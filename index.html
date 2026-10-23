@@ -34,6 +34,8 @@
   --sun: #ffc93c;
   --sun-ink: #101418;
   --soft: #e7efe9;
+  --slab: #101418;
+  --on-slab: #eef1ec;
   --shadow: 0 24px 50px -28px rgba(16, 20, 24, .35);
   color-scheme: light;
 }
@@ -48,6 +50,8 @@
   --sun: #ffc93c;
   --sun-ink: #101418;
   --soft: #13262a;
+  --slab: #1c262c;
+  --on-slab: #eef1ec;
   --shadow: 0 24px 50px -24px rgba(0, 0, 0, .8);
   color-scheme: dark;
 }
@@ -61,7 +65,7 @@ a { color: inherit; text-underline-offset: 4px; }
 h1, h2, h3 { font-family: var(--font-display); line-height: 1.02; margin: 0; text-wrap: balance; letter-spacing: -.025em; }
 h2 { font-size: clamp(2.1rem, 4.6vw, 3.5rem); font-weight: 800; }
 h3 { font-weight: 700; font-size: 1.35rem; letter-spacing: -.015em; }
-p { margin: 0; }
+p { margin: 0; text-wrap: pretty; }
 .wrap { width: min(100% - 32px, var(--max)); margin-inline: auto; }
 .icon { width: 20px; height: 20px; stroke: currentColor; fill: none; stroke-width: 1.75; stroke-linecap: round; stroke-linejoin: round; flex: none; }
 .lead { color: var(--muted); font-size: 1.15rem; max-width: 52ch; }
@@ -79,20 +83,20 @@ p { margin: 0; }
 .skip:focus { top: 12px; }
 header.top { position: sticky; top: 0; z-index: 50; background: color-mix(in srgb, var(--bg) 85%, transparent); backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px); border-bottom: 1px solid var(--line); }
 .nav { display: flex; align-items: center; gap: 28px; height: 68px; }
-.logo { display: flex; align-items: center; gap: 10px; text-decoration: none; font: 800 1.2rem/1 var(--font-display); letter-spacing: -.02em; }
-.logo-mark { width: 32px; height: 32px; border-radius: 9px; background: var(--ink); display: grid; place-items: center; }
+.logo { min-height: 44px; display: flex; align-items: center; gap: 10px; text-decoration: none; font: 800 1.2rem/1 var(--font-display); letter-spacing: -.02em; }
+.logo-mark { width: 32px; height: 32px; border-radius: 9px; background: var(--slab); display: grid; place-items: center; }
 .logo-mark svg { width: 18px; height: 18px; stroke: var(--sun); stroke-width: 3.2; fill: none; stroke-linecap: round; }
 .logo small { font: 600 .78rem var(--font-body); color: var(--muted); letter-spacing: 0; margin-left: 2px; }
 .nav ul { display: flex; gap: 24px; list-style: none; margin: 0 0 0 auto; padding: 0; }
-.nav ul a { text-decoration: none; color: var(--muted); font-weight: 500; font-size: .95rem; }
+.nav ul a { display: inline-block; padding: 12px 0; text-decoration: none; color: var(--muted); font-weight: 500; font-size: .95rem; }
 .nav ul a:hover { color: var(--ink); }
 .tools { display: flex; gap: 8px; align-items: center; }
-.tbtn { width: 42px; height: 42px; border-radius: 12px; border: 1px solid var(--line); background: var(--paper); color: var(--ink); display: grid; place-items: center; cursor: pointer; }
+.tbtn { width: 44px; height: 44px; border-radius: 12px; border: 1px solid var(--line); background: var(--paper); color: var(--ink); display: grid; place-items: center; cursor: pointer; }
 .tbtn:hover { border-color: var(--ink); }
 .tbtn .i-moon { display: none; }
 [data-theme="dark"] .tbtn .i-moon { display: block; }
 [data-theme="dark"] .tbtn .i-sun { display: none; }
-.nav .btn { min-height: 42px; padding: 0 16px; font-size: .92rem; }
+.nav .btn { min-height: 44px; padding: 0 16px; font-size: .92rem; }
 .menu { display: none; }
 
 /* Hero */
@@ -116,7 +120,7 @@ header.top { position: sticky; top: 0; z-index: 50; background: color-mix(in srg
 .bar i { width: 10px; height: 10px; border-radius: 50%; background: var(--line); }
 .bar span { margin-left: 10px; flex: 1; font-size: .72rem; color: var(--muted); background: var(--bg); border-radius: 6px; padding: 4px 10px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
 .mini { --m-bg: #0b0a08; --m-text: #f4ede0; --m-muted: #b9ad98; --m-gold: #d4af6a; --m-line: rgba(212,175,106,.25); background: var(--m-bg); color: var(--m-text); padding: 18px 20px 22px; transition: background-color .6s, color .6s; }
-.mini.light { --m-bg: #f8f3ea; --m-text: #1c1710; --m-muted: #5e5343; --m-gold: #8a6526; --m-line: rgba(122,92,40,.25); }
+.mini.light { --m-bg: #f8f3ea; --m-text: #1c1710; --m-muted: #5e5343; --m-gold: #6b4c1a; --m-line: rgba(122,92,40,.25); }
 .mini-nav { display: flex; justify-content: space-between; align-items: center; font-size: .62rem; color: var(--m-muted); }
 .mini-nav b { font: 600 1rem 'Georgia', serif; color: var(--m-gold); }
 .mini-nav em { font-style: normal; border: 1px solid var(--m-gold); color: var(--m-gold); border-radius: 99px; padding: 3px 8px; }
@@ -131,7 +135,7 @@ header.top { position: sticky; top: 0; z-index: 50; background: color-mix(in srg
 .tag { position: absolute; z-index: 2; background: var(--paper); border: 1px solid var(--line); border-radius: 12px; padding: 10px 14px; box-shadow: var(--shadow); display: flex; gap: 10px; align-items: center; font-size: .88rem; font-weight: 600; }
 .tag .icon { color: var(--teal); }
 .tag-1 { left: -18px; bottom: 34px; }
-.tag-2 { right: -12px; top: 64px; }
+.tag-2 { right: -12px; bottom: 96px; }
 .dot { width: 9px; height: 9px; border-radius: 50%; background: #22a35a; box-shadow: 0 0 0 4px color-mix(in srgb, #22a35a 25%, transparent); }
 
 /* Sections */
@@ -142,6 +146,8 @@ section { padding: clamp(72px, 9vw, 120px) 0 0; }
 .niches { display: flex; flex-wrap: wrap; gap: 12px; }
 .niche { display: flex; align-items: center; gap: 12px; padding: 14px 20px 14px 14px; border-radius: 999px; background: var(--paper); border: 1px solid var(--line); font-weight: 600; }
 .niche span { width: 38px; height: 38px; border-radius: 50%; background: var(--soft); color: var(--teal); display: grid; place-items: center; }
+.niche-link { text-decoration: none; color: inherit; border-color: var(--teal); }
+.niche-link:hover { background: var(--soft); }
 .niche small { display: block; font-weight: 400; color: var(--muted); font-size: .85rem; }
 
 /* Demos */
@@ -160,8 +166,8 @@ section { padding: clamp(72px, 9vw, 120px) 0 0; }
 /* Pricing */
 .plans { display: grid; grid-template-columns: repeat(3, 1fr); gap: 18px; align-items: stretch; }
 .plan { background: var(--paper); border: 1px solid var(--line); border-radius: var(--radius); padding: 28px; display: flex; flex-direction: column; gap: 18px; }
-.plan.star { background: var(--ink); color: var(--bg); border-color: var(--ink); position: relative; }
-.plan.star .muted, .plan.star li { color: color-mix(in srgb, var(--bg) 72%, var(--ink)); }
+.plan.star { background: var(--slab); color: var(--on-slab); border-color: var(--slab); position: relative; }
+.plan.star .muted, .plan.star li { color: color-mix(in srgb, var(--on-slab) 74%, var(--slab)); }
 .plan.star .icon { color: var(--sun); }
 .badge { position: absolute; top: -13px; left: 28px; background: var(--sun); color: var(--sun-ink); font-size: .78rem; font-weight: 700; padding: 5px 12px; border-radius: 99px; }
 .price { font: 800 clamp(1.6rem, 2.3vw, 1.85rem)/1 var(--font-display); white-space: nowrap; letter-spacing: -.03em; font-variant-numeric: tabular-nums; }
@@ -194,13 +200,13 @@ details[open] summary .icon { transform: rotate(45deg); }
 details p { color: var(--muted); padding: 0 0 20px; max-width: 60ch; }
 
 /* Contact */
-.contact { margin-top: clamp(72px, 9vw, 120px); background: var(--ink); color: var(--bg); padding: clamp(56px, 8vw, 96px) 0; }
+.contact { margin-top: clamp(72px, 9vw, 120px); background: var(--slab); color: var(--on-slab); padding: clamp(56px, 8vw, 96px) 0; }
 .contact .wrap { display: grid; grid-template-columns: .9fr 1.1fr; gap: clamp(32px, 5vw, 64px); }
-.contact h2 { color: var(--bg); }
-.contact .lead { color: color-mix(in srgb, var(--bg) 70%, var(--ink)); margin-top: 18px; }
+.contact h2 { color: var(--on-slab); }
+.contact .lead { color: color-mix(in srgb, var(--on-slab) 74%, var(--slab)); margin-top: 18px; }
 .phone { margin-top: 28px; display: flex; flex-wrap: wrap; align-items: center; gap: 12px; }
 .phone strong { font: 800 clamp(1.6rem, 3vw, 2.2rem)/1 var(--font-display); letter-spacing: -.02em; user-select: all; }
-.copy { border: 1px solid color-mix(in srgb, var(--bg) 30%, transparent); background: transparent; color: var(--bg); border-radius: 10px; padding: 8px 12px; font: 600 .85rem var(--font-body); cursor: pointer; }
+.copy { border: 1px solid color-mix(in srgb, var(--on-slab) 45%, transparent); background: transparent; color: var(--on-slab); border-radius: 10px; padding: 8px 12px; font: 600 .85rem var(--font-body); cursor: pointer; }
 .copy:hover { border-color: var(--sun); }
 .contact .btn-wa { margin-top: 24px; background: var(--sun); color: var(--sun-ink); }
 form { background: var(--paper); color: var(--ink); border-radius: 20px; padding: clamp(22px, 3vw, 32px); display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
@@ -213,16 +219,19 @@ input::placeholder, textarea::placeholder { color: var(--muted); }
 input:focus, select:focus, textarea:focus { outline: none; border-color: var(--teal); box-shadow: 0 0 0 3px color-mix(in srgb, var(--teal) 22%, transparent); }
 .err { font-size: .82rem; color: #b42318; min-height: 1em; }
 [data-theme="dark"] .err { color: #ff8a7a; }
-[aria-invalid="true"] { border-color: #b42318; }
+[aria-invalid="true"], [aria-invalid="true"]:focus { border-color: #b42318; }
+[data-theme="dark"] [aria-invalid="true"] { border-color: #ff8a7a; }
 .form-note { grid-column: 1 / -1; font-size: .85rem; color: var(--muted); }
 
 footer { padding: 32px 0 40px; }
 footer .wrap { display: flex; flex-wrap: wrap; justify-content: space-between; gap: 16px; color: var(--muted); font-size: .9rem; }
-footer a { text-decoration: none; }
+footer a { text-decoration: none; display: inline-block; padding: 12px 0; }
 footer a:hover { color: var(--ink); }
 
 .wa-float { position: fixed; right: 18px; bottom: 18px; z-index: 40; display: flex; align-items: center; gap: 10px; background: #15803d; color: #fff; text-decoration: none; font-weight: 700; padding: 0 18px 0 14px; height: 54px; border-radius: 999px; box-shadow: 0 14px 30px -12px rgba(0,0,0,.5); transition: transform .2s var(--ease); }
 .wa-float:hover { transform: translateY(-3px); }
+.wa-float.away { opacity: 0; pointer-events: none; transform: translateY(12px); }
+.wa-float { transition: transform .2s var(--ease), opacity .2s; }
 .wa-float .icon { width: 24px; height: 24px; }
 
 .toast { position: fixed; left: 50%; bottom: 86px; transform: translate(-50%, 16px); opacity: 0; pointer-events: none; z-index: 60; background: var(--ink); color: var(--bg); padding: 10px 18px; border-radius: 999px; font-size: .9rem; transition: opacity .25s, transform .35s var(--ease); }
@@ -257,12 +266,12 @@ footer a:hover { color: var(--ink); }
 .vs-col { border-radius: 20px; padding: clamp(22px, 3vw, 32px); display: flex; flex-direction: column; gap: 16px; }
 .vs-before { background: var(--paper); border: 1px solid var(--line); }
 .vs-after { background: var(--soft); border: 1px solid color-mix(in srgb, var(--teal) 30%, transparent); }
-.vs-label { font: 700 .8rem var(--font-body); letter-spacing: .06em; text-transform: uppercase; color: var(--muted); }
+.vs-label { font: 700 1rem var(--font-body); color: var(--muted); }
 .vs-after .vs-label { color: var(--teal); }
 .chat { display: grid; gap: 8px; }
 .msg { max-width: 82%; padding: 10px 14px; border-radius: 16px 16px 16px 4px; background: var(--bg); border: 1px solid var(--line); font-size: .95rem; }
 .msg time { display: block; font-size: .72rem; color: var(--muted); margin-top: 2px; font-variant-numeric: tabular-nums; }
-.msg.late { border-color: #e2a2a2; }
+.msg.late { border-color: color-mix(in srgb, #c2410c 45%, var(--line)); }
 .vs-cost { margin-top: auto; padding-top: 14px; border-top: 1px dashed var(--line); color: var(--muted); font-size: .95rem; }
 .page-card { background: var(--paper); border-radius: 14px; border: 1px solid var(--line); overflow: hidden; }
 .page-row { display: flex; justify-content: space-between; gap: 12px; padding: 12px 16px; border-bottom: 1px solid var(--line); font-size: .95rem; }
@@ -274,7 +283,7 @@ footer a:hover { color: var(--ink); }
 .promises { display: grid; grid-template-columns: repeat(3, 1fr); gap: 0; border-block: 1px solid var(--line); margin-top: 48px; }
 .promise { padding: 26px 24px 26px 0; display: flex; gap: 14px; }
 .promise + .promise { padding-left: 24px; border-left: 1px solid var(--line); }
-.promise span { width: 44px; height: 44px; border-radius: 12px; background: var(--ink); color: var(--sun); display: grid; place-items: center; flex: none; }
+.promise span { width: 44px; height: 44px; border-radius: 12px; background: var(--slab); color: var(--sun); display: grid; place-items: center; flex: none; }
 .promise b { display: block; font-size: 1.05rem; }
 .promise p { color: var(--muted); font-size: .95rem; margin-top: 2px; }
 
@@ -355,7 +364,7 @@ footer a:hover { color: var(--ink); }
   <div class="wrap hero">
     <div>
       <h1>Tu negocio merece una página que <mark>venda</mark>.</h1>
-      <p class="lead">Diseño landing pages para negocios en República Dominicana: tus servicios, precios y fotos en un solo link, con botón de WhatsApp para que te escriban y agenden.</p>
+      <p class="lead">Diseño páginas web para negocios en República Dominicana: tus servicios, precios y fotos en un solo link, con botón de WhatsApp para que te escriban y agenden.</p>
       <div class="cta-row">
         <a class="btn btn-main" data-wa="Hola Eric, quiero mi demo gratis. Mi negocio es: " href="https://wa.me/18292600023"><svg class="icon"><use href="#i-wa"/></svg>Pide tu demo gratis</a>
         <a class="btn btn-ghost" href="#demos">Ver ejemplos<svg class="icon"><use href="#i-arrow"/></svg></a>
@@ -379,7 +388,7 @@ footer a:hover { color: var(--ink); }
         </div>
       </div>
       <div class="tag tag-1"><span class="dot"></span>Nueva cita por WhatsApp</div>
-      <div class="tag tag-2"><svg class="icon"><use href="#i-sun"/></svg>Tema claro y oscuro</div>
+      <div class="tag tag-2"><svg class="icon"><use href="#i-check"/></svg>Precios y horario a la vista</div>
     </div>
   </div>
 
@@ -426,7 +435,7 @@ footer a:hover { color: var(--ink); }
         <p>Si tus clientes te preguntan precios y horarios por mensaje todos los días, una página les responde sola y te deja solo agendar.</p>
       </div>
       <div class="niches stagger">
-        <div class="niche" style="--i:0"><span><svg class="icon"><use href="#i-scissors"/></svg></span><div>Salones y barberías<small>Servicios, precios y citas</small></div></div>
+        <a class="niche niche-link" href="#demos" style="--i:0"><span><svg class="icon"><use href="#i-scissors"/></svg></span><div>Salones y barberías<small>Ver demo de salón →</small></div></a>
         <div class="niche" style="--i:1"><span><svg class="icon"><use href="#i-food"/></svg></span><div>Restaurantes<small>Menú digital y pedidos</small></div></div>
         <div class="niche" style="--i:2"><span><svg class="icon"><use href="#i-tooth"/></svg></span><div>Clínicas y estética<small>Consultas y testimonios</small></div></div>
         <div class="niche" style="--i:3"><span><svg class="icon"><use href="#i-palm"/></svg></span><div>Rentas vacacionales<small>Galería y reservas, en inglés</small></div></div>
@@ -442,8 +451,8 @@ footer a:hover { color: var(--ink); }
   <section id="demos">
     <div class="wrap">
       <div class="head">
-        <h2>Demos que puedes abrir y tocar</h2>
-        <p>Cada demo es una página real, con datos de ejemplo. Ábrela en tu celular y prueba los botones como lo haría tu cliente.</p>
+        <h2>Una demo que puedes abrir y tocar</h2>
+        <p>Es una página real con datos de ejemplo. Ábrela en tu celular y prueba los botones como lo haría tu cliente. Pronto habrá más.</p>
       </div>
       <article class="demo">
         <div class="demo-shot" aria-hidden="true">
@@ -457,7 +466,7 @@ footer a:hover { color: var(--ink); }
           </div>
         </div>
         <div class="demo-body">
-          <span class="pill">Plan Pro · Salón de belleza</span>
+          <span class="pill">Salón de belleza · Plan Pro + versión en inglés</span>
           <h3>Lumière Salón &amp; Spa</h3>
           <ul>
             <li><svg class="icon"><use href="#i-check"/></svg>Negro y dorado, con cambio a tema claro</li>
@@ -471,7 +480,6 @@ footer a:hover { color: var(--ink); }
           </div>
         </div>
       </article>
-      <div class="next"><span>Próximamente: restaurante con menú digital</span><span>Próximamente: barbería con citas</span></div>
     </div>
   </section>
 
@@ -493,7 +501,7 @@ footer a:hover { color: var(--ink); }
           <a class="btn btn-ghost" data-wa="Hola Eric, me interesa el plan Básico." href="https://wa.me/18292600023">Elegir Básico</a>
         </article>
         <article class="plan star" style="--i:1">
-          <span class="badge">El más pedido</span>
+          <span class="badge">Recomendado: incluye tu dominio</span>
           <h3>Pro</h3>
           <div class="price">RD$12,000–15,000<small class="muted">Entrega en 3 a 5 días</small></div>
           <ul>
@@ -520,7 +528,7 @@ footer a:hover { color: var(--ink); }
         <div><b>Mantenimiento mensual · RD$1,500–3,000</b><p class="muted">Hosting, cambios de precios, fotos nuevas y soporte. Tú no tocas nada técnico.</p></div>
         <a class="btn btn-ghost" data-wa="Hola Eric, tengo una pregunta sobre el mantenimiento mensual." href="https://wa.me/18292600023">Preguntar</a>
       </div>
-      <p class="terms">El precio final depende de cuántas secciones y fotos lleve tu página. Te lo confirmo antes de empezar.</p>
+      <p class="terms">Si no te gusta la demo, no pagas nada. El precio final depende de cuántas secciones y fotos lleve tu página, y te lo confirmo antes de empezar.</p>
     </div>
   </section>
 
@@ -533,7 +541,7 @@ footer a:hover { color: var(--ink); }
       <ol class="steps">
         <li><h3>Me escribes</h3><p>Me cuentas qué vendes y me mandas tu logo, fotos y lista de precios.</p><span class="when">Día 1</span></li>
         <li><h3>Te mando la demo</h3><p>Ves tu página funcionando en tu celular antes de pagar nada.</p><span class="when">En 24 horas</span></li>
-        <li><h3>Ajustamos</h3><p>Cambiamos textos, colores o fotos hasta que te guste. Pagas el 50% para seguir.</p><span class="when">Días 2–4</span></li>
+        <li><h3>Ajustamos</h3><p>Cambiamos textos, colores o fotos hasta que te guste. Pagas el 50% para seguir.</p><span class="when">Básico 48 h · Pro 3–5 días</span></li>
         <li><h3>Publicamos</h3><p>Conecto tu dominio, pagas el resto y te entrego el link para tus redes.</p><span class="when">Lista</span></li>
       </ol>
       <div class="sec-cta">
@@ -570,7 +578,7 @@ footer a:hover { color: var(--ink); }
         <div class="field"><label for="f-type">Tipo de negocio</label>
           <select id="f-type" name="type"><option>Salón o barbería</option><option>Restaurante</option><option>Clínica o estética</option><option>Renta vacacional</option><option>Gimnasio o entrenador</option><option>Dealer o rent-a-car</option><option>Otro</option></select></div>
         <div class="field"><label for="f-plan">Plan que te interesa</label>
-          <select id="f-plan" name="plan"><option>Todavía no sé</option><option>Básico</option><option selected>Pro</option><option>Premium</option></select></div>
+          <select id="f-plan" name="plan"><option selected>Todavía no sé</option><option>Básico</option><option>Pro</option><option>Premium</option></select></div>
         <div class="field full"><label for="f-msg">¿Qué te gustaría que tenga tu página? (opcional)</label><textarea id="f-msg" name="msg" placeholder="Ej.: precios, fotos de mis trabajos y que me agenden por WhatsApp"></textarea></div>
         <button class="btn btn-main full" type="submit"><svg class="icon"><use href="#i-wa"/></svg>Enviar por WhatsApp</button>
         <p class="form-note">Se abre WhatsApp con tu mensaje ya escrito; solo tienes que darle a enviar.</p>
@@ -615,6 +623,11 @@ footer a:hover { color: var(--ink); }
 
   var menu = document.getElementById('menu'), links = document.getElementById('links');
   menu.addEventListener('click', function () { var o = links.classList.toggle('open'); menu.setAttribute('aria-expanded', o); });
+  function closeMenu() { links.classList.remove('open'); menu.setAttribute('aria-expanded', false); }
+  document.addEventListener('keydown', function (e) { if (e.key === 'Escape' && links.classList.contains('open')) { closeMenu(); menu.focus(); } });
+  document.addEventListener('click', function (e) { if (links.classList.contains('open') && !e.target.closest('#links, #menu')) closeMenu(); });
+  var float = document.querySelector('.wa-float');
+  if ('IntersectionObserver' in window) new IntersectionObserver(function (es) { float.classList.toggle('away', es[0].isIntersecting); }).observe(document.getElementById('contacto'));
   links.addEventListener('click', function (e) { if (e.target.closest('a')) { links.classList.remove('open'); menu.setAttribute('aria-expanded', false); } });
 
   // The hero mock flips between the demo's dark and light themes
@@ -640,8 +653,8 @@ footer a:hover { color: var(--ink); }
   }
   form.addEventListener('submit', function (e) {
     e.preventDefault();
-    var ok = setErr('name', form.name.value.trim().length < 2 ? 'Escribe tu nombre.' : '');
-    ok = setErr('biz', form.biz.value.trim().length < 2 ? 'Escribe el nombre de tu negocio.' : '') && ok;
+    var ok = setErr('name', !form.name.value.trim() ? 'Escribe tu nombre.' : form.name.value.trim().length < 2 ? 'Escribe tu nombre completo.' : '');
+    ok = setErr('biz', !form.biz.value.trim() ? 'Escribe el nombre de tu negocio.' : form.biz.value.trim().length < 2 ? 'Escribe el nombre completo de tu negocio.' : '') && ok;
     if (!ok) { form.querySelector('[aria-invalid="true"]').focus(); return; }
     var text = 'Hola Eric, soy ' + form.name.value.trim() + ' de ' + form.biz.value.trim() + ' (' + form.type.value + ').\n' +
       'Me interesa el plan: ' + form.plan.value + '.' + (form.msg.value.trim() ? '\nQuiero que mi página tenga: ' + form.msg.value.trim() : '') +
@@ -649,7 +662,10 @@ footer a:hover { color: var(--ink); }
     var url = waLink(text);
     document.getElementById('sentLink').href = url;
     document.getElementById('sent').classList.add('show');
+    var btn = form.querySelector('[type=submit]'); btn.disabled = true;
+    setTimeout(function () { btn.disabled = false; }, 4000);
     window.open(url, '_blank', 'noopener');
+    document.getElementById('sent').scrollIntoView({ block: 'center', behavior: 'smooth' });
   });
   if ('IntersectionObserver' in window && !matchMedia('(prefers-reduced-motion: reduce)').matches) {
     var io = new IntersectionObserver(function (es) { es.forEach(function (e) { if (e.isIntersecting) { e.target.classList.add('in'); io.unobserve(e.target); } }); }, { rootMargin: '0px 0px -10% 0px' });
