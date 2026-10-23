@@ -117,10 +117,11 @@ section { padding-top: clamp(72px, 9vw, 112px); }
 .cards { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; }
 .card { background: var(--panel); border-radius: var(--r); overflow: hidden; display: flex; flex-direction: column; }
 .card .ph { aspect-ratio: 16 / 10; border-radius: 0; }
-.card .body { padding: 20px 22px 22px; display: grid; gap: 6px; flex: 1; align-content: start; }
+.card .body { padding: 20px 22px 22px; display: flex; flex-direction: column; gap: 6px; flex: 1; }
 .card h3 { font-size: 1.5rem; }
 .card p { color: var(--muted); font-size: 1rem; }
-.card .price { margin-top: 8px; display: flex; justify-content: space-between; align-items: baseline; font-size: .875rem; color: var(--muted); }
+.card .btn { margin-top: 12px; }
+.card .price { margin-top: auto; padding-top: 8px; display: flex; justify-content: space-between; align-items: baseline; font-size: .875rem; color: var(--muted); }
 .card .price b { font: 600 1.5rem var(--font-display); color: var(--rose); font-variant-numeric: tabular-nums; }
 .extras { margin-top: 16px; display: grid; grid-template-columns: repeat(3, 1fr); gap: 0 48px; }
 .menu-item { display: flex; align-items: baseline; justify-content: space-between; gap: 12px; padding: 12px 0; }
@@ -165,8 +166,14 @@ section { padding-top: clamp(72px, 9vw, 112px); }
 .steps li.now span { border-color: var(--rose); color: var(--rose); }
 .steps li::after { content: ""; flex: 1; height: 1px; background: var(--line); } /* taste-skill-ignore: progress connector, same as Navaja */
 .steps li:last-child::after { display: none; }
-.grid { display: grid; grid-template-columns: 1fr 1fr 1.15fr 1fr; gap: 24px; align-items: start; }
-.col { scroll-margin-top: 88px; min-width: 0; }
+.grid { display: grid; grid-template-columns: 1fr 1fr minmax(320px, 1.25fr) 1fr; gap: 24px; align-items: start; }
+.col { scroll-margin-top: 88px; min-width: 0; transition: opacity 300ms ease; }
+.col[inert] { opacity: .5; }
+.sub-label { margin: 16px 0 8px; font-weight: 600; font-size: .875rem; }
+.sub-label span { color: var(--muted); font-weight: 400; }
+.finish button[disabled] { color: var(--busy); cursor: not-allowed; }
+.linkbtn { display: inline-flex; align-items: center; min-height: 44px; padding: 0 6px; border: 0; background: transparent; color: var(--rose); font: 600 .875rem/1.2 var(--font-body); text-decoration: underline; text-underline-offset: 4px; cursor: pointer; }
+.linkbtn:hover { color: var(--rose-hi); }
 .col h3 { font: 700 1.125rem var(--font-body); display: flex; align-items: center; gap: 10px; margin-bottom: 14px; }
 .col h3 .icon { color: var(--rose); }
 .opts { display: grid; gap: 8px; }
@@ -189,16 +196,18 @@ section { padding-top: clamp(72px, 9vw, 112px); }
 .cal-head b { font-weight: 600; text-transform: capitalize; }
 .cal-nav { width: 44px; height: 44px; border-radius: 10px; border: 1px solid var(--line-2); background: transparent; display: grid; place-items: center; cursor: pointer; }
 .cal-nav[disabled] { opacity: .3; cursor: not-allowed; }
-.cal { display: grid; grid-template-columns: repeat(7, 1fr); gap: 2px; text-align: center; }
+.cal { display: grid; grid-template-columns: repeat(7, minmax(0, 1fr)); gap: 2px; text-align: center; }
+.cal-legend { margin-top: 8px; }
 .cal .dow { font-size: .875rem; letter-spacing: .06em; color: var(--muted); padding: 4px 0; }
-.day { aspect-ratio: 1; min-height: 44px; border-radius: 50%; border: 0; background: transparent; cursor: pointer; font-size: .875rem; font-variant-numeric: tabular-nums; transition: transform 120ms var(--ease-out), background-color 200ms ease; }
+.day { aspect-ratio: 1; min-height: 44px; width: 100%; max-width: 52px; justify-self: center; border-radius: 50%; border: 0; background: transparent; cursor: pointer; font-size: .875rem; font-variant-numeric: tabular-nums; transition: transform 120ms var(--ease-out), background-color 200ms ease; }
 .day:active:not([disabled]) { transform: scale(0.95); }
 .day:hover:not([disabled]) { background: color-mix(in srgb, var(--rose) 14%, transparent); }
 .day[disabled] { color: var(--busy); cursor: not-allowed; }
 .day[aria-pressed="true"] { background: var(--rose); color: var(--on-rose); font-weight: 700; }
 .day.today:not([aria-pressed="true"]) { outline: 1px solid var(--rose); outline-offset: -1px; }
 .day:focus-visible { outline: 2px solid var(--rose); outline-offset: 2px; }
-.times-label { margin: 16px 0 8px; font-weight: 600; font-size: .875rem; }
+.times-label { margin: 16px 0 2px; font-weight: 600; font-size: .875rem; }
+.times-label + .hint { margin-bottom: 8px; }
 .times { display: grid; grid-template-columns: repeat(3, 1fr); gap: 6px; }
 .time { min-height: 44px; border-radius: 8px; border: 1px solid var(--line-2); background: var(--bg); cursor: pointer; font-size: .875rem; font-variant-numeric: tabular-nums; transition: transform 120ms var(--ease-out), border-color 200ms ease; }
 .time:active:not([disabled]) { transform: scale(0.96); }
@@ -209,10 +218,15 @@ section { padding-top: clamp(72px, 9vw, 112px); }
 .tgroup:first-child { margin-top: 0; }
 .hint { font-size: .875rem; color: var(--muted); grid-column: 1 / -1; }
 .summary dl { margin: 0; }
-.summary[data-ui] .row { display: flex; justify-content: space-between; gap: 12px; padding: 10px 0; border-bottom: 1px solid var(--line-2); font-size: .875rem; }
+.summary[data-ui] .row { display: flex; justify-content: space-between; align-items: center; gap: 12px; min-height: 48px; padding: 2px 0; border-bottom: 1px solid var(--line-2); font-size: .875rem; }
 .summary dt { color: var(--muted); }
 .summary dd { margin: 0; text-align: right; font-weight: 600; }
-.summary dd.empty { color: var(--muted); font-weight: 500; }
+.summary #sumBox dd { flex: 1; display: flex; flex-wrap: wrap; justify-content: flex-end; align-items: center; column-gap: 4px; }
+.summary .empty { color: var(--muted); font-weight: 500; }
+.summary .chg { margin-right: -6px; font-weight: 500; }
+.summary .row small { display: block; color: var(--muted); font-weight: 500; }
+.reset { display: flex; margin: 0 auto; }
+.reuse { margin-bottom: 8px; }
 .total { display: flex; justify-content: space-between; align-items: baseline; margin: 16px 0; }
 .total b { font: 600 1.9rem/1 var(--font-display); color: var(--rose); font-variant-numeric: tabular-nums; }
 .field { display: grid; gap: 6px; margin-bottom: 10px; }
@@ -221,7 +235,8 @@ section { padding-top: clamp(72px, 9vw, 112px); }
 .field input:focus-visible { outline: 2px solid var(--rose); outline-offset: 1px; }
 .field input::placeholder { color: var(--muted); opacity: .8; }
 .field input[aria-invalid="true"] { border-color: #d26a4c; }
-.err { font-size: .875rem; color: #e08a6e; min-height: 1em; }
+.err { display: flex; align-items: flex-start; gap: 6px; font-size: .875rem; color: #e08a6e; min-height: 1em; }
+.err .icon { width: 16px; height: 16px; margin-top: 3px; }
 [data-theme="light"] .err { color: #a3352a; }
 .summary .btn { width: 100%; }
 .missing { font-size: .875rem; color: var(--muted); margin-top: 8px; text-align: center; }
@@ -255,8 +270,14 @@ footer { margin-top: clamp(72px, 9vw, 112px); background: var(--panel); padding:
 .foot .brand { padding: 0; }
 .credit { margin-top: 32px; padding-top: 18px; display: flex; flex-wrap: wrap; justify-content: space-between; gap: 12px; font-size: .875rem; color: var(--muted); }
 .credit a { color: var(--rose); display: inline-block; padding: 12px 0; }
-.toast { position: fixed; left: 50%; bottom: 24px; transform: translate(-50%, 16px); opacity: 0; pointer-events: none; z-index: 60; background: var(--panel-2); border: 1px solid var(--line); border-radius: 999px; padding: 12px 20px; font-size: .875rem; transition: opacity 400ms ease, transform 400ms ease; }
+.toast { position: fixed; left: 50%; bottom: 24px; transform: translate(-50%, 16px); opacity: 0; pointer-events: none; z-index: 60; display: flex; align-items: center; gap: 8px; width: max-content; max-width: calc(100% - 32px); background: var(--panel-2); border: 1px solid var(--line); border-radius: 999px; padding: 12px 20px; font-size: .875rem; transition: opacity 400ms ease, transform 400ms ease; }
 .toast.show { opacity: 1; transform: translate(-50%, 0); }
+.toast.has-undo { padding: 0 10px 0 20px; }
+.toast.show.has-undo { pointer-events: auto; }
+@media (min-width: 1081px) {
+  .toast { left: auto; right: 32px; bottom: 32px; max-width: 420px; transform: translate(0, 16px); }
+  .toast.show { transform: translate(0, 0); }
+}
 
 /* Entrances: content is visible by default; JS opts in */
 .js .enter > * { opacity: 0; transform: translateY(20px); transition: opacity 500ms var(--ease-out), transform 500ms var(--ease-out); }
@@ -266,8 +287,10 @@ footer { margin-top: clamp(72px, 9vw, 112px); background: var(--panel); padding:
 .js .enter.in > :nth-child(4) { transition-delay: 210ms; }
 .js .enter.in > :nth-child(n+5) { transition-delay: 260ms; }
 
-@media (max-width: 1080px) {
+@media (max-width: 1180px) {
   .grid { grid-template-columns: 1fr 1fr; }
+}
+@media (max-width: 1080px) {
   .perks { grid-template-columns: 1fr 1fr; }
   .cards { grid-template-columns: 1fr 1fr; }
   .swatches { grid-template-columns: 1fr 1fr; }
@@ -291,6 +314,8 @@ footer { margin-top: clamp(72px, 9vw, 112px); background: var(--panel); padding:
   .gallery { grid-template-columns: 1fr 1fr; grid-auto-rows: 180px; }
   .ph.tall { grid-row: span 1; grid-column: span 2; }
   .hours { display: none; }
+  .cal { gap: 0; }
+  .toast { bottom: calc(env(safe-area-inset-bottom, 0px) + 88px); border-radius: 16px; }
   .mbar { display: flex; position: sticky; bottom: 0; z-index: 30; margin: 16px -20px -20px; padding: 12px 16px calc(env(safe-area-inset-bottom, 0px) + 12px); gap: 12px; align-items: center; background: var(--panel); border-radius: 0 0 20px 20px; }
   .mbar .msum { flex: 1; min-width: 0; font-size: .875rem; color: var(--muted); }
   .mbar .msum b { display: block; color: var(--text); font-size: 1rem; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
@@ -302,7 +327,11 @@ footer { margin-top: clamp(72px, 9vw, 112px); background: var(--panel); padding:
   .btn, .opt, .day, .time, .cal-nav, .tool, .sw, .finish button, .ph img { transform: none !important; }
   .done-card.show { animation: fadeOnly 200ms ease both; }
   .toast, .toast.show { transform: translate(-50%, 0); }
+  .col { transition: none; }
   @keyframes fadeOnly { from { opacity: 0; } }
+}
+@media (prefers-reduced-motion: reduce) and (min-width: 1081px) {
+  .toast, .toast.show { transform: none; }
 }
 </style>
 </head>
@@ -394,11 +423,12 @@ footer { margin-top: clamp(72px, 9vw, 112px); background: var(--panel); padding:
           <h3 id="pvName">Rosa nácar</h3>
           <p id="pvNote">El tono de la casa. En gel dura tres semanas.</p>
           <div class="swatches" id="swatches" role="group" aria-label="Tonos"></div>
-          <div class="finish" role="group" aria-label="Acabado">
+          <div class="finish" id="pvFin" role="group" aria-label="Acabado">
             <button type="button" data-finish="brillo" aria-pressed="true">Brillo</button>
             <button type="button" data-finish="mate" aria-pressed="false">Mate</button>
             <button type="button" data-finish="cromo" aria-pressed="false">Cromo</button>
           </div>
+          <p class="note" id="pvExtra" aria-live="polite"></p>
           <a class="btn btn-rose" href="#reservar" id="pvBook"><svg class="icon"><use href="#i-cal"/></svg>Reservar con este color</a>
         </div>
       </div>
@@ -426,6 +456,12 @@ footer { margin-top: clamp(72px, 9vw, 112px); background: var(--panel); padding:
           <div class="col" data-ui id="c-col">
             <h3><svg class="icon"><use href="#i-pol"/></svg>Escoge tu color</h3>
             <div class="opts" id="colors"></div>
+            <p class="sub-label" id="cFinLabel">Acabado <span>· Francesa o cromo + RD$300</span></p>
+            <div class="finish" id="cFin" role="group" aria-labelledby="cFinLabel">
+              <button type="button" data-cfin="brillo" aria-pressed="true">Brillo</button>
+              <button type="button" data-cfin="mate" aria-pressed="false">Mate</button>
+              <button type="button" data-cfin="cromo" aria-pressed="false">Cromo</button>
+            </div>
             <p class="note-s"><svg class="icon"><use href="#i-info"/></svg>¿No te decides? Escoge "Lo decido allá".</p>
           </div>
           <div class="col" data-ui id="c-when">
@@ -436,24 +472,29 @@ footer { margin-top: clamp(72px, 9vw, 112px); background: var(--panel); padding:
               <button class="cal-nav" id="nextM" type="button" aria-label="Mes siguiente"><svg class="icon"><use href="#i-right"/></svg></button>
             </div>
             <div class="cal" id="cal" role="group" aria-label="Calendario"></div>
+            <p class="hint cal-legend">Gris: cerrado o sin cupo · Lunes cerrado</p>
             <p class="times-label">Horarios disponibles</p>
+            <p class="hint">Las horas tachadas ya están ocupadas.</p>
             <div class="times" id="times"><p class="hint">Escoge un día para ver las horas.</p></div>
           </div>
           <div class="col summary" data-ui id="c-sum">
             <h3><svg class="icon"><use href="#i-doc"/></svg>Tu cita</h3>
             <div id="sumBox">
               <dl>
-                <div class="row"><dt>Servicio</dt><dd id="s-svc" class="empty">Sin escoger</dd></div>
-                <div class="row"><dt>Color</dt><dd id="s-col" class="empty">Sin escoger</dd></div>
-                <div class="row"><dt>Día</dt><dd id="s-day" class="empty">Sin escoger</dd></div>
-                <div class="row"><dt>Hora</dt><dd id="s-time" class="empty">Sin escoger</dd></div>
+                <div class="row"><dt>Servicio</dt><dd><span id="s-svc" class="empty">Sin escoger</span><button class="linkbtn chg" type="button" data-go="c-svc" aria-label="Cambiar servicio" hidden>Cambiar</button></dd></div>
+                <div class="row"><dt>Color</dt><dd><span id="s-col" class="empty">Sin escoger</span><button class="linkbtn chg" type="button" data-go="c-col" aria-label="Cambiar color" hidden>Cambiar</button></dd></div>
+                <div class="row" id="r-fin" hidden><dt>Acabado</dt><dd><span id="s-fin"></span><button class="linkbtn chg" type="button" data-go="c-col" data-focus="cFin" aria-label="Cambiar acabado">Cambiar</button></dd></div>
+                <div class="row"><dt>Día</dt><dd><span id="s-day" class="empty">Sin escoger</span><button class="linkbtn chg" type="button" data-go="c-when" aria-label="Cambiar día" hidden>Cambiar</button></dd></div>
+                <div class="row"><dt>Hora</dt><dd><span id="s-time" class="empty">Sin escoger</span><button class="linkbtn chg" type="button" data-go="c-when" data-focus="times" aria-label="Cambiar hora" hidden>Cambiar</button></dd></div>
               </dl>
               <div class="total"><span>Total</span><b id="s-total">RD$0</b></div>
               <form id="bookForm" novalidate>
-                <div class="field"><label for="f-name">Tu nombre</label><input id="f-name" aria-describedby="e-name" autocomplete="name" placeholder="Ej.: Laura"><span class="err" id="e-name" aria-live="polite"></span></div>
-                <div class="field"><label for="f-tel">WhatsApp</label><input id="f-tel" aria-describedby="e-tel" type="tel" inputmode="tel" autocomplete="tel" placeholder="809-000-0000"><span class="err" id="e-tel" aria-live="polite"></span></div>
+                <p class="hint reuse" id="reuse" hidden>Usamos tus datos de la cita anterior.</p>
+                <div class="field"><label for="f-name">Tu nombre</label><input id="f-name" aria-describedby="e-name" autocomplete="name" minlength="2" placeholder="Ej.: Laura"><span class="err" id="e-name" aria-live="polite"></span></div>
+                <div class="field"><label for="f-tel">WhatsApp</label><input id="f-tel" aria-describedby="e-tel" type="tel" inputmode="tel" autocomplete="tel" maxlength="14" placeholder="809-000-0000"><span class="err" id="e-tel" aria-live="polite"></span></div>
                 <button class="btn btn-rose" id="confirm" type="submit" disabled>Confirmar cita</button>
                 <p class="missing" id="missing" aria-live="polite">Te falta: servicio, color, día y hora.</p>
+                <button class="linkbtn reset" id="reset" type="button" hidden>Empezar de nuevo</button>
               </form>
             </div>
             <div class="done-card" id="done" role="status">
@@ -497,7 +538,7 @@ footer { margin-top: clamp(72px, 9vw, 112px); background: var(--panel); padding:
     <div class="credit"><span>Demo con datos ficticios. Nombre, dirección, teléfono y precios son de ejemplo.</span><a href="../../#demos">Hecha por Eric Design Web</a></div>
   </div>
 </footer>
-<div class="toast" id="toast" role="status" aria-live="polite"></div>
+<div class="toast" id="toast"><span id="toastMsg" role="status" aria-live="polite"></span><button class="linkbtn" id="toastUndo" type="button" hidden>Deshacer</button></div>
 
 <script>
 (function () {
@@ -554,7 +595,7 @@ footer { margin-top: clamp(72px, 9vw, 112px); background: var(--panel); padding:
   // Service cards
   var polIcon = '<svg viewBox="0 0 24 24" class="icon"><use href="#i-pol"/></svg>';
   $('cards').innerHTML = SERVICES.map(function (s) {
-    return '<article class="card"><div class="ph">' + polIcon + '<img src="' + s.img + '" alt="' + s.alt + '" loading="lazy" onerror="this.remove()"></div><div class="body"><h3>' + s.name + '</h3><p>' + s.d + '</p><div class="price"><span>' + s.min + ' min</span><b>' + rd(s.price) + '</b></div></div></article>';
+    return '<article class="card"><div class="ph">' + polIcon + '<img src="' + s.img + '" alt="' + s.alt + '" loading="lazy" onerror="this.remove()"></div><div class="body"><h3>' + s.name + '</h3><p>' + s.d + '</p><div class="price"><span>' + s.min + ' min</span><b>' + rd(s.price) + '</b></div><a class="btn btn-line" href="#reservar" data-pick="' + s.id + '" aria-label="Reservar ' + s.name + '">Reservar</a></div></article>';
   }).join('');
 
   // Shade card
@@ -569,6 +610,7 @@ footer { margin-top: clamp(72px, 9vw, 112px); background: var(--panel); padding:
       '<rect class="shine" x="' + (n[0] + 14) + '" y="' + (n[1] + 22) + '" width="7" height="' + (n[3] * .55) + '" rx="3.5" fill="#fff" opacity=".3"/>' +
       '<path class="chrome" d="' + almond(n[0] + 6, n[1], n[2], n[3]) + '" fill="url(#cg)" opacity="0"/>';
   }).join('');
+  function shadeById(id) { return SHADES.filter(function (s) { return s.id === id; })[0]; }
   function paint() {
     var s = pv.shade, f = pv.fin;
     document.querySelectorAll('#nailset .nail').forEach(function (n) { n.setAttribute('fill', s.c); });
@@ -576,12 +618,24 @@ footer { margin-top: clamp(72px, 9vw, 112px); background: var(--panel); padding:
     document.querySelectorAll('#nailset .chrome').forEach(function (n) { n.setAttribute('opacity', f === 'cromo' ? .9 : 0); });
     $('nails').classList.toggle('mate', f === 'mate');
     $('pvName').textContent = s.name; $('pvNote').textContent = s.note;
+    $('pvExtra').textContent = s.id === 'frances' || f === 'cromo' ? (s.id === 'frances' ? 'Francesa' : 'Cromo') + ': + RD$300 sobre el servicio.' : '';
     document.querySelectorAll('[data-shade]').forEach(function (b) { b.setAttribute('aria-pressed', b.dataset.shade === s.id ? 'true' : 'false'); });
     document.querySelectorAll('[data-finish]').forEach(function (b) { b.setAttribute('aria-pressed', b.dataset.finish === f ? 'true' : 'false'); });
   }
-  $('swatches').addEventListener('click', function (e) { var b = e.target.closest('[data-shade]'); if (!b) return; pv.shade = SHADES.filter(function (s) { return s.id === b.dataset.shade; })[0]; paint(); });
-  document.querySelector('.finish').addEventListener('click', function (e) { var b = e.target.closest('[data-finish]'); if (!b) return; pv.fin = b.dataset.finish; paint(); });
-  $('pvBook').addEventListener('click', function () { st.col = pv.shade.id; st.fin = pv.fin; press($('colors'), 'data-col', st.col); update(); toast(pv.shade.name + ' (' + pv.fin + ') quedó en tu reserva.'); });
+  $('swatches').addEventListener('click', function (e) { var b = e.target.closest('[data-shade]'); if (!b) return; pv.shade = shadeById(b.dataset.shade); paint(); });
+  $('pvFin').addEventListener('click', function (e) { var b = e.target.closest('[data-finish]'); if (!b) return; pv.fin = b.dataset.finish; paint(); });
+  var LOCKED_MSG = 'Tu cita ya está reservada. Toca “Hacer otra reserva” para escoger otra.';
+  $('pvBook').addEventListener('click', function () {
+    if (locked) { toast(LOCKED_MSG); return; }
+    var prev = snap();
+    st.col = pv.shade.id; st.fin = pv.fin; sync();
+    toast(pv.shade.name + ', ' + pv.fin + ', quedó en tu reserva.', function () { apply(prev); toast('Listo, volvimos a lo que tenías.'); });
+  });
+  $('cards').addEventListener('click', function (e) {
+    var b = e.target.closest('[data-pick]'); if (!b) return;
+    if (locked) { toast(LOCKED_MSG); return; }
+    st.svc = b.dataset.pick; sync();
+  });
 
   function check() { return '<span class="tick"><svg class="icon"><use href="#i-check"/></svg></span>'; }
   function press(container, attr, val) { container.querySelectorAll('[' + attr + ']').forEach(function (el) { el.setAttribute('aria-pressed', el.getAttribute(attr) === val ? 'true' : 'false'); }); }
@@ -589,60 +643,118 @@ footer { margin-top: clamp(72px, 9vw, 112px); background: var(--panel); padding:
     return '<button type="button" class="opt" data-svc="' + s.id + '" aria-pressed="false"><span class="t"><b>' + s.name + '</b><small>' + rd(s.price) + ' · ' + s.min + ' min</small></span>' + check() + '</button>';
   }).join('');
   $('colors').innerHTML = SHADES.concat([{ id: 'luego', name: 'Lo decido allá', c: 'transparent' }]).map(function (s) {
-    return '<button type="button" class="opt" data-col="' + s.id + '" aria-pressed="false"><i class="c" style="--c:' + s.c + '"></i><span class="t"><b>' + s.name + '</b></span>' + check() + '</button>';
+    return '<button type="button" class="opt" data-col="' + s.id + '" aria-pressed="false"><i class="c" style="--c:' + s.c + '"></i><span class="t"><b>' + s.name + '</b>' + (s.id === 'frances' ? '<small>+ RD$300</small>' : '') + '</span>' + check() + '</button>';
   }).join('');
-  $('services').addEventListener('click', function (e) { var b = e.target.closest('[data-svc]'); if (!b) return; st.svc = b.dataset.svc; press($('services'), 'data-svc', st.svc); update(); goNext(); });
-  $('colors').addEventListener('click', function (e) { var b = e.target.closest('[data-col]'); if (!b) return; st.col = b.dataset.col; st.fin = 'brillo'; press($('colors'), 'data-col', st.col); update(); goNext(); });
+  function isShade(id) { return !!id && id !== 'luego'; }
+  // Pressed states for service, colour and finish follow st
+  function sync() {
+    press($('services'), 'data-svc', st.svc || '');
+    press($('colors'), 'data-col', st.col || '');
+    var on = isShade(st.col);
+    $('cFin').querySelectorAll('[data-cfin]').forEach(function (b) { b.setAttribute('aria-pressed', on && b.dataset.cfin === st.fin ? 'true' : 'false'); b.disabled = !on; });
+    update();
+  }
+  $('services').addEventListener('click', function (e) { var b = e.target.closest('[data-svc]'); if (!b) return; st.svc = b.dataset.svc; sync(); goNext(); });
+  $('colors').addEventListener('click', function (e) {
+    var b = e.target.closest('[data-col]'); if (!b) return;
+    st.col = b.dataset.col; // the finish is kept: re-picking or switching shades never drops it
+    if (isShade(st.col)) { pv.shade = shadeById(st.col); pv.fin = st.fin; paint(); }
+    sync();
+    if (mobile.matches && isShade(st.col)) $('cFin').scrollIntoView({ behavior: smooth, block: 'nearest' });
+    else if (st.col === 'luego') goNext();
+  });
+  $('cFin').addEventListener('click', function (e) {
+    var b = e.target.closest('[data-cfin]'); if (!b || b.disabled) return;
+    st.fin = b.dataset.cfin; pv.fin = st.fin; if (isShade(st.col)) pv.shade = shadeById(st.col);
+    paint(); sync();
+  });
 
   // Calendar
   function sameDay(a, b) { return a && b && a.getTime() === b.getTime(); }
   function slotsFor(d) { var end = d.getDay() === 0 ? 15 : 20, out = []; for (var h = 10; h < end; h++) out.push(h); return out; }
   function hl(h) { return (h > 12 ? h - 12 : h) + ':00 ' + (h < 12 ? 'a. m.' : 'p. m.'); }
+  function limitDay() { return new Date(today.getFullYear(), today.getMonth() + 2, 0); }
+  function dayOff(dt) { var late = sameDay(dt, today) && new Date().getHours() >= (dt.getDay() === 0 ? 14 : 19); return dt < today || dt.getDay() === 1 || dt > limitDay() || late; }
+  function busy(d, h) { return (sameDay(d, today) && h <= new Date().getHours()) || (d.getDate() * 3 + h * 7) % 5 === 0; }
   function renderCal() {
     var y = view.getFullYear(), m = view.getMonth();
     $('monthLabel').textContent = MONTHS[m] + ' ' + y;
     $('prevM').disabled = y === today.getFullYear() && m === today.getMonth();
-    var limit = new Date(today.getFullYear(), today.getMonth() + 2, 0);
-    $('nextM').disabled = new Date(y, m + 1, 1) > limit;
+    $('nextM').disabled = new Date(y, m + 1, 1) > limitDay();
     var html = DOW.map(function (d) { return '<span class="dow" aria-hidden="true">' + d + '</span>'; }).join('');
     var first = new Date(y, m, 1).getDay(), days = new Date(y, m + 1, 0).getDate();
     for (var i = 0; i < first; i++) html += '<span></span>';
     for (var d = 1; d <= days; d++) {
-      var dt = new Date(y, m, d), late = sameDay(dt, today) && new Date().getHours() >= (dt.getDay() === 0 ? 14 : 19);
-      var off = dt < today || dt.getDay() === 1 || dt > limit || late;
-      html += '<button type="button" class="day' + (sameDay(dt, today) ? ' today' : '') + '" data-day="' + d + '" aria-label="' + DOWL[dt.getDay()] + ' ' + d + ' de ' + MONTHS[m] + (dt.getDay() === 1 ? ', cerrado' : '') + '" aria-pressed="' + (sameDay(dt, st.date) ? 'true' : 'false') + '"' + (off ? ' disabled' : '') + '>' + d + '</button>';
+      var dt = new Date(y, m, d), off = dayOff(dt);
+      html += '<button type="button" class="day' + (sameDay(dt, today) ? ' today' : '') + '" data-day="' + d + '" aria-label="' + DOWL[dt.getDay()] + ' ' + d + ' de ' + MONTHS[m] + (dt.getDay() === 1 ? ', cerrado' : off && dt >= today ? ', sin cupo' : '') + '" aria-pressed="' + (sameDay(dt, st.date) ? 'true' : 'false') + '"' + (off ? ' disabled' : '') + '>' + d + '</button>';
     }
     $('cal').innerHTML = html;
   }
+  var newDay = false;
   $('cal').addEventListener('click', function (e) {
     var b = e.target.closest('[data-day]'); if (!b || b.disabled) return;
-    st.date = new Date(view.getFullYear(), view.getMonth(), +b.dataset.day); st.time = null;
+    var d = new Date(view.getFullYear(), view.getMonth(), +b.dataset.day);
+    if (!sameDay(d, st.date)) { newDay = st.time != null; st.time = null; }
+    st.date = d;
     $('cal').querySelectorAll('[data-day]').forEach(function (x) { x.setAttribute('aria-pressed', x === b ? 'true' : 'false'); });
     renderTimes(); update();
   });
   $('prevM').addEventListener('click', function () { view = new Date(view.getFullYear(), view.getMonth() - 1, 1); renderCal(); });
   $('nextM').addEventListener('click', function () { view = new Date(view.getFullYear(), view.getMonth() + 1, 1); renderCal(); });
+  var NO_DAY = '<p class="hint">Escoge un día para ver las horas.</p>';
   function renderTimes() {
-    if (!st.date) return;
-    var now = new Date(), free = 0;
-    var html = slotsFor(st.date).map(function (h, i) {
-      var off = (sameDay(st.date, today) && h <= now.getHours()) || (st.date.getDate() * 3 + h * 7) % 5 === 0;
+    if (!st.date) { $('times').innerHTML = NO_DAY; return; }
+    var free = 0;
+    var html = slotsFor(st.date).map(function (h) {
+      var off = busy(st.date, h);
       if (!off) free++;
       return (h === 10 ? '<span class="tgroup">Mañana</span>' : h === 12 ? '<span class="tgroup">Tarde</span>' : '') + '<button type="button" class="time" data-time="' + h + '" aria-label="' + hl(h) + (off ? ', ocupado' : '') + '" aria-pressed="' + (st.time === h ? 'true' : 'false') + '"' + (off ? ' disabled' : '') + '>' + hl(h).replace(' a. m.', '').replace(' p. m.', '') + '</button>';
     }).join('');
     $('times').innerHTML = free ? html : '<p class="hint">Ese día ya está lleno. Prueba otro.</p>';
   }
-  $('times').addEventListener('click', function (e) { var b = e.target.closest('[data-time]'); if (!b || b.disabled) return; st.time = +b.dataset.time; $('times').querySelectorAll('[data-time]').forEach(function (x) { x.setAttribute('aria-pressed', x === b ? 'true' : 'false'); }); update(); goNext(); });
+  $('times').addEventListener('click', function (e) { var b = e.target.closest('[data-time]'); if (!b || b.disabled) return; st.time = +b.dataset.time; newDay = false; $('times').querySelectorAll('[data-time]').forEach(function (x) { x.setAttribute('aria-pressed', x === b ? 'true' : 'false'); }); update(); goNext(); });
+
+  // Saved progress: survives a reload, cleared on "Hacer otra reserva" / "Empezar de nuevo"
+  var KEY = 'nacar-booking';
+  function iso(d) { return d.getFullYear() + '-' + ('0' + (d.getMonth() + 1)).slice(-2) + '-' + ('0' + d.getDate()).slice(-2); }
+  function snap() { return { svc: st.svc, col: st.col, fin: st.fin, date: st.date, time: st.time }; }
+  function save() { try { localStorage.setItem(KEY, JSON.stringify({ svc: st.svc, col: st.col, fin: st.fin, date: st.date ? iso(st.date) : null, time: st.time })); } catch (e) {} }
+  function load() {
+    var o = null; try { o = JSON.parse(localStorage.getItem(KEY) || 'null'); } catch (e) {}
+    if (!o || typeof o !== 'object') o = {};
+    var s = { svc: null, col: null, fin: 'brillo', date: null, time: null };
+    if (SERVICES.some(function (x) { return x.id === o.svc; })) s.svc = o.svc;
+    if (o.col === 'luego' || shadeById(o.col)) s.col = o.col;
+    if (FIN[o.fin]) s.fin = o.fin;
+    var m = /^(\d{4})-(\d{2})-(\d{2})$/.exec(o.date || '');
+    if (m) { var d = new Date(+m[1], +m[2] - 1, +m[3]); if (!dayOff(d)) s.date = d; }
+    if (s.date && slotsFor(s.date).indexOf(o.time) > -1 && !busy(s.date, o.time)) s.time = o.time;
+    apply(s);
+  }
+  function apply(s) {
+    st = { svc: s.svc, col: s.col, fin: s.fin || 'brillo', date: s.date, time: s.time }; newDay = false;
+    if (isShade(st.col)) { pv.shade = shadeById(st.col); pv.fin = st.fin; paint(); }
+    if (st.date) view = new Date(st.date.getFullYear(), st.date.getMonth(), 1);
+    renderCal(); renderTimes(); sync();
+  }
 
   // Summary + steps
-  function setv(id, val) { var el = $(id); el.textContent = val || 'Sin escoger'; el.classList.toggle('empty', !val); }
-  function colorLabel() { if (!st.col) return ''; if (st.col === 'luego') return 'Lo decido allá'; var c = SHADES.filter(function (x) { return x.id === st.col; })[0]; return c.name + (st.fin !== 'brillo' ? ', ' + FIN[st.fin] : ''); }
+  function setv(id, val) { var el = $(id); el.textContent = val || 'Sin escoger'; el.classList.toggle('empty', !val); var c = el.nextElementSibling; if (c) c.hidden = !val; }
+  function colorLabel() { if (!st.col) return ''; return st.col === 'luego' ? 'Lo decido allá' : shadeById(st.col).name; }
+  function extra() { return isShade(st.col) && (st.fin === 'cromo' || st.col === 'frances') ? 300 : 0; }
+  function finLabel() {
+    if (!isShade(st.col)) return '';
+    var f = FIN[st.fin].charAt(0).toUpperCase() + FIN[st.fin].slice(1);
+    return st.col === 'frances' ? 'Francesa, ' + FIN[st.fin] : f;
+  }
   function update() {
     var s = SERVICES.filter(function (x) { return x.id === st.svc; })[0];
     setv('s-svc', s && s.name); setv('s-col', colorLabel());
+    $('r-fin').hidden = !isShade(st.col);
+    $('s-fin').innerHTML = finLabel() + (extra() ? '<small>+ RD$300</small>' : '');
     setv('s-day', st.date && (DOWL[st.date.getDay()] + ' ' + st.date.getDate() + ' de ' + MONTHS[st.date.getMonth()]));
     setv('s-time', st.time && hl(st.time));
-    $('s-total').textContent = rd(s ? s.price : 0);
+    $('s-total').textContent = rd(s ? s.price + extra() : 0);
     var done = [!!st.svc, !!st.col, !!(st.date && st.time)];
     var nowIdx = done.indexOf(false); if (nowIdx === -1) nowIdx = 3;
     for (var i = 0; i < 4; i++) {
@@ -652,32 +764,88 @@ footer { margin-top: clamp(72px, 9vw, 112px); background: var(--panel); padding:
     }
     var miss = []; if (!st.svc) miss.push('servicio'); if (!st.col) miss.push('color'); if (!st.date) miss.push('día'); if (!st.time) miss.push('hora');
     $('confirm').disabled = miss.length > 0;
-    $('missing').textContent = miss.length ? 'Te falta: ' + miss.join(', ') + '.' : 'Todo listo. Solo falta tu nombre y WhatsApp.';
-    var titles = ['Escoge un servicio', 'Escoge tu color', 'Escoge día y hora', 'Confirma tu cita'];
-    $('mbarTitle').textContent = s ? s.name : titles[0];
-    $('mbar').hidden = nowIdx === 3 || $('done').classList.contains('show');
-    $('mbarSub').textContent = 'Paso ' + (Math.min(nowIdx, 2) + 1) + ' de 4';
-    $('mbarBtn').textContent = nowIdx < 3 ? 'Continuar' : 'Confirmar';
+    if (newDay && st.date && !st.time) { miss.pop(); $('missing').textContent = (miss.length ? 'Te falta: ' + miss.join(', ') + '. ' : '') + 'Escoge una hora para el nuevo día.'; }
+    else $('missing').textContent = miss.length ? 'Te falta: ' + miss.join(', ') + '.' : 'Todo listo. Solo falta tu nombre y WhatsApp.';
+    $('reset').hidden = locked || !(st.svc || st.col || st.date);
+    var picks = [s && s.name, st.col && (st.col === 'luego' ? 'Color allá' : shadeById(st.col).name), st.date && (DOW[st.date.getDay()].toLowerCase() + ' ' + st.date.getDate()), st.time && hl(st.time)].filter(Boolean);
+    var names = ['Servicio', 'Color', 'Fecha y hora', 'Confirmar'];
+    $('mbarTitle').textContent = picks.length ? picks.join(' · ') : 'Escoge un servicio';
+    $('mbar').hidden = nowIdx === 3 || locked;
+    $('mbarSub').textContent = 'Paso ' + (nowIdx + 1) + ' de 4: ' + names[nowIdx];
+    $('mbarBtn').textContent = 'Continuar';
     $('mbarBtn').dataset.target = ['c-svc', 'c-col', 'c-when', 'c-sum'][nowIdx];
+    if (!locked) save();
   }
   var mobile = matchMedia('(max-width: 760px)');
   var smooth = matchMedia('(prefers-reduced-motion: reduce)').matches ? 'auto' : 'smooth';
   function goNext() { if (!mobile.matches) return; var t = $($('mbarBtn').dataset.target); if (t) t.scrollIntoView({ behavior: smooth, block: 'start' }); }
   $('mbarBtn').addEventListener('click', function () { var t = $(this.dataset.target); t.scrollIntoView({ behavior: smooth, block: 'start' }); if (this.dataset.target === 'c-sum') setTimeout(function () { $('f-name').focus({ preventScroll: true }); }, 400); });
+  // "Cambiar": jump back to the column and put focus on the current pick
+  $('sumBox').addEventListener('click', function (e) {
+    var b = e.target.closest('[data-go]'); if (!b) return;
+    var col = $(b.dataset.go), area = b.dataset.focus ? $(b.dataset.focus) : col;
+    col.scrollIntoView({ behavior: smooth, block: 'start' });
+    var t = area.querySelector('[aria-pressed="true"]:not([disabled])') || area.querySelector('button:not([disabled])');
+    if (t) t.focus({ preventScroll: true });
+  });
 
-  function err(id, msg) { $('e-' + id).textContent = msg; $('f-' + id).setAttribute('aria-invalid', msg ? 'true' : 'false'); return !msg; }
+  // Form: validate on blur, live phone format 809-555-1234
+  var INFO = '<svg class="icon" aria-hidden="true"><use href="#i-info"/></svg>';
+  function err(id, msg) { $('e-' + id).innerHTML = msg ? INFO + '<span>' + msg + '</span>' : ''; $('f-' + id).setAttribute('aria-invalid', msg ? 'true' : 'false'); return !msg; }
+  function digits() { var dg = $('f-tel').value.replace(/\D/g, ''); return dg.length === 11 && dg[0] === '1' ? dg.slice(1) : dg; }
+  function checkName() {
+    var nm = $('f-name').value.trim(), letters = nm.replace(/[^A-Za-zÀ-ÿñÑ]/g, '').length;
+    return err('name', !nm ? 'Escribe tu nombre.' : letters < 2 ? 'Escribe al menos 2 letras.' : '');
+  }
+  function checkTel() {
+    var n = digits().length, left = 10 - n;
+    return err('tel', !n ? 'Escribe tu WhatsApp, por ejemplo 809-555-1234.' :
+      n < 10 ? 'Llevas ' + n + (n === 1 ? ' dígito' : ' dígitos') + '; ' + (left === 1 ? 'falta 1' : 'faltan ' + left) + '. Ej.: 809-555-1234.' :
+      !/^8[024]9/.test(digits()) ? 'Los números de RD empiezan con 809, 829 o 849.' : '');
+  }
+  function fmtTel(v) {
+    var d = v.replace(/\D/g, ''), pre = '';
+    if (d.length > 1 && d[0] === '1') { pre = '1-'; d = d.slice(1); }
+    d = d.slice(0, 10);
+    return pre + d.slice(0, 3) + (d.length > 3 ? '-' + d.slice(3, 6) : '') + (d.length > 6 ? '-' + d.slice(6) : '');
+  }
+  var tel = $('f-tel');
+  tel.addEventListener('input', function () {
+    var pos = tel.selectionStart || 0, before = tel.value.slice(0, pos).replace(/\D/g, '').length, out = fmtTel(tel.value);
+    if (out !== tel.value) {
+      tel.value = out;
+      var i = 0, seen = 0; while (i < out.length && seen < before) { if (/\d/.test(out[i])) seen++; i++; }
+      tel.setSelectionRange(i, i);
+    }
+  });
+  tel.addEventListener('paste', function (e) {
+    var t = (e.clipboardData || window.clipboardData).getData('text'); if (!t) return;
+    e.preventDefault(); tel.value = fmtTel(t); tel.dispatchEvent(new Event('input', { bubbles: true }));
+  });
+  $('bookForm').addEventListener('input', function (e) {
+    var f = e.target; f.dataset.dirty = '1'; $('reuse').hidden = true;
+    if (f.getAttribute('aria-invalid') === 'true') { if (f.id === 'f-name') checkName(); else checkTel(); }
+  });
+  $('bookForm').addEventListener('focusout', function (e) {
+    var f = e.target; if (!f.dataset || !f.dataset.dirty) return;
+    if (f.id === 'f-name') checkName(); else if (f.id === 'f-tel') checkTel();
+  });
+  var locked = false;
+  function lock(on) { locked = on; ['c-svc', 'c-col', 'c-when'].forEach(function (id) { $(id).inert = on; }); }
   $('bookForm').addEventListener('submit', function (e) {
     e.preventDefault();
-    var nm = $('f-name').value.trim(), dg = $('f-tel').value.replace(/\D/g, '');
-    if (dg.length === 11 && dg[0] === '1') dg = dg.slice(1);
-    var ok = err('name', !nm ? 'Escribe tu nombre.' : nm.length < 2 ? 'Escribe tu nombre completo.' : '');
-    ok = err('tel', dg.length !== 10 ? 'Escribe 10 dígitos, por ejemplo 809-555-1234.' : '') && ok;
+    if ($('confirm').disabled) return;
+    var ok = checkName(); ok = checkTel() && ok;
     if (!ok) { document.querySelector('[aria-invalid="true"]').focus(); return; }
+    var nm = $('f-name').value.trim();
     var btn = $('confirm'); btn.disabled = true; btn.textContent = 'Reservando…';
     setTimeout(function () {
       var day = $('s-day').textContent, time = $('s-time').textContent;
       $('doneText').textContent = nm.split(' ')[0] + ', te esperamos el ' + day + ' a las ' + time + (/\.$/.test(time) ? '' : '.');
-      $('doneList').innerHTML = '<div class="row"><dt>Servicio</dt><dd>' + $('s-svc').textContent + '</dd></div><div class="row"><dt>Color</dt><dd>' + $('s-col').textContent + '</dd></div><div class="row"><dt>Total</dt><dd>' + $('s-total').textContent + ', en el local</dd></div>';
+      $('doneList').innerHTML = '<div class="row"><dt>Servicio</dt><dd>' + $('s-svc').textContent + '</dd></div><div class="row"><dt>Color</dt><dd>' + $('s-col').textContent + '</dd></div>' +
+        (isShade(st.col) ? '<div class="row"><dt>Acabado</dt><dd>' + finLabel() + (extra() ? ' + RD$300' : '') + '</dd></div>' : '') +
+        '<div class="row"><dt>Total</dt><dd>' + $('s-total').textContent + ', en el local</dd></div>';
+      lock(true);
       $('sumBox').hidden = true; $('done').classList.add('show'); $('mbar').hidden = true;
       ['st-1', 'st-2', 'st-3', 'st-4'].forEach(function (id) { $(id).classList.add('done'); $(id).classList.remove('now'); $(id).removeAttribute('aria-current'); });
       var hd = $('done').querySelector('h4'); hd.setAttribute('tabindex', '-1'); hd.focus({ preventScroll: true });
@@ -685,22 +853,42 @@ footer { margin-top: clamp(72px, 9vw, 112px); background: var(--panel); padding:
       btn.textContent = 'Confirmar cita';
     }, 700);
   });
-  $('bookForm').addEventListener('input', function (e) { if (e.target.getAttribute('aria-invalid') === 'true') err(e.target.id.slice(2), ''); });
+  var BLANK = { svc: null, col: null, fin: 'brillo', date: null, time: null };
+  function clearSaved() { try { localStorage.removeItem(KEY); } catch (e) {} }
   $('again').addEventListener('click', function () {
-    st = { svc: null, col: null, fin: 'brillo', date: null, time: null };
-    pv = { shade: SHADES[0], fin: 'brillo' }; paint();
-    press($('services'), 'data-svc', ''); press($('colors'), 'data-col', '');
-    $('sumBox').hidden = false; $('done').classList.remove('show'); $('mbar').hidden = false;
-    $('times').innerHTML = '<p class="hint">Escoge un día para ver las horas.</p>';
-    renderCal(); update(); document.querySelector('[data-svc]').focus();
+    lock(false); clearSaved();
+    view = new Date(today.getFullYear(), today.getMonth(), 1);
+    $('sumBox').hidden = false; $('done').classList.remove('show');
+    err('name', ''); err('tel', '');
+    $('reuse').hidden = !($('f-name').value || $('f-tel').value);
+    ['f-name', 'f-tel'].forEach(function (id) { delete $(id).dataset.dirty; });
+    apply(BLANK); document.querySelector('[data-svc]').focus();
+  });
+  $('reset').addEventListener('click', function () {
+    var prev = snap();
+    view = new Date(today.getFullYear(), today.getMonth(), 1);
+    apply(BLANK); clearSaved();
+    document.querySelector('[data-svc]').focus({ preventScroll: true });
+    toast('Borramos lo que habías escogido.', function () { apply(prev); toast('Listo, recuperamos tu selección.'); });
   });
 
-  var toastEl = $('toast'), tt;
-  function toast(m) { toastEl.textContent = m; toastEl.classList.add('show'); clearTimeout(tt); tt = setTimeout(function () { toastEl.classList.remove('show'); }, 2800); }
+  var toastEl = $('toast'), toastMsg = $('toastMsg'), undoBtn = $('toastUndo'), tt, undoFn = null;
+  function hideToast() { toastEl.classList.remove('show'); undoFn = null; }
+  function armToast() { clearTimeout(tt); tt = setTimeout(hideToast, undoFn ? 6000 : 2800); }
+  function toast(m, onUndo) {
+    toastMsg.textContent = m; undoFn = onUndo || null;
+    undoBtn.hidden = !undoFn; toastEl.classList.toggle('has-undo', !!undoFn);
+    toastEl.classList.add('show'); armToast();
+  }
+  undoBtn.addEventListener('click', function () { var f = undoFn; hideToast(); if (f) f(); });
+  toastEl.addEventListener('mouseenter', function () { clearTimeout(tt); });
+  toastEl.addEventListener('mouseleave', function () { if (toastEl.classList.contains('show')) armToast(); });
+  toastEl.addEventListener('focusin', function () { clearTimeout(tt); });
+  toastEl.addEventListener('focusout', function () { if (toastEl.classList.contains('show')) armToast(); });
   $('waBtn').addEventListener('click', function (e) { e.preventDefault(); toast('En el sitio real esto abre WhatsApp con tu cita escrita.'); });
   document.addEventListener('click', function (e) { if (e.target.closest('[data-demo]')) { e.preventDefault(); toast('Es una demo: en el sitio real esto abre el teléfono o la red social.'); } });
 
-  paint(); renderCal(); update();
+  paint(); load();
   root.classList.add('js');
   var groups = document.querySelectorAll('.enter');
   if ('IntersectionObserver' in window) {
