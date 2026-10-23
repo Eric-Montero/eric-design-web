@@ -1,0 +1,559 @@
+<!doctype html>
+<html lang="es" data-theme="dark">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Navaja Barber Studio · Agenda tu corte</title>
+<meta name="description" content="Barbería en Santo Domingo. Corte, barba y cejas. Agenda tu turno en línea en menos de un minuto.">
+<meta name="theme-color" content="#0a0907">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%230a0907'/%3E%3Cpath d='M18 46L46 18M26 18l20 28' stroke='%23c9a45c' stroke-width='5' stroke-linecap='round'/%3E%3C/svg%3E">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant:ital,wght@0,500;0,600;0,700;1,500&family=Montserrat:wght@400;500;600;700&display=swap" rel="stylesheet">
+<script>try{var t=localStorage.getItem('navaja-theme');if(t)document.documentElement.dataset.theme=t}catch(e){}</script>
+<style>
+/* Layout: full-bleed photo hero, then the booking console as the page's centre of gravity (4 columns desktop, stacked steps mobile) */
+:root {
+  --font-display: 'Cormorant', 'Times New Roman', serif;
+  --font-body: 'Montserrat', system-ui, sans-serif;
+  --ease: cubic-bezier(.16, 1, .3, 1);
+  --r: 14px;
+  --max: 1200px;
+}
+[data-theme="dark"] {
+  --bg: #0a0907; --panel: #14120e; --panel-2: #1c1914; --line: rgba(201, 164, 92, .2); --line-2: rgba(244, 236, 220, .1);
+  --text: #f4ecdc; --muted: #b3a690; --gold: #c9a45c; --gold-hi: #dcbc7a; --on-gold: #17110a;
+  --busy: rgba(244, 236, 220, .28); --shadow: 0 24px 50px -26px rgba(0, 0, 0, .8);
+  color-scheme: dark;
+}
+[data-theme="light"] {
+  --bg: #f6f2ea; --panel: #fffdf9; --panel-2: #efe8db; --line: rgba(120, 88, 36, .22); --line-2: rgba(30, 24, 14, .1);
+  --text: #1b160f; --muted: #5d5243; --gold: #855f1f; --gold-hi: #6f4f19; --on-gold: #fffaf0;
+  --busy: rgba(30, 24, 14, .3); --shadow: 0 24px 50px -28px rgba(70, 50, 20, .35);
+  color-scheme: light;
+}
+*, *::before, *::after { box-sizing: border-box; }
+html { scroll-behavior: smooth; scroll-padding-top: 80px; }
+body { margin: 0; background: var(--bg); color: var(--text); font: 400 1rem/1.6 var(--font-body); -webkit-font-smoothing: antialiased; transition: background-color .35s, color .35s; }
+::selection { background: var(--gold); color: var(--on-gold); }
+html { scrollbar-color: var(--panel-2) var(--bg); }
+img { display: block; max-width: 100%; }
+a { color: inherit; text-underline-offset: 4px; }
+button { font: inherit; color: inherit; }
+:focus-visible { outline: 2px solid var(--gold); outline-offset: 3px; border-radius: 8px; }
+h1, h2, h3 { font-family: var(--font-display); font-weight: 600; line-height: 1.04; margin: 0; text-wrap: balance; }
+p { margin: 0; text-wrap: pretty; }
+.wrap { width: min(100% - 32px, var(--max)); margin-inline: auto; }
+.icon { width: 20px; height: 20px; stroke: currentColor; fill: none; stroke-width: 1.6; stroke-linecap: round; stroke-linejoin: round; flex: none; }
+.btn { display: inline-flex; align-items: center; justify-content: center; gap: 10px; min-height: 48px; padding: 0 24px; border-radius: 10px; border: 1px solid transparent; font: 600 .82rem/1 var(--font-body); letter-spacing: .08em; text-transform: uppercase; text-decoration: none; cursor: pointer; transition: background-color .2s, color .2s, transform .2s var(--ease), border-color .2s; }
+.btn-gold { background: var(--gold); color: var(--on-gold); }
+.btn-gold:hover { background: var(--gold-hi); transform: translateY(-1px); }
+.btn-line { border-color: var(--gold); color: var(--gold); background: transparent; }
+.btn-line:hover { background: var(--gold); color: var(--on-gold); }
+.btn[disabled] { opacity: .45; cursor: not-allowed; transform: none; }
+.skip { position: absolute; left: 16px; top: -80px; z-index: 100; }
+.skip:focus { top: 12px; }
+
+/* Header */
+header { position: sticky; top: 0; z-index: 40; background: color-mix(in srgb, var(--bg) 86%, transparent); backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px); border-bottom: 1px solid var(--line-2); }
+.nav { height: 72px; display: flex; align-items: center; gap: 28px; }
+.brand { display: flex; align-items: center; gap: 12px; text-decoration: none; }
+.brand .icon { width: 30px; height: 30px; color: var(--gold); stroke-width: 1.4; }
+.brand b { display: block; font: 600 1.45rem/1 var(--font-display); letter-spacing: .02em; }
+.brand small { display: block; font-size: .62rem; letter-spacing: .3em; text-transform: uppercase; color: var(--muted); margin-top: 3px; }
+.nav ul { display: flex; gap: 26px; list-style: none; margin: 0 0 0 auto; padding: 0; }
+.nav ul a { display: inline-block; padding: 12px 0; text-decoration: none; font-size: .88rem; color: var(--muted); }
+.nav ul a:hover { color: var(--text); }
+.tool { width: 44px; height: 44px; border-radius: 10px; border: 1px solid var(--line-2); background: transparent; display: grid; place-items: center; cursor: pointer; }
+.tool:hover { border-color: var(--gold); }
+.tool .i-moon { display: none; }
+[data-theme="light"] .tool .i-moon { display: block; }
+[data-theme="light"] .tool .i-sun { display: none; }
+.nav .btn { min-height: 44px; padding: 0 18px; }
+
+/* Hero */
+.hero { position: relative; min-height: min(78vh, 640px); display: flex; align-items: center; overflow: hidden; background: #0a0907; }
+.hero-img { position: absolute; inset: 0; background: radial-gradient(80% 90% at 75% 40%, #3a2c18, #0a0907 70%); }
+.hero-img img { width: 100%; height: 100%; object-fit: cover; object-position: 70% 30%; opacity: .78; animation: slow 14s ease-out both; }
+@keyframes slow { from { transform: scale(1.08); } }
+.hero::after { content: ""; position: absolute; inset: 0; background: linear-gradient(90deg, rgba(10, 9, 7, .94) 0%, rgba(10, 9, 7, .72) 42%, rgba(10, 9, 7, .1) 78%); }
+.hero .wrap { position: relative; z-index: 1; padding-block: 72px 120px; }
+.hero h1 { color: #f4ecdc; font-size: clamp(3rem, 7.5vw, 6rem); font-weight: 600; letter-spacing: -.01em; max-width: 11ch; }
+.hero h1 em { color: #c9a45c; font-style: italic; font-weight: 500; }
+.hero p { color: #d6cbb6; margin-top: 20px; max-width: 40ch; font-size: 1.08rem; }
+.hero .row { display: flex; flex-wrap: wrap; gap: 12px; margin-top: 32px; }
+.hero .btn-gold { background: #c9a45c; color: #17110a; }
+.hero .btn-line { border-color: rgba(244, 236, 220, .5); color: #f4ecdc; }
+.hero .btn-line:hover { background: #f4ecdc; color: #0a0907; }
+.open-now { display: inline-flex; align-items: center; gap: 8px; margin-top: 28px; color: #d6cbb6; font-size: .9rem; }
+.dot { width: 8px; height: 8px; border-radius: 50%; background: #3fbf6a; box-shadow: 0 0 0 4px rgba(63, 191, 106, .2); }
+.dot.closed { background: #d26a4c; box-shadow: 0 0 0 4px rgba(210, 106, 76, .2); }
+
+/* Booking console */
+.booking { position: relative; z-index: 2; margin-top: -72px; }
+.console { background: var(--panel); border: 1px solid var(--line); border-radius: 20px; box-shadow: var(--shadow); padding: clamp(20px, 3vw, 36px); }
+.console-head { display: flex; flex-wrap: wrap; justify-content: space-between; align-items: end; gap: 16px 32px; }
+.console-head h2 { font-size: clamp(2rem, 3.6vw, 2.8rem); }
+.hours { display: flex; align-items: center; gap: 10px; color: var(--muted); font-size: .88rem; }
+.hours .icon { color: var(--gold); width: 26px; height: 26px; }
+.hours b { color: var(--text); display: block; font-weight: 600; }
+.steps { list-style: none; padding: 0; margin: 28px 0; display: grid; grid-template-columns: repeat(4, 1fr); gap: 12px; }
+.steps li { display: flex; align-items: center; gap: 12px; font-size: .9rem; color: var(--muted); }
+.steps li span { width: 34px; height: 34px; border-radius: 50%; border: 1px solid var(--line); display: grid; place-items: center; font-weight: 700; font-size: .85rem; flex: none; transition: background-color .3s, color .3s, border-color .3s; }
+.steps li.done span { background: var(--gold); color: var(--on-gold); border-color: var(--gold); }
+.steps li.done, .steps li.now { color: var(--text); }
+.steps li.now span { border-color: var(--gold); color: var(--gold); }
+.steps li::after { content: ""; flex: 1; height: 1px; background: var(--line); }
+.steps li:last-child::after { display: none; }
+.grid { display: grid; grid-template-columns: 1fr 1fr 1.15fr 1fr; gap: 16px; }
+.col { background: var(--panel-2); border: 1px solid var(--line-2); border-radius: var(--r); padding: 18px; min-width: 0; }
+.col h3 { font: 600 .95rem var(--font-body); display: flex; align-items: center; gap: 10px; margin-bottom: 14px; }
+.col h3 .icon { color: var(--gold); }
+.opts { display: grid; gap: 8px; }
+.opt { display: flex; align-items: center; gap: 12px; width: 100%; text-align: left; min-height: 56px; padding: 10px 14px; border-radius: 10px; border: 1px solid var(--line-2); background: var(--panel); cursor: pointer; transition: border-color .2s, background-color .2s; }
+.opt:hover { border-color: var(--line); }
+.opt[aria-pressed="true"] { border-color: var(--gold); background: color-mix(in srgb, var(--gold) 9%, var(--panel)); }
+.opt .t { flex: 1; min-width: 0; }
+.opt .t b { display: block; font-weight: 600; font-size: .92rem; }
+.opt .t small { color: var(--muted); font-size: .8rem; font-variant-numeric: tabular-nums; }
+.tick { width: 22px; height: 22px; border-radius: 50%; border: 1.5px solid var(--line); display: grid; place-items: center; flex: none; }
+.tick .icon { width: 13px; height: 13px; stroke-width: 3; opacity: 0; }
+.opt[aria-pressed="true"] .tick { background: var(--gold); border-color: var(--gold); color: var(--on-gold); }
+.opt[aria-pressed="true"] .tick .icon { opacity: 1; }
+.mono { width: 40px; height: 40px; border-radius: 50%; display: grid; place-items: center; font: 600 1.05rem var(--font-display); color: var(--gold); background: color-mix(in srgb, var(--gold) 14%, var(--panel)); border: 1px solid var(--line); flex: none; }
+.rating { display: inline-flex; align-items: center; gap: 4px; }
+.rating svg { width: 12px; height: 12px; fill: var(--gold); }
+.note { margin-top: 14px; display: flex; gap: 8px; font-size: .8rem; color: var(--muted); }
+.note .icon { width: 16px; height: 16px; color: var(--gold); margin-top: 2px; }
+
+.cal-head { display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px; }
+.cal-head b { font-weight: 600; text-transform: capitalize; }
+.cal-nav { width: 44px; height: 44px; border-radius: 10px; border: 1px solid var(--line-2); background: transparent; display: grid; place-items: center; cursor: pointer; }
+.cal-nav[disabled] { opacity: .3; cursor: not-allowed; }
+.cal { display: grid; grid-template-columns: repeat(7, 1fr); gap: 4px; text-align: center; }
+.cal .dow { font-size: .68rem; letter-spacing: .06em; color: var(--muted); padding: 4px 0; }
+.day { aspect-ratio: 1; min-height: 36px; border-radius: 50%; border: 0; background: transparent; cursor: pointer; font-size: .86rem; font-variant-numeric: tabular-nums; transition: background-color .2s; }
+.day:hover:not([disabled]) { background: color-mix(in srgb, var(--gold) 14%, transparent); }
+.day[disabled] { color: var(--busy); cursor: not-allowed; }
+.day[aria-pressed="true"] { background: var(--gold); color: var(--on-gold); font-weight: 700; }
+.day.today:not([aria-pressed="true"]) { box-shadow: inset 0 0 0 1px var(--gold); }
+.times-label { margin: 16px 0 8px; font-weight: 600; font-size: .88rem; }
+.times { display: grid; grid-template-columns: repeat(3, 1fr); gap: 6px; }
+.time { min-height: 44px; border-radius: 8px; border: 1px solid var(--line-2); background: var(--panel); cursor: pointer; font-size: .86rem; font-variant-numeric: tabular-nums; }
+.time:hover:not([disabled]) { border-color: var(--gold); }
+.time[aria-pressed="true"] { background: var(--gold); color: var(--on-gold); border-color: var(--gold); font-weight: 700; }
+.time[disabled] { color: var(--busy); text-decoration: line-through; cursor: not-allowed; }
+.hint { font-size: .82rem; color: var(--muted); }
+
+.summary dl { margin: 0; display: grid; gap: 0; }
+.summary .row { display: flex; justify-content: space-between; gap: 12px; padding: 10px 0; border-bottom: 1px solid var(--line-2); font-size: .88rem; }
+.summary dt { color: var(--muted); }
+.summary dd { margin: 0; text-align: right; font-weight: 600; }
+.summary dd.empty { color: var(--busy); font-weight: 500; }
+.total { display: flex; justify-content: space-between; align-items: baseline; margin: 16px 0; }
+.total b { font: 600 1.9rem/1 var(--font-display); color: var(--gold); font-variant-numeric: tabular-nums; }
+.field { display: grid; gap: 6px; margin-bottom: 10px; }
+.field label { font-size: .8rem; font-weight: 600; }
+.field input { width: 100%; min-height: 46px; padding: 10px 12px; border-radius: 8px; border: 1px solid var(--line-2); background: var(--panel); color: var(--text); font: 400 .95rem var(--font-body); caret-color: var(--gold); }
+.field input:focus { outline: none; border-color: var(--gold); box-shadow: 0 0 0 3px color-mix(in srgb, var(--gold) 22%, transparent); }
+.field input[aria-invalid="true"] { border-color: #d26a4c; }
+.err { font-size: .76rem; color: #e08a6e; min-height: 1em; }
+[data-theme="light"] .err { color: #a3352a; }
+.summary .btn { width: 100%; }
+.missing { font-size: .78rem; color: var(--muted); margin-top: 8px; text-align: center; }
+.secure { display: flex; justify-content: center; gap: 6px; align-items: center; font-size: .75rem; color: var(--muted); margin-top: 10px; }
+.secure .icon { width: 14px; height: 14px; }
+.done-card { display: none; text-align: center; padding: 8px 0; }
+.done-card.show { display: block; animation: rise .5s var(--ease); }
+.done-card .icon { width: 44px; height: 44px; color: var(--gold); margin: 0 auto 10px; stroke-width: 1.4; }
+.done-card h4 { margin: 0 0 6px; font: 600 1.5rem var(--font-display); }
+.done-card p { color: var(--muted); font-size: .88rem; }
+.done-card button { margin-top: 14px; }
+@keyframes rise { from { opacity: 0; transform: translateY(8px); } }
+
+/* Perks */
+.perks { margin-top: 24px; display: grid; grid-template-columns: repeat(4, 1fr); border: 1px solid var(--line-2); border-radius: var(--r); background: var(--panel); }
+.perk { display: flex; gap: 14px; padding: 22px; }
+.perk + .perk { border-left: 1px solid var(--line-2); }
+.perk .icon { width: 30px; height: 30px; color: var(--gold); stroke-width: 1.3; }
+.perk b { display: block; font-size: .92rem; }
+.perk p { color: var(--muted); font-size: .82rem; margin-top: 2px; }
+
+/* Services / gallery */
+section { padding-top: clamp(72px, 9vw, 112px); }
+.sec-title { display: flex; flex-wrap: wrap; justify-content: space-between; align-items: end; gap: 16px; margin-bottom: 32px; }
+.sec-title h2 { font-size: clamp(2.2rem, 4.6vw, 3.4rem); }
+.sec-title p { color: var(--muted); max-width: 44ch; }
+.menu-list { display: grid; grid-template-columns: 1fr 1fr; gap: 0 48px; }
+.menu-item { display: flex; align-items: baseline; gap: 12px; padding: 18px 0; border-bottom: 1px solid var(--line-2); }
+.menu-item b { font: 600 1.35rem var(--font-display); }
+.menu-item small { display: block; color: var(--muted); font-size: .82rem; }
+.menu-item .dots { flex: 1; border-bottom: 1px dotted var(--line); transform: translateY(-6px); }
+.menu-item span.p { color: var(--gold); font-weight: 600; font-variant-numeric: tabular-nums; white-space: nowrap; }
+.gallery { display: grid; grid-template-columns: 2fr 1fr 1fr; grid-auto-rows: 240px; gap: 12px; }
+.ph { border-radius: var(--r); overflow: hidden; background: radial-gradient(90% 90% at 30% 20%, color-mix(in srgb, var(--gold) 30%, var(--panel-2)), var(--panel-2)); position: relative; }
+.ph img { width: 100%; height: 100%; object-fit: cover; transition: transform .8s var(--ease); }
+.ph:hover img { transform: scale(1.04); }
+.ph.tall { grid-row: span 2; }
+.ph figcaption { position: absolute; left: 12px; bottom: 12px; background: rgba(10, 9, 7, .72); color: #f4ecdc; font-size: .78rem; padding: 6px 10px; border-radius: 999px; }
+
+footer { margin-top: clamp(72px, 9vw, 112px); border-top: 1px solid var(--line-2); padding: 40px 0; }
+.foot { display: grid; grid-template-columns: 1.3fr 1fr 1fr; gap: 32px; font-size: .9rem; color: var(--muted); }
+.foot h4 { margin: 0 0 12px; color: var(--text); font-size: .75rem; letter-spacing: .2em; text-transform: uppercase; }
+.foot ul { list-style: none; margin: 0; padding: 0; display: grid; gap: 6px; }
+.foot li { display: flex; justify-content: space-between; gap: 12px; font-variant-numeric: tabular-nums; }
+.credit { margin-top: 32px; padding-top: 18px; border-top: 1px solid var(--line-2); display: flex; flex-wrap: wrap; justify-content: space-between; gap: 12px; font-size: .8rem; color: var(--muted); }
+.credit a { color: var(--gold); display: inline-block; padding: 12px 0; }
+
+.toast { position: fixed; left: 50%; bottom: 24px; transform: translate(-50%, 16px); opacity: 0; pointer-events: none; z-index: 60; background: var(--panel-2); border: 1px solid var(--line); border-radius: 999px; padding: 12px 20px; font-size: .88rem; box-shadow: var(--shadow); transition: opacity .25s, transform .35s var(--ease); }
+.toast.show { opacity: 1; transform: translate(-50%, 0); }
+
+@media (max-width: 1080px) {
+  .grid { grid-template-columns: 1fr 1fr; }
+  .perks { grid-template-columns: 1fr 1fr; }
+  .perk:nth-child(3) { border-left: 0; }
+  .perk:nth-child(n+3) { border-top: 1px solid var(--line-2); }
+}
+@media (max-width: 760px) {
+  .nav ul, .nav .btn-nav { display: none; }
+  .nav .tool { margin-left: auto; }
+  .hero { min-height: 0; }
+  .hero::after { background: linear-gradient(180deg, rgba(10, 9, 7, .55) 0%, rgba(10, 9, 7, .92) 70%); }
+  .hero .wrap { padding-block: 56px 104px; }
+  .grid, .menu-list, .foot { grid-template-columns: 1fr; }
+  .steps { grid-template-columns: repeat(4, auto); justify-content: space-between; }
+  .steps li em { display: none; }
+  .steps li::after { display: none; }
+  .perks { grid-template-columns: 1fr; }
+  .perk + .perk { border-left: 0; border-top: 1px solid var(--line-2); }
+  .gallery { grid-template-columns: 1fr 1fr; grid-auto-rows: 180px; }
+  .ph.tall { grid-row: span 1; grid-column: span 2; }
+}
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after { animation: none !important; transition: none !important; }
+  html { scroll-behavior: auto; }
+}
+</style>
+</head>
+<body>
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <symbol id="i-sc" viewBox="0 0 24 24"><circle cx="6" cy="6" r="3"/><circle cx="6" cy="18" r="3"/><path d="M8.1 8.1L20 20M8.1 15.9L20 4"/></symbol>
+  <symbol id="i-user" viewBox="0 0 24 24"><circle cx="12" cy="8" r="4"/><path d="M4 21c1.5-4 4.5-6 8-6s6.5 2 8 6"/></symbol>
+  <symbol id="i-cal" viewBox="0 0 24 24"><rect x="3" y="4.5" width="18" height="16" rx="2.5"/><path d="M8 2.5v4M16 2.5v4M3 9.5h18"/></symbol>
+  <symbol id="i-doc" viewBox="0 0 24 24"><path d="M6 2.5h8l4 4v15H6z"/><path d="M14 2.5v4h4M9 12h6M9 16h6"/></symbol>
+  <symbol id="i-clock" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></symbol>
+  <symbol id="i-check" viewBox="0 0 24 24"><path d="M5 12.5l4.5 4.5L19 7.5"/></symbol>
+  <symbol id="i-info" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 11v6M12 7.5v.5"/></symbol>
+  <symbol id="i-lock" viewBox="0 0 24 24"><rect x="5" y="10.5" width="14" height="10" rx="2"/><path d="M8 10.5V8a4 4 0 0 1 8 0v2.5"/></symbol>
+  <symbol id="i-left" viewBox="0 0 24 24"><path d="M15 5l-7 7 7 7"/></symbol>
+  <symbol id="i-right" viewBox="0 0 24 24"><path d="M9 5l7 7-7 7"/></symbol>
+  <symbol id="i-star" viewBox="0 0 24 24"><path d="M12 2.5l2.9 6 6.6.9-4.8 4.6 1.2 6.5L12 17.4l-5.9 3.1 1.2-6.5L2.5 9.4l6.6-.9z"/></symbol>
+  <symbol id="i-bolt" viewBox="0 0 24 24"><path d="M13 2L4 14h7l-1 8 9-12h-7z"/></symbol>
+  <symbol id="i-award" viewBox="0 0 24 24"><circle cx="12" cy="9" r="6"/><path d="M8.5 14L7 22l5-3 5 3-1.5-8"/></symbol>
+  <symbol id="i-chair" viewBox="0 0 24 24"><path d="M7 3h10v8H7zM5 11h14v4H5zM8 15l-1 6M16 15l1 6M12 15v4"/></symbol>
+  <symbol id="i-card" viewBox="0 0 24 24"><rect x="2.5" y="5" width="19" height="14" rx="2.5"/><path d="M2.5 10h19M6 15h4"/></symbol>
+  <symbol id="i-sun" viewBox="0 0 24 24"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"/></symbol>
+  <symbol id="i-moon" viewBox="0 0 24 24"><path d="M20 14.5A8 8 0 1 1 9.5 4a6.5 6.5 0 0 0 10.5 10.5z"/></symbol>
+</svg>
+
+<a class="btn btn-gold skip" href="#agenda">Ir a agendar</a>
+
+<header>
+  <nav class="wrap nav" aria-label="Principal">
+    <a class="brand" href="#" aria-label="Navaja Barber Studio, inicio"><svg class="icon"><use href="#i-sc"/></svg><span><b>Navaja</b><small>Barber Studio</small></span></a>
+    <ul>
+      <li><a href="#agenda">Agendar</a></li>
+      <li><a href="#servicios">Servicios</a></li>
+      <li><a href="#trabajos">Trabajos</a></li>
+      <li><a href="#contacto">Contacto</a></li>
+    </ul>
+    <button class="tool" id="theme" type="button" aria-label="Cambiar a tema claro"><svg class="icon i-sun"><use href="#i-sun"/></svg><svg class="icon i-moon"><use href="#i-moon"/></svg></button>
+    <a class="btn btn-line btn-nav" href="#agenda"><svg class="icon"><use href="#i-cal"/></svg>Agendar</a>
+  </nav>
+</header>
+
+<main>
+  <div class="hero">
+    <div class="hero-img"><img src="https://images.unsplash.com/photo-1503951914875-452162b0f3f1?auto=format&fit=crop&w=1800&q=70" alt="" fetchpriority="high" onerror="this.remove()"></div>
+    <div class="wrap">
+      <h1>Tu corte, <em>sin esperar turno.</em></h1>
+      <p>Fades, barba con toalla caliente y cejas. Escoge barbero y hora desde el celular y llega directo a la silla.</p>
+      <div class="row">
+        <a class="btn btn-gold" href="#agenda"><svg class="icon"><use href="#i-cal"/></svg>Agendar ahora</a>
+        <a class="btn btn-line" href="#servicios">Ver precios</a>
+      </div>
+      <div class="open-now"><span class="dot" id="openDot"></span><span id="openText">Abierto hoy hasta las 8:00 p. m.</span></div>
+    </div>
+  </div>
+
+  <div class="booking wrap" id="agenda">
+    <div class="console">
+      <div class="console-head">
+        <h2>Agenda tu turno</h2>
+        <div class="hours"><svg class="icon"><use href="#i-clock"/></svg><span>Atendemos<b>Lun a sáb · 9:00 a. m. – 8:00 p. m.</b></span></div>
+      </div>
+      <ol class="steps" aria-label="Progreso de la reserva">
+        <li id="st-1" class="now"><span>1</span><em>Servicio</em></li>
+        <li id="st-2"><span>2</span><em>Barbero</em></li>
+        <li id="st-3"><span>3</span><em>Fecha y hora</em></li>
+        <li id="st-4"><span>4</span><em>Confirmar</em></li>
+      </ol>
+      <div class="grid">
+        <div class="col">
+          <h3><svg class="icon"><use href="#i-sc"/></svg>1. Escoge el servicio</h3>
+          <div class="opts" id="services"></div>
+          <p class="note"><svg class="icon"><use href="#i-info"/></svg>Todos incluyen lavado y toalla caliente.</p>
+        </div>
+        <div class="col">
+          <h3><svg class="icon"><use href="#i-user"/></svg>2. Escoge tu barbero</h3>
+          <div class="opts" id="barbers"></div>
+          <p class="note"><svg class="icon"><use href="#i-info"/></svg>"El que esté libre" te da más horarios.</p>
+        </div>
+        <div class="col">
+          <h3><svg class="icon"><use href="#i-cal"/></svg>3. Fecha y hora</h3>
+          <div class="cal-head">
+            <button class="cal-nav" id="prevM" type="button" aria-label="Mes anterior"><svg class="icon"><use href="#i-left"/></svg></button>
+            <b id="monthLabel" aria-live="polite"></b>
+            <button class="cal-nav" id="nextM" type="button" aria-label="Mes siguiente"><svg class="icon"><use href="#i-right"/></svg></button>
+          </div>
+          <div class="cal" id="cal" role="group" aria-label="Calendario"></div>
+          <p class="times-label">Horarios disponibles</p>
+          <div class="times" id="times"><p class="hint" style="grid-column:1/-1">Escoge un día para ver las horas.</p></div>
+        </div>
+        <div class="col summary">
+          <h3><svg class="icon"><use href="#i-doc"/></svg>4. Tu cita</h3>
+          <div id="sumBox">
+            <dl>
+              <div class="row"><dt>Servicio</dt><dd id="s-svc" class="empty">Sin escoger</dd></div>
+              <div class="row"><dt>Barbero</dt><dd id="s-bar" class="empty">Sin escoger</dd></div>
+              <div class="row"><dt>Día</dt><dd id="s-day" class="empty">Sin escoger</dd></div>
+              <div class="row"><dt>Hora</dt><dd id="s-time" class="empty">Sin escoger</dd></div>
+              <div class="row"><dt>Duración</dt><dd id="s-dur" class="empty">—</dd></div>
+            </dl>
+            <div class="total"><span>Total</span><b id="s-total">RD$0</b></div>
+            <form id="bookForm" novalidate>
+              <div class="field"><label for="f-name">Tu nombre</label><input id="f-name" autocomplete="name" placeholder="Ej.: Carlos"><span class="err" id="e-name" aria-live="polite"></span></div>
+              <div class="field"><label for="f-tel">WhatsApp</label><input id="f-tel" type="tel" inputmode="tel" autocomplete="tel" placeholder="809-000-0000"><span class="err" id="e-tel" aria-live="polite"></span></div>
+              <button class="btn btn-gold" id="confirm" type="submit" disabled>Confirmar cita</button>
+              <p class="missing" id="missing" aria-live="polite">Te falta: servicio, barbero, día y hora.</p>
+              <p class="secure"><svg class="icon"><use href="#i-lock"/></svg>Solo usamos tu número para confirmar la cita.</p>
+            </form>
+          </div>
+          <div class="done-card" id="done" role="status">
+            <svg class="icon"><use href="#i-check"/></svg>
+            <h4>¡Cita reservada!</h4>
+            <p id="doneText"></p>
+            <button class="btn btn-line" id="again" type="button">Agendar otra</button>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="perks">
+      <div class="perk"><svg class="icon"><use href="#i-bolt"/></svg><div><b>Reserva en un minuto</b><p>Sin llamar ni esperar respuesta.</p></div></div>
+      <div class="perk"><svg class="icon"><use href="#i-award"/></svg><div><b>Barberos con años en la silla</b><p>Fades, diseños y barba clásica.</p></div></div>
+      <div class="perk"><svg class="icon"><use href="#i-chair"/></svg><div><b>Llegas y te sientas</b><p>Tu turno te espera a la hora.</p></div></div>
+      <div class="perk"><svg class="icon"><use href="#i-card"/></svg><div><b>Paga como quieras</b><p>Efectivo, tarjeta o transferencia.</p></div></div>
+    </div>
+  </div>
+
+  <section id="servicios">
+    <div class="wrap">
+      <div class="sec-title"><h2>Servicios y precios</h2><p>Precios fijos, sin sorpresas al final. Lo que ves es lo que pagas.</p></div>
+      <div class="menu-list" id="menu"></div>
+    </div>
+  </section>
+
+  <section id="trabajos">
+    <div class="wrap">
+      <div class="sec-title"><h2>Trabajos recientes</h2><p>Un poco de lo que sale de nuestras sillas cada semana.</p></div>
+      <div class="gallery">
+        <figure class="ph tall" style="margin:0"><img src="https://images.unsplash.com/photo-1621605815971-fbc98d665033?auto=format&fit=crop&w=900&q=70" alt="Barbero haciendo un fade" loading="lazy" onerror="this.remove()"><figcaption>Low fade</figcaption></figure>
+        <figure class="ph" style="margin:0"><img src="https://images.unsplash.com/photo-1599351431202-1e0f0137899a?auto=format&fit=crop&w=700&q=70" alt="Arreglo de barba" loading="lazy" onerror="this.remove()"><figcaption>Barba</figcaption></figure>
+        <figure class="ph" style="margin:0"><img src="https://images.unsplash.com/photo-1622286342621-4bd786c2447c?auto=format&fit=crop&w=700&q=70" alt="Corte con diseño" loading="lazy" onerror="this.remove()"><figcaption>Diseño</figcaption></figure>
+        <figure class="ph" style="margin:0"><img src="https://images.unsplash.com/photo-1585747860715-2ba37e788b70?auto=format&fit=crop&w=700&q=70" alt="Interior de la barbería" loading="lazy" onerror="this.remove()"><figcaption>El local</figcaption></figure>
+        <figure class="ph" style="margin:0"><img src="https://images.unsplash.com/photo-1605497788044-5a32c7078486?auto=format&fit=crop&w=700&q=70" alt="Herramientas de barbería" loading="lazy" onerror="this.remove()"><figcaption>Navaja y toalla</figcaption></figure>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer id="contacto">
+  <div class="wrap">
+    <div class="foot">
+      <div><a class="brand" href="#"><svg class="icon"><use href="#i-sc"/></svg><span><b>Navaja</b><small>Barber Studio</small></span></a><p style="margin-top:14px;max-width:34ch">Calle Ejemplo 45, Santo Domingo · (809) 000-0000</p></div>
+      <div><h4>Horario</h4><ul><li><span>Lun – Vie</span><span>9:00 – 20:00</span></li><li><span>Sábado</span><span>9:00 – 20:00</span></li><li><span>Domingo</span><span>Cerrado</span></li></ul></div>
+      <div><h4>Agenda</h4><ul><li><a href="#agenda">Reservar en línea</a></li><li><a href="#servicios">Ver precios</a></li></ul></div>
+    </div>
+    <div class="credit"><span>Demo con datos ficticios. Nombre, dirección, teléfono y precios son de ejemplo.</span><a href="../../#demos">Hecha por Eric Design Web</a></div>
+  </div>
+</footer>
+<div class="toast" id="toast" role="status" aria-live="polite"></div>
+
+<script>
+(function () {
+  var root = document.documentElement;
+  var SERVICES = [
+    { id: 'corte', name: 'Corte de pelo', min: 40, price: 400 },
+    { id: 'barba', name: 'Barba', min: 25, price: 250 },
+    { id: 'combo', name: 'Corte + barba', min: 60, price: 600 },
+    { id: 'cejas', name: 'Cejas', min: 10, price: 150 },
+    { id: 'full', name: 'Corte + barba + cejas', min: 70, price: 700 }
+  ];
+  var BARBERS = [
+    { id: 'any', name: 'El que esté libre', mono: '·', rating: null },
+    { id: 'luis', name: 'Luis M.', mono: 'LM', rating: 4.9 },
+    { id: 'kelvin', name: 'Kelvin R.', mono: 'KR', rating: 4.8 },
+    { id: 'angel', name: 'Ángel P.', mono: 'ÁP', rating: 4.9 }
+  ];
+  var DETAIL = { corte: 'Fade, taper o clásico, con lavado', barba: 'Perfilado con navaja y toalla caliente', combo: 'El más pedido de la casa', cejas: 'Limpieza y perfilado', full: 'El paquete completo' };
+  var MONTHS = ['enero', 'febrero', 'marzo', 'abril', 'mayo', 'junio', 'julio', 'agosto', 'septiembre', 'octubre', 'noviembre', 'diciembre'];
+  var DOW = ['Dom', 'Lun', 'Mar', 'Mié', 'Jue', 'Vie', 'Sáb'];
+  var DOWL = ['domingo', 'lunes', 'martes', 'miércoles', 'jueves', 'viernes', 'sábado'];
+  var SLOTS = ['9:00', '10:00', '11:00', '12:00', '2:00', '3:00', '4:00', '5:00', '6:00'];
+  var st = { svc: null, bar: null, date: null, time: null };
+  var today = new Date(); today.setHours(0, 0, 0, 0);
+  var view = new Date(today.getFullYear(), today.getMonth(), 1);
+  var rd = function (n) { return 'RD$' + n.toLocaleString('en-US'); };
+  var $ = function (id) { return document.getElementById(id); };
+
+  // Theme
+  var themeBtn = $('theme');
+  function syncTheme() {
+    var dark = root.dataset.theme !== 'light';
+    themeBtn.setAttribute('aria-label', dark ? 'Cambiar a tema claro' : 'Cambiar a tema oscuro');
+    document.querySelector('meta[name=theme-color]').content = dark ? '#0a0907' : '#f6f2ea';
+  }
+  themeBtn.addEventListener('click', function () {
+    root.dataset.theme = root.dataset.theme === 'light' ? 'dark' : 'light';
+    try { localStorage.setItem('navaja-theme', root.dataset.theme); } catch (e) {}
+    syncTheme();
+  });
+  syncTheme();
+
+  // Open now
+  (function () {
+    var n = new Date(), h = n.getHours(), d = n.getDay();
+    var open = d !== 0 && h >= 9 && h < 20;
+    $('openDot').classList.toggle('closed', !open);
+    $('openText').textContent = open ? 'Abierto ahora, hasta las 8:00 p. m.' : (d === 6 && h >= 20) || d === 0 ? 'Cerrado ahora. Abrimos el lunes a las 9:00 a. m.' : 'Cerrado ahora. Abrimos a las 9:00 a. m.';
+  })();
+
+  function check() { return '<span class="tick"><svg class="icon"><use href="#i-check"/></svg></span>'; }
+  function stars(r) { return r ? '<span class="rating"><svg viewBox="0 0 24 24"><use href="#i-star"/></svg>' + r + '</span>' : 'Primer turno libre'; }
+
+  // Services
+  $('services').innerHTML = SERVICES.map(function (s) {
+    return '<button type="button" class="opt" data-svc="' + s.id + '" aria-pressed="false"><span class="t"><b>' + s.name + '</b><small>' + rd(s.price) + ' · ' + s.min + ' min</small></span>' + check() + '</button>';
+  }).join('');
+  $('menu').innerHTML = SERVICES.map(function (s) {
+    return '<div class="menu-item"><div><b>' + s.name + '</b><small>' + DETAIL[s.id] + ' · ' + s.min + ' min</small></div><span class="dots"></span><span class="p">' + rd(s.price) + '</span></div>';
+  }).join('');
+  // Barbers
+  $('barbers').innerHTML = BARBERS.map(function (b) {
+    return '<button type="button" class="opt" data-bar="' + b.id + '" aria-pressed="false"><span class="mono" aria-hidden="true">' + b.mono + '</span><span class="t"><b>' + b.name + '</b><small>' + stars(b.rating) + '</small></span>' + check() + '</button>';
+  }).join('');
+
+  function press(container, attr, val) {
+    container.querySelectorAll('[' + attr + ']').forEach(function (el) { el.setAttribute('aria-pressed', el.getAttribute(attr) === val ? 'true' : 'false'); });
+  }
+  $('services').addEventListener('click', function (e) { var b = e.target.closest('[data-svc]'); if (!b) return; st.svc = b.dataset.svc; press($('services'), 'data-svc', st.svc); update(); });
+  $('barbers').addEventListener('click', function (e) { var b = e.target.closest('[data-bar]'); if (!b) return; st.bar = b.dataset.bar; press($('barbers'), 'data-bar', st.bar); st.time = null; renderTimes(); update(); });
+
+  // Calendar
+  function sameDay(a, b) { return a && b && a.getTime() === b.getTime(); }
+  function renderCal() {
+    var y = view.getFullYear(), m = view.getMonth();
+    $('monthLabel').textContent = MONTHS[m] + ' ' + y;
+    $('prevM').disabled = y === today.getFullYear() && m === today.getMonth();
+    var limit = new Date(today.getFullYear(), today.getMonth() + 2, 0);
+    $('nextM').disabled = new Date(y, m + 1, 1) > limit;
+    var html = DOW.map(function (d) { return '<span class="dow" aria-hidden="true">' + d + '</span>'; }).join('');
+    var first = new Date(y, m, 1).getDay(), days = new Date(y, m + 1, 0).getDate();
+    for (var i = 0; i < first; i++) html += '<span></span>';
+    for (var d = 1; d <= days; d++) {
+      var dt = new Date(y, m, d), off = dt < today || dt.getDay() === 0 || dt > limit;
+      var label = DOWL[dt.getDay()] + ' ' + d + ' de ' + MONTHS[m] + (dt.getDay() === 0 ? ', cerrado' : '');
+      html += '<button type="button" class="day' + (sameDay(dt, today) ? ' today' : '') + '" data-day="' + d + '" aria-label="' + label + '" aria-pressed="' + (sameDay(dt, st.date) ? 'true' : 'false') + '"' + (off ? ' disabled' : '') + '>' + d + '</button>';
+    }
+    $('cal').innerHTML = html;
+  }
+  $('cal').addEventListener('click', function (e) {
+    var b = e.target.closest('[data-day]'); if (!b || b.disabled) return;
+    st.date = new Date(view.getFullYear(), view.getMonth(), +b.dataset.day); st.time = null;
+    renderCal(); renderTimes(); update();
+  });
+  $('prevM').addEventListener('click', function () { view = new Date(view.getFullYear(), view.getMonth() - 1, 1); renderCal(); });
+  $('nextM').addEventListener('click', function () { view = new Date(view.getFullYear(), view.getMonth() + 1, 1); renderCal(); });
+
+  function busy(slot) {
+    // Deterministic fake availability per day/barber
+    var seed = (st.date.getDate() * 7 + st.date.getMonth() * 3 + (st.bar ? st.bar.length : 0) + SLOTS.indexOf(slot) * 5) % 9;
+    if (st.bar === 'any') return seed === 0;
+    return seed < 3;
+  }
+  function passed(slot) {
+    if (!sameDay(st.date, today)) return false;
+    var parts = slot.split(':'), h = +parts[0]; if (h < 9) h += 12;
+    return h <= new Date().getHours();
+  }
+  function ampm(slot) { var h = +slot.split(':')[0]; return slot + (h >= 9 && h < 12 ? ' a. m.' : ' p. m.'); }
+  function renderTimes() {
+    if (!st.date) return;
+    $('times').innerHTML = SLOTS.map(function (s) {
+      var off = busy(s) || passed(s);
+      return '<button type="button" class="time" data-time="' + s + '" aria-pressed="' + (st.time === s ? 'true' : 'false') + '"' + (off ? ' disabled aria-label="' + ampm(s) + ', ocupado"' : '') + '>' + s + '</button>';
+    }).join('');
+  }
+  $('times').addEventListener('click', function (e) { var b = e.target.closest('[data-time]'); if (!b || b.disabled) return; st.time = b.dataset.time; renderTimes(); update(); });
+
+  // Summary + steps
+  function set(id, val) { var el = $(id); el.textContent = val || 'Sin escoger'; el.classList.toggle('empty', !val); }
+  function update() {
+    var s = SERVICES.filter(function (x) { return x.id === st.svc; })[0];
+    var b = BARBERS.filter(function (x) { return x.id === st.bar; })[0];
+    set('s-svc', s && s.name); set('s-bar', b && b.name);
+    set('s-day', st.date && (DOWL[st.date.getDay()] + ' ' + st.date.getDate() + ' de ' + MONTHS[st.date.getMonth()]));
+    set('s-time', st.time && ampm(st.time));
+    $('s-dur').textContent = s ? s.min + ' min' : '—'; $('s-dur').classList.toggle('empty', !s);
+    $('s-total').textContent = rd(s ? s.price : 0);
+    var done = [!!st.svc, !!st.bar, !!(st.date && st.time)];
+    var nowIdx = done.indexOf(false); if (nowIdx === -1) nowIdx = 3;
+    for (var i = 0; i < 4; i++) {
+      var li = $('st-' + (i + 1));
+      li.classList.toggle('done', i < 3 && done[i]);
+      li.classList.toggle('now', i === nowIdx);
+      if (i === nowIdx) li.setAttribute('aria-current', 'step'); else li.removeAttribute('aria-current');
+    }
+    var miss = []; if (!st.svc) miss.push('servicio'); if (!st.bar) miss.push('barbero'); if (!st.date) miss.push('día'); if (!st.time) miss.push('hora');
+    $('confirm').disabled = miss.length > 0;
+    $('missing').textContent = miss.length ? 'Te falta: ' + miss.join(', ') + '.' : 'Todo listo. Solo falta tu nombre y WhatsApp.';
+  }
+
+  // Confirm
+  function err(id, msg) { var i = $('f-' + id); $('e-' + id).textContent = msg; i.setAttribute('aria-invalid', msg ? 'true' : 'false'); return !msg; }
+  $('bookForm').addEventListener('submit', function (e) {
+    e.preventDefault();
+    var ok = err('name', $('f-name').value.trim().length < 2 ? 'Escribe tu nombre.' : '');
+    ok = err('tel', $('f-tel').value.replace(/\D/g, '').length < 10 ? 'Escribe un WhatsApp de 10 dígitos.' : '') && ok;
+    if (!ok) { document.querySelector('[aria-invalid="true"]').focus(); return; }
+    var btn = $('confirm'); btn.disabled = true; btn.textContent = 'Reservando…';
+    setTimeout(function () {
+      $('doneText').textContent = $('f-name').value.trim() + ', te esperamos el ' + $('s-day').textContent + ' a las ' + $('s-time').textContent + ' con ' + $('s-bar').textContent + '. Te llegará la confirmación por WhatsApp (en esta demo no se envía nada).';
+      $('sumBox').hidden = true; $('done').classList.add('show'); $('done').focus && $('done').setAttribute('tabindex', '-1'); $('done').focus();
+      btn.textContent = 'Confirmar cita';
+    }, 800);
+  });
+  $('bookForm').addEventListener('input', function (e) { if (e.target.getAttribute('aria-invalid') === 'true') err(e.target.id.slice(2), ''); });
+  $('again').addEventListener('click', function () {
+    st = { svc: null, bar: null, date: null, time: null };
+    press($('services'), 'data-svc', ''); press($('barbers'), 'data-bar', '');
+    $('bookForm').reset(); $('sumBox').hidden = false; $('done').classList.remove('show');
+    $('times').innerHTML = '<p class="hint" style="grid-column:1/-1">Escoge un día para ver las horas.</p>';
+    renderCal(); update(); document.querySelector('[data-svc]').focus();
+  });
+
+  renderCal(); update();
+})();
+</script>
+</body>
+</html>

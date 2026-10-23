@@ -163,6 +163,45 @@ section { padding: clamp(72px, 9vw, 120px) 0 0; }
 .next { margin-top: 16px; display: flex; flex-wrap: wrap; gap: 12px; color: var(--muted); font-size: .95rem; }
 .next span { border: 1px dashed var(--line); border-radius: 12px; padding: 12px 16px; }
 
+.demo-pair { display: grid; grid-template-columns: 1fr 1fr; gap: 18px; margin-top: 18px; }
+.demo-card { background: var(--paper); border: 1px solid var(--line); border-radius: 22px; overflow: hidden; display: flex; flex-direction: column; }
+.dc-shot { display: grid; place-items: center; height: 290px; padding: 28px; text-decoration: none; overflow: hidden; }
+.dc-shot > span { transition: transform .5s var(--ease); }
+.dc-shot:hover > span { transform: translateY(-4px) scale(1.01); }
+.dc-body { padding: clamp(22px, 3vw, 32px); display: flex; flex-direction: column; gap: 14px; flex: 1; }
+.dc-body .demo-actions { margin-top: auto; }
+/* Navaja mock */
+.dc-navaja { background: #0a0907; }
+.nv { width: 100%; max-width: 420px; border: 1px solid rgba(201,164,92,.28); border-radius: 12px; padding: 14px; background: #100e0b; display: grid; gap: 12px; }
+.nv-top { display: flex; justify-content: space-between; align-items: center; }
+.nv-top b { font: 600 1rem Georgia, serif; color: #c9a45c; }
+.nv-top i { width: 54px; height: 16px; border: 1px solid #c9a45c; border-radius: 4px; }
+.nv-h { font: 600 1.35rem/1.05 Georgia, serif; color: #f4ecdc; }
+.nv-h em { color: #c9a45c; }
+.nv-console { display: grid; grid-template-columns: 1fr 1fr 1.2fr 1fr; gap: 6px; padding: 8px; border-radius: 8px; background: #17140f; border: 1px solid rgba(201,164,92,.18); }
+.nv-col { display: grid; gap: 4px; align-content: start; }
+.nv-col i { height: 12px; border-radius: 3px; border: 1px solid rgba(244,236,220,.12); }
+.nv-col i.on { border-color: #c9a45c; background: rgba(201,164,92,.18); }
+.nv-cal { grid-template-columns: repeat(4, 1fr); }
+.nv-cal i { height: 9px; border-radius: 50%; border: 0; background: rgba(244,236,220,.1); }
+.nv-cal i.on { background: #c9a45c; }
+.nv-sum i.btnl { background: #c9a45c; border-color: #c9a45c; margin-top: 8px; }
+/* Fade mock */
+.dc-fade { background: linear-gradient(160deg, #2a2117, #0d0c0a 70%); }
+.fc { width: 150px; height: 230px; border-radius: 26px; border: 6px solid #141210; background: #0d0c0a; padding: 16px 12px 10px; display: flex; flex-direction: column; gap: 8px; box-shadow: 0 24px 40px -20px rgba(0,0,0,.8); position: relative; }
+.fc-title { font: 900 1.05rem/.9 'Arial Narrow', sans-serif; color: #f3ece0; letter-spacing: .02em; }
+.fc-title b { display: block; color: #c79a5b; }
+.fc-promo { height: 42px; border-radius: 10px; background: linear-gradient(120deg, #3a2c1c, #1a1714); border: 1px solid rgba(240,230,214,.1); position: relative; }
+.fc-promo i { position: absolute; left: 8px; bottom: 7px; width: 34px; height: 10px; border-radius: 4px; background: #c79a5b; }
+.fc-cats, .fc-row { display: grid; gap: 5px; }
+.fc-cats { grid-template-columns: repeat(4, 1fr); }
+.fc-cats i { aspect-ratio: 1; border-radius: 7px; background: #171512; border: 1px solid rgba(199,154,91,.35); }
+.fc-row { grid-template-columns: repeat(3, 1fr); flex: 1; }
+.fc-row i { border-radius: 8px; background: linear-gradient(150deg, #2c241a, #1a1714); }
+.fc-tabs { display: grid; grid-template-columns: repeat(5, 1fr); align-items: end; gap: 4px; padding-top: 6px; border-top: 1px solid rgba(240,230,214,.08); }
+.fc-tabs i { height: 6px; width: 10px; margin: 0 auto; border-radius: 3px; background: rgba(240,230,214,.25); }
+.fc-tabs i.fab { width: 20px; height: 20px; border-radius: 50%; background: #c79a5b; margin-top: -10px; }
+
 /* Pricing */
 .plans { display: grid; grid-template-columns: repeat(3, 1fr); gap: 18px; align-items: stretch; }
 .plan { background: var(--paper); border: 1px solid var(--line); border-radius: var(--radius); padding: 28px; display: flex; flex-direction: column; gap: 18px; }
@@ -252,7 +291,7 @@ footer a:hover { color: var(--ink); }
   .tools { margin-left: auto; }
   .nav ul.open { display: flex; flex-direction: column; gap: 0; position: absolute; top: 68px; left: 0; right: 0; margin: 0; padding: 8px 16px 16px; background: var(--bg); border-bottom: 1px solid var(--line); }
   .nav ul.open a { display: block; padding: 14px 4px; border-bottom: 1px solid var(--line); color: var(--ink); font-size: 1.05rem; }
-  .hero, .demo, .faq, .contact .wrap, .head, .about { grid-template-columns: 1fr; }
+  .hero, .demo, .faq, .contact .wrap, .head, .about, .demo-pair { grid-template-columns: 1fr; }
   .about-photo { max-width: 340px; }
   .about-photo img { aspect-ratio: 1 / 1; object-position: center 12%; }
   .stage { max-width: 560px; }
@@ -448,7 +487,7 @@ footer a:hover { color: var(--ink); }
         <p>Si tus clientes te preguntan precios y horarios por mensaje todos los días, una página les responde sola y te deja solo agendar.</p>
       </div>
       <div class="niches stagger">
-        <a class="niche niche-link" href="#demos" style="--i:0"><span><svg class="icon"><use href="#i-scissors"/></svg></span><div>Salones y barberías<small>Ver demo de salón →</small></div></a>
+        <a class="niche niche-link" href="#demos" style="--i:0"><span><svg class="icon"><use href="#i-scissors"/></svg></span><div>Salones y barberías<small>Ver 3 demos →</small></div></a>
         <div class="niche" style="--i:1"><span><svg class="icon"><use href="#i-food"/></svg></span><div>Restaurantes<small>Menú digital y pedidos</small></div></div>
         <div class="niche" style="--i:2"><span><svg class="icon"><use href="#i-tooth"/></svg></span><div>Clínicas y estética<small>Consultas y testimonios</small></div></div>
         <div class="niche" style="--i:3"><span><svg class="icon"><use href="#i-palm"/></svg></span><div>Rentas vacacionales<small>Galería y reservas, en inglés</small></div></div>
@@ -464,8 +503,8 @@ footer a:hover { color: var(--ink); }
   <section id="demos">
     <div class="wrap">
       <div class="head">
-        <h2>Una demo que puedes abrir y tocar</h2>
-        <p>Es una página real con datos de ejemplo. Ábrela en tu celular y prueba los botones como lo haría tu cliente. Pronto habrá más.</p>
+        <h2>Demos que puedes abrir y tocar</h2>
+        <p>Son páginas reales con datos de ejemplo. Ábrelas en tu celular y prueba los botones como lo haría tu cliente.</p>
       </div>
       <article class="demo">
         <div class="demo-shot" aria-hidden="true">
@@ -493,6 +532,46 @@ footer a:hover { color: var(--ink); }
           </div>
         </div>
       </article>
+      <div class="demo-pair">
+        <article class="demo-card">
+          <a class="dc-shot dc-navaja" href="demos/navaja/" aria-label="Abrir demo Navaja Barber Studio">
+            <span class="nv" aria-hidden="true">
+              <span class="nv-top"><b>Navaja</b><i></i></span>
+              <span class="nv-h">Tu corte,<em> sin esperar turno.</em></span>
+              <span class="nv-console"><span class="nv-col"><i class="on"></i><i></i><i></i></span><span class="nv-col"><i></i><i class="on"></i><i></i></span><span class="nv-col nv-cal"><i></i><i></i><i></i><i></i><i></i><i class="on"></i><i></i><i></i><i></i><i></i><i></i><i></i></span><span class="nv-col nv-sum"><i></i><i></i><i class="btnl"></i></span></span>
+            </span>
+          </a>
+          <div class="dc-body">
+            <span class="pill">Barbería · Página web con reservas</span>
+            <h3>Navaja Barber Studio</h3>
+            <p class="muted">El cliente escoge servicio, barbero, día y hora, y confirma su turno sin llamar. Negro y dorado, con tema claro.</p>
+            <div class="demo-actions">
+              <a class="btn btn-main" href="demos/navaja/">Abrir demo<svg class="icon"><use href="#i-arrow"/></svg></a>
+              <a class="btn btn-ghost" data-wa="Hola Eric, quiero una página con reservas como la demo de barbería. Mi negocio es: " href="https://wa.me/18292600023">Quiero una así</a>
+            </div>
+          </div>
+        </article>
+        <article class="demo-card">
+          <a class="dc-shot dc-fade" href="demos/fade-club/" aria-label="Abrir demo Fade Club">
+            <span class="fc" aria-hidden="true">
+              <span class="fc-title">FADE<b>CLUB</b></span>
+              <span class="fc-promo"><i></i></span>
+              <span class="fc-cats"><i></i><i></i><i></i><i></i></span>
+              <span class="fc-row"><i></i><i></i><i></i></span>
+              <span class="fc-tabs"><i></i><i></i><i class="fab"></i><i></i><i></i></span>
+            </span>
+          </a>
+          <div class="dc-body">
+            <span class="pill">Barbería · Estilo app en el celular</span>
+            <h3>Fade Club</h3>
+            <p class="muted">Se siente como una app: inicio, barberos, reserva en tres toques y "Mis citas". Se abre desde un link, sin descargar nada.</p>
+            <div class="demo-actions">
+              <a class="btn btn-main" href="demos/fade-club/">Abrir demo<svg class="icon"><use href="#i-arrow"/></svg></a>
+              <a class="btn btn-ghost" data-wa="Hola Eric, quiero una app como la demo Fade Club. Mi negocio es: " href="https://wa.me/18292600023">Quiero una así</a>
+            </div>
+          </div>
+        </article>
+      </div>
     </div>
   </section>
 
