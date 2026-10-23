@@ -189,6 +189,15 @@ section { padding: clamp(72px, 9vw, 120px) 0 0; }
 .steps p { color: var(--muted); margin-top: 8px; }
 .steps .when { display: inline-block; margin-top: 12px; font-size: .82rem; font-weight: 700; background: var(--soft); color: var(--teal); padding: 3px 10px; border-radius: 99px; }
 
+/* About */
+.about { display: grid; grid-template-columns: minmax(0, .8fr) minmax(0, 1.2fr); gap: clamp(32px, 5vw, 72px); align-items: center; }
+.about-photo { display: block; max-width: 420px; width: 100%; }
+.about-photo img { width: 100%; height: auto; aspect-ratio: 4 / 5; object-fit: cover; object-position: center 18%; border-radius: 20px; box-shadow: var(--shadow); background: var(--slab); }
+.about-text { display: flex; flex-direction: column; align-items: flex-start; gap: 18px; }
+.about-text .lead { font-size: 1.25rem; color: var(--ink); }
+.place { display: flex; align-items: center; gap: 8px; font-weight: 600; }
+.place .icon { color: var(--teal); }
+
 /* FAQ */
 .faq { display: grid; grid-template-columns: .8fr 1.2fr; gap: 48px; }
 details { border-bottom: 1px solid var(--line); }
@@ -243,7 +252,9 @@ footer a:hover { color: var(--ink); }
   .tools { margin-left: auto; }
   .nav ul.open { display: flex; flex-direction: column; gap: 0; position: absolute; top: 68px; left: 0; right: 0; margin: 0; padding: 8px 16px 16px; background: var(--bg); border-bottom: 1px solid var(--line); }
   .nav ul.open a { display: block; padding: 14px 4px; border-bottom: 1px solid var(--line); color: var(--ink); font-size: 1.05rem; }
-  .hero, .demo, .faq, .contact .wrap, .head { grid-template-columns: 1fr; }
+  .hero, .demo, .faq, .contact .wrap, .head, .about { grid-template-columns: 1fr; }
+  .about-photo { max-width: 340px; }
+  .about-photo img { aspect-ratio: 1 / 1; object-position: center 12%; }
   .stage { max-width: 560px; }
   .plans { grid-template-columns: 1fr; max-width: 520px; }
   .plan.star { order: -1; }
@@ -334,6 +345,7 @@ footer a:hover { color: var(--ink); }
   <symbol id="i-car" viewBox="0 0 24 24"><path d="M5 16h14M3 16v-4l2-5h14l2 5v4"/><circle cx="7.5" cy="16.5" r="2"/><circle cx="16.5" cy="16.5" r="2"/></symbol>
   <symbol id="i-sun" viewBox="0 0 24 24"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"/></symbol>
   <symbol id="i-moon" viewBox="0 0 24 24"><path d="M20 14.5A8 8 0 1 1 9.5 4a6.5 6.5 0 0 0 10.5 10.5z"/></symbol>
+  <symbol id="i-pin" viewBox="0 0 24 24"><path d="M12 21s7-6.2 7-12a7 7 0 0 0-14 0c0 5.8 7 12 7 12z"/><circle cx="12" cy="9" r="2.5"/></symbol>
   <symbol id="i-menu" viewBox="0 0 24 24"><path d="M4 7h16M4 12h16M4 17h16"/></symbol>
 </svg>
 
@@ -349,6 +361,7 @@ footer a:hover { color: var(--ink); }
       <li><a href="#demos">Demos</a></li>
       <li><a href="#precios">Precios</a></li>
       <li><a href="#proceso">Cómo trabajo</a></li>
+      <li><a href="#sobre-mi">Sobre mí</a></li>
       <li><a href="#preguntas">Preguntas</a></li>
       <li><a href="#contacto">Contacto</a></li>
     </ul>
@@ -487,7 +500,7 @@ footer a:hover { color: var(--ink); }
     <div class="wrap">
       <div class="head">
         <h2>Precios claros, sin sorpresas</h2>
-        <p>Pagas 50% para empezar y 50% cuando la página está lista y te gusta. Todos los planes incluyen una ronda de cambios.</p>
+        <p>Pagas 50% para empezar y 50% cuando la página está lista y te gusta. Todos los planes incluyen una ronda de cambios y llevan el mantenimiento mensual.</p>
       </div>
       <div class="plans stagger">
         <article class="plan" style="--i:0">
@@ -496,6 +509,7 @@ footer a:hover { color: var(--ink); }
           <ul>
             <li><svg class="icon"><use href="#i-check"/></svg>Una página con tus servicios y precios</li>
             <li><svg class="icon"><use href="#i-check"/></svg>Botón de WhatsApp y mapa</li>
+            <li><svg class="icon"><use href="#i-check"/></svg>Link gratis tipo tunegocio.vercel.app</li>
             <li><svg class="icon"><use href="#i-check"/></svg>Link listo para tu bio de Instagram y TikTok</li>
           </ul>
           <a class="btn btn-ghost" data-wa="Hola Eric, me interesa el plan Básico." href="https://wa.me/18292600023">Elegir Básico</a>
@@ -525,7 +539,7 @@ footer a:hover { color: var(--ink); }
         </article>
       </div>
       <div class="upkeep">
-        <div><b>Mantenimiento mensual · RD$1,500–3,000</b><p class="muted">Hosting, cambios de precios, fotos nuevas y soporte. Tú no tocas nada técnico.</p></div>
+        <div><b>Mantenimiento mensual · RD$1,500–3,000</b><p class="muted">Incluido en todos los planes: mantiene tu página en línea, con cambios de precios, fotos nuevas y soporte. Tú no tocas nada técnico.</p></div>
         <a class="btn btn-ghost" data-wa="Hola Eric, tengo una pregunta sobre el mantenimiento mensual." href="https://wa.me/18292600023">Preguntar</a>
       </div>
       <p class="terms">Si no te gusta la demo, no pagas nada. El precio final depende de cuántas secciones y fotos lleve tu página, y te lo confirmo antes de empezar.</p>
@@ -551,13 +565,29 @@ footer a:hover { color: var(--ink); }
     </div>
   </section>
 
+  <section id="sobre-mi">
+    <div class="wrap about">
+      <picture class="about-photo">
+        <source srcset="img/eric.webp" type="image/webp">
+        <img src="img/eric.jpg" width="800" height="999" loading="lazy" alt="Eric Montero, diseñador web de Eric Design Web">
+      </picture>
+      <div class="about-text">
+        <h2>Soy Eric</h2>
+        <p class="lead">Diseño páginas web para negocios dominicanos que ya venden por WhatsApp e Instagram y quieren verse más profesionales.</p>
+        <p class="muted">No hay agencia ni intermediarios: desde la demo hasta que tu página está publicada, hablas directamente conmigo. Si algo no te gusta, me escribes y lo cambio.</p>
+        <p class="place"><svg class="icon"><use href="#i-pin"/></svg>Los Alcarrizos, Santo Domingo</p>
+        <a class="btn btn-main" data-wa="Hola Eric, vi tu página y quiero hablar de mi negocio." href="https://wa.me/18292600023"><svg class="icon"><use href="#i-wa"/></svg>Escríbeme por WhatsApp</a>
+      </div>
+    </div>
+  </section>
+
   <section id="preguntas">
     <div class="wrap faq">
       <h2>Preguntas frecuentes</h2>
       <div>
-        <details><summary>¿Necesito tener dominio o hosting?<svg class="icon"><use href="#i-plus"/></svg></summary><p>No. En los planes Pro y Premium te ayudo a comprar el dominio y lo dejo conectado. El hosting va incluido en el mantenimiento mensual.</p></details>
+        <details><summary>¿Necesito tener dominio o hosting?<svg class="icon"><use href="#i-plus"/></svg></summary><p>No. En el Básico tu página sale con un link gratis tipo tunegocio.vercel.app. En Pro y Premium te ayudo a comprar tu propio dominio y lo dejo conectado. El hosting siempre va dentro del mantenimiento mensual.</p></details>
         <details><summary>¿Cómo pago?<svg class="icon"><use href="#i-plus"/></svg></summary><p>Por transferencia bancaria: 50% para empezar y 50% al entregar. Te mando los datos por WhatsApp.</p></details>
-        <details><summary>¿Puedo cambiar precios o fotos después?<svg class="icon"><use href="#i-plus"/></svg></summary><p>Sí. Con el mantenimiento mensual me mandas el cambio por WhatsApp y lo actualizo. Sin mantenimiento, cada cambio se cotiza aparte.</p></details>
+        <details><summary>¿Puedo cambiar precios o fotos después?<svg class="icon"><use href="#i-plus"/></svg></summary><p>Sí. Me mandas el cambio por WhatsApp y lo actualizo; eso es parte del mantenimiento mensual que llevan todos los planes.</p></details>
         <details><summary>¿Y si ya tengo Instagram?<svg class="icon"><use href="#i-plus"/></svg></summary><p>Perfecto: la página no lo reemplaza, lo completa. Pones el link en tu bio y tus clientes ven precios, horarios y fotos sin esperar tu respuesta.</p></details>
         <details><summary>¿Y si no me gusta la demo?<svg class="icon"><use href="#i-plus"/></svg></summary><p>No pagas nada. La demo es gratis justamente para que decidas viendo la página real.</p></details>
       </div>
@@ -590,7 +620,7 @@ footer a:hover { color: var(--ink); }
 
 <footer>
   <div class="wrap">
-    <span>© 2026 Eric Design Web · República Dominicana</span>
+    <span>© 2026 Eric Design Web · Los Alcarrizos, Santo Domingo</span>
     <a data-wa="Hola Eric, " href="https://wa.me/18292600023">WhatsApp +1 (829) 260-0023</a>
   </div>
 </footer>
