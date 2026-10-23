@@ -1,0 +1,662 @@
+<!doctype html>
+<html lang="es" data-theme="light">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Eric Design Web · Páginas que venden</title>
+<meta name="description" content="Landing pages para negocios en República Dominicana: listas en días, con WhatsApp, citas y tu propio dominio. Pide tu demo gratis.">
+<meta name="theme-color" content="#f1f4f3">
+<meta property="og:title" content="Eric Design Web · Páginas que venden">
+<meta property="og:description" content="Tu negocio con página propia en días. Pide tu demo gratis por WhatsApp.">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='16' fill='%23101418'/%3E%3Cpath d='M20 18h24M20 32h18M20 46h24M20 18v28' stroke='%23ffc93c' stroke-width='6' stroke-linecap='round'/%3E%3C/svg%3E">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,700;12..96,800&family=Figtree:wght@400;500;600;700&display=swap" rel="stylesheet">
+<script>try{var t=localStorage.getItem('edw-theme');if(t)document.documentElement.dataset.theme=t;else if(matchMedia('(prefers-color-scheme: dark)').matches)document.documentElement.dataset.theme='dark'}catch(e){}</script>
+<style>
+/* Layout: editorial left-aligned columns, one tilted device mock as the hero moment, Caribbean teal + sun yellow on paper */
+:root {
+  --font-display: 'Bricolage Grotesque', 'Arial Narrow', system-ui, sans-serif;
+  --font-body: 'Figtree', system-ui, sans-serif;
+  --ease: cubic-bezier(.16, 1, .3, 1);
+  --radius: 16px;
+  --max: 1180px;
+  --wa: 18292600023;
+}
+[data-theme="light"] {
+  --bg: #f1f4f3;
+  --paper: #ffffff;
+  --ink: #101418;
+  --muted: #4c5560;
+  --line: #d6dedc;
+  --teal: #0b6f71;
+  --teal-ink: #ffffff;
+  --sun: #ffc93c;
+  --sun-ink: #101418;
+  --soft: #e7efe9;
+  --shadow: 0 24px 50px -28px rgba(16, 20, 24, .35);
+  color-scheme: light;
+}
+[data-theme="dark"] {
+  --bg: #0e1215;
+  --paper: #161b20;
+  --ink: #eef1ec;
+  --muted: #a3adb4;
+  --line: #2a3238;
+  --teal: #44c2bf;
+  --teal-ink: #062223;
+  --sun: #ffc93c;
+  --sun-ink: #101418;
+  --soft: #13262a;
+  --shadow: 0 24px 50px -24px rgba(0, 0, 0, .8);
+  color-scheme: dark;
+}
+*, *::before, *::after { box-sizing: border-box; }
+html { scroll-behavior: smooth; scroll-padding-top: 80px; }
+body { margin: 0; background: var(--bg); color: var(--ink); font: 400 1.0625rem/1.6 var(--font-body); -webkit-font-smoothing: antialiased; transition: background-color .35s, color .35s; }
+::selection { background: var(--sun); color: var(--sun-ink); }
+html { scrollbar-color: var(--line) var(--bg); }
+a { color: inherit; text-underline-offset: 4px; }
+:focus-visible { outline: 3px solid var(--sun); outline-offset: 3px; border-radius: 6px; }
+h1, h2, h3 { font-family: var(--font-display); line-height: 1.02; margin: 0; text-wrap: balance; letter-spacing: -.025em; }
+h2 { font-size: clamp(2.1rem, 4.6vw, 3.5rem); font-weight: 800; }
+h3 { font-weight: 700; font-size: 1.35rem; letter-spacing: -.015em; }
+p { margin: 0; }
+.wrap { width: min(100% - 32px, var(--max)); margin-inline: auto; }
+.icon { width: 20px; height: 20px; stroke: currentColor; fill: none; stroke-width: 1.75; stroke-linecap: round; stroke-linejoin: round; flex: none; }
+.lead { color: var(--muted); font-size: 1.15rem; max-width: 52ch; }
+
+.btn { display: inline-flex; align-items: center; justify-content: center; gap: 10px; min-height: 50px; padding: 0 22px; border-radius: 12px; border: 2px solid transparent; font: 700 1rem/1 var(--font-body); text-decoration: none; cursor: pointer; transition: transform .2s var(--ease), background-color .2s, border-color .2s, box-shadow .2s; }
+.btn-main { background: var(--teal); color: var(--teal-ink); box-shadow: 0 10px 22px -12px var(--teal); }
+.btn-main:hover { transform: translateY(-2px); }
+.btn-ghost { border-color: var(--ink); color: var(--ink); background: transparent; }
+.btn-ghost:hover { background: var(--ink); color: var(--bg); }
+.btn:active { transform: scale(.98); }
+.btn[disabled] { opacity: .6; cursor: progress; }
+
+/* Header */
+.skip { position: absolute; left: 16px; top: -80px; z-index: 100; }
+.skip:focus { top: 12px; }
+header.top { position: sticky; top: 0; z-index: 50; background: color-mix(in srgb, var(--bg) 85%, transparent); backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px); border-bottom: 1px solid var(--line); }
+.nav { display: flex; align-items: center; gap: 28px; height: 68px; }
+.logo { display: flex; align-items: center; gap: 10px; text-decoration: none; font: 800 1.2rem/1 var(--font-display); letter-spacing: -.02em; }
+.logo-mark { width: 32px; height: 32px; border-radius: 9px; background: var(--ink); display: grid; place-items: center; }
+.logo-mark svg { width: 18px; height: 18px; stroke: var(--sun); stroke-width: 3.2; fill: none; stroke-linecap: round; }
+.logo small { font: 600 .78rem var(--font-body); color: var(--muted); letter-spacing: 0; margin-left: 2px; }
+.nav ul { display: flex; gap: 24px; list-style: none; margin: 0 0 0 auto; padding: 0; }
+.nav ul a { text-decoration: none; color: var(--muted); font-weight: 500; font-size: .95rem; }
+.nav ul a:hover { color: var(--ink); }
+.tools { display: flex; gap: 8px; align-items: center; }
+.tbtn { width: 42px; height: 42px; border-radius: 12px; border: 1px solid var(--line); background: var(--paper); color: var(--ink); display: grid; place-items: center; cursor: pointer; }
+.tbtn:hover { border-color: var(--ink); }
+.tbtn .i-moon { display: none; }
+[data-theme="dark"] .tbtn .i-moon { display: block; }
+[data-theme="dark"] .tbtn .i-sun { display: none; }
+.nav .btn { min-height: 42px; padding: 0 16px; font-size: .92rem; }
+.menu { display: none; }
+
+/* Hero */
+.hero { padding: clamp(48px, 8vw, 104px) 0 clamp(56px, 8vw, 96px); display: grid; grid-template-columns: 1.1fr .9fr; gap: clamp(32px, 5vw, 64px); align-items: center; }
+.hero h1 { font-size: clamp(2.9rem, 7vw, 5.6rem); font-weight: 800; letter-spacing: -.035em; }
+.hero h1 mark { background: none; color: inherit; position: relative; white-space: nowrap; }
+.hero h1 mark::after { content: ""; position: absolute; left: -.04em; right: -.04em; bottom: .06em; height: .26em; background: var(--sun); z-index: -1; border-radius: 4px; transform-origin: left; animation: swipe 1s .35s var(--ease) both; }
+.hero h1 { position: relative; z-index: 0; }
+@keyframes swipe { from { transform: scaleX(0); } }
+.hero .lead { margin-top: 24px; }
+.cta-row { display: flex; flex-wrap: wrap; gap: 12px; margin-top: 32px; }
+.proofs { display: flex; flex-wrap: wrap; gap: 10px 22px; margin-top: 32px; padding: 0; list-style: none; color: var(--muted); font-size: .95rem; }
+.proofs li { display: flex; align-items: center; gap: 8px; }
+.proofs .icon { color: var(--teal); }
+
+/* Device mock: the Lumière demo, drawn in HTML */
+.stage { position: relative; perspective: 1400px; }
+.device { border-radius: 18px; background: var(--paper); border: 1px solid var(--line); box-shadow: var(--shadow); transform: rotateY(-10deg) rotateX(4deg); transition: transform .8s var(--ease); overflow: hidden; }
+.stage:hover .device { transform: none; }
+.bar { display: flex; align-items: center; gap: 6px; padding: 10px 14px; border-bottom: 1px solid var(--line); }
+.bar i { width: 10px; height: 10px; border-radius: 50%; background: var(--line); }
+.bar span { margin-left: 10px; flex: 1; font-size: .72rem; color: var(--muted); background: var(--bg); border-radius: 6px; padding: 4px 10px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.mini { --m-bg: #0b0a08; --m-text: #f4ede0; --m-muted: #b9ad98; --m-gold: #d4af6a; --m-line: rgba(212,175,106,.25); background: var(--m-bg); color: var(--m-text); padding: 18px 20px 22px; transition: background-color .6s, color .6s; }
+.mini.light { --m-bg: #f8f3ea; --m-text: #1c1710; --m-muted: #5e5343; --m-gold: #8a6526; --m-line: rgba(122,92,40,.25); }
+.mini-nav { display: flex; justify-content: space-between; align-items: center; font-size: .62rem; color: var(--m-muted); }
+.mini-nav b { font: 600 1rem 'Georgia', serif; color: var(--m-gold); }
+.mini-nav em { font-style: normal; border: 1px solid var(--m-gold); color: var(--m-gold); border-radius: 99px; padding: 3px 8px; }
+.mini-hero { display: grid; grid-template-columns: 1.2fr .8fr; gap: 14px; margin-top: 18px; align-items: center; }
+.mini-hero .m-h { margin: 0; font: 600 clamp(1.3rem, 2.4vw, 1.75rem)/1.02 'Georgia', serif; }
+.mini-hero .m-h span { color: var(--m-gold); display: block; }
+.mini-hero p { font-size: .62rem; color: var(--m-muted); margin-top: 8px; line-height: 1.5; }
+.mini-btn { display: inline-block; margin-top: 10px; background: var(--m-gold); color: var(--m-bg); font-size: .6rem; font-weight: 700; padding: 5px 10px; border-radius: 99px; }
+.mini-arch { aspect-ratio: 3 / 4; border-radius: 999px 999px 8px 8px; border: 1px solid var(--m-line); background: radial-gradient(120% 80% at 50% 10%, color-mix(in srgb, var(--m-gold) 55%, transparent), transparent 70%), linear-gradient(170deg, color-mix(in srgb, var(--m-gold) 25%, var(--m-bg)), var(--m-bg)); }
+.mini-row { display: grid; grid-template-columns: repeat(4, 1fr); gap: 6px; margin-top: 16px; }
+.mini-row div { height: 34px; border-radius: 6px; border: 1px solid var(--m-line); background: color-mix(in srgb, var(--m-gold) 10%, transparent); }
+.tag { position: absolute; z-index: 2; background: var(--paper); border: 1px solid var(--line); border-radius: 12px; padding: 10px 14px; box-shadow: var(--shadow); display: flex; gap: 10px; align-items: center; font-size: .88rem; font-weight: 600; }
+.tag .icon { color: var(--teal); }
+.tag-1 { left: -18px; bottom: 34px; }
+.tag-2 { right: -12px; top: 64px; }
+.dot { width: 9px; height: 9px; border-radius: 50%; background: #22a35a; box-shadow: 0 0 0 4px color-mix(in srgb, #22a35a 25%, transparent); }
+
+/* Sections */
+section { padding: clamp(72px, 9vw, 120px) 0 0; }
+.head { display: grid; grid-template-columns: 1fr 1fr; gap: 24px 48px; align-items: end; margin-bottom: 48px; }
+.head p { color: var(--muted); max-width: 48ch; }
+
+.niches { display: flex; flex-wrap: wrap; gap: 12px; }
+.niche { display: flex; align-items: center; gap: 12px; padding: 14px 20px 14px 14px; border-radius: 999px; background: var(--paper); border: 1px solid var(--line); font-weight: 600; }
+.niche span { width: 38px; height: 38px; border-radius: 50%; background: var(--soft); color: var(--teal); display: grid; place-items: center; }
+.niche small { display: block; font-weight: 400; color: var(--muted); font-size: .85rem; }
+
+/* Demos */
+.demo { display: grid; grid-template-columns: 1.2fr .8fr; gap: 0; background: var(--paper); border: 1px solid var(--line); border-radius: 22px; overflow: hidden; }
+.demo-shot { background: #0b0a08; padding: clamp(20px, 3vw, 36px); display: grid; place-items: center; min-height: 320px; position: relative; overflow: hidden; }
+.demo-shot .mini { width: 100%; max-width: 520px; border-radius: 12px; border: 1px solid rgba(212,175,106,.25); box-shadow: 0 30px 60px -30px rgba(0,0,0,.9); }
+.demo-body { padding: clamp(24px, 3.5vw, 44px); display: flex; flex-direction: column; gap: 18px; }
+.demo-body ul { margin: 0; padding: 0; list-style: none; display: grid; gap: 10px; color: var(--muted); }
+.demo-body li { display: flex; gap: 10px; align-items: flex-start; }
+.demo-body li .icon { color: var(--teal); margin-top: 3px; }
+.pill { align-self: flex-start; font-size: .8rem; font-weight: 700; padding: 5px 12px; border-radius: 99px; background: var(--soft); color: var(--teal); }
+.demo-actions { display: flex; flex-wrap: wrap; gap: 10px; margin-top: auto; }
+.next { margin-top: 16px; display: flex; flex-wrap: wrap; gap: 12px; color: var(--muted); font-size: .95rem; }
+.next span { border: 1px dashed var(--line); border-radius: 12px; padding: 12px 16px; }
+
+/* Pricing */
+.plans { display: grid; grid-template-columns: repeat(3, 1fr); gap: 18px; align-items: stretch; }
+.plan { background: var(--paper); border: 1px solid var(--line); border-radius: var(--radius); padding: 28px; display: flex; flex-direction: column; gap: 18px; }
+.plan.star { background: var(--ink); color: var(--bg); border-color: var(--ink); position: relative; }
+.plan.star .muted, .plan.star li { color: color-mix(in srgb, var(--bg) 72%, var(--ink)); }
+.plan.star .icon { color: var(--sun); }
+.badge { position: absolute; top: -13px; left: 28px; background: var(--sun); color: var(--sun-ink); font-size: .78rem; font-weight: 700; padding: 5px 12px; border-radius: 99px; }
+.price { font: 800 clamp(1.6rem, 2.3vw, 1.85rem)/1 var(--font-display); white-space: nowrap; letter-spacing: -.03em; font-variant-numeric: tabular-nums; }
+.price small { display: block; font: 500 .85rem var(--font-body); letter-spacing: 0; margin-top: 8px; }
+.muted { color: var(--muted); }
+.plan ul { list-style: none; margin: 0; padding: 0; display: grid; gap: 10px; color: var(--muted); }
+.plan li { display: flex; gap: 10px; }
+.plan li .icon { color: var(--teal); margin-top: 3px; width: 18px; height: 18px; }
+.plan .btn { margin-top: auto; }
+.plan.star .btn-main { background: var(--sun); color: var(--sun-ink); box-shadow: none; }
+.upkeep { margin-top: 18px; display: flex; flex-wrap: wrap; justify-content: space-between; align-items: center; gap: 16px; padding: 22px 28px; border-radius: var(--radius); background: var(--soft); }
+.upkeep b { font-family: var(--font-display); font-size: 1.25rem; }
+.terms { margin-top: 14px; font-size: .88rem; color: var(--muted); }
+
+/* Process */
+.steps { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: repeat(4, 1fr); gap: 28px; counter-reset: s; }
+.steps li { counter-increment: s; border-top: 2px solid var(--ink); padding-top: 18px; }
+.steps li::before { content: counter(s); font: 800 2.6rem/1 var(--font-display); color: var(--teal); display: block; margin-bottom: 14px; }
+.steps p { color: var(--muted); margin-top: 8px; }
+.steps .when { display: inline-block; margin-top: 12px; font-size: .82rem; font-weight: 700; background: var(--soft); color: var(--teal); padding: 3px 10px; border-radius: 99px; }
+
+/* FAQ */
+.faq { display: grid; grid-template-columns: .8fr 1.2fr; gap: 48px; }
+details { border-bottom: 1px solid var(--line); }
+details:first-child { border-top: 1px solid var(--line); }
+summary { list-style: none; cursor: pointer; padding: 20px 0; display: flex; justify-content: space-between; gap: 16px; font-weight: 600; font-size: 1.08rem; }
+summary::-webkit-details-marker { display: none; }
+summary .icon { transition: transform .3s var(--ease); color: var(--teal); }
+details[open] summary .icon { transform: rotate(45deg); }
+details p { color: var(--muted); padding: 0 0 20px; max-width: 60ch; }
+
+/* Contact */
+.contact { margin-top: clamp(72px, 9vw, 120px); background: var(--ink); color: var(--bg); padding: clamp(56px, 8vw, 96px) 0; }
+.contact .wrap { display: grid; grid-template-columns: .9fr 1.1fr; gap: clamp(32px, 5vw, 64px); }
+.contact h2 { color: var(--bg); }
+.contact .lead { color: color-mix(in srgb, var(--bg) 70%, var(--ink)); margin-top: 18px; }
+.phone { margin-top: 28px; display: flex; flex-wrap: wrap; align-items: center; gap: 12px; }
+.phone strong { font: 800 clamp(1.6rem, 3vw, 2.2rem)/1 var(--font-display); letter-spacing: -.02em; user-select: all; }
+.copy { border: 1px solid color-mix(in srgb, var(--bg) 30%, transparent); background: transparent; color: var(--bg); border-radius: 10px; padding: 8px 12px; font: 600 .85rem var(--font-body); cursor: pointer; }
+.copy:hover { border-color: var(--sun); }
+.contact .btn-wa { margin-top: 24px; background: var(--sun); color: var(--sun-ink); }
+form { background: var(--paper); color: var(--ink); border-radius: 20px; padding: clamp(22px, 3vw, 32px); display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+.field { display: grid; gap: 6px; }
+.full { grid-column: 1 / -1; }
+label { font-size: .88rem; font-weight: 600; }
+input, select, textarea { width: 100%; min-height: 48px; padding: 11px 14px; border-radius: 10px; border: 1.5px solid var(--line); background: var(--bg); color: var(--ink); font: 400 1rem var(--font-body); caret-color: var(--teal); }
+textarea { min-height: 90px; resize: vertical; }
+input::placeholder, textarea::placeholder { color: var(--muted); }
+input:focus, select:focus, textarea:focus { outline: none; border-color: var(--teal); box-shadow: 0 0 0 3px color-mix(in srgb, var(--teal) 22%, transparent); }
+.err { font-size: .82rem; color: #b42318; min-height: 1em; }
+[data-theme="dark"] .err { color: #ff8a7a; }
+[aria-invalid="true"] { border-color: #b42318; }
+.form-note { grid-column: 1 / -1; font-size: .85rem; color: var(--muted); }
+
+footer { padding: 32px 0 40px; }
+footer .wrap { display: flex; flex-wrap: wrap; justify-content: space-between; gap: 16px; color: var(--muted); font-size: .9rem; }
+footer a { text-decoration: none; }
+footer a:hover { color: var(--ink); }
+
+.wa-float { position: fixed; right: 18px; bottom: 18px; z-index: 40; display: flex; align-items: center; gap: 10px; background: #15803d; color: #fff; text-decoration: none; font-weight: 700; padding: 0 18px 0 14px; height: 54px; border-radius: 999px; box-shadow: 0 14px 30px -12px rgba(0,0,0,.5); transition: transform .2s var(--ease); }
+.wa-float:hover { transform: translateY(-3px); }
+.wa-float .icon { width: 24px; height: 24px; }
+
+.toast { position: fixed; left: 50%; bottom: 86px; transform: translate(-50%, 16px); opacity: 0; pointer-events: none; z-index: 60; background: var(--ink); color: var(--bg); padding: 10px 18px; border-radius: 999px; font-size: .9rem; transition: opacity .25s, transform .35s var(--ease); }
+.toast.show { opacity: 1; transform: translate(-50%, 0); }
+
+@media (max-width: 980px) {
+  .nav ul, .nav .btn-nav { display: none; }
+  .menu { display: grid; }
+  .tools { margin-left: auto; }
+  .nav ul.open { display: flex; flex-direction: column; gap: 0; position: absolute; top: 68px; left: 0; right: 0; margin: 0; padding: 8px 16px 16px; background: var(--bg); border-bottom: 1px solid var(--line); }
+  .nav ul.open a { display: block; padding: 14px 4px; border-bottom: 1px solid var(--line); color: var(--ink); font-size: 1.05rem; }
+  .hero, .demo, .faq, .contact .wrap, .head { grid-template-columns: 1fr; }
+  .stage { max-width: 560px; }
+  .plans { grid-template-columns: 1fr; max-width: 520px; }
+  .plan.star { order: -1; }
+  .steps { grid-template-columns: 1fr 1fr; }
+}
+@media (max-width: 560px) {
+  .logo small { display: none; }
+  .tag-2 { display: none; }
+  .tag-1 { left: 8px; bottom: -18px; }
+  .mini-hero { grid-template-columns: 1fr; }
+  .mini-arch { display: none; }
+  .steps { grid-template-columns: 1fr; }
+  form { grid-template-columns: 1fr; }
+  .wa-float span { display: none; }
+  .wa-float { padding: 0; width: 56px; justify-content: center; }
+  .device { transform: none; }
+}
+/* Problem vs solution */
+.versus { display: grid; grid-template-columns: 1fr 1fr; gap: 18px; }
+.vs-col { border-radius: 20px; padding: clamp(22px, 3vw, 32px); display: flex; flex-direction: column; gap: 16px; }
+.vs-before { background: var(--paper); border: 1px solid var(--line); }
+.vs-after { background: var(--soft); border: 1px solid color-mix(in srgb, var(--teal) 30%, transparent); }
+.vs-label { font: 700 .8rem var(--font-body); letter-spacing: .06em; text-transform: uppercase; color: var(--muted); }
+.vs-after .vs-label { color: var(--teal); }
+.chat { display: grid; gap: 8px; }
+.msg { max-width: 82%; padding: 10px 14px; border-radius: 16px 16px 16px 4px; background: var(--bg); border: 1px solid var(--line); font-size: .95rem; }
+.msg time { display: block; font-size: .72rem; color: var(--muted); margin-top: 2px; font-variant-numeric: tabular-nums; }
+.msg.late { border-color: #e2a2a2; }
+.vs-cost { margin-top: auto; padding-top: 14px; border-top: 1px dashed var(--line); color: var(--muted); font-size: .95rem; }
+.page-card { background: var(--paper); border-radius: 14px; border: 1px solid var(--line); overflow: hidden; }
+.page-row { display: flex; justify-content: space-between; gap: 12px; padding: 12px 16px; border-bottom: 1px solid var(--line); font-size: .95rem; }
+.page-row:last-child { border-bottom: 0; }
+.page-row b { font-variant-numeric: tabular-nums; }
+.page-cta { display: flex; align-items: center; justify-content: center; gap: 8px; margin: 12px 16px 16px; min-height: 44px; border-radius: 10px; background: var(--teal); color: var(--teal-ink); font-weight: 700; font-size: .95rem; }
+
+/* Guarantees */
+.promises { display: grid; grid-template-columns: repeat(3, 1fr); gap: 0; border-block: 1px solid var(--line); margin-top: 48px; }
+.promise { padding: 26px 24px 26px 0; display: flex; gap: 14px; }
+.promise + .promise { padding-left: 24px; border-left: 1px solid var(--line); }
+.promise span { width: 44px; height: 44px; border-radius: 12px; background: var(--ink); color: var(--sun); display: grid; place-items: center; flex: none; }
+.promise b { display: block; font-size: 1.05rem; }
+.promise p { color: var(--muted); font-size: .95rem; margin-top: 2px; }
+
+/* Section CTA */
+.sec-cta { margin-top: 40px; display: flex; flex-wrap: wrap; align-items: center; gap: 14px 20px; }
+.sec-cta p { color: var(--muted); }
+
+/* Form result */
+.sent { grid-column: 1 / -1; display: none; gap: 12px; align-items: flex-start; padding: 14px 16px; border-radius: 12px; background: var(--soft); border: 1px solid color-mix(in srgb, var(--teal) 35%, transparent); font-size: .95rem; }
+.sent.show { display: flex; animation: rise .45s var(--ease); }
+.sent .icon { color: var(--teal); margin-top: 2px; }
+.sent a { font-weight: 700; color: var(--teal); }
+@keyframes rise { from { opacity: 0; transform: translateY(8px); } }
+
+/* Stagger reveal (content is visible by default; JS only adds motion) */
+.js .stagger > * { opacity: 0; transform: translateY(16px) scale(.98); transition: opacity .5s var(--ease), transform .5s var(--ease); transition-delay: calc(var(--i, 0) * 60ms); }
+.js .stagger.in > * { opacity: 1; transform: none; }
+.copy { min-height: 44px; }
+
+@media (max-width: 980px) {
+  .versus { grid-template-columns: 1fr; }
+  .promises { grid-template-columns: 1fr; }
+  .promise, .promise + .promise { padding: 20px 0; border-left: 0; }
+  .promise + .promise { border-top: 1px solid var(--line); }
+}
+@media (max-width: 560px) { body { padding-bottom: 72px; } }
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after { animation: none !important; transition: none !important; }
+  html { scroll-behavior: auto; }
+  .js .stagger > * { opacity: 1; transform: none; }
+}
+</style>
+</head>
+<body>
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <symbol id="i-check" viewBox="0 0 24 24"><path d="M5 12.5l4.5 4.5L19 7.5"/></symbol>
+  <symbol id="i-wa" viewBox="0 0 24 24"><path d="M4 20l1.3-3.9A8 8 0 1 1 8 19z"/><path d="M9 10.5c.3 1.8 2.2 3.7 4 4l1.2-1.2 1.8.8c-.3 1-1.2 1.6-2.2 1.4-3-.6-5.3-2.9-5.9-5.9-.2-1 .4-1.9 1.4-2.2l.8 1.8z"/></symbol>
+  <symbol id="i-arrow" viewBox="0 0 24 24"><path d="M5 12h14M13 6l6 6-6 6"/></symbol>
+  <symbol id="i-plus" viewBox="0 0 24 24"><path d="M12 5v14M5 12h14"/></symbol>
+  <symbol id="i-bolt" viewBox="0 0 24 24"><path d="M13 2L4 14h7l-1 8 9-12h-7z"/></symbol>
+  <symbol id="i-phone" viewBox="0 0 24 24"><rect x="6" y="2.5" width="12" height="19" rx="2.5"/><path d="M11 18.5h2"/></symbol>
+  <symbol id="i-cal" viewBox="0 0 24 24"><rect x="3" y="4.5" width="18" height="16" rx="2.5"/><path d="M8 2.5v4M16 2.5v4M3 9.5h18"/></symbol>
+  <symbol id="i-scissors" viewBox="0 0 24 24"><circle cx="6" cy="6" r="3"/><circle cx="6" cy="18" r="3"/><path d="M8.1 8.1L20 20M8.1 15.9L20 4"/></symbol>
+  <symbol id="i-food" viewBox="0 0 24 24"><path d="M6 2v8a2 2 0 0 0 4 0V2M8 10v12M16 22V2c-2.5 1.5-3 4-3 7 0 2 1 3 3 3"/></symbol>
+  <symbol id="i-tooth" viewBox="0 0 24 24"><path d="M12 5c-2-2-6-2-7 1-1 3 1 6 1.5 9 .4 2.5 1 6 2.5 6s1.5-4 3-4 1.5 4 3 4 2.1-3.5 2.5-6c.5-3 2.5-6 1.5-9-1-3-5-3-7-1z"/></symbol>
+  <symbol id="i-palm" viewBox="0 0 24 24"><path d="M12 22c0-6 0-10-1-13"/><path d="M11 9C9 5 5 5 3 7c3 0 5 1 8 2zM11 9c2-4 6-5 9-3-3 0-6 1-9 3zM11 9c-1-3 0-6 3-7-1 2-2 4-3 7z"/></symbol>
+  <symbol id="i-dumbbell" viewBox="0 0 24 24"><path d="M6 6v12M18 6v12M3 9v6M21 9v6M6 12h12"/></symbol>
+  <symbol id="i-car" viewBox="0 0 24 24"><path d="M5 16h14M3 16v-4l2-5h14l2 5v4"/><circle cx="7.5" cy="16.5" r="2"/><circle cx="16.5" cy="16.5" r="2"/></symbol>
+  <symbol id="i-sun" viewBox="0 0 24 24"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"/></symbol>
+  <symbol id="i-moon" viewBox="0 0 24 24"><path d="M20 14.5A8 8 0 1 1 9.5 4a6.5 6.5 0 0 0 10.5 10.5z"/></symbol>
+  <symbol id="i-menu" viewBox="0 0 24 24"><path d="M4 7h16M4 12h16M4 17h16"/></symbol>
+</svg>
+
+<a class="btn btn-main skip" href="#contacto">Saltar al contacto</a>
+
+<header class="top">
+  <nav class="wrap nav" aria-label="Principal">
+    <a class="logo" href="#" aria-label="Eric Design Web, inicio">
+      <span class="logo-mark" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M7 5h10M7 12h7M7 19h10M7 5v14"/></svg></span>
+      Eric Design <small>Web</small>
+    </a>
+    <ul id="links">
+      <li><a href="#demos">Demos</a></li>
+      <li><a href="#precios">Precios</a></li>
+      <li><a href="#proceso">Cómo trabajo</a></li>
+      <li><a href="#preguntas">Preguntas</a></li>
+      <li><a href="#contacto">Contacto</a></li>
+    </ul>
+    <div class="tools">
+      <button class="tbtn" id="theme" type="button" aria-label="Cambiar a tema oscuro"><svg class="icon i-sun"><use href="#i-moon"/></svg><svg class="icon i-moon"><use href="#i-sun"/></svg></button>
+      <a class="btn btn-main btn-nav" data-wa="Hola Eric, quiero una página para mi negocio." href="https://wa.me/18292600023"><svg class="icon"><use href="#i-wa"/></svg>Escríbeme</a>
+      <button class="tbtn menu" id="menu" type="button" aria-expanded="false" aria-controls="links" aria-label="Abrir menú"><svg class="icon"><use href="#i-menu"/></svg></button>
+    </div>
+  </nav>
+</header>
+
+<main>
+  <div class="wrap hero">
+    <div>
+      <h1>Tu negocio merece una página que <mark>venda</mark>.</h1>
+      <p class="lead">Diseño landing pages para negocios en República Dominicana: tus servicios, precios y fotos en un solo link, con botón de WhatsApp para que te escriban y agenden.</p>
+      <div class="cta-row">
+        <a class="btn btn-main" data-wa="Hola Eric, quiero mi demo gratis. Mi negocio es: " href="https://wa.me/18292600023"><svg class="icon"><use href="#i-wa"/></svg>Pide tu demo gratis</a>
+        <a class="btn btn-ghost" href="#demos">Ver ejemplos<svg class="icon"><use href="#i-arrow"/></svg></a>
+      </div>
+      <ul class="proofs">
+        <li><svg class="icon"><use href="#i-bolt"/></svg>Lista desde 48 horas</li>
+        <li><svg class="icon"><use href="#i-phone"/></svg>Hecha para el celular</li>
+        <li><svg class="icon"><use href="#i-check"/></svg>Ves la demo antes de pagar</li>
+      </ul>
+    </div>
+    <div class="stage" aria-hidden="true">
+      <div class="device">
+        <div class="bar"><i></i><i></i><i></i><span>tusalon.com</span></div>
+        <div class="mini" id="heroMini">
+          <div class="mini-nav"><b>Lumière</b><span>Servicios · Galería · Opiniones</span><em>Reservar</em></div>
+          <div class="mini-hero">
+            <div><div class="m-h">Belleza. Lujo.<span>Confianza.</span></div><p>Cabello, uñas, maquillaje y spa en un solo lugar.</p><span class="mini-btn">Reservar cita</span></div>
+            <div class="mini-arch"></div>
+          </div>
+          <div class="mini-row"><div></div><div></div><div></div><div></div></div>
+        </div>
+      </div>
+      <div class="tag tag-1"><span class="dot"></span>Nueva cita por WhatsApp</div>
+      <div class="tag tag-2"><svg class="icon"><use href="#i-sun"/></svg>Tema claro y oscuro</div>
+    </div>
+  </div>
+
+  <section id="por-que">
+    <div class="wrap">
+      <div class="head">
+        <h2>Deja de contestar lo mismo todos los días</h2>
+        <p>Tus clientes quieren saber precio, horario y dónde estás. Si la respuesta tarda, le escriben a otro. Tu página les responde al instante, de día o de noche.</p>
+      </div>
+      <div class="versus">
+        <div class="vs-col vs-before">
+          <span class="vs-label">Hoy, solo con Instagram</span>
+          <div class="chat" aria-label="Ejemplo de mensajes de clientes">
+            <div class="msg">¿Cuánto cuesta el blower?<time>10:42 p. m.</time></div>
+            <div class="msg">¿Abren el domingo?<time>10:58 p. m.</time></div>
+            <div class="msg late">¿Dónde quedan? ¿Tienen parqueo?<time>11:15 p. m.</time></div>
+            <div class="msg late">Ok, gracias igual<time>11:40 p. m.</time></div>
+          </div>
+          <p class="vs-cost">Mensajes sin responder de noche son clientes que reservan en otro lado.</p>
+        </div>
+        <div class="vs-col vs-after">
+          <span class="vs-label">Con tu página</span>
+          <div class="page-card" aria-label="Ejemplo de página con precios y horario">
+            <div class="page-row"><span>Blower</span><b>RD$800</b></div>
+            <div class="page-row"><span>Domingo</span><b>10:00 a. m. – 3:00 p. m.</b></div>
+            <div class="page-row"><span>Ubicación</span><b>Mapa y parqueo</b></div>
+            <div class="page-cta"><svg class="icon"><use href="#i-wa"/></svg>Agendar por WhatsApp</div>
+          </div>
+          <p class="vs-cost">El cliente ve todo en segundos y te escribe solo para agendar.</p>
+        </div>
+      </div>
+      <div class="promises stagger">
+        <div class="promise" style="--i:0"><span><svg class="icon"><use href="#i-check"/></svg></span><div><b>Demo gratis</b><p>Ves tu página funcionando antes de pagar un peso.</p></div></div>
+        <div class="promise" style="--i:1"><span><svg class="icon"><use href="#i-bolt"/></svg></span><div><b>Rápida de verdad</b><p>Desde 48 horas, no semanas de espera.</p></div></div>
+        <div class="promise" style="--i:2"><span><svg class="icon"><use href="#i-wa"/></svg></span><div><b>Trato directo</b><p>Hablas conmigo por WhatsApp, sin intermediarios.</p></div></div>
+      </div>
+    </div>
+  </section>
+
+  <section id="para-quien">
+    <div class="wrap">
+      <div class="head">
+        <h2>Negocios que ya viven en WhatsApp e Instagram</h2>
+        <p>Si tus clientes te preguntan precios y horarios por mensaje todos los días, una página les responde sola y te deja solo agendar.</p>
+      </div>
+      <div class="niches stagger">
+        <div class="niche" style="--i:0"><span><svg class="icon"><use href="#i-scissors"/></svg></span><div>Salones y barberías<small>Servicios, precios y citas</small></div></div>
+        <div class="niche" style="--i:1"><span><svg class="icon"><use href="#i-food"/></svg></span><div>Restaurantes<small>Menú digital y pedidos</small></div></div>
+        <div class="niche" style="--i:2"><span><svg class="icon"><use href="#i-tooth"/></svg></span><div>Clínicas y estética<small>Consultas y testimonios</small></div></div>
+        <div class="niche" style="--i:3"><span><svg class="icon"><use href="#i-palm"/></svg></span><div>Rentas vacacionales<small>Galería y reservas, en inglés</small></div></div>
+        <div class="niche" style="--i:4"><span><svg class="icon"><use href="#i-dumbbell"/></svg></span><div>Gimnasios y entrenadores<small>Planes y horarios</small></div></div>
+        <div class="niche" style="--i:5"><span><svg class="icon"><use href="#i-car"/></svg></span><div>Dealers y rent-a-car<small>Inventario y financiamiento</small></div></div>
+      </div>
+      <div class="sec-cta">
+        <a class="btn btn-ghost" data-wa="Hola Eric, mi negocio es de otro tipo, ¿también haces páginas para: " href="https://wa.me/18292600023">¿Tu negocio no está aquí? Pregúntame</a>
+      </div>
+    </div>
+  </section>
+
+  <section id="demos">
+    <div class="wrap">
+      <div class="head">
+        <h2>Demos que puedes abrir y tocar</h2>
+        <p>Cada demo es una página real, con datos de ejemplo. Ábrela en tu celular y prueba los botones como lo haría tu cliente.</p>
+      </div>
+      <article class="demo">
+        <div class="demo-shot" aria-hidden="true">
+          <div class="mini" id="demoMini">
+            <div class="mini-nav"><b>Lumière</b><span>ES · EN</span><em>Reservar</em></div>
+            <div class="mini-hero">
+              <div><div class="m-h">Belleza. Lujo.<span>Confianza.</span></div><p>Servicios, galería, opiniones y citas.</p><span class="mini-btn">Reservar cita</span></div>
+              <div class="mini-arch"></div>
+            </div>
+            <div class="mini-row"><div></div><div></div><div></div><div></div></div>
+          </div>
+        </div>
+        <div class="demo-body">
+          <span class="pill">Plan Pro · Salón de belleza</span>
+          <h3>Lumière Salón &amp; Spa</h3>
+          <ul>
+            <li><svg class="icon"><use href="#i-check"/></svg>Negro y dorado, con cambio a tema claro</li>
+            <li><svg class="icon"><use href="#i-check"/></svg>Español e inglés con un botón</li>
+            <li><svg class="icon"><use href="#i-check"/></svg>Servicios con precios, galería y opiniones</li>
+            <li><svg class="icon"><use href="#i-check"/></svg>Formulario de citas y WhatsApp</li>
+          </ul>
+          <div class="demo-actions">
+            <a class="btn btn-main" id="demoLink" href="https://lumiere-salon-demo.vercel.app" target="_blank" rel="noopener">Abrir demo<svg class="icon"><use href="#i-arrow"/></svg></a>
+            <a class="btn btn-ghost" data-wa="Hola Eric, quiero una página como la demo del salón. Mi negocio es: " href="https://wa.me/18292600023">Quiero una así</a>
+          </div>
+        </div>
+      </article>
+      <div class="next"><span>Próximamente: restaurante con menú digital</span><span>Próximamente: barbería con citas</span></div>
+    </div>
+  </section>
+
+  <section id="precios">
+    <div class="wrap">
+      <div class="head">
+        <h2>Precios claros, sin sorpresas</h2>
+        <p>Pagas 50% para empezar y 50% cuando la página está lista y te gusta. Todos los planes incluyen una ronda de cambios.</p>
+      </div>
+      <div class="plans stagger">
+        <article class="plan" style="--i:0">
+          <h3>Básico</h3>
+          <div class="price">RD$6,000–8,000<small class="muted">Entrega en 48 horas</small></div>
+          <ul>
+            <li><svg class="icon"><use href="#i-check"/></svg>Una página con tus servicios y precios</li>
+            <li><svg class="icon"><use href="#i-check"/></svg>Botón de WhatsApp y mapa</li>
+            <li><svg class="icon"><use href="#i-check"/></svg>Link listo para tu bio de Instagram y TikTok</li>
+          </ul>
+          <a class="btn btn-ghost" data-wa="Hola Eric, me interesa el plan Básico." href="https://wa.me/18292600023">Elegir Básico</a>
+        </article>
+        <article class="plan star" style="--i:1">
+          <span class="badge">El más pedido</span>
+          <h3>Pro</h3>
+          <div class="price">RD$12,000–15,000<small class="muted">Entrega en 3 a 5 días</small></div>
+          <ul>
+            <li><svg class="icon"><use href="#i-check"/></svg>Todo lo del Básico</li>
+            <li><svg class="icon"><use href="#i-check"/></svg>Galería de fotos y testimonios</li>
+            <li><svg class="icon"><use href="#i-check"/></svg>Formulario de citas</li>
+            <li><svg class="icon"><use href="#i-check"/></svg>Dominio propio (tunegocio.com)</li>
+          </ul>
+          <a class="btn btn-main" data-wa="Hola Eric, me interesa el plan Pro." href="https://wa.me/18292600023">Elegir Pro</a>
+        </article>
+        <article class="plan" style="--i:2">
+          <h3>Premium</h3>
+          <div class="price">RD$20,000–30,000<small class="muted">Entrega en 7 días</small></div>
+          <ul>
+            <li><svg class="icon"><use href="#i-check"/></svg>Todo lo del Pro</li>
+            <li><svg class="icon"><use href="#i-check"/></svg>Reservas automáticas</li>
+            <li><svg class="icon"><use href="#i-check"/></svg>Versión en inglés</li>
+            <li><svg class="icon"><use href="#i-check"/></svg>4 videos cortos para TikTok</li>
+          </ul>
+          <a class="btn btn-ghost" data-wa="Hola Eric, me interesa el plan Premium." href="https://wa.me/18292600023">Elegir Premium</a>
+        </article>
+      </div>
+      <div class="upkeep">
+        <div><b>Mantenimiento mensual · RD$1,500–3,000</b><p class="muted">Hosting, cambios de precios, fotos nuevas y soporte. Tú no tocas nada técnico.</p></div>
+        <a class="btn btn-ghost" data-wa="Hola Eric, tengo una pregunta sobre el mantenimiento mensual." href="https://wa.me/18292600023">Preguntar</a>
+      </div>
+      <p class="terms">El precio final depende de cuántas secciones y fotos lleve tu página. Te lo confirmo antes de empezar.</p>
+    </div>
+  </section>
+
+  <section id="proceso">
+    <div class="wrap">
+      <div class="head">
+        <h2>De tu primer mensaje a tu página publicada</h2>
+        <p>Sin reuniones largas ni formularios técnicos. Todo por WhatsApp.</p>
+      </div>
+      <ol class="steps">
+        <li><h3>Me escribes</h3><p>Me cuentas qué vendes y me mandas tu logo, fotos y lista de precios.</p><span class="when">Día 1</span></li>
+        <li><h3>Te mando la demo</h3><p>Ves tu página funcionando en tu celular antes de pagar nada.</p><span class="when">En 24 horas</span></li>
+        <li><h3>Ajustamos</h3><p>Cambiamos textos, colores o fotos hasta que te guste. Pagas el 50% para seguir.</p><span class="when">Días 2–4</span></li>
+        <li><h3>Publicamos</h3><p>Conecto tu dominio, pagas el resto y te entrego el link para tus redes.</p><span class="when">Lista</span></li>
+      </ol>
+      <div class="sec-cta">
+        <a class="btn btn-main" data-wa="Hola Eric, quiero empezar con mi página. Mi negocio es: " href="https://wa.me/18292600023"><svg class="icon"><use href="#i-wa"/></svg>Empezar hoy</a>
+        <p>El paso 1 toma dos minutos: mándame el nombre de tu negocio.</p>
+      </div>
+    </div>
+  </section>
+
+  <section id="preguntas">
+    <div class="wrap faq">
+      <h2>Preguntas frecuentes</h2>
+      <div>
+        <details><summary>¿Necesito tener dominio o hosting?<svg class="icon"><use href="#i-plus"/></svg></summary><p>No. En los planes Pro y Premium te ayudo a comprar el dominio y lo dejo conectado. El hosting va incluido en el mantenimiento mensual.</p></details>
+        <details><summary>¿Cómo pago?<svg class="icon"><use href="#i-plus"/></svg></summary><p>Por transferencia bancaria: 50% para empezar y 50% al entregar. Te mando los datos por WhatsApp.</p></details>
+        <details><summary>¿Puedo cambiar precios o fotos después?<svg class="icon"><use href="#i-plus"/></svg></summary><p>Sí. Con el mantenimiento mensual me mandas el cambio por WhatsApp y lo actualizo. Sin mantenimiento, cada cambio se cotiza aparte.</p></details>
+        <details><summary>¿Y si ya tengo Instagram?<svg class="icon"><use href="#i-plus"/></svg></summary><p>Perfecto: la página no lo reemplaza, lo completa. Pones el link en tu bio y tus clientes ven precios, horarios y fotos sin esperar tu respuesta.</p></details>
+        <details><summary>¿Y si no me gusta la demo?<svg class="icon"><use href="#i-plus"/></svg></summary><p>No pagas nada. La demo es gratis justamente para que decidas viendo la página real.</p></details>
+      </div>
+    </div>
+  </section>
+
+  <div class="contact" id="contacto">
+    <div class="wrap">
+      <div>
+        <h2>Pide tu demo gratis</h2>
+        <p class="lead">Cuéntame de tu negocio y en 24 horas te mando una página de prueba con tu nombre.</p>
+        <div class="phone"><strong id="num">+1 (829) 260-0023</strong><button class="copy" id="copy" type="button">Copiar número</button></div>
+        <a class="btn btn-wa" data-wa="Hola Eric, quiero mi demo gratis. Mi negocio es: " href="https://wa.me/18292600023"><svg class="icon"><use href="#i-wa"/></svg>Abrir WhatsApp</a>
+      </div>
+      <form id="lead" novalidate>
+        <div class="field"><label for="f-name">Tu nombre</label><input id="f-name" name="name" autocomplete="name" placeholder="María Pérez"><span class="err" id="e-name" aria-live="polite"></span></div>
+        <div class="field"><label for="f-biz">Nombre del negocio</label><input id="f-biz" name="biz" autocomplete="organization" placeholder="Salón Bella"><span class="err" id="e-biz" aria-live="polite"></span></div>
+        <div class="field"><label for="f-type">Tipo de negocio</label>
+          <select id="f-type" name="type"><option>Salón o barbería</option><option>Restaurante</option><option>Clínica o estética</option><option>Renta vacacional</option><option>Gimnasio o entrenador</option><option>Dealer o rent-a-car</option><option>Otro</option></select></div>
+        <div class="field"><label for="f-plan">Plan que te interesa</label>
+          <select id="f-plan" name="plan"><option>Todavía no sé</option><option>Básico</option><option selected>Pro</option><option>Premium</option></select></div>
+        <div class="field full"><label for="f-msg">¿Qué te gustaría que tenga tu página? (opcional)</label><textarea id="f-msg" name="msg" placeholder="Ej.: precios, fotos de mis trabajos y que me agenden por WhatsApp"></textarea></div>
+        <button class="btn btn-main full" type="submit"><svg class="icon"><use href="#i-wa"/></svg>Enviar por WhatsApp</button>
+        <p class="form-note">Se abre WhatsApp con tu mensaje ya escrito; solo tienes que darle a enviar.</p>
+        <div class="sent" id="sent" role="status"><svg class="icon"><use href="#i-check"/></svg><span>Abrimos WhatsApp con tu mensaje. Si no se abrió, <a id="sentLink" href="https://wa.me/18292600023" target="_blank" rel="noopener">toca aquí para enviarlo</a>.</span></div>
+      </form>
+    </div>
+  </div>
+</main>
+
+<footer>
+  <div class="wrap">
+    <span>© 2026 Eric Design Web · República Dominicana</span>
+    <a data-wa="Hola Eric, " href="https://wa.me/18292600023">WhatsApp +1 (829) 260-0023</a>
+  </div>
+</footer>
+
+<a class="wa-float" data-wa="Hola Eric, quiero una página para mi negocio." href="https://wa.me/18292600023" aria-label="Escribir por WhatsApp"><svg class="icon"><use href="#i-wa"/></svg><span>WhatsApp</span></a>
+<div class="toast" id="toast" role="status" aria-live="polite"></div>
+
+<script>
+(function () {
+  document.documentElement.classList.add('js');
+  var WA = 'https://wa.me/18292600023';
+  var root = document.documentElement;
+  function waLink(text) { return WA + '?text=' + encodeURIComponent(text); }
+  document.querySelectorAll('[data-wa]').forEach(function (a) {
+    a.href = waLink(a.dataset.wa); a.target = '_blank'; a.rel = 'noopener';
+  });
+
+  var theme = document.getElementById('theme');
+  function syncTheme() {
+    var dark = root.dataset.theme === 'dark';
+    theme.setAttribute('aria-label', dark ? 'Cambiar a tema claro' : 'Cambiar a tema oscuro');
+    document.querySelector('meta[name=theme-color]').content = dark ? '#0e1215' : '#f1f4f3';
+  }
+  theme.addEventListener('click', function () {
+    root.dataset.theme = root.dataset.theme === 'dark' ? 'light' : 'dark';
+    try { localStorage.setItem('edw-theme', root.dataset.theme); } catch (e) {}
+    syncTheme();
+  });
+  syncTheme();
+
+  var menu = document.getElementById('menu'), links = document.getElementById('links');
+  menu.addEventListener('click', function () { var o = links.classList.toggle('open'); menu.setAttribute('aria-expanded', o); });
+  links.addEventListener('click', function (e) { if (e.target.closest('a')) { links.classList.remove('open'); menu.setAttribute('aria-expanded', false); } });
+
+  // The hero mock flips between the demo's dark and light themes
+  var hero = document.getElementById('heroMini');
+  if (!matchMedia('(prefers-reduced-motion: reduce)').matches) {
+    setInterval(function () { hero.classList.toggle('light'); }, 3200);
+  }
+
+  var toast = document.getElementById('toast'), tt;
+  function say(msg) { toast.textContent = msg; toast.classList.add('show'); clearTimeout(tt); tt = setTimeout(function () { toast.classList.remove('show'); }, 2600); }
+  document.getElementById('copy').addEventListener('click', function () {
+    var n = '+18292600023';
+    if (navigator.clipboard) navigator.clipboard.writeText(n).then(function () { say('Número copiado'); }, function () { say('Mantén presionado el número para copiarlo'); });
+    else say('Mantén presionado el número para copiarlo');
+  });
+
+  var form = document.getElementById('lead');
+  function setErr(id, msg) {
+    var i = document.getElementById('f-' + id), e = document.getElementById('e-' + id);
+    e.textContent = msg; i.setAttribute('aria-invalid', msg ? 'true' : 'false');
+    if (msg) i.setAttribute('aria-describedby', 'e-' + id); else i.removeAttribute('aria-describedby');
+    return !msg;
+  }
+  form.addEventListener('submit', function (e) {
+    e.preventDefault();
+    var ok = setErr('name', form.name.value.trim().length < 2 ? 'Escribe tu nombre.' : '');
+    ok = setErr('biz', form.biz.value.trim().length < 2 ? 'Escribe el nombre de tu negocio.' : '') && ok;
+    if (!ok) { form.querySelector('[aria-invalid="true"]').focus(); return; }
+    var text = 'Hola Eric, soy ' + form.name.value.trim() + ' de ' + form.biz.value.trim() + ' (' + form.type.value + ').\n' +
+      'Me interesa el plan: ' + form.plan.value + '.' + (form.msg.value.trim() ? '\nQuiero que mi página tenga: ' + form.msg.value.trim() : '') +
+      '\n¿Me haces una demo gratis?';
+    var url = waLink(text);
+    document.getElementById('sentLink').href = url;
+    document.getElementById('sent').classList.add('show');
+    window.open(url, '_blank', 'noopener');
+  });
+  if ('IntersectionObserver' in window && !matchMedia('(prefers-reduced-motion: reduce)').matches) {
+    var io = new IntersectionObserver(function (es) { es.forEach(function (e) { if (e.isIntersecting) { e.target.classList.add('in'); io.unobserve(e.target); } }); }, { rootMargin: '0px 0px -10% 0px' });
+    document.querySelectorAll('.stagger').forEach(function (el) { io.observe(el); });
+  } else { document.querySelectorAll('.stagger').forEach(function (el) { el.classList.add('in'); }); }
+  form.addEventListener('input', function (e) { if (e.target.getAttribute('aria-invalid') === 'true') setErr(e.target.id.slice(2), ''); });
+})();
+</script>
+</body>
+</html>
