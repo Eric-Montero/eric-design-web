@@ -24,7 +24,7 @@
 }
 *, *::before, *::after { box-sizing: border-box; }
 html, body { height: 100%; }
-body { margin: 0; font: 400 1rem/1.5 var(--font); background: var(--bg); color: var(--text); -webkit-font-smoothing: antialiased; }
+body { margin: 0; font: 400 1rem/1.5 var(--font); font-variant-numeric: tabular-nums; background: var(--bg); color: var(--text); -webkit-font-smoothing: antialiased; }
 ::selection { background: var(--copper); color: var(--on-copper); }
 button { font: inherit; color: inherit; background: none; border: 0; padding: 0; cursor: pointer; }
 a { color: inherit; }
@@ -48,7 +48,7 @@ h1, h2, h3, p { margin: 0; }
   .pitch li { display: flex; gap: 10px; }
   .pitch li .icon { color: #8a6a3a; width: 20px; height: 20px; margin-top: 2px; }
   .pitch a { display: inline-block; margin-top: 28px; padding: 12px 0; font-weight: 700; color: var(--page-ink); }
-  .phone { width: 390px; height: 820px; min-height: 0; border-radius: 48px; border: 10px solid #141210; box-shadow: 0 40px 80px -30px rgba(20, 16, 10, .55), 0 0 0 1px rgba(0, 0, 0, .25); color: var(--text); }
+  .phone { width: 390px; height: 820px; min-height: 0; border-radius: 48px; border: 10px solid #141210;  color: var(--text); }
   .phone::before { content: ""; position: absolute; top: 10px; left: 50%; translate: -50% 0; width: 110px; height: 30px; background: #000; border-radius: 20px; z-index: 30; }
 }
 
@@ -57,7 +57,8 @@ h1, h2, h3, p { margin: 0; }
 .screen { position: absolute; inset: 0; overflow-y: auto; overscroll-behavior: contain; padding: calc(env(safe-area-inset-top, 0px) + 20px) 20px 24px; opacity: 0; pointer-events: none; transform: translateX(12px); transition: opacity 200ms var(--ease-out), transform 250ms var(--ease-out); scrollbar-width: none; }
 .phone[data-dir="back"] .screen:not(.on) { transform: translateX(-12px); }
 .screen::-webkit-scrollbar { display: none; }
-.screen.on { opacity: 1; pointer-events: auto; transform: none; }
+.screen.on { opacity: 1; pointer-events: auto; transform: none; visibility: visible; transition: opacity 200ms var(--ease-out), transform 250ms var(--ease-out), visibility 0s; }
+.screen:not(.on) { visibility: hidden; transition: opacity 200ms var(--ease-out), transform 250ms var(--ease-out), visibility 0s linear 250ms; }
 @media (min-width: 900px) { .screen { padding-top: 56px; } }
 .has-tabs .screen { padding-bottom: 112px; }
 #detail { padding-bottom: 120px; }
@@ -66,7 +67,7 @@ h1, h2, h3, p { margin: 0; }
 
 /* Welcome */
 #welcome { padding: 0; display: flex; flex-direction: column; }
-.w-photo { flex: 1; min-height: 340px; position: relative; background: radial-gradient(90% 70% at 50% 35%, #4a3720, var(--bg) 75%); overflow: hidden; }
+.w-photo { flex: 1; min-height: 340px; position: relative; background: #2a2015; overflow: hidden; }
 .w-photo img { width: 100%; height: 100%; object-fit: cover; object-position: 50% 30%; opacity: .7; }
 .w-photo::after { content: ""; position: absolute; inset: 0; background: linear-gradient(180deg, rgba(13, 12, 10, .2) 30%, var(--bg) 96%); }
 .w-body { padding: 0 24px calc(env(safe-area-inset-bottom, 0px) + 28px); margin-top: -120px; position: relative; z-index: 1; }
@@ -95,7 +96,7 @@ h1, h2, h3, p { margin: 0; }
 .search { display: flex; align-items: center; gap: 10px; min-height: 52px; padding: 0 16px; border-radius: 16px; background: var(--s1); border: 1px solid var(--line); color: var(--muted); }
 .search input { flex: 1; min-width: 0; background: none; border: 0; color: var(--text); font: inherit; outline: none; }
 .search input::placeholder { color: var(--muted); }
-.promo { margin-top: 18px; border-radius: 22px; overflow: hidden; position: relative; min-height: 168px; background: linear-gradient(120deg, #2b2116, #171512 70%); border: 1px solid var(--line); display: flex; }
+.promo { margin-top: 18px; border-radius: 22px; overflow: hidden; position: relative; min-height: 168px; background: #241c13; border: 1px solid var(--line); display: flex; }
 .promo.noimg .promo-text { max-width: 100%; }
 .promo-text { position: relative; z-index: 1; padding: 20px; max-width: 62%; display: flex; flex-direction: column; align-items: flex-start; gap: 6px; }
 .promo-text small { color: var(--copper); font-weight: 700; }
@@ -114,7 +115,7 @@ h1, h2, h3, p { margin: 0; }
 .barbers { display: grid; grid-auto-flow: column; grid-auto-columns: 132px; gap: 12px; overflow-x: auto; scroll-snap-type: x mandatory; scrollbar-width: none; margin: 0 -20px; padding: 0 20px 4px; }
 .barbers::-webkit-scrollbar { display: none; }
 .barber { scroll-snap-align: start; text-align: left; background: var(--s1); border: 1px solid var(--line); border-radius: 18px; padding: 12px; }
-.mono { aspect-ratio: 1; width: 100%; border-radius: 12px; display: grid; place-items: center; font: 900 1.9rem var(--font); font-stretch: 80%; color: var(--copper); background: linear-gradient(150deg, #2c241a, #1a1714); margin-bottom: 10px; }
+.mono { aspect-ratio: 1; width: 100%; border-radius: 12px; display: grid; place-items: center; font: 900 1.9rem var(--font); font-stretch: 80%; color: var(--copper); background: #221b14; margin-bottom: 10px; }
 .barber b { display: block; font-weight: 700; font-size: .95rem; }
 .barber small { color: var(--muted); font-size: .78rem; display: flex; align-items: center; gap: 4px; }
 .barber small svg { width: 12px; height: 12px; fill: var(--copper); stroke: none; }
@@ -128,7 +129,7 @@ h1, h2, h3, p { margin: 0; }
 
 /* Detail */
 .back-row { display: flex; justify-content: space-between; margin-bottom: 8px; position: relative; z-index: 2; }
-.d-hero { margin: -76px -20px 0; height: 260px; position: relative; overflow: hidden; background: radial-gradient(80% 80% at 70% 30%, #4a3720, var(--bg) 75%); }
+.d-hero { margin: -76px -20px 0; height: 260px; position: relative; overflow: hidden; background: #2a2015; }
 @media (min-width: 900px) { .d-hero { margin-top: -112px; } }
 .d-hero img { width: 100%; height: 100%; object-fit: cover; object-position: 60% 25%; opacity: .78; }
 .d-hero.noimg { height: 190px; }
@@ -136,7 +137,7 @@ h1, h2, h3, p { margin: 0; }
 .d-hero:not(.noimg) .big { display: none; }
 .w-photo .big { position: absolute; left: 50%; top: 44%; translate: -50% -50%; font: 900 12rem/.8 var(--font); font-stretch: 75%; color: transparent; -webkit-text-stroke: 1.5px rgba(199, 154, 91, .35); letter-spacing: -.04em; z-index: 0; }
 .w-photo:not(.noimg) .big { display: none; }
-.w-photo.noimg { background: repeating-linear-gradient(135deg, rgba(199,154,91,.06) 0 18px, transparent 18px 36px), radial-gradient(90% 70% at 50% 35%, #4a3720, var(--bg) 75%); }
+.w-photo.noimg { background: #2a2015; }
 .d-hero::after { content: ""; position: absolute; inset: 0; background: linear-gradient(180deg, rgba(13, 12, 10, .5) 0%, transparent 30%, var(--bg) 98%); }
 .d-title { margin-top: -64px; position: relative; z-index: 1; }
 .d-title h2 { font: 900 2.2rem/.95 var(--font); font-stretch: 82%; }
@@ -277,8 +278,8 @@ h1, h2, h3, p { margin: 0; }
 
 <div class="stage">
   <aside class="pitch">
-    <h2>Tu barbería, como una app en el celular de tus clientes.</h2>
-    <p>Así se ve en un teléfono. Toca los botones: escoge corte, barbero, día y hora, y confirma la cita.</p>
+    <h2>Tu barbería, como una app</h2>
+    <p>Así se vería en el celular de tus clientes. Toca los botones: escoge corte, barbero, día y hora, y confirma la cita.</p>
     <ul>
       <li><svg class="icon"><use href="#i-check"/></svg>Se abre desde un link, sin descargar nada</li>
       <li><svg class="icon"><use href="#i-check"/></svg>Se puede guardar en la pantalla de inicio</li>
@@ -458,7 +459,7 @@ h1, h2, h3, p { margin: 0; }
     return '<button class="barber" data-pick-bar="' + b.id + '"><div class="mono" aria-hidden="true">' + b.mono + '</div><b>' + b.name + '</b><small>' + stars(b.rating) + '</small></button>';
   }).join('');
   $('barberList').innerHTML = BAR.filter(function (b) { return b.id !== 'any'; }).map(function (b) {
-    return '<button class="svc" data-pick-bar="' + b.id + '"><span class="ic" style="font-weight:900;font-size:1.2rem">' + b.mono + '</span><span class="t"><b>' + b.name + '</b><small>' + b.role + '</small></span><span class="p" style="color:var(--copper)">★ ' + b.rating + '</span></button>';
+    return '<button class="svc" data-pick-bar="' + b.id + '"><span class="ic" style="font-weight:900;font-size:1.2rem">' + b.mono + '</span><span class="t"><b>' + b.name + '</b><small>' + b.role + '</small></span><span class="p" style="color:var(--copper)"><svg class="icon" style="width:14px;height:14px;fill:currentColor;stroke:none;vertical-align:-2px"><use href="#i-star"/></svg> ' + b.rating + '</span></button>';
   }).join('');
   function renderSvc() {
     var q = ($('q').value || '').toLowerCase().trim();
