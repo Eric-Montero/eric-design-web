@@ -1,492 +1,671 @@
 <!doctype html>
-<html lang="es">
+<html lang="es" data-theme="dark">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Nácar Nail Studio · Uñas en Piantini</title>
-<meta name="description" content="Manicure, gel, nail art y pedicure en Piantini, Santo Domingo. Escoge tu color en nuestra carta y reserva tu cita en línea.">
-<meta name="theme-color" content="#120d0d">
-<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' fill='%23120d0d'/%3E%3Cpath d='M32 10c9 0 14 9 14 20v24H18V30c0-11 5-20 14-20z' fill='%23d8a7a0'/%3E%3C/svg%3E">
-<link rel="preload" href="fonts/bodoni-moda-latin-400-normal.woff2" as="font" type="font/woff2" crossorigin>
-<link rel="preload" href="fonts/jost-latin-400-normal.woff2" as="font" type="font/woff2" crossorigin>
+<meta name="description" content="Manicure, gel, extensiones, nail art y pedicure en Piantini, Santo Domingo. Escoge tu color y reserva tu cita en línea.">
+<meta name="theme-color" content="#0b0909">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%230b0909'/%3E%3Cpath d='M32 12c8 0 12 8 12 18v22H20V30c0-10 4-18 12-18z' fill='none' stroke='%23d8a7a0' stroke-width='4'/%3E%3C/svg%3E">
+<link rel="preload" href="fonts/cormorant-latin-600-normal.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="fonts/hanken-grotesk-latin-400-normal.woff2" as="font" type="font/woff2" crossorigin>
+<script>try{var t=localStorage.getItem('nacar-theme');if(t)document.documentElement.dataset.theme=t}catch(e){}</script>
 <style>
-@font-face { font-family: 'Bodoni Moda'; font-style: normal; font-weight: 400; font-display: swap; src: url(fonts/bodoni-moda-latin-400-normal.woff2) format('woff2'); }
-@font-face { font-family: 'Bodoni Moda'; font-style: normal; font-weight: 500; font-display: swap; src: url(fonts/bodoni-moda-latin-500-normal.woff2) format('woff2'); }
-@font-face { font-family: 'Jost'; font-style: normal; font-weight: 400; font-display: swap; src: url(fonts/jost-latin-400-normal.woff2) format('woff2'); }
-@font-face { font-family: 'Jost'; font-style: normal; font-weight: 500; font-display: swap; src: url(fonts/jost-latin-500-normal.woff2) format('woff2'); }
-/* The dark room: one brown-black ground, lit things in it. Square corners, one accent (rose) on the action. */
+@font-face { font-family: 'Cormorant'; font-style: normal; font-weight: 500; font-display: swap; src: url(fonts/cormorant-latin-500-normal.woff2) format('woff2'); }
+@font-face { font-family: 'Cormorant'; font-style: normal; font-weight: 600; font-display: swap; src: url(fonts/cormorant-latin-600-normal.woff2) format('woff2'); }
+@font-face { font-family: 'Hanken Grotesk'; font-style: normal; font-weight: 400; font-display: swap; src: url(fonts/hanken-grotesk-latin-400-normal.woff2) format('woff2'); }
+@font-face { font-family: 'Hanken Grotesk'; font-style: normal; font-weight: 600; font-display: swap; src: url(fonts/hanken-grotesk-latin-600-normal.woff2) format('woff2'); }
+@font-face { font-family: 'Hanken Grotesk'; font-style: normal; font-weight: 700; font-display: swap; src: url(fonts/hanken-grotesk-latin-700-normal.woff2) format('woff2'); }
+/* Same family as Lumière and Navaja: Cormorant + Hanken Grotesk, near-black panels, one warm accent (here dusty rose), 14px cards, light/dark toggle */
 :root {
-  --display: 'Bodoni Moda', 'Didot', Georgia, serif;
-  --text: 'Jost', 'Futura', system-ui, sans-serif;
-  --bg: #120d0d;
-  --surface: #1c1515;
-  --field: #261c1b;
-  --ink: #f2e6e2;
-  --muted: #c4b0ab;
-  --accent: #d8a7a0;
-  --on-accent: #1a1110;
-  --s1: .875rem;   /* 14 */
-  --s2: 1.0625rem; /* 17 */
-  --s3: 1.375rem;  /* 22 */
-  --s4: 2.5rem;    /* 40 */
-  --s5: clamp(3.5rem, 6.4vw, 6rem);
-  --m: clamp(20px, 4vw, 56px);
+  --font-display: 'Cormorant', 'Times New Roman', serif;
+  --font-body: 'Hanken Grotesk', system-ui, sans-serif;
   --ease-out: cubic-bezier(0.23, 1, 0.32, 1);
-  --ease-in-out: cubic-bezier(0.77, 0, 0.175, 1);
+  --r: 14px;
+  --max: 1200px;
+}
+[data-theme="dark"] {
+  --bg: #0b0909; --panel: #151111; --panel-2: #1d1817; --line: rgba(216, 167, 160, .22); --line-2: rgba(244, 233, 229, .1);
+  --text: #f4e9e5; --muted: #b9a7a2; --rose: #d8a7a0; --rose-hi: #e6bdb6; --on-rose: #1a1110;
+  --busy: rgba(244, 233, 229, .28);
   color-scheme: dark;
+}
+[data-theme="light"] {
+  --bg: #f7f1ee; --panel: #fffcfb; --panel-2: #f0e6e2; --line: rgba(154, 90, 85, .25); --line-2: rgba(40, 24, 22, .1);
+  --text: #1e1514; --muted: #5f4f4c; --rose: #9a5a55; --rose-hi: #82473f; --on-rose: #fffaf8;
+  --busy: rgba(40, 24, 22, .3);
+  color-scheme: light;
 }
 *, *::before, *::after { box-sizing: border-box; }
 [hidden] { display: none !important; }
-html { scroll-behavior: smooth; scroll-padding-top: 72px; }
-body { margin: 0; background: var(--bg); color: var(--ink); font: 400 var(--s2)/1.6 var(--text); -webkit-font-smoothing: antialiased; font-variant-numeric: tabular-nums; }
-::selection { background: var(--accent); color: var(--on-accent); }
-html { scrollbar-color: var(--field) var(--bg); }
+html { scroll-behavior: smooth; scroll-padding-top: 80px; scrollbar-color: var(--panel-2) var(--bg); }
+body { margin: 0; background: var(--bg); color: var(--text); font: 400 1rem/1.6 var(--font-body); -webkit-font-smoothing: antialiased; transition: background-color .35s, color .35s; }
+::selection { background: var(--rose); color: var(--on-rose); }
 img { display: block; max-width: 100%; }
-a { color: inherit; text-underline-offset: 5px; }
+a { color: inherit; text-underline-offset: 4px; }
 button { font: inherit; color: inherit; }
-:focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; }
-h1, h2, h3 { margin: 0; font-family: var(--display); font-weight: 400; line-height: 1; letter-spacing: -.02em; text-wrap: balance; }
+:focus-visible { outline: 2px solid var(--rose); outline-offset: 3px; border-radius: 8px; }
+h1, h2, h3 { font-family: var(--font-display); font-weight: 600; line-height: 1.04; margin: 0; text-wrap: balance; }
 p { margin: 0; text-wrap: pretty; }
-.wrap { padding-inline: var(--m); max-width: 1440px; margin-inline: auto; }
-.icon { width: 20px; height: 20px; stroke: currentColor; fill: none; stroke-width: 1.5; stroke-linecap: round; stroke-linejoin: round; flex: none; }
-.btn { display: inline-flex; align-items: center; justify-content: center; gap: 10px; min-height: 48px; padding: 0 26px; border: 0; background: var(--accent); color: var(--on-accent); font: 500 var(--s2)/1 var(--text); text-decoration: none; cursor: pointer; transition: transform 160ms var(--ease-out), background-color 200ms ease; }
+.wrap { width: min(100% - 32px, var(--max)); margin-inline: auto; }
+.icon { width: 20px; height: 20px; stroke: currentColor; fill: none; stroke-width: 1.6; stroke-linecap: round; stroke-linejoin: round; flex: none; }
+.btn { display: inline-flex; align-items: center; justify-content: center; gap: 10px; min-height: 48px; padding: 0 24px; border-radius: 10px; border: 1px solid transparent; font: 600 .875rem/1 var(--font-body); letter-spacing: .08em; text-transform: uppercase; text-decoration: none; cursor: pointer; transition: background-color 200ms ease, color 200ms ease, transform 160ms var(--ease-out), border-color 200ms ease; }
 .btn:active:not([disabled]) { transform: scale(0.97); }
-.btn[disabled] { background: var(--field); color: var(--muted); cursor: not-allowed; }
-.link { display: inline-flex; align-items: center; min-height: 44px; font-size: var(--s1); color: var(--ink); text-decoration: none; }
-button.link { background: none; border: 0; padding: 0; cursor: pointer; justify-self: start; text-decoration: underline; }
+.btn-rose { background: var(--rose); color: var(--on-rose); }
+.btn-line { border-color: var(--rose); color: var(--rose); background: transparent; }
 @media (hover: hover) and (pointer: fine) {
-  .btn:hover:not([disabled]) { background: #e6bab3; }
-  .link:hover { text-decoration: underline; }
+  .btn-rose:hover { background: var(--rose-hi); }
+  .btn-line:hover { background: var(--rose); color: var(--on-rose); }
 }
+.btn[disabled] { background: transparent; color: var(--muted); border: 1px dashed var(--line); cursor: not-allowed; }
 .skip { position: absolute; left: 16px; top: -80px; z-index: 100; }
 .skip:focus { top: 12px; }
 
-/* Hero: one photograph, everything on the midline rail */
-.hero { position: relative; height: 100svh; min-height: 560px; background: var(--surface); }
-.hero-photo { position: absolute; inset: 0; overflow: hidden; background: var(--surface); }
-.hero-photo img { width: 100%; height: 100%; object-fit: cover; object-position: 50% 45%; }
-.hero-photo .fallback { position: absolute; inset: 0; display: grid; place-items: end; padding-right: var(--m); }
-.hero-photo .fallback svg { width: min(40vw, 460px); height: auto; }
-.hero-title { position: absolute; left: var(--m); right: var(--m); bottom: calc(50svh + 40px); z-index: 4; font-size: clamp(3rem, 7.4vw, 7.25rem); line-height: .95; color: var(--ink); }
-.hero-photo::after { content: ""; position: absolute; inset: 0; background: rgba(10, 6, 6, .38); }
-.brand { font: 400 var(--s3)/1 var(--display); white-space: nowrap; text-decoration: none; color: inherit; min-height: 44px; display: inline-flex; align-items: center; }
-.rail { position: sticky; top: 0; z-index: 20; margin-block: calc(-50svh - 32px) calc(50svh - 32px); min-height: 64px; display: grid; grid-template-columns: auto 1fr auto; align-items: center; gap: 24px 40px; padding: 10px var(--m); background: rgba(0, 0, 0, .55); }
-.rail.docked { background: var(--bg); }
-.rail p { max-width: 44ch; font-size: var(--s2); }
-.rail nav { display: flex; align-items: center; gap: 24px; }
-.hero-cta { display: none; }
-.detail { height: 80svh; background: var(--surface); overflow: hidden; }
-.detail:not(:has(img)) { display: none; }
-.detail img { width: 100%; height: 100%; object-fit: cover; object-position: 50% 60%; }
+/* Header */
+header { position: sticky; top: 0; z-index: 40; background: var(--bg); transition: background-color .35s; }
+.nav { height: 72px; display: flex; align-items: center; gap: 28px; }
+.brand { display: flex; align-items: center; gap: 12px; text-decoration: none; min-height: 44px; color: var(--text); }
+.brand .icon { width: 30px; height: 30px; color: var(--rose); stroke-width: 1.4; }
+.brand b { display: block; font: 600 1.5rem/1 var(--font-display); letter-spacing: .02em; }
+.brand small { display: block; font-size: .875rem; color: var(--muted); margin-top: 3px; }
+.nav ul { display: flex; gap: 26px; list-style: none; margin: 0 0 0 auto; padding: 0; }
+.nav ul a { display: inline-block; padding: 12px 0; text-decoration: none; font-size: .875rem; color: var(--muted); }
+.nav ul a:hover { color: var(--text); }
+.tool { width: 44px; height: 44px; border-radius: 10px; border: 1px solid var(--line-2); background: transparent; display: grid; place-items: center; cursor: pointer; transition: transform 120ms var(--ease-out), border-color 200ms ease; }
+.tool:active { transform: scale(0.97); }
+.tool:hover { border-color: var(--rose); }
+.tool .i-moon { display: none; }
+[data-theme="light"] .tool .i-moon { display: block; }
+[data-theme="light"] .tool .i-sun { display: none; }
+.nav .btn { min-height: 44px; padding: 0 18px; }
 
-/* Masked headline */
-.line { display: block; overflow: hidden; padding-bottom: .08em; margin-bottom: -.08em; }
-.line > span { display: block; }
-@media (prefers-reduced-motion: no-preference) {
-  .js .line > span { transform: translateY(105%); animation: line-up 900ms var(--ease-out) forwards; animation-delay: calc(var(--i, 0) * 110ms + 150ms); }
-  .js .rail p, .js .rail nav { opacity: 0; animation: fade-in 600ms var(--ease-out) 500ms forwards; }
-}
-@keyframes line-up { to { transform: none; } }
-@keyframes fade-in { to { opacity: 1; } }
+/* Hero: text left, arched photo right (Lumière's arch, Navaja's buttons) */
+.hero { padding-block: clamp(40px, 6vw, 80px) clamp(56px, 7vw, 96px); }
+.hero .wrap { display: grid; grid-template-columns: 1.05fr .95fr; gap: clamp(32px, 6vw, 80px); align-items: center; }
+.hero h1 { font-size: clamp(3.2rem, 7vw, 6rem); letter-spacing: -.01em; }
+.hero h1 em { display: block; color: var(--rose); font-style: normal; }
+.hero p { color: var(--muted); margin-top: 22px; max-width: 42ch; font-size: 1.125rem; }
+.hero .row { display: flex; flex-wrap: wrap; gap: 12px; margin-top: 32px; }
+.trust { display: flex; flex-wrap: wrap; gap: 10px 22px; margin-top: 28px; font-size: 1rem; color: var(--muted); }
+.trust span { display: inline-flex; align-items: center; gap: 8px; }
+.stars { display: inline-flex; gap: 2px; }
+.stars svg { width: 14px; height: 14px; fill: var(--rose); }
+.dot { width: 8px; height: 8px; border-radius: 50%; background: #3fbf6a; }
+.dot.closed { background: #d26a4c; }
+.arch { position: relative; justify-self: end; width: min(100%, 470px); }
+.arch .frame { aspect-ratio: 4 / 5; border-radius: 999px 999px var(--r) var(--r); overflow: hidden; background: var(--panel-2); position: relative; }
+.arch .frame::after { content: ""; position: absolute; z-index: 2; inset: 10px; border-radius: inherit; border: 1px solid rgba(244, 233, 229, .35); pointer-events: none; }
+.arch img { position: relative; z-index: 1; width: 100%; height: 100%; object-fit: cover; object-position: 50% 40%; }
+.chip { position: absolute; z-index: 2; display: flex; align-items: center; gap: 12px; background: var(--panel); border: 1px solid var(--line); border-radius: var(--r); padding: 12px 16px; font-size: .875rem; }
+.chip b { display: block; font: 600 1.5rem/1 var(--font-display); color: var(--rose); }
+.chip-1 { left: -28px; bottom: 56px; }
+.chip-2 { right: -14px; top: 64px; gap: 6px; }
+.chip-2 i { width: 18px; height: 22px; border-radius: 9px 9px 4px 4px; background: var(--c); }
 
-section { padding-block: clamp(120px, 14vw, 200px) 0; }
-h2 { font-size: var(--s4); }
+/* Perks */
+.perks { display: grid; grid-template-columns: repeat(4, 1fr); border-radius: var(--r); background: var(--panel); }
+.perk { padding: 24px; }
+.perk b { display: block; font: 600 1.5rem/1.1 var(--font-display); }
+.perk p { font-size: 1rem; margin-top: 4px; color: var(--muted); }
 
-/* Carta de colores: specimens on colour tiles, and the live thing */
-.carta { display: grid; grid-template-columns: repeat(12, 1fr); gap: 0 10px; }
-.carta-head { grid-column: 1 / 4; display: grid; gap: 20px; align-content: start; }
-.carta-head p { max-width: 30ch; color: var(--muted); }
-.tiles { grid-column: 4 / 13; display: grid; grid-template-columns: repeat(4, 1fr); gap: 32px 10px; }
-.tile { display: grid; gap: 12px; text-align: left; background: none; border: 0; padding: 0; cursor: pointer; transition: transform 120ms var(--ease-out); }
-.tile:active { transform: scale(0.98); }
-.tile .sw { aspect-ratio: 4 / 5; display: grid; place-items: center; background: var(--c); position: relative; }
-.tile.wide { grid-column: span 2; }
-.tile.wide .sw { aspect-ratio: 8 / 5; }
-.tile .sw svg { height: 70%; width: auto; }
-.tile .sw::after { content: ""; position: absolute; inset: 0; outline: 3px solid var(--ink); outline-offset: -3px; opacity: 0; transition: opacity 200ms ease; }
-.tile[aria-pressed="true"] .sw::after { opacity: 1; }
-.tile b { font: 500 var(--s3)/1.2 var(--text); }
-.tile small { display: block; font-size: var(--s2); color: var(--muted); }
-.preview { grid-column: 4 / 13; margin-top: 56px; display: grid; grid-template-columns: 1.1fr 1fr; gap: 40px; align-items: center; background: var(--surface); padding: clamp(24px, 4vw, 48px); }
-.nails { width: 100%; height: auto; }
+section { padding-top: clamp(72px, 9vw, 112px); }
+.sec-title { display: flex; flex-wrap: wrap; justify-content: space-between; align-items: end; gap: 16px; margin-bottom: 32px; }
+.sec-title h2 { font-size: clamp(2.2rem, 4.6vw, 3.4rem); }
+.sec-title p { color: var(--muted); max-width: 44ch; }
+
+/* Services: cards with photo, like the reference */
+.cards { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; }
+.card { background: var(--panel); border-radius: var(--r); overflow: hidden; display: flex; flex-direction: column; }
+.card .ph { aspect-ratio: 16 / 10; border-radius: 0; }
+.card .body { padding: 20px 22px 22px; display: grid; gap: 6px; flex: 1; align-content: start; }
+.card h3 { font-size: 1.5rem; }
+.card p { color: var(--muted); font-size: 1rem; }
+.card .price { margin-top: 8px; display: flex; justify-content: space-between; align-items: baseline; font-size: .875rem; color: var(--muted); }
+.card .price b { font: 600 1.5rem var(--font-display); color: var(--rose); font-variant-numeric: tabular-nums; }
+.extras { margin-top: 16px; display: grid; grid-template-columns: repeat(3, 1fr); gap: 0 48px; }
+.menu-item { display: flex; align-items: baseline; justify-content: space-between; gap: 12px; padding: 12px 0; }
+.menu-item b { font: 600 1.5rem var(--font-display); }
+.menu-item span { color: var(--rose); font-weight: 600; font-variant-numeric: tabular-nums; white-space: nowrap; }
+
+/* Shade card */
+.shade { display: grid; grid-template-columns: 1fr 1fr; gap: clamp(20px, 4vw, 48px); align-items: center; background: var(--panel); border-radius: 20px; padding: clamp(20px, 3vw, 40px); }
+.preview[data-ui] { background: var(--panel-2); border-radius: var(--r); padding: 28px 24px 0; overflow: hidden; }
+.nails { width: 100%; height: auto; display: block; }
 .nails .nail { transition: fill 300ms ease; }
-.nails .shine { transition: opacity 300ms ease; }
-.pick { display: grid; gap: 20px; }
-.pick h3 { font-size: var(--s4); }
-.finish { display: flex; flex-wrap: wrap; gap: 8px; }
-.finish button { min-height: 44px; padding: 0 18px; border: 0; background: var(--field); color: var(--ink); font-size: var(--s2); cursor: pointer; transition: background-color 200ms ease, transform 120ms var(--ease-out); }
+.nails .shine, .nails .chrome { transition: opacity 300ms ease; }
+.nails.mate .nail { filter: saturate(.85) brightness(.94); }
+.pick h3 { font-size: clamp(2rem, 3.6vw, 2.6rem); }
+.pick > p { color: var(--muted); margin-top: 8px; }
+.swatches { display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; margin-top: 22px; }
+.sw { display: flex; align-items: center; gap: 12px; min-height: 56px; padding: 8px 12px; border-radius: 10px; border: 1px solid var(--line-2); background: var(--bg); cursor: pointer; text-align: left; transition: border-color 200ms ease, transform 120ms var(--ease-out); }
+.sw:active { transform: scale(0.97); }
+.sw i { width: 26px; height: 32px; border-radius: 13px 13px 5px 5px; background: var(--c); flex: none; }
+.sw i, .opt i.c { outline: 1px solid var(--line-2); outline-offset: -1px; }
+.sw span { font-size: .875rem; font-weight: 600; line-height: 1.2; }
+.sw[aria-pressed="true"] { border-color: var(--rose); background: color-mix(in srgb, var(--rose) 10%, var(--bg)); }
+.finish { display: flex; gap: 8px; margin-top: 14px; }
+.finish button { flex: 1; min-height: 44px; border-radius: 10px; border: 1px solid var(--line-2); background: transparent; cursor: pointer; font-size: 1rem; transition: background-color 200ms ease, transform 120ms var(--ease-out); }
 .finish button:active { transform: scale(0.97); }
-.finish button[aria-pressed="true"] { background: var(--ink); color: var(--bg); }
-.pick .note { color: var(--muted); }
+.finish button[aria-pressed="true"] { background: var(--text); color: var(--bg); border-color: var(--text); }
+.pick .note { margin-top: 14px; font-size: .875rem; color: var(--muted); min-height: 1.4em; }
+.pick .btn { margin-top: 18px; }
 
-/* Gallery: staggered pairs in empty ground */
-.gallery { display: grid; grid-template-columns: repeat(12, 1fr); column-gap: 10px; row-gap: 96px; }
-.gallery h2 { grid-column: 1 / -1; margin-bottom: -60px; }
-.g { margin: 0; }
-.g .ph { overflow: hidden; background: var(--surface); position: relative; }
-.g img { width: 100%; height: 100%; object-fit: cover; filter: brightness(.88) contrast(1.05); }
-.g figcaption { margin-top: 10px; font-size: var(--s1); color: var(--muted); }
-.g1 { grid-column: 1 / 5; grid-row: 2; } .g1 .ph { aspect-ratio: 3 / 4; }
-.g2 { grid-column: 7 / 13; grid-row: 2; margin-top: 180px; } .g2 .ph { aspect-ratio: 5 / 4; }
-.g3 { grid-column: 6 / 12; grid-row: 3; margin-top: 60px; } .g3 .ph { aspect-ratio: 3 / 2; }
-.g4 { grid-column: 2 / 5; grid-row: 3; margin-top: 240px; } .g4 .ph { aspect-ratio: 4 / 5; }
-.ph .fallback { position: absolute; inset: 0; display: grid; place-items: center; }
-.ph .fallback svg { width: 38%; height: auto; }
-.js .reveal .ph { clip-path: inset(100% 0 0 0); transition: clip-path 900ms var(--ease-in-out); }
-.js .reveal.in .ph { clip-path: inset(0 0 0 0); }
+/* Booking console (Navaja's) */
+.console { background: var(--panel); border-radius: 20px; padding: clamp(20px, 3vw, 36px); }
+.console-head { display: flex; flex-wrap: wrap; justify-content: space-between; align-items: end; gap: 16px 32px; }
+.console-head h2 { font-size: clamp(2.2rem, 4.6vw, 3.4rem); }
+.hours { display: flex; align-items: center; gap: 10px; color: var(--muted); font-size: .875rem; }
+.hours .icon { color: var(--rose); width: 26px; height: 26px; }
+.hours b { color: var(--text); display: block; font-weight: 600; }
+.steps { list-style: none; padding: 0; margin: 28px 0; display: grid; grid-template-columns: repeat(4, 1fr); gap: 12px; }
+.steps li { display: flex; align-items: center; gap: 12px; font-size: 1rem; color: var(--muted); }
+.steps li span { width: 34px; height: 34px; border-radius: 50%; border: 1px solid var(--line); display: grid; place-items: center; font-weight: 700; font-size: .85rem; flex: none; transition: background-color 200ms ease, color 200ms ease, border-color 200ms ease; }
+.steps li.done span { background: var(--rose); color: var(--on-rose); border-color: var(--rose); }
+.steps li.done, .steps li.now { color: var(--text); }
+.steps li.now span { border-color: var(--rose); color: var(--rose); }
+.steps li::after { content: ""; flex: 1; height: 1px; background: var(--line); } /* taste-skill-ignore: progress connector, same as Navaja */
+.steps li:last-child::after { display: none; }
+.grid { display: grid; grid-template-columns: 1fr 1fr 1.15fr 1fr; gap: 24px; align-items: start; }
+.col { scroll-margin-top: 88px; min-width: 0; }
+.col h3 { font: 700 1.125rem var(--font-body); display: flex; align-items: center; gap: 10px; margin-bottom: 14px; }
+.col h3 .icon { color: var(--rose); }
+.opts { display: grid; gap: 8px; }
+.opt { display: flex; align-items: center; gap: 12px; width: 100%; text-align: left; min-height: 56px; padding: 10px 14px; border-radius: 10px; border: 1px solid var(--line-2); background: var(--bg); cursor: pointer; transition: transform 120ms var(--ease-out), border-color 200ms ease, background-color 200ms ease; }
+.opt:active { transform: scale(0.97); }
+.opt:hover { border-color: var(--line); }
+.opt[aria-pressed="true"] { border-color: var(--rose); background: color-mix(in srgb, var(--rose) 9%, var(--bg)); }
+.opt .t { flex: 1; min-width: 0; }
+.opt .t b { display: block; font-weight: 600; font-size: 1rem; }
+.opt .t small { color: var(--muted); font-size: .875rem; font-variant-numeric: tabular-nums; }
+.opt i.c { width: 22px; height: 28px; border-radius: 11px 11px 4px 4px; background: var(--c); flex: none; }
+[data-col="luego"] i.c { outline: 1px dashed var(--muted); outline-offset: -1px; }
+.tick { width: 22px; height: 22px; border-radius: 50%; border: 1.5px solid var(--line); display: grid; place-items: center; flex: none; }
+.tick .icon { width: 13px; height: 13px; stroke-width: 3; opacity: 0; }
+.opt[aria-pressed="true"] .tick { background: var(--rose); border-color: var(--rose); color: var(--on-rose); }
+.opt[aria-pressed="true"] .tick .icon { opacity: 1; }
+.note-s { margin-top: 12px; display: flex; gap: 8px; font-size: .875rem; color: var(--muted); }
+.note-s .icon { width: 16px; height: 16px; color: var(--rose); margin-top: 2px; }
+.cal-head { display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px; }
+.cal-head b { font-weight: 600; text-transform: capitalize; }
+.cal-nav { width: 44px; height: 44px; border-radius: 10px; border: 1px solid var(--line-2); background: transparent; display: grid; place-items: center; cursor: pointer; }
+.cal-nav[disabled] { opacity: .3; cursor: not-allowed; }
+.cal { display: grid; grid-template-columns: repeat(7, 1fr); gap: 2px; text-align: center; }
+.cal .dow { font-size: .875rem; letter-spacing: .06em; color: var(--muted); padding: 4px 0; }
+.day { aspect-ratio: 1; min-height: 44px; border-radius: 50%; border: 0; background: transparent; cursor: pointer; font-size: .875rem; font-variant-numeric: tabular-nums; transition: transform 120ms var(--ease-out), background-color 200ms ease; }
+.day:active:not([disabled]) { transform: scale(0.95); }
+.day:hover:not([disabled]) { background: color-mix(in srgb, var(--rose) 14%, transparent); }
+.day[disabled] { color: var(--busy); cursor: not-allowed; }
+.day[aria-pressed="true"] { background: var(--rose); color: var(--on-rose); font-weight: 700; }
+.day.today:not([aria-pressed="true"]) { outline: 1px solid var(--rose); outline-offset: -1px; }
+.day:focus-visible { outline: 2px solid var(--rose); outline-offset: 2px; }
+.times-label { margin: 16px 0 8px; font-weight: 600; font-size: .875rem; }
+.times { display: grid; grid-template-columns: repeat(3, 1fr); gap: 6px; }
+.time { min-height: 44px; border-radius: 8px; border: 1px solid var(--line-2); background: var(--bg); cursor: pointer; font-size: .875rem; font-variant-numeric: tabular-nums; transition: transform 120ms var(--ease-out), border-color 200ms ease; }
+.time:active:not([disabled]) { transform: scale(0.96); }
+.time:hover:not([disabled]) { border-color: var(--rose); }
+.time[aria-pressed="true"] { background: var(--rose); color: var(--on-rose); border-color: var(--rose); font-weight: 700; }
+.time[disabled] { color: var(--busy); text-decoration: line-through; cursor: not-allowed; }
+.tgroup { grid-column: 1 / -1; font-size: .875rem; color: var(--muted); margin-top: 4px; }
+.tgroup:first-child { margin-top: 0; }
+.hint { font-size: .875rem; color: var(--muted); grid-column: 1 / -1; }
+.summary dl { margin: 0; }
+.summary[data-ui] .row { display: flex; justify-content: space-between; gap: 12px; padding: 10px 0; border-bottom: 1px solid var(--line-2); font-size: .875rem; }
+.summary dt { color: var(--muted); }
+.summary dd { margin: 0; text-align: right; font-weight: 600; }
+.summary dd.empty { color: var(--muted); font-weight: 500; }
+.total { display: flex; justify-content: space-between; align-items: baseline; margin: 16px 0; }
+.total b { font: 600 1.9rem/1 var(--font-display); color: var(--rose); font-variant-numeric: tabular-nums; }
+.field { display: grid; gap: 6px; margin-bottom: 10px; }
+.field label { font-size: .875rem; font-weight: 600; }
+.field input { width: 100%; min-height: 46px; padding: 10px 12px; border-radius: 8px; border: 1px solid var(--line); background: var(--bg); color: var(--text); font: 400 1rem var(--font-body); caret-color: var(--rose); }
+.field input:focus-visible { outline: 2px solid var(--rose); outline-offset: 1px; }
+.field input::placeholder { color: var(--muted); opacity: .8; }
+.field input[aria-invalid="true"] { border-color: #d26a4c; }
+.err { font-size: .875rem; color: #e08a6e; min-height: 1em; }
+[data-theme="light"] .err { color: #a3352a; }
+.summary .btn { width: 100%; }
+.missing { font-size: .875rem; color: var(--muted); margin-top: 8px; text-align: center; }
+.done-card { display: none; text-align: center; padding: 8px 0; }
+.done-card.show { display: block; animation: rise 300ms var(--ease-out); }
+.done-card > .icon { width: 44px; height: 44px; color: var(--rose); margin: 0 auto 10px; stroke-width: 1.4; }
+.done-card h4 { margin: 0 0 6px; font: 600 1.5rem var(--font-display); }
+.done-card p { color: var(--muted); font-size: .875rem; }
+.done-card dl { margin: 14px 0 0; text-align: left; }
+.done-card .btns { display: grid; gap: 8px; margin-top: 16px; }
+.done-card .btns .btn { width: 100%; }
+@keyframes rise { from { opacity: 0; transform: translateY(8px); } }
+.mbar { display: none; }
 
-/* Prices like a menu */
-.menu { display: grid; grid-template-columns: repeat(12, 1fr); gap: 0 10px; }
-.menu-head { grid-column: 1 / 4; display: grid; gap: 24px; align-content: start; }
-.menu-head p { color: var(--muted); max-width: 26ch; }
-.menu-cols { grid-column: 5 / 13; display: grid; grid-template-columns: 1fr 1fr; gap: 0 64px; }
-.group h3 { font: 500 var(--s3)/1.2 var(--text); margin: 48px 0 22px; letter-spacing: 0; }
-.group:nth-child(-n+2) h3 { margin-top: 0; }
-.item { display: grid; gap: 2px; margin-bottom: 22px; }
-.item .row { display: flex; justify-content: space-between; gap: 16px; font-size: var(--s3); }
-.item p { font-size: var(--s2); color: var(--muted); max-width: 36ch; }
+/* Gallery */
+.gallery { display: grid; grid-template-columns: 2fr 1fr 1fr; grid-auto-rows: 240px; gap: 12px; }
+.ph { margin: 0; border-radius: var(--r); overflow: hidden; background: var(--panel-2); position: relative; }
+.ph:has(img) > svg { display: none; }
+.ph > svg { position: absolute; inset: 0; margin: auto; width: 26%; height: 26%; color: var(--rose); opacity: .3; }
+.ph img { position: relative; z-index: 1; width: 100%; height: 100%; object-fit: cover; transition: transform 500ms var(--ease-out); }
+@media (hover: hover) and (pointer: fine) { .gallery .ph:hover img { transform: scale(1.04); } }
+.ph.tall { grid-row: span 2; }
+.ph figcaption { position: absolute; z-index: 2; left: 12px; bottom: 12px; background: rgba(11, 9, 9, .72); color: #f4e9e5; font-size: .875rem; padding: 6px 12px; border-radius: 999px; }
 
-/* About: inset panel, shaped portrait */
-.panel { margin-inline: 20px; min-height: 92svh; background: var(--surface); position: relative; overflow: hidden; display: grid; grid-template-columns: 1fr 1fr; grid-template-rows: auto 1fr; padding: 56px; gap: 40px; }
-.panel h2 { font-size: var(--s5); grid-column: 1; grid-row: 1; }
-.panel .shape { grid-column: 1; grid-row: 2; align-self: end; width: min(100%, 34vw); aspect-ratio: 3 / 4; margin-bottom: -56px; clip-path: inset(0 round 50% 50% 0 0); background: var(--field); overflow: hidden; }
-.panel .shape { position: relative; }
-.panel .shape img { position: relative; width: 100%; height: 100%; object-fit: cover; }
-.panel .shape .fallback { position: absolute; inset: 0; display: grid; place-items: center; }
-.panel .shape .fallback svg { width: 30%; height: auto; }
-.panel .texts { grid-column: 2; grid-row: 1 / 3; padding-left: 20%; display: grid; gap: 64px; align-content: start; max-width: 620px; }
-.panel .texts h3 { font: 500 var(--s3)/1.2 var(--text); letter-spacing: 0; margin-bottom: 10px; }
-.panel .texts p { color: var(--muted); }
-
-/* Booking */
-.book { display: grid; grid-template-columns: repeat(12, 1fr); gap: 0 10px; }
-.book-head { grid-column: 1 / 5; display: grid; gap: 20px; align-content: start; }
-.book-head p { color: var(--muted); max-width: 32ch; }
-.chosen { display: flex; align-items: center; gap: 14px; font-size: var(--s2); }
-.chosen i { width: 36px; height: 44px; background: var(--c, var(--accent)); display: block; transition: background-color 300ms ease; }
-.chosen b { font-weight: 500; }
-form { grid-column: 6 / 13; display: grid; grid-template-columns: 1fr 1fr; gap: 28px 20px; }
-.field { display: grid; gap: 8px; }
-.full { grid-column: 1 / -1; }
-label, .label { font-size: var(--s1); color: var(--muted); }
-select, input { width: 100%; min-height: 50px; padding: 0 14px; background: var(--surface); border: 1px solid #6b5853; color: var(--ink); font: 400 var(--s2) var(--text); border-radius: 0; caret-color: var(--accent); }
-select:focus-visible, input:focus-visible { outline: 2px solid var(--ink); outline-offset: 2px; border-color: var(--accent); }
-input[aria-invalid="true"] { border-color: #ff9a8a; }
-.err { font-size: var(--s1); color: #ffb3a7; min-height: 1.2em; }
-.chips { display: flex; flex-wrap: wrap; gap: 8px; }
-.chip { min-width: 64px; min-height: 52px; padding: 6px 12px; border: 0; background: var(--surface); color: var(--ink); display: grid; place-items: center; line-height: 1.2; font-size: var(--s1); cursor: pointer; transition: background-color 200ms ease, transform 120ms var(--ease-out); }
-.chip b { font: 500 var(--s2)/1.1 var(--text); display: block; }
-.chip:active:not([disabled]) { transform: scale(0.96); }
-.chip[aria-pressed="true"] { background: var(--ink); color: var(--bg); }
-.chip[disabled] { color: #8a7773; text-decoration: line-through; cursor: not-allowed; }
-.form-end { grid-column: 1 / -1; display: flex; flex-wrap: wrap; align-items: center; gap: 16px 24px; }
-.form-end p { color: var(--muted); font-size: var(--s1); }
-.done { grid-column: 6 / 13; display: none; background: var(--surface); padding: clamp(24px, 4vw, 48px); gap: 18px; }
-.done.show { display: grid; animation: rise 400ms var(--ease-out); }
-.done h3 { font-size: var(--s4); }
-.done dl { margin: 0; display: grid; gap: 10px; }
-.done dl div { display: flex; justify-content: space-between; gap: 16px; }
-.done dt { color: var(--muted); }
-.done dd { margin: 0; }
-@keyframes rise { from { opacity: 0; transform: translateY(12px); } }
-
-/* Contact: the number as display type */
-.contact { min-height: 64svh; margin-top: clamp(120px, 14vw, 200px); background: var(--ink); color: var(--bg); padding: 40px var(--m) 32px; display: grid; grid-template-rows: auto 1fr auto auto; gap: 24px; }
-.contact > p:first-child { font-size: var(--s3); max-width: 28ch; }
-.big { align-self: end; font: 400 clamp(2.6rem, 9.4vw, 9rem)/1 var(--display); letter-spacing: -.03em; color: inherit; text-decoration: none; white-space: nowrap; transition: color 200ms ease; }
-@media (hover: hover) and (pointer: fine) { .big:hover { color: #8e4f47; } }
-.corners { display: flex; flex-wrap: wrap; justify-content: space-between; gap: 12px 24px; font-size: var(--s1); }
-.corners a { color: inherit; display: inline-block; padding: 12px 0; }
-.contact :focus-visible, footer :focus-visible { outline-color: var(--bg); }
-
-/* Footer: columns above, wordmark below */
-footer { background: var(--ink); color: var(--bg); display: grid; padding: 40px var(--m) 20px; gap: 16px; }
-footer .wordmark { margin-top: clamp(96px, 12vw, 180px); }
-.fcols { display: grid; grid-template-columns: repeat(4, 1fr); gap: 32px; font-size: var(--s2); }
-.fcols ul { list-style: none; margin: 0; padding: 0; display: grid; gap: 4px; }
-.fcols li:first-child { font-weight: 500; }
-.fcols li:not(:first-child) { color: #5c4a46; }
-.fcols a { color: inherit; display: inline-block; padding: 11px 0; }
-.wordmark { width: 100%; height: auto; display: block; }
-.legal { font-size: var(--s1); color: #5c4a46; display: flex; flex-wrap: wrap; justify-content: space-between; gap: 8px 24px; }
-.legal a { color: #3b2f2c; display: inline-block; padding: 12px 0; }
-
-/* Entrances (content visible without script) */
-.js .enter > * { opacity: 0; transform: translateY(24px); transition: opacity 600ms var(--ease-out), transform 600ms var(--ease-out); }
-.js .enter.in > * { opacity: 1; transform: none; }
-.js .enter.in > :nth-child(2) { transition-delay: 80ms; }
-.js .enter.in > :nth-child(3) { transition-delay: 160ms; }
-.js .enter.in > :nth-child(4) { transition-delay: 240ms; }
-.js .enter.in > :nth-child(n+5) { transition-delay: 300ms; }
-
-.toast { position: fixed; left: 50%; bottom: 24px; z-index: 60; transform: translate(-50%, 16px); opacity: 0; pointer-events: none; background: var(--ink); color: var(--bg); padding: 12px 20px; font-size: var(--s1); transition: opacity 400ms ease, transform 400ms ease; }
+footer { margin-top: clamp(72px, 9vw, 112px); background: var(--panel); padding: 40px 0; }
+.foot { display: grid; grid-template-columns: 1.3fr 1fr 1fr; gap: 32px; font-size: 1rem; color: var(--muted); }
+.foot h4 { margin: 0 0 12px; color: var(--text); font: 600 1.5rem var(--font-display); }
+.foot ul { list-style: none; margin: 0; padding: 0; display: grid; gap: 6px; }
+.foot li { display: flex; justify-content: space-between; gap: 12px; font-variant-numeric: tabular-nums; }
+.foot a { display: inline-block; padding: 10px 0; }
+.foot .brand { padding: 0; }
+.credit { margin-top: 32px; padding-top: 18px; display: flex; flex-wrap: wrap; justify-content: space-between; gap: 12px; font-size: .875rem; color: var(--muted); }
+.credit a { color: var(--rose); display: inline-block; padding: 12px 0; }
+.toast { position: fixed; left: 50%; bottom: 24px; transform: translate(-50%, 16px); opacity: 0; pointer-events: none; z-index: 60; background: var(--panel-2); border: 1px solid var(--line); border-radius: 999px; padding: 12px 20px; font-size: .875rem; transition: opacity 400ms ease, transform 400ms ease; }
 .toast.show { opacity: 1; transform: translate(-50%, 0); }
 
-@media (max-width: 900px) {
-  .rail { grid-template-columns: 1fr auto; gap: 8px 16px; }
-  .hero-title { font-size: 13.5vw; bottom: auto; top: 96px; }
-  .rail p, .rail nav .link, .rail nav .btn { display: none; }
-  .rail.docked nav .btn { display: inline-flex; }
-  .hero-cta { display: grid; gap: 12px; position: absolute; left: 20px; right: 20px; bottom: 24px; z-index: 5; padding: 16px; background: rgba(0, 0, 0, .55); }
-  .hero-cta .btn { width: 100%; }
-  .carta-head, .tiles, .preview, .menu-head, .menu-cols, .book-head, form, .done { grid-column: 1 / -1; }
-  .carta-head { margin-bottom: 40px; }
-  .tiles { grid-template-columns: 1fr 1fr; gap: 24px 8px; }
-  .tile.wide { grid-column: 1 / -1; order: -1; }
-  .tile b { font-size: var(--s2); }
-  .tile small { font-size: var(--s1); }
-  .preview { grid-template-columns: 1fr; }
-  .gallery { grid-template-columns: 1fr; row-gap: 64px; }
-  .gallery h2 { margin-bottom: 0; }
-  .g1, .g2, .g3, .g4 { grid-column: 1; grid-row: auto; margin-top: 0; }
-  .g1 { width: 70%; } .g2 { width: 84%; justify-self: end; } .g3 { width: 100%; } .g4 { width: 56%; }
-  .menu-head { margin-bottom: 40px; }
-  .menu-cols { grid-template-columns: 1fr; }
-  .group:nth-child(2) h3 { margin-top: 40px; }
-  .panel { margin-inline: 10px; grid-template-columns: 1fr; padding: 48px 20px 0; min-height: 0; }
-  .panel h2 { font-size: var(--s4); }
-  .panel .texts { grid-column: 1; grid-row: auto; padding-left: 0; gap: 32px; }
-  .panel .shape { order: 3; grid-row: auto; width: 86vw; justify-self: center; margin-bottom: 0; }
-  .book-head { margin-bottom: 40px; }
-  form { grid-template-columns: 1fr; }
-  .big { font-size: 11.5vw; white-space: normal; }
-  .fcols { grid-template-columns: 1fr 1fr; }
+/* Entrances: content is visible by default; JS opts in */
+.js .enter > * { opacity: 0; transform: translateY(20px); transition: opacity 500ms var(--ease-out), transform 500ms var(--ease-out); }
+.js .enter.in > * { opacity: 1; transform: none; }
+.js .enter.in > :nth-child(2) { transition-delay: 70ms; }
+.js .enter.in > :nth-child(3) { transition-delay: 140ms; }
+.js .enter.in > :nth-child(4) { transition-delay: 210ms; }
+.js .enter.in > :nth-child(n+5) { transition-delay: 260ms; }
+
+@media (max-width: 1080px) {
+  .grid { grid-template-columns: 1fr 1fr; }
+  .perks { grid-template-columns: 1fr 1fr; }
+  .cards { grid-template-columns: 1fr 1fr; }
+  .swatches { grid-template-columns: 1fr 1fr; }
+}
+@media (max-width: 760px) {
+  .nav ul { display: none; }
+  .nav .tool { margin-left: auto; }
+  .nav { gap: 10px; }
+  .nav .btn-nav { min-height: 44px; padding: 0 14px; }
+  .nav .btn-nav .icon { display: none; }
+  .steps li.now em { display: inline; font-style: normal; }
+  .hero .wrap { grid-template-columns: 1fr; }
+  .hero .row .btn { flex: 1 1 100%; }
+  .arch { justify-self: center; width: min(100%, 360px); margin-top: 8px; }
+  .chip-1 { left: -6px; bottom: 32px; }
+  .chip-2 { right: -6px; }
+  .perks, .cards, .extras, .foot, .grid, .shade { grid-template-columns: 1fr; }
+  .steps { grid-template-columns: repeat(4, auto); justify-content: space-between; }
+  .steps li em { display: none; }
+  .steps li::after { display: none; }
+  .gallery { grid-template-columns: 1fr 1fr; grid-auto-rows: 180px; }
+  .ph.tall { grid-row: span 1; grid-column: span 2; }
+  .hours { display: none; }
+  .mbar { display: flex; position: sticky; bottom: 0; z-index: 30; margin: 16px -20px -20px; padding: 12px 16px calc(env(safe-area-inset-bottom, 0px) + 12px); gap: 12px; align-items: center; background: var(--panel); border-radius: 0 0 20px 20px; }
+  .mbar .msum { flex: 1; min-width: 0; font-size: .875rem; color: var(--muted); }
+  .mbar .msum b { display: block; color: var(--text); font-size: 1rem; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+  .mbar .btn { flex: none; padding: 0 16px; }
 }
 @media (prefers-reduced-motion: reduce) {
   html { scroll-behavior: auto; }
-  .js .enter > * { transform: none; transition: opacity 200ms ease; transition-delay: 0ms !important; }
-  .js .reveal .ph { clip-path: none; transition: none; }
-  .btn, .tile, .chip, .finish button { transition: background-color 200ms ease; }
-  .btn:active, .tile:active, .chip:active, .finish button:active { transform: none !important; }
-  .done.show { animation: fade-in 200ms ease; }
+  .js .enter > * { opacity: 1; transform: none; transition: none; }
+  .btn, .opt, .day, .time, .cal-nav, .tool, .sw, .finish button, .ph img { transform: none !important; }
+  .done-card.show { animation: fadeOnly 200ms ease both; }
   .toast, .toast.show { transform: translate(-50%, 0); }
+  @keyframes fadeOnly { from { opacity: 0; } }
 }
 </style>
 </head>
 <body>
 <svg width="0" height="0" style="position:absolute" aria-hidden="true">
-  <symbol id="bottle" viewBox="0 0 60 120"><rect x="20" y="0" width="20" height="40" fill="#141010"/><rect x="24" y="40" width="12" height="10" fill="#141010"/><rect x="6" y="50" width="48" height="70" fill="currentColor"/><rect x="12" y="58" width="6" height="52" fill="#ffffff" fill-opacity=".22"/><rect x="6" y="50" width="48" height="70" fill="none" stroke="#000" stroke-opacity=".18" stroke-width="2"/></symbol>
-  <symbol id="i-arrow" viewBox="0 0 24 24"><path d="M5 12h14M13 6l6 6-6 6"/></symbol>
+  <symbol id="i-pol" viewBox="0 0 24 24"><path d="M10 2.5h4v5h-4z"/><path d="M9 7.5h6"/><path d="M7.5 11c0-1.9 1.6-3.5 3.5-3.5h2c1.9 0 3.5 1.6 3.5 3.5v8.5a2 2 0 0 1-2 2h-5a2 2 0 0 1-2-2z"/><path d="M10 13v5"/></symbol>
+  <symbol id="i-hand" viewBox="0 0 24 24"><path d="M8 13V5.5a1.5 1.5 0 0 1 3 0V12M11 11V4a1.5 1.5 0 0 1 3 0v7M14 11V5.5a1.5 1.5 0 0 1 3 0V14c0 4-2.5 7.5-6.5 7.5S5 18 5 15v-3a1.5 1.5 0 0 1 3 0"/></symbol>
+  <symbol id="i-cal" viewBox="0 0 24 24"><rect x="3" y="4.5" width="18" height="16" rx="2.5"/><path d="M8 2.5v4M16 2.5v4M3 9.5h18"/></symbol>
+  <symbol id="i-doc" viewBox="0 0 24 24"><path d="M6 2.5h8l4 4v15H6z"/><path d="M14 2.5v4h4M9 12h6M9 16h6"/></symbol>
+  <symbol id="i-clock" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></symbol>
   <symbol id="i-check" viewBox="0 0 24 24"><path d="M5 12.5l4.5 4.5L19 7.5"/></symbol>
+  <symbol id="i-info" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 11v6M12 7.5v.5"/></symbol>
+  <symbol id="i-left" viewBox="0 0 24 24"><path d="M15 5l-7 7 7 7"/></symbol>
+  <symbol id="i-right" viewBox="0 0 24 24"><path d="M9 5l7 7-7 7"/></symbol>
+  <symbol id="i-star" viewBox="0 0 24 24"><path d="M12 2.5l2.9 6 6.6.9-4.8 4.6 1.2 6.5L12 17.4l-5.9 3.1 1.2-6.5L2.5 9.4l6.6-.9z"/></symbol>
+  <symbol id="i-sun" viewBox="0 0 24 24"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"/></symbol>
+  <symbol id="i-moon" viewBox="0 0 24 24"><path d="M20 14.5A8 8 0 1 1 9.5 4a6.5 6.5 0 0 0 10.5 10.5z"/></symbol>
+  <symbol id="i-arrow" viewBox="0 0 24 24"><path d="M5 12h14M13 6l6 6-6 6"/></symbol>
 </svg>
 
-<a class="btn skip" href="#reserva">Ir a reservar</a>
+<a class="btn btn-rose skip" href="#reservar">Ir a reservar</a>
+
+<header>
+  <nav class="wrap nav" aria-label="Principal">
+    <a class="brand" href="#" aria-label="Nácar Nail Studio, inicio"><svg class="icon"><use href="#i-pol"/></svg><span><b>Nácar</b><small>Nail Studio</small></span></a>
+    <ul>
+      <li><a href="#servicios">Servicios</a></li>
+      <li><a href="#colores">Colores</a></li>
+      <li><a href="#trabajos">Trabajos</a></li>
+      <li><a href="#contacto">Contacto</a></li>
+    </ul>
+    <button class="tool" id="theme" type="button" aria-label="Cambiar a tema claro"><svg class="icon i-sun"><use href="#i-sun"/></svg><svg class="icon i-moon"><use href="#i-moon"/></svg></button>
+    <a class="btn btn-line btn-nav" href="#reservar"><svg class="icon"><use href="#i-cal"/></svg>Reservar</a>
+  </nav>
+</header>
 
 <main>
-  <div class="hero" id="inicio">
-    <div class="hero-photo">
-      <div class="fallback" aria-hidden="true"><svg viewBox="0 0 400 300"><g fill="#d8a7a0"><path d="M60 300V170c0-44 18-70 40-70s40 26 40 70v130z"/><path d="M150 300V130c0-48 20-78 44-78s44 30 44 78v170z"/><path d="M248 300V150c0-46 19-74 42-74s42 28 42 74v150z"/></g><g fill="#fff" fill-opacity=".2"><rect x="76" y="130" width="8" height="90"/><rect x="168" y="90" width="9" height="110"/><rect x="265" y="110" width="8" height="100"/></g></svg></div>
-      <img src="https://images.unsplash.com/photo-1604654894610-df63bc536371?auto=format&fit=crop&w=2000&q=75" alt="Manos con uñas largas en tono rosa sobre fondo oscuro" fetchpriority="high" onerror="this.remove()">
-    </div>
-    <h1 class="hero-title"><span class="line"><span style="--i:0">Uñas hechas</span></span><span class="line"><span style="--i:1">sin prisa</span></span></h1>
-    <div class="hero-cta"><p>Manicure, gel, nail art y pedicure en Piantini, con cita.</p><a class="btn" href="#reserva">Reservar cita</a></div>
-  </div>
-  <div class="rail" id="rail">
-      <a class="brand" href="#inicio">Nácar Nail Studio</a>
-      <p>Manicure, gel, nail art y pedicure en Piantini, con cita.</p>
-      <nav aria-label="Principal">
-        <a class="link" href="#carta">Carta de colores</a>
-        <a class="link" href="#precios">Precios</a>
-        <a class="btn" href="#reserva">Reservar</a>
-      </nav>
-    </div>
-  <div class="detail" aria-hidden="true"><img src="https://images.unsplash.com/photo-1610992015732-2449b76344bc?auto=format&fit=crop&w=2000&q=70" alt="" loading="lazy" onerror="this.remove()"></div>
-
-  <section id="carta" aria-labelledby="carta-t">
-    <div class="wrap carta">
-      <div class="carta-head enter">
-        <h2 id="carta-t">Carta de colores</h2>
-        <p>Toca un tono para verlo en tus uñas. Lo guardamos en tu reserva.</p>
+  <div class="hero">
+    <div class="wrap">
+      <div class="enter">
+        <h1>Uñas que te <em>empoderan.</em></h1>
+        <p>Manicure, gel, extensiones y nail art en Piantini. Escoge tu color aquí mismo y llega directo a tu mesa, sin esperar.</p>
+        <div class="row">
+          <a class="btn btn-rose" href="#reservar"><svg class="icon"><use href="#i-cal"/></svg>Reservar cita</a>
+          <a class="btn btn-line" href="#colores">Ver colores</a>
+        </div>
+        <div class="trust">
+          <span><span class="stars" aria-hidden="true"><svg viewBox="0 0 24 24"><use href="#i-star"/></svg><svg viewBox="0 0 24 24"><use href="#i-star"/></svg><svg viewBox="0 0 24 24"><use href="#i-star"/></svg><svg viewBox="0 0 24 24"><use href="#i-star"/></svg><svg viewBox="0 0 24 24"><use href="#i-star"/></svg></span>4.9 de 5 en reseñas</span>
+          <span><span class="dot" id="openDot"></span><span id="openText">Abierto hoy hasta las 8:00 p. m.</span></span>
+        </div>
       </div>
-      <div class="tiles enter" id="tiles" role="group" aria-label="Tonos"></div>
-      <div class="preview enter" data-ui aria-live="polite">
-        <svg class="nails" viewBox="0 0 420 220" role="img" aria-labelledby="pv-name">
-          <g id="nailset"></g>
-        </svg>
+      <div class="arch">
+        <div class="frame"><img src="img/hero.webp" alt="Mano con uñas cortas en negro brillante y carey" fetchpriority="high" onerror="this.remove()"></div>
+        <div class="chip chip-1"><b>3 semanas</b><span>de gel sin<br>perder el brillo</span></div>
+        <div class="chip chip-2" aria-hidden="true"><i style="--c:#d8a7a0"></i><i style="--c:#8b1e2d"></i><i style="--c:#c9a48a"></i><i style="--c:#2a2224"></i></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="wrap">
+    <div class="perks enter">
+      <div class="perk"><b>Cuatro mesas, sin prisa</b><p>Trabajamos con cita para que nadie te apure.</p></div>
+      <div class="perk"><b>Herramientas selladas</b><p>Cada set sale de la autoclave y se abre frente a ti.</p></div>
+      <div class="perk"><b>Más de 60 tonos</b><p>Gel, cromo, mate y francesa.</p></div>
+      <div class="perk"><b>Paga como quieras</b><p>Efectivo, tarjeta o transferencia.</p></div>
+    </div>
+  </div>
+
+  <section id="servicios">
+    <div class="wrap">
+      <div class="sec-title enter"><h2>Servicios y precios</h2><p>Todo incluye limpieza de cutícula y crema de manos. Lo que ves es lo que pagas.</p></div>
+      <div class="cards enter" id="cards"></div>
+      <div class="extras enter">
+        <div class="menu-item"><b>Nail art por uña</b><span>RD$150</span></div>
+        <div class="menu-item"><b>Retiro de gel</b><span>RD$400</span></div>
+        <div class="menu-item"><b>Francesa o cromo</b><span>+ RD$300</span></div>
+      </div>
+    </div>
+  </section>
+
+  <section id="colores">
+    <div class="wrap">
+      <div class="sec-title enter"><h2>Prueba tu color</h2><p>Toca un tono y un acabado para verlo en una mano. Lo pasamos a tu reserva.</p></div>
+      <div class="shade enter">
+        <div class="preview" data-ui aria-live="polite">
+          <svg class="nails" id="nails" viewBox="0 0 420 220" role="img" aria-labelledby="pvName"><defs><linearGradient id="cg" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#fff" stop-opacity="0"/><stop offset=".42" stop-color="#fff" stop-opacity=".75"/><stop offset=".58" stop-color="#fff" stop-opacity="0"/><stop offset=".8" stop-color="#fff" stop-opacity=".3"/><stop offset="1" stop-color="#fff" stop-opacity="0"/></linearGradient></defs><g id="nailset"></g></svg>
+        </div>
         <div class="pick">
-          <h3 id="pv-name">Rosa nácar</h3>
+          <h3 id="pvName">Rosa nácar</h3>
+          <p id="pvNote">El tono de la casa. En gel dura tres semanas.</p>
+          <div class="swatches" id="swatches" role="group" aria-label="Tonos"></div>
           <div class="finish" role="group" aria-label="Acabado">
             <button type="button" data-finish="brillo" aria-pressed="true">Brillo</button>
             <button type="button" data-finish="mate" aria-pressed="false">Mate</button>
             <button type="button" data-finish="cromo" aria-pressed="false">Cromo</button>
           </div>
-          <p class="note" id="pv-note">En gel dura tres semanas sin perder el brillo.</p>
-          <a class="btn" href="#reserva" id="pv-book">Reservar con este color<svg class="icon"><use href="#i-arrow"/></svg></a>
+          <a class="btn btn-rose" href="#reservar" id="pvBook"><svg class="icon"><use href="#i-cal"/></svg>Reservar con este color</a>
         </div>
       </div>
     </div>
   </section>
 
-  <section aria-labelledby="gal-t">
-    <div class="wrap gallery">
-      <h2 id="gal-t" class="enter"><span>Trabajos de la semana</span></h2>
-      <figure class="g g1 reveal"><div class="ph"><div class="fallback" aria-hidden="true"><svg viewBox="0 0 60 120"><use href="#bottle" color="#d8a7a0"/></svg></div><img src="https://images.unsplash.com/photo-1632345031435-8727f6897d53?auto=format&fit=crop&w=900&q=70" alt="Manicure en tono nude con almendra larga" loading="lazy" onerror="this.remove()"></div><figcaption>Almendra larga en Nude arena</figcaption></figure>
-      <figure class="g g2 reveal"><div class="ph"><div class="fallback" aria-hidden="true"><svg viewBox="0 0 60 120"><use href="#bottle" color="#8e5a6b"/></svg></div><img src="https://images.unsplash.com/photo-1519014816548-bf5fe059798b?auto=format&fit=crop&w=1200&q=70" alt="Esmaltes de colores sobre una mesa" loading="lazy" onerror="this.remove()"></div><figcaption>La carta completa, en la mesa dos</figcaption></figure>
-      <figure class="g g3 reveal"><div class="ph"><div class="fallback" aria-hidden="true"><svg viewBox="0 0 60 120"><use href="#bottle" color="#8b1e2d"/></svg></div><img src="https://images.unsplash.com/photo-1607779097040-26e80aa78e66?auto=format&fit=crop&w=1400&q=70" alt="Uñas cortas en rojo cereza" loading="lazy" onerror="this.remove()"></div><figcaption>Cereza en uña corta, gel</figcaption></figure>
-      <figure class="g g4 reveal"><div class="ph"><div class="fallback" aria-hidden="true"><svg viewBox="0 0 60 120"><use href="#bottle" color="#efe6e1"/></svg></div><img src="https://images.unsplash.com/photo-1600428877878-1a0fd85beda8?auto=format&fit=crop&w=800&q=70" alt="Francesa clásica en blanco" loading="lazy" onerror="this.remove()"></div><figcaption>Francesa clásica</figcaption></figure>
-    </div>
-  </section>
-
-  <section id="precios" aria-labelledby="pre-t">
-    <div class="wrap menu">
-      <div class="menu-head enter">
-        <h2 id="pre-t">Precios</h2>
-        <p>Todo incluye limpieza de cutícula y crema de manos. Pagas en el local.</p>
-      </div>
-      <div class="menu-cols enter">
-        <div class="group">
-          <h3>Manos · RD$</h3>
-          <div class="item"><div class="row"><span>Manicure clásica</span><span>650</span></div><p>Lima, cutícula y esmalte tradicional. 45 minutos.</p></div>
-          <div class="item"><div class="row"><span>Manicure en gel</span><span>1,200</span></div><p>Dura tres semanas. Cualquier tono de la carta.</p></div>
-          <div class="item"><div class="row"><span>Extensiones en gel</span><span>2,500</span></div><p>Almendra, cuadrada o bailarina. 90 minutos.</p></div>
-          <div class="item"><div class="row"><span>Retiro de gel</span><span>400</span></div><p>Sin limar la uña natural.</p></div>
+  <section id="reservar">
+    <div class="wrap">
+      <div class="console">
+        <div class="console-head">
+          <h2>Reserva tu cita</h2>
+          <div class="hours"><svg class="icon"><use href="#i-clock"/></svg><span>Atendemos<b>Mar a sáb 10 a. m. – 8 p. m. · Dom 10 a. m. – 3 p. m.</b></span></div>
         </div>
-        <div class="group">
-          <h3>Pies · RD$</h3>
-          <div class="item"><div class="row"><span>Pedicure spa</span><span>1,100</span></div><p>Baño tibio, exfoliación y masaje de diez minutos.</p></div>
-          <div class="item"><div class="row"><span>Pedicure en gel</span><span>1,400</span></div><p>Para las tres semanas de playa.</p></div>
+        <ol class="steps" aria-label="Progreso de la reserva">
+          <li id="st-1" class="now"><span>1</span><em>Servicio</em></li>
+          <li id="st-2"><span>2</span><em>Color</em></li>
+          <li id="st-3"><span>3</span><em>Fecha y hora</em></li>
+          <li id="st-4"><span>4</span><em>Confirmar</em></li>
+        </ol>
+        <div class="grid">
+          <div class="col" data-ui id="c-svc">
+            <h3><svg class="icon"><use href="#i-hand"/></svg>Escoge el servicio</h3>
+            <div class="opts" id="services"></div>
+          </div>
+          <div class="col" data-ui id="c-col">
+            <h3><svg class="icon"><use href="#i-pol"/></svg>Escoge tu color</h3>
+            <div class="opts" id="colors"></div>
+            <p class="note-s"><svg class="icon"><use href="#i-info"/></svg>¿No te decides? Escoge "Lo decido allá".</p>
+          </div>
+          <div class="col" data-ui id="c-when">
+            <h3><svg class="icon"><use href="#i-cal"/></svg>Fecha y hora</h3>
+            <div class="cal-head">
+              <button class="cal-nav" id="prevM" type="button" aria-label="Mes anterior"><svg class="icon"><use href="#i-left"/></svg></button>
+              <b id="monthLabel" aria-live="polite"></b>
+              <button class="cal-nav" id="nextM" type="button" aria-label="Mes siguiente"><svg class="icon"><use href="#i-right"/></svg></button>
+            </div>
+            <div class="cal" id="cal" role="group" aria-label="Calendario"></div>
+            <p class="times-label">Horarios disponibles</p>
+            <div class="times" id="times"><p class="hint">Escoge un día para ver las horas.</p></div>
+          </div>
+          <div class="col summary" data-ui id="c-sum">
+            <h3><svg class="icon"><use href="#i-doc"/></svg>Tu cita</h3>
+            <div id="sumBox">
+              <dl>
+                <div class="row"><dt>Servicio</dt><dd id="s-svc" class="empty">Sin escoger</dd></div>
+                <div class="row"><dt>Color</dt><dd id="s-col" class="empty">Sin escoger</dd></div>
+                <div class="row"><dt>Día</dt><dd id="s-day" class="empty">Sin escoger</dd></div>
+                <div class="row"><dt>Hora</dt><dd id="s-time" class="empty">Sin escoger</dd></div>
+              </dl>
+              <div class="total"><span>Total</span><b id="s-total">RD$0</b></div>
+              <form id="bookForm" novalidate>
+                <div class="field"><label for="f-name">Tu nombre</label><input id="f-name" aria-describedby="e-name" autocomplete="name" placeholder="Ej.: Laura"><span class="err" id="e-name" aria-live="polite"></span></div>
+                <div class="field"><label for="f-tel">WhatsApp</label><input id="f-tel" aria-describedby="e-tel" type="tel" inputmode="tel" autocomplete="tel" placeholder="809-000-0000"><span class="err" id="e-tel" aria-live="polite"></span></div>
+                <button class="btn btn-rose" id="confirm" type="submit" disabled>Confirmar cita</button>
+                <p class="missing" id="missing" aria-live="polite">Te falta: servicio, color, día y hora.</p>
+              </form>
+            </div>
+            <div class="done-card" id="done" role="status">
+              <svg class="icon"><use href="#i-check"/></svg>
+              <h4>¡Cita reservada!</h4>
+              <p id="doneText"></p>
+              <dl id="doneList"></dl>
+              <div class="btns">
+                <a class="btn btn-rose" id="waBtn" href="#">Enviar por WhatsApp</a>
+                <button class="btn btn-line" id="again" type="button">Hacer otra reserva</button>
+              </div>
+            </div>
+          </div>
         </div>
-        <div class="group">
-          <h3>Arte · RD$</h3>
-          <div class="item"><div class="row"><span>Nail art por uña</span><span>150</span></div><p>Líneas, flores o cromo a mano alzada.</p></div>
-          <div class="item"><div class="row"><span>Set completo de arte</span><span>900</span></div><p>Diseño en las diez uñas. Trae tu foto de referencia.</p></div>
-        </div>
+        <div class="mbar" id="mbar"><div class="msum"><b id="mbarTitle">Escoge un servicio</b><span id="mbarSub">Paso 1 de 4</span></div><button class="btn btn-rose" id="mbarBtn" type="button">Continuar</button></div>
       </div>
     </div>
   </section>
 
-  <section aria-labelledby="sobre-t">
-    <div class="panel enter">
-      <h2 id="sobre-t">Cuatro mesas</h2>
-      <div class="shape"><div class="fallback" aria-hidden="true"><svg viewBox="0 0 60 120"><use href="#bottle" color="#d8a7a0"/></svg></div><img src="https://images.unsplash.com/photo-1560066984-138dadb4c035?auto=format&fit=crop&w=1000&q=70" alt="Mesas de manicure del estudio" loading="lazy" onerror="this.remove()"></div>
-      <div class="texts">
-        <div><h3>Por cita, siempre</h3><p>Tenemos solo cuatro mesas. Por eso trabajamos con cita: llegas, te sientas y nadie te apura.</p></div>
-        <div><h3>Herramientas esterilizadas</h3><p>Cada set de limas y alicates sale sellado de la autoclave y se abre frente a ti.</p></div>
-        <a class="btn" href="#reserva">Reservar cita</a>
+  <section id="trabajos">
+    <div class="wrap">
+      <div class="sec-title enter"><h2>Trabajos recientes</h2><p>Un poco de lo que sale de nuestras mesas cada semana.</p></div>
+      <div class="gallery enter">
+        <figure class="ph tall"><svg viewBox="0 0 24 24" class="icon"><use href="#i-pol"/></svg><img src="img/g1.webp" alt="Uñas en tono nude sobre una manta blanca" loading="lazy" onerror="this.remove()"><figcaption>Nude almendra</figcaption></figure>
+        <figure class="ph"><svg viewBox="0 0 24 24" class="icon"><use href="#i-pol"/></svg><img src="img/g2.webp" alt="Francesa con brillo en almendra" loading="lazy" onerror="this.remove()"><figcaption>Francesa con brillo</figcaption></figure>
+        <figure class="ph"><svg viewBox="0 0 24 24" class="icon"><use href="#i-pol"/></svg><img src="img/g3.webp" alt="Manicure rosa sobre tela blanca" loading="lazy" onerror="this.remove()"><figcaption>Rosa nácar</figcaption></figure>
+        <figure class="ph"><svg viewBox="0 0 24 24" class="icon"><use href="#i-pol"/></svg><img src="img/g4.webp" alt="Uñas en gris, blanco y brillo" loading="lazy" onerror="this.remove()"><figcaption>Gris y brillo</figcaption></figure>
+        <figure class="ph"><svg viewBox="0 0 24 24" class="icon"><use href="#i-pol"/></svg><img src="img/g5.webp" alt="Pared con frascos de esmalte de colores" loading="lazy" onerror="this.remove()"><figcaption>La pared de colores</figcaption></figure>
       </div>
     </div>
   </section>
-
-  <section id="reserva" aria-labelledby="res-t">
-    <div class="wrap book">
-      <div class="book-head enter">
-        <h2 id="res-t">Reserva tu cita</h2>
-        <p>Escoge servicio, día y hora. Te confirmamos por WhatsApp.</p>
-        <p class="chosen"><i id="chosenSw"></i><span>Tu color: <b id="chosenName">Rosa nácar</b> · <span id="chosenFin">brillo</span></span></p>
-      </div>
-      <form id="bookForm" novalidate>
-        <div class="field full"><label for="f-svc">Servicio</label>
-          <select id="f-svc"><option>Manicure en gel · RD$1,200</option><option>Manicure clásica · RD$650</option><option>Extensiones en gel · RD$2,500</option><option>Pedicure spa · RD$1,100</option><option>Pedicure en gel · RD$1,400</option><option>Set completo de arte · RD$900</option><option>Nail art por uña · RD$150</option><option>Retiro de gel · RD$400</option></select></div>
-        <div class="field full"><span class="label" id="l-day">Día</span><div class="chips" id="days" role="group" aria-labelledby="l-day"></div></div>
-        <div class="field full"><span class="label" id="l-time">Hora</span><div class="chips" id="times" role="group" aria-labelledby="l-time"><p class="label">Escoge un día primero.</p></div></div>
-        <div class="field"><label for="f-name">Nombre</label><input id="f-name" autocomplete="name"><span class="err" id="e-name" aria-live="polite"></span></div>
-        <div class="field"><label for="f-tel">WhatsApp</label><input id="f-tel" type="tel" inputmode="tel" autocomplete="tel" placeholder="809-000-0000"><span class="err" id="e-tel" aria-live="polite"></span></div>
-        <div class="form-end"><button class="btn" type="submit" id="confirm" disabled>Escoge día y hora</button><p>No cobramos nada por reservar.</p></div>
-      </form>
-      <div class="done" id="done" role="status">
-        <h3 tabindex="-1" id="doneTitle">Te esperamos</h3>
-        <dl id="doneList"></dl>
-        <a class="btn" href="#" data-demo>Confirmar por WhatsApp</a>
-        <button class="link" type="button" id="again">Hacer otra reserva</button>
-      </div>
-    </div>
-  </section>
-
-  <div class="contact">
-    <p>Para dudas sobre tonos, diseños o tu cita, escríbenos.</p>
-    <a class="big" href="#" data-demo>(809) 000-0000</a>
-    <div class="corners"><span>Calle Ejemplo 8, Piantini · Santo Domingo</span><span><a href="#" data-demo>Instagram</a> · <a href="#" data-demo>TikTok</a></span></div>
-  </div>
 </main>
 
-<footer>
-  <div class="fcols">
-    <ul><li>Dónde</li><li>Calle Ejemplo 8</li><li>Piantini, Santo Domingo</li></ul>
-    <ul><li>Horario</li><li>Martes a sábado, 10 a. m. a 8 p. m.</li><li>Domingo, 10 a. m. a 3 p. m.</li><li>Lunes cerrado</li></ul>
-    <ul><li>Página</li><li><a href="#carta">Carta de colores</a></li><li><a href="#precios">Precios</a></li><li><a href="#reserva">Reservar</a></li></ul>
-    <ul><li>Demo</li><li>Nombre, datos y precios ficticios</li><li><a href="../../#demos">Hecha por Eric Design Web</a></li></ul>
+<footer id="contacto">
+  <div class="wrap">
+    <div class="foot enter">
+      <div><a class="brand" href="#"><svg class="icon"><use href="#i-pol"/></svg><span><b>Nácar</b><small>Nail Studio</small></span></a><p style="margin-top:14px">Calle Ejemplo 8, Piantini, Santo Domingo</p><p><a href="#" data-demo>(809) 000-0000</a></p></div>
+      <div><h4>Horario</h4><ul><li><span>Mar – Sáb</span><span>10 a. m. – 8 p. m.</span></li><li><span>Domingo</span><span>10 a. m. – 3 p. m.</span></li><li><span>Lunes</span><span>Cerrado</span></li></ul></div>
+      <div><h4>Agenda</h4><ul><li><a href="#reservar">Reservar en línea</a></li><li><a href="#colores">Probar colores</a></li><li><a href="#" data-demo>Instagram</a></li></ul></div>
+    </div>
+    <div class="credit"><span>Demo con datos ficticios. Nombre, dirección, teléfono y precios son de ejemplo.</span><a href="../../#demos">Hecha por Eric Design Web</a></div>
   </div>
-  <svg class="wordmark" viewBox="0 0 1000 222" role="img" aria-label="Nácar"><text x="0" y="200" font-family="Bodoni Moda, Didot, Georgia, serif" font-size="196" letter-spacing="-6" fill="currentColor" textLength="1000" lengthAdjust="spacingAndGlyphs">NÁCAR</text></svg>
-  <div class="legal"><span>© 2026 Nácar Nail Studio · Demo</span><a href="../../">Eric Design Web</a></div>
 </footer>
 <div class="toast" id="toast" role="status" aria-live="polite"></div>
 
 <script>
 (function () {
-  document.documentElement.classList.add('js');
+  var root = document.documentElement;
   var $ = function (id) { return document.getElementById(id); };
-  var SHADES = [
-    { id: 'rosa', name: 'Rosa nácar', c: '#d8a7a0', fact: 'El de la casa', note: 'En gel dura tres semanas sin perder el brillo.', wide: false },
-    { id: 'cereza', name: 'Cereza', c: '#8b1e2d', fact: 'Rojo profundo', note: 'Se ve mejor en uña corta y cuadrada.', wide: true },
-    { id: 'nude', name: 'Nude arena', c: '#c9a48a', fact: 'Para la oficina', note: 'Alarga los dedos en almendra larga.', wide: false },
-    { id: 'malva', name: 'Malva', c: '#8e5a6b', fact: 'Tono de temporada', note: 'Queda muy bien en acabado mate.', wide: false },
-    { id: 'frances', name: 'Blanco francés', c: '#efe6e1', fact: 'Clásico', note: 'Punta blanca sobre base rosada.', wide: false },
-    { id: 'negro', name: 'Negro brillo', c: '#2a2224', fact: 'Con cromo', note: 'Pide el acabado cromo para un reflejo plateado.', wide: false }
+  var rd = function (n) { return 'RD$' + n.toLocaleString('en-US'); };
+  var SERVICES = [
+    { id: 'clasica', name: 'Manicure clásica', min: 45, price: 650, img: 'img/s1.webp', alt: '', d: 'Lima, cutícula y esmalte tradicional.' },
+    { id: 'gel', name: 'Manicure en gel', min: 60, price: 1200, img: 'img/s2.webp', alt: '', d: 'Dura tres semanas. Cualquier tono de la carta.' },
+    { id: 'ext', name: 'Extensiones en gel', min: 90, price: 2500, img: 'img/s3.webp', alt: '', d: 'Almendra, cuadrada o bailarina.' },
+    { id: 'art', name: 'Set de nail art', min: 90, price: 1800, img: 'img/s4.webp', alt: '', d: 'Diseño en las diez uñas. Trae tu foto.' },
+    { id: 'pedi', name: 'Pedicure spa', min: 60, price: 1100, img: 'img/s5.webp', alt: '', d: 'Baño tibio, exfoliación y masaje.' },
+    { id: 'combo', name: 'Mani + pedi en gel', min: 120, price: 2300, img: 'img/s6.webp', alt: '', d: 'El combo más pedido de la casa.' }
   ];
-  var st = { shade: SHADES[0], finish: 'brillo', day: null, time: null };
+  var SHADES = [
+    { id: 'rosa', name: 'Rosa nácar', c: '#d8a7a0', note: 'El tono de la casa. En gel dura tres semanas.' },
+    { id: 'cereza', name: 'Cereza', c: '#8b1e2d', note: 'Rojo profundo. Se ve mejor en uña corta.' },
+    { id: 'nude', name: 'Nude arena', c: '#c9a48a', note: 'Para la oficina. Alarga los dedos.' },
+    { id: 'malva', name: 'Malva', c: '#8e5a6b', note: 'Tono de temporada. Queda muy bien en mate.' },
+    { id: 'frances', name: 'Blanco francés', c: '#efe6e1', note: 'Clásica: punta blanca sobre base rosada.' },
+    { id: 'negro', name: 'Negro brillo', c: '#2a2224', note: 'Pide cromo para un reflejo plateado.' }
+  ];
+  var FIN = { brillo: 'brillo', mate: 'mate', cromo: 'cromo' };
+  var MONTHS = ['enero', 'febrero', 'marzo', 'abril', 'mayo', 'junio', 'julio', 'agosto', 'septiembre', 'octubre', 'noviembre', 'diciembre'];
+  var DOW = ['Dom', 'Lun', 'Mar', 'Mié', 'Jue', 'Vie', 'Sáb'];
+  var DOWL = ['domingo', 'lunes', 'martes', 'miércoles', 'jueves', 'viernes', 'sábado'];
+  var st = { svc: null, col: null, fin: 'brillo', date: null, time: null };
+  var pv = { shade: SHADES[0], fin: 'brillo' };
+  var today = new Date(); today.setHours(0, 0, 0, 0);
+  var view = new Date(today.getFullYear(), today.getMonth(), 1);
 
-  // Tiles
-  $('tiles').innerHTML = SHADES.map(function (s, i) {
-    return '<button type="button" class="tile' + (s.wide ? ' wide' : '') + '" data-shade="' + s.id + '" aria-pressed="' + (i === 0) + '" style="--c:' + (s.id === 'negro' ? '#3a3033' : s.id === 'frances' ? '#d9ccc6' : '#2a1f1e') + '">' +
-      '<span class="sw" aria-hidden="true"><svg viewBox="0 0 60 120"><use href="#bottle" color="' + s.c + '"/></svg></span>' +
-      '<span><b>' + s.name + '</b><small>' + s.fact + '</small></span></button>';
+  // Theme
+  var themeBtn = $('theme');
+  function syncTheme() {
+    var dark = root.dataset.theme !== 'light';
+    themeBtn.setAttribute('aria-label', dark ? 'Cambiar a tema claro' : 'Cambiar a tema oscuro');
+    document.querySelector('meta[name=theme-color]').content = dark ? '#0b0909' : '#f7f1ee';
+  }
+  themeBtn.addEventListener('click', function () {
+    root.dataset.theme = root.dataset.theme === 'light' ? 'dark' : 'light';
+    try { localStorage.setItem('nacar-theme', root.dataset.theme); } catch (e) {}
+    syncTheme();
+  });
+  syncTheme();
+
+  // Open now (Tue–Sat 10–20, Sun 10–15, Mon closed)
+  (function () {
+    var n = new Date(), h = n.getHours(), d = n.getDay();
+    var end = d === 0 ? 15 : 20, open = d !== 1 && h >= 10 && h < end;
+    $('openDot').classList.toggle('closed', !open);
+    $('openText').textContent = open ? 'Abierto ahora, hasta las ' + (end - 12) + ':00 p. m.' : d === 1 || (d === 0 && h >= 15) ? 'Cerrado ahora. Abrimos el martes a las 10:00 a. m.' : 'Cerrado ahora. Abrimos a las 10:00 a. m.';
+  })();
+
+  // Service cards
+  var polIcon = '<svg viewBox="0 0 24 24" class="icon"><use href="#i-pol"/></svg>';
+  $('cards').innerHTML = SERVICES.map(function (s) {
+    return '<article class="card"><div class="ph">' + polIcon + '<img src="' + s.img + '" alt="' + s.alt + '" loading="lazy" onerror="this.remove()"></div><div class="body"><h3>' + s.name + '</h3><p>' + s.d + '</p><div class="price"><span>' + s.min + ' min</span><b>' + rd(s.price) + '</b></div></div></article>';
   }).join('');
 
-  // Nail preview: five almond nails, flat shapes
+  // Shade card
+  $('swatches').innerHTML = SHADES.map(function (s, i) {
+    return '<button type="button" class="sw" data-shade="' + s.id + '" aria-pressed="' + (i === 0) + '"><i style="--c:' + s.c + '"></i><span>' + s.name + '</span></button>';
+  }).join('');
   var NAILS = [[40, 70, 52, 120], [118, 30, 58, 150], [204, 18, 60, 160], [292, 34, 58, 146], [366, 90, 46, 104]];
   function almond(x, y, w, h) { var r = w / 2; return 'M' + x + ' ' + (y + h) + 'V' + (y + r * 1.4) + 'C' + x + ' ' + (y + r * .2) + ' ' + (x + r * .5) + ' ' + y + ' ' + (x + r) + ' ' + y + 'C' + (x + r * 1.5) + ' ' + y + ' ' + (x + w) + ' ' + (y + r * .2) + ' ' + (x + w) + ' ' + (y + r * 1.4) + 'V' + (y + h) + 'Z'; }
   $('nailset').innerHTML = NAILS.map(function (n) {
     return '<path d="' + almond(n[0], n[1] + 10, n[2] + 12, n[3] + 30) + '" fill="#e8c9b8"/>' +
       '<path class="nail" d="' + almond(n[0] + 6, n[1], n[2], n[3]) + '" fill="#d8a7a0"/>' +
-      '<rect class="shine" x="' + (n[0] + 14) + '" y="' + (n[1] + 22) + '" width="7" height="' + (n[3] * .55) + '" fill="#fff"/>' +
-      '<rect class="chrome" x="' + (n[0] + 6) + '" y="' + (n[1] + n[3] * .45) + '" width="' + n[2] + '" height="' + (n[3] * .05) + '" fill="#fff" opacity="0"/>';
-  }).join('') + '<rect x="0" y="206" width="420" height="14" fill="#1c1515"/>';
+      '<rect class="shine" x="' + (n[0] + 14) + '" y="' + (n[1] + 22) + '" width="7" height="' + (n[3] * .55) + '" rx="3.5" fill="#fff" opacity=".3"/>' +
+      '<path class="chrome" d="' + almond(n[0] + 6, n[1], n[2], n[3]) + '" fill="url(#cg)" opacity="0"/>';
+  }).join('');
   function paint() {
-    var s = st.shade, f = st.finish;
+    var s = pv.shade, f = pv.fin;
     document.querySelectorAll('#nailset .nail').forEach(function (n) { n.setAttribute('fill', s.c); });
-    document.querySelectorAll('#nailset .shine').forEach(function (n) { n.style.opacity = f === 'mate' ? 0 : f === 'cromo' ? .55 : .3; });
-    document.querySelectorAll('#nailset .chrome').forEach(function (n) { n.setAttribute('opacity', f === 'cromo' ? .18 : 0); });
-    $('pv-name').textContent = s.name;
-    $('pv-note').textContent = s.note;
-    $('chosenSw').style.setProperty('--c', s.c);
-    $('chosenName').textContent = s.name; $('chosenFin').textContent = f;
-    document.querySelectorAll('[data-shade]').forEach(function (t) { t.setAttribute('aria-pressed', t.dataset.shade === s.id ? 'true' : 'false'); });
+    document.querySelectorAll('#nailset .shine').forEach(function (n) { n.setAttribute('opacity', f === 'mate' ? 0 : f === 'cromo' ? .55 : .3); });
+    document.querySelectorAll('#nailset .chrome').forEach(function (n) { n.setAttribute('opacity', f === 'cromo' ? .9 : 0); });
+    $('nails').classList.toggle('mate', f === 'mate');
+    $('pvName').textContent = s.name; $('pvNote').textContent = s.note;
+    document.querySelectorAll('[data-shade]').forEach(function (b) { b.setAttribute('aria-pressed', b.dataset.shade === s.id ? 'true' : 'false'); });
     document.querySelectorAll('[data-finish]').forEach(function (b) { b.setAttribute('aria-pressed', b.dataset.finish === f ? 'true' : 'false'); });
   }
-  $('tiles').addEventListener('click', function (e) { var t = e.target.closest('[data-shade]'); if (!t) return; st.shade = SHADES.filter(function (s) { return s.id === t.dataset.shade; })[0]; paint(); });
-  document.querySelector('.finish').addEventListener('click', function (e) { var b = e.target.closest('[data-finish]'); if (!b) return; st.finish = b.dataset.finish; paint(); });
+  $('swatches').addEventListener('click', function (e) { var b = e.target.closest('[data-shade]'); if (!b) return; pv.shade = SHADES.filter(function (s) { return s.id === b.dataset.shade; })[0]; paint(); });
+  document.querySelector('.finish').addEventListener('click', function (e) { var b = e.target.closest('[data-finish]'); if (!b) return; pv.fin = b.dataset.finish; paint(); });
+  $('pvBook').addEventListener('click', function () { st.col = pv.shade.id; st.fin = pv.fin; press($('colors'), 'data-col', st.col); update(); toast(pv.shade.name + ' (' + pv.fin + ') quedó en tu reserva.'); });
 
-  // Days: next 8 open days (closed Monday)
-  var DOW = ['dom', 'lun', 'mar', 'mié', 'jue', 'vie', 'sáb'], DOWL = ['domingo', 'lunes', 'martes', 'miércoles', 'jueves', 'viernes', 'sábado'];
-  var MON = ['enero', 'febrero', 'marzo', 'abril', 'mayo', 'junio', 'julio', 'agosto', 'septiembre', 'octubre', 'noviembre', 'diciembre'];
-  var days = [], d0 = new Date(); d0.setHours(0, 0, 0, 0);
-  var lateToday = new Date().getHours() >= (d0.getDay() === 0 ? 14 : 19);
-  for (var i = lateToday ? 1 : 0; days.length < 8; i++) { var d = new Date(d0); d.setDate(d0.getDate() + i); if (d.getDay() !== 1) days.push(d); }
-  $('days').innerHTML = days.map(function (d, i) {
-    var lbl = (i === 0 && d.getTime() === d0.getTime() ? 'hoy' : DOW[d.getDay()]);
-    return '<button type="button" class="chip" data-day="' + i + '" aria-pressed="false" aria-label="' + DOWL[d.getDay()] + ' ' + d.getDate() + ' de ' + MON[d.getMonth()] + '"><span>' + lbl + '</span><b>' + d.getDate() + '</b></button>';
+  function check() { return '<span class="tick"><svg class="icon"><use href="#i-check"/></svg></span>'; }
+  function press(container, attr, val) { container.querySelectorAll('[' + attr + ']').forEach(function (el) { el.setAttribute('aria-pressed', el.getAttribute(attr) === val ? 'true' : 'false'); }); }
+  $('services').innerHTML = SERVICES.map(function (s) {
+    return '<button type="button" class="opt" data-svc="' + s.id + '" aria-pressed="false"><span class="t"><b>' + s.name + '</b><small>' + rd(s.price) + ' · ' + s.min + ' min</small></span>' + check() + '</button>';
   }).join('');
-  function slotsFor(d) { var end = d.getDay() === 0 ? 15 : 20; var out = []; for (var h = 10; h < end; h++) out.push(h); return out; }
-  function hlabel(h) { return (h > 12 ? h - 12 : h) + ':00 ' + (h < 12 ? 'a. m.' : 'p. m.'); }
-  function renderTimes() {
-    var d = st.day, now = new Date();
-    $('times').innerHTML = slotsFor(d).map(function (h) {
-      var past = d.getTime() === d0.getTime() && h <= now.getHours();
-      var busy = (d.getDate() * 3 + h * 7) % 5 === 0;
-      var off = past || busy;
-      return '<button type="button" class="chip" data-time="' + h + '" aria-pressed="false"' + (off ? ' disabled aria-label="' + hlabel(h) + ', ocupado"' : '') + '>' + hlabel(h) + '</button>';
-    }).join('');
-    if (!$('times').querySelector('[data-time]:not([disabled])')) $('times').innerHTML = '<p class="label">Ese día ya está lleno. Prueba otro.</p>';
-  }
-  function gate() {
-    var b = $('confirm');
-    b.disabled = !(st.day && st.time);
-    b.textContent = !st.day ? 'Escoge día y hora' : !st.time ? 'Escoge una hora' : 'Reservar ' + DOWL[st.day.getDay()] + ' ' + st.day.getDate() + ', ' + hlabel(st.time);
-  }
-  $('days').addEventListener('click', function (e) { var b = e.target.closest('[data-day]'); if (!b) return; st.day = days[+b.dataset.day]; st.time = null; $('days').querySelectorAll('[data-day]').forEach(function (x) { x.setAttribute('aria-pressed', x === b ? 'true' : 'false'); }); renderTimes(); gate(); });
-  $('times').addEventListener('click', function (e) { var b = e.target.closest('[data-time]'); if (!b || b.disabled) return; st.time = +b.dataset.time; $('times').querySelectorAll('[data-time]').forEach(function (x) { x.setAttribute('aria-pressed', x === b ? 'true' : 'false'); }); gate(); });
+  $('colors').innerHTML = SHADES.concat([{ id: 'luego', name: 'Lo decido allá', c: 'transparent' }]).map(function (s) {
+    return '<button type="button" class="opt" data-col="' + s.id + '" aria-pressed="false"><i class="c" style="--c:' + s.c + '"></i><span class="t"><b>' + s.name + '</b></span>' + check() + '</button>';
+  }).join('');
+  $('services').addEventListener('click', function (e) { var b = e.target.closest('[data-svc]'); if (!b) return; st.svc = b.dataset.svc; press($('services'), 'data-svc', st.svc); update(); goNext(); });
+  $('colors').addEventListener('click', function (e) { var b = e.target.closest('[data-col]'); if (!b) return; st.col = b.dataset.col; st.fin = 'brillo'; press($('colors'), 'data-col', st.col); update(); goNext(); });
 
-  function err(id, m) { $('e-' + id).textContent = m; $('f-' + id).setAttribute('aria-invalid', m ? 'true' : 'false'); return !m; }
+  // Calendar
+  function sameDay(a, b) { return a && b && a.getTime() === b.getTime(); }
+  function slotsFor(d) { var end = d.getDay() === 0 ? 15 : 20, out = []; for (var h = 10; h < end; h++) out.push(h); return out; }
+  function hl(h) { return (h > 12 ? h - 12 : h) + ':00 ' + (h < 12 ? 'a. m.' : 'p. m.'); }
+  function renderCal() {
+    var y = view.getFullYear(), m = view.getMonth();
+    $('monthLabel').textContent = MONTHS[m] + ' ' + y;
+    $('prevM').disabled = y === today.getFullYear() && m === today.getMonth();
+    var limit = new Date(today.getFullYear(), today.getMonth() + 2, 0);
+    $('nextM').disabled = new Date(y, m + 1, 1) > limit;
+    var html = DOW.map(function (d) { return '<span class="dow" aria-hidden="true">' + d + '</span>'; }).join('');
+    var first = new Date(y, m, 1).getDay(), days = new Date(y, m + 1, 0).getDate();
+    for (var i = 0; i < first; i++) html += '<span></span>';
+    for (var d = 1; d <= days; d++) {
+      var dt = new Date(y, m, d), late = sameDay(dt, today) && new Date().getHours() >= (dt.getDay() === 0 ? 14 : 19);
+      var off = dt < today || dt.getDay() === 1 || dt > limit || late;
+      html += '<button type="button" class="day' + (sameDay(dt, today) ? ' today' : '') + '" data-day="' + d + '" aria-label="' + DOWL[dt.getDay()] + ' ' + d + ' de ' + MONTHS[m] + (dt.getDay() === 1 ? ', cerrado' : '') + '" aria-pressed="' + (sameDay(dt, st.date) ? 'true' : 'false') + '"' + (off ? ' disabled' : '') + '>' + d + '</button>';
+    }
+    $('cal').innerHTML = html;
+  }
+  $('cal').addEventListener('click', function (e) {
+    var b = e.target.closest('[data-day]'); if (!b || b.disabled) return;
+    st.date = new Date(view.getFullYear(), view.getMonth(), +b.dataset.day); st.time = null;
+    $('cal').querySelectorAll('[data-day]').forEach(function (x) { x.setAttribute('aria-pressed', x === b ? 'true' : 'false'); });
+    renderTimes(); update();
+  });
+  $('prevM').addEventListener('click', function () { view = new Date(view.getFullYear(), view.getMonth() - 1, 1); renderCal(); });
+  $('nextM').addEventListener('click', function () { view = new Date(view.getFullYear(), view.getMonth() + 1, 1); renderCal(); });
+  function renderTimes() {
+    if (!st.date) return;
+    var now = new Date(), free = 0;
+    var html = slotsFor(st.date).map(function (h, i) {
+      var off = (sameDay(st.date, today) && h <= now.getHours()) || (st.date.getDate() * 3 + h * 7) % 5 === 0;
+      if (!off) free++;
+      return (h === 10 ? '<span class="tgroup">Mañana</span>' : h === 12 ? '<span class="tgroup">Tarde</span>' : '') + '<button type="button" class="time" data-time="' + h + '" aria-label="' + hl(h) + (off ? ', ocupado' : '') + '" aria-pressed="' + (st.time === h ? 'true' : 'false') + '"' + (off ? ' disabled' : '') + '>' + hl(h).replace(' a. m.', '').replace(' p. m.', '') + '</button>';
+    }).join('');
+    $('times').innerHTML = free ? html : '<p class="hint">Ese día ya está lleno. Prueba otro.</p>';
+  }
+  $('times').addEventListener('click', function (e) { var b = e.target.closest('[data-time]'); if (!b || b.disabled) return; st.time = +b.dataset.time; $('times').querySelectorAll('[data-time]').forEach(function (x) { x.setAttribute('aria-pressed', x === b ? 'true' : 'false'); }); update(); goNext(); });
+
+  // Summary + steps
+  function setv(id, val) { var el = $(id); el.textContent = val || 'Sin escoger'; el.classList.toggle('empty', !val); }
+  function colorLabel() { if (!st.col) return ''; if (st.col === 'luego') return 'Lo decido allá'; var c = SHADES.filter(function (x) { return x.id === st.col; })[0]; return c.name + (st.fin !== 'brillo' ? ', ' + FIN[st.fin] : ''); }
+  function update() {
+    var s = SERVICES.filter(function (x) { return x.id === st.svc; })[0];
+    setv('s-svc', s && s.name); setv('s-col', colorLabel());
+    setv('s-day', st.date && (DOWL[st.date.getDay()] + ' ' + st.date.getDate() + ' de ' + MONTHS[st.date.getMonth()]));
+    setv('s-time', st.time && hl(st.time));
+    $('s-total').textContent = rd(s ? s.price : 0);
+    var done = [!!st.svc, !!st.col, !!(st.date && st.time)];
+    var nowIdx = done.indexOf(false); if (nowIdx === -1) nowIdx = 3;
+    for (var i = 0; i < 4; i++) {
+      var li = $('st-' + (i + 1));
+      li.classList.toggle('done', i < 3 && done[i]); li.classList.toggle('now', i === nowIdx);
+      if (i === nowIdx) li.setAttribute('aria-current', 'step'); else li.removeAttribute('aria-current');
+    }
+    var miss = []; if (!st.svc) miss.push('servicio'); if (!st.col) miss.push('color'); if (!st.date) miss.push('día'); if (!st.time) miss.push('hora');
+    $('confirm').disabled = miss.length > 0;
+    $('missing').textContent = miss.length ? 'Te falta: ' + miss.join(', ') + '.' : 'Todo listo. Solo falta tu nombre y WhatsApp.';
+    var titles = ['Escoge un servicio', 'Escoge tu color', 'Escoge día y hora', 'Confirma tu cita'];
+    $('mbarTitle').textContent = s ? s.name : titles[0];
+    $('mbar').hidden = nowIdx === 3 || $('done').classList.contains('show');
+    $('mbarSub').textContent = 'Paso ' + (Math.min(nowIdx, 2) + 1) + ' de 4';
+    $('mbarBtn').textContent = nowIdx < 3 ? 'Continuar' : 'Confirmar';
+    $('mbarBtn').dataset.target = ['c-svc', 'c-col', 'c-when', 'c-sum'][nowIdx];
+  }
+  var mobile = matchMedia('(max-width: 760px)');
+  var smooth = matchMedia('(prefers-reduced-motion: reduce)').matches ? 'auto' : 'smooth';
+  function goNext() { if (!mobile.matches) return; var t = $($('mbarBtn').dataset.target); if (t) t.scrollIntoView({ behavior: smooth, block: 'start' }); }
+  $('mbarBtn').addEventListener('click', function () { var t = $(this.dataset.target); t.scrollIntoView({ behavior: smooth, block: 'start' }); if (this.dataset.target === 'c-sum') setTimeout(function () { $('f-name').focus({ preventScroll: true }); }, 400); });
+
+  function err(id, msg) { $('e-' + id).textContent = msg; $('f-' + id).setAttribute('aria-invalid', msg ? 'true' : 'false'); return !msg; }
   $('bookForm').addEventListener('submit', function (e) {
     e.preventDefault();
     var nm = $('f-name').value.trim(), dg = $('f-tel').value.replace(/\D/g, '');
@@ -494,33 +673,41 @@ footer .wordmark { margin-top: clamp(96px, 12vw, 180px); }
     var ok = err('name', !nm ? 'Escribe tu nombre.' : nm.length < 2 ? 'Escribe tu nombre completo.' : '');
     ok = err('tel', dg.length !== 10 ? 'Escribe 10 dígitos, por ejemplo 809-555-1234.' : '') && ok;
     if (!ok) { document.querySelector('[aria-invalid="true"]').focus(); return; }
-    var svc = $('f-svc').value.split(' · ');
-    $('doneTitle').textContent = 'Te esperamos, ' + nm.split(' ')[0];
-    $('doneList').innerHTML = [['Servicio', svc[0]], ['Color', st.shade.name + ', ' + st.finish], ['Día', DOWL[st.day.getDay()] + ' ' + st.day.getDate() + ' de ' + MON[st.day.getMonth()]], ['Hora', hlabel(st.time)], ['Total', svc[1] + ', en el local']].map(function (r) { return '<div><dt>' + r[0] + '</dt><dd>' + r[1] + '</dd></div>'; }).join('');
-    $('bookForm').hidden = true; $('done').classList.add('show'); $('doneTitle').focus();
+    var btn = $('confirm'); btn.disabled = true; btn.textContent = 'Reservando…';
+    setTimeout(function () {
+      var day = $('s-day').textContent, time = $('s-time').textContent;
+      $('doneText').textContent = nm.split(' ')[0] + ', te esperamos el ' + day + ' a las ' + time + (/\.$/.test(time) ? '' : '.');
+      $('doneList').innerHTML = '<div class="row"><dt>Servicio</dt><dd>' + $('s-svc').textContent + '</dd></div><div class="row"><dt>Color</dt><dd>' + $('s-col').textContent + '</dd></div><div class="row"><dt>Total</dt><dd>' + $('s-total').textContent + ', en el local</dd></div>';
+      $('sumBox').hidden = true; $('done').classList.add('show'); $('mbar').hidden = true;
+      ['st-1', 'st-2', 'st-3', 'st-4'].forEach(function (id) { $(id).classList.add('done'); $(id).classList.remove('now'); $(id).removeAttribute('aria-current'); });
+      var hd = $('done').querySelector('h4'); hd.setAttribute('tabindex', '-1'); hd.focus({ preventScroll: true });
+      $('c-sum').scrollIntoView({ behavior: smooth, block: 'nearest' });
+      btn.textContent = 'Confirmar cita';
+    }, 700);
   });
   $('bookForm').addEventListener('input', function (e) { if (e.target.getAttribute('aria-invalid') === 'true') err(e.target.id.slice(2), ''); });
-  $('again').addEventListener('click', function () { $('done').classList.remove('show'); $('bookForm').hidden = false; st.time = null; renderTimes && st.day && renderTimes(); gate(); $('f-svc').focus(); });
+  $('again').addEventListener('click', function () {
+    st = { svc: null, col: null, fin: 'brillo', date: null, time: null };
+    pv = { shade: SHADES[0], fin: 'brillo' }; paint();
+    press($('services'), 'data-svc', ''); press($('colors'), 'data-col', '');
+    $('sumBox').hidden = false; $('done').classList.remove('show'); $('mbar').hidden = false;
+    $('times').innerHTML = '<p class="hint">Escoge un día para ver las horas.</p>';
+    renderCal(); update(); document.querySelector('[data-svc]').focus();
+  });
 
-  // Demo links
-  var toast = $('toast'), tt;
-  document.addEventListener('click', function (e) { var a = e.target.closest('[data-demo]'); if (!a) return; e.preventDefault(); toast.textContent = 'Es una demo: en el sitio real esto abre WhatsApp o la red social.'; toast.classList.add('show'); clearTimeout(tt); tt = setTimeout(function () { toast.classList.remove('show'); }, 2800); });
+  var toastEl = $('toast'), tt;
+  function toast(m) { toastEl.textContent = m; toastEl.classList.add('show'); clearTimeout(tt); tt = setTimeout(function () { toastEl.classList.remove('show'); }, 2800); }
+  $('waBtn').addEventListener('click', function (e) { e.preventDefault(); toast('En el sitio real esto abre WhatsApp con tu cita escrita.'); });
+  document.addEventListener('click', function (e) { if (e.target.closest('[data-demo]')) { e.preventDefault(); toast('Es una demo: en el sitio real esto abre el teléfono o la red social.'); } });
 
-  // Rail docks once the pictures have passed
-  var rail = $('rail');
-  window.addEventListener('scroll', function () { rail.classList.toggle('docked', rail.getBoundingClientRect().top <= 0 && window.scrollY > window.innerHeight * .4); }, { passive: true });
-
-  // Entrances, once
-  var groups = document.querySelectorAll('.enter, .reveal');
+  paint(); renderCal(); update();
+  root.classList.add('js');
+  var groups = document.querySelectorAll('.enter');
   if ('IntersectionObserver' in window) {
-    var io = new IntersectionObserver(function (es) { es.forEach(function (en) { if (en.isIntersecting) { en.target.classList.add('in'); io.unobserve(en.target); } }); }, { rootMargin: '0px 0px -10% 0px' });
+    var io = new IntersectionObserver(function (es) { es.forEach(function (en) { if (en.isIntersecting) { en.target.classList.add('in'); io.unobserve(en.target); } }); }, { rootMargin: '0px 0px -8% 0px' });
     groups.forEach(function (g) { io.observe(g); });
+    setTimeout(function () { groups.forEach(function (g) { g.classList.add('in'); }); }, 2500);
   } else { groups.forEach(function (g) { g.classList.add('in'); }); }
-  // Safety net: never leave content hidden if the observer does not fire
-  setTimeout(function () { groups.forEach(function (g) { if (g.getBoundingClientRect().top < innerHeight * 1.5) g.classList.add('in'); }); }, 2500);
-  window.addEventListener('load', function () { setTimeout(function () { groups.forEach(function (g) { g.classList.add('in'); }); }, 6000); });
-
-  paint(); gate();
 })();
 </script>
 </body>

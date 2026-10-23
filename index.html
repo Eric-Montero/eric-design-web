@@ -235,6 +235,14 @@ section { padding: clamp(104px, 12vw, 176px) 0 0; }
 [data-ui] .nc-nails i { width: 15%; background: #d8a7a0; border-radius: 999px 999px 0 0; position: relative; }
 [data-ui] .nc-nails i::after { content: ""; position: absolute; left: 0; right: 0; bottom: 0; height: 22%; background: #e8c9b8; }
 [data-ui] .nc-nails i:nth-child(1) { height: 52%; } [data-ui] .nc-nails i:nth-child(2) { height: 74%; } [data-ui] .nc-nails i:nth-child(3) { height: 82%; } [data-ui] .nc-nails i:nth-child(4) { height: 70%; } [data-ui] .nc-nails i:nth-child(5) { height: 44%; }
+/* Real screenshots of the demos */
+[data-ui] .slide.shot { padding: 0; background: #0b0a08; }
+[data-ui] .slide.shot img, .shot-card img { width: 100%; height: 100%; object-fit: cover; object-position: 50% 0; display: block; }
+.shot-card { display: block; overflow: hidden; background: #0b0a08; aspect-ratio: 16 / 10; }
+.demo .shot-card { aspect-ratio: auto; min-height: 320px; }
+.shot-card img { transition: transform 500ms var(--ease-out); }
+@media (hover: hover) and (pointer: fine) { .shot-card:hover img { transform: scale(1.03); } }
+@media (prefers-reduced-motion: reduce) { .shot-card:hover img { transform: none; } }
 /* Fade mock */
 .dc-fade[data-ui] { background: #1a1510; }
 [data-ui] .fc { width: 150px; height: 230px; border-radius: 26px; border: 6px solid #141210; background: #0d0c0a; padding: 16px 12px 10px; display: flex; flex-direction: column; gap: 8px; box-shadow: 0 24px 40px -20px rgba(0,0,0,.8); position: relative; }
@@ -543,44 +551,13 @@ details, details:first-child { border: 0; background: var(--paper); border-radiu
       </ul>
     </div>
     <div class="stage" id="showcase" role="region" aria-roledescription="carrusel" aria-label="Demos de Eric Design Web">
-      <a class="device" data-ui id="heroDevice" href="https://lumiere-salon-demo.vercel.app" target="_blank" rel="noopener" aria-label="Abrir la demo Lumière Salón &amp; Spa">
+      <a class="device" data-ui id="heroDevice" href="demos/lumiere/" aria-label="Abrir la demo Lumière Salón &amp; Spa">
         <div class="bar"><i></i><i></i><i></i><span id="heroUrl">tusalon.com</span><b class="open-pill">Abrir demo →</b></div>
         <div class="slides" aria-hidden="true">
-          <div class="slide on" aria-hidden="false">
-            <div class="mini" id="heroMini">
-              <div class="mini-nav"><b>Lumière</b><span>Servicios · Galería · Opiniones</span><em>Reservar</em></div>
-              <div class="mini-hero">
-                <div><div class="m-h">Belleza. Lujo.<span>Confianza.</span></div><p>Cabello, uñas, maquillaje y spa en un solo lugar.</p><span class="mini-btn">Reservar cita</span></div>
-                <div class="mini-arch"></div>
-              </div>
-              <div class="mini-row"><div></div><div></div><div></div><div></div></div>
-            </div>
-          </div>
-          <div class="slide s-navaja" aria-hidden="true">
-            <span class="nv">
-              <span class="nv-top"><b>Navaja</b><i></i></span>
-              <span class="nv-h">Tu corte,<em> sin esperar turno.</em></span>
-              <span class="nv-console"><span class="nv-col"><i class="on"></i><i></i><i></i></span><span class="nv-col"><i></i><i class="on"></i><i></i></span><span class="nv-col nv-cal"><i></i><i></i><i></i><i></i><i></i><i class="on"></i><i></i><i></i><i></i><i></i><i></i><i></i></span><span class="nv-col nv-sum"><i></i><i></i><i class="btnl"></i></span></span>
-            </span>
-          </div>
-          <div class="slide s-fade" aria-hidden="true">
-            <span class="fc-side"><b>FADE<em>CLUB</em></b><small>Reserva en tres toques</small></span>
-            <span class="fc">
-              <span class="fc-title">FADE<b>CLUB</b></span>
-              <span class="fc-promo"><i></i></span>
-              <span class="fc-cats"><i></i><i></i><i></i><i></i></span>
-              <span class="fc-row"><i></i><i></i><i></i></span>
-              <span class="fc-tabs"><i></i><i></i><i class="fab"></i><i></i><i></i></span>
-            </span>
-          </div>
-          <div class="slide s-nacar" aria-hidden="true">
-            <span class="nc">
-              <span><span class="nc-name">Nácar</span><span class="nc-sub">Escoge tu color y reserva</span>
-                <span class="nc-sw"><i style="--c:#d8a7a0"></i><i style="--c:#8b1e2d"></i><i style="--c:#c9a48a"></i><i style="--c:#8e5a6b"></i><i style="--c:#efe6e1"></i><i style="--c:#2a2224"></i></span>
-                <span class="nc-btn">Reservar con este color</span></span>
-              <span class="nc-nails"><i></i><i></i><i></i><i></i><i></i></span>
-            </span>
-          </div>
+          <div class="slide shot on" aria-hidden="false"><img src="img/demos/lumiere-1200.webp" srcset="img/demos/lumiere-640.webp 640w, img/demos/lumiere-1200.webp 1200w" sizes="(max-width: 900px) 92vw, 600px" width="1200" height="750" alt="" decoding="async"></div>
+          <div class="slide shot" aria-hidden="true"><img src="img/demos/navaja-1200.webp" srcset="img/demos/navaja-640.webp 640w, img/demos/navaja-1200.webp 1200w" sizes="(max-width: 900px) 92vw, 600px" width="1200" height="750" alt="" loading="lazy" decoding="async"></div>
+          <div class="slide shot" aria-hidden="true"><img src="img/demos/fade-1200.webp" srcset="img/demos/fade-640.webp 640w, img/demos/fade-1200.webp 1200w" sizes="(max-width: 900px) 92vw, 600px" width="1200" height="750" alt="" loading="lazy" decoding="async"></div>
+          <div class="slide shot" aria-hidden="true"><img src="img/demos/nacar-1200.webp" srcset="img/demos/nacar-640.webp 640w, img/demos/nacar-1200.webp 1200w" sizes="(max-width: 900px) 92vw, 600px" width="1200" height="750" alt="" loading="lazy" decoding="async"></div>
         </div>
       </a>
       <span id="heroTag" hidden></span>
@@ -656,16 +633,7 @@ details, details:first-child { border: 0; background: var(--paper); border-radiu
         <p>Son páginas reales con datos de ejemplo. Ábrelas en tu celular y prueba los botones como lo haría tu cliente.</p>
       </div>
       <article class="stagger demo">
-        <div class="demo-shot" data-ui aria-hidden="true">
-          <div class="mini" id="demoMini">
-            <div class="mini-nav"><b>Lumière</b><span>ES · EN</span><em>Reservar</em></div>
-            <div class="mini-hero">
-              <div><div class="m-h">Belleza. Lujo.<span>Confianza.</span></div><p>Servicios, galería, opiniones y citas.</p><span class="mini-btn">Reservar cita</span></div>
-              <div class="mini-arch"></div>
-            </div>
-            <div class="mini-row"><div></div><div></div><div></div><div></div></div>
-          </div>
-        </div>
+        <a class="demo-shot shot-card" href="demos/lumiere/" aria-label="Abrir demo Lumière Salón &amp; Spa"><img src="img/demos/lumiere-1200.webp" srcset="img/demos/lumiere-640.webp 640w, img/demos/lumiere-1200.webp 1200w" sizes="(max-width: 900px) 92vw, 600px" width="1200" height="750" alt="Portada de la demo Lumière Salón & Spa" loading="lazy" decoding="async"></a>
         <div class="demo-body">
           <span class="pill">Salón de belleza · Plan Pro + versión en inglés</span>
           <h3>Lumière Salón &amp; Spa</h3>
@@ -676,20 +644,14 @@ details, details:first-child { border: 0; background: var(--paper); border-radiu
             <li><svg class="icon"><use href="#i-check"/></svg>Formulario de citas y WhatsApp</li>
           </ul>
           <div class="demo-actions">
-            <a class="btn btn-main" id="demoLink" href="https://lumiere-salon-demo.vercel.app" target="_blank" rel="noopener">Abrir demo<svg class="icon"><use href="#i-arrow"/></svg></a>
+            <a class="btn btn-main" id="demoLink" href="demos/lumiere/">Abrir demo<svg class="icon"><use href="#i-arrow"/></svg></a>
             <a class="btn btn-ghost" data-wa="Hola Eric, quiero una página como la demo del salón. Mi negocio es: " href="https://wa.me/18292600023">Quiero una así</a>
           </div>
         </div>
       </article>
       <div class="stagger demo-pair">
         <article class="demo-card">
-          <a class="dc-shot dc-navaja" data-ui href="demos/navaja/" aria-label="Abrir demo Navaja Barber Studio">
-            <span class="nv" aria-hidden="true">
-              <span class="nv-top"><b>Navaja</b><i></i></span>
-              <span class="nv-h">Tu corte,<em> sin esperar turno.</em></span>
-              <span class="nv-console"><span class="nv-col"><i class="on"></i><i></i><i></i></span><span class="nv-col"><i></i><i class="on"></i><i></i></span><span class="nv-col nv-cal"><i></i><i></i><i></i><i></i><i></i><i class="on"></i><i></i><i></i><i></i><i></i><i></i><i></i></span><span class="nv-col nv-sum"><i></i><i></i><i class="btnl"></i></span></span>
-            </span>
-          </a>
+          <a class="dc-shot shot-card" href="demos/navaja/" aria-label="Abrir demo Navaja Barber Studio"><img src="img/demos/navaja-1200.webp" srcset="img/demos/navaja-640.webp 640w, img/demos/navaja-1200.webp 1200w" sizes="(max-width: 900px) 92vw, 600px" width="1200" height="750" alt="Portada de la demo Navaja Barber Studio" loading="lazy" decoding="async"></a>
           <div class="dc-body">
             <span class="pill">Barbería · Página web con reservas</span>
             <h3>Navaja Barber Studio</h3>
@@ -701,15 +663,7 @@ details, details:first-child { border: 0; background: var(--paper); border-radiu
           </div>
         </article>
         <article class="demo-card">
-          <a class="dc-shot dc-fade" data-ui href="demos/fade-club/" aria-label="Abrir demo Fade Club">
-            <span class="fc" aria-hidden="true">
-              <span class="fc-title">FADE<b>CLUB</b></span>
-              <span class="fc-promo"><i></i></span>
-              <span class="fc-cats"><i></i><i></i><i></i><i></i></span>
-              <span class="fc-row"><i></i><i></i><i></i></span>
-              <span class="fc-tabs"><i></i><i></i><i class="fab"></i><i></i><i></i></span>
-            </span>
-          </a>
+          <a class="dc-shot shot-card" href="demos/fade-club/" aria-label="Abrir demo Fade Club"><img src="img/demos/fade-1200.webp" srcset="img/demos/fade-640.webp 640w, img/demos/fade-1200.webp 1200w" sizes="(max-width: 900px) 92vw, 600px" width="1200" height="750" alt="Portada de la demo Fade Club" loading="lazy" decoding="async"></a>
           <div class="dc-body">
             <span class="pill">Barbería · Estilo app en el celular</span>
             <h3>Fade Club</h3>
@@ -722,21 +676,14 @@ details, details:first-child { border: 0; background: var(--paper); border-radiu
         </article>
       </div>
       <article class="stagger demo demo-nacar">
-        <a class="demo-shot dc-nacar" data-ui href="demos/nacar/" aria-label="Abrir demo Nácar Nail Studio">
-          <span class="nc" aria-hidden="true">
-              <span><span class="nc-name">Nácar</span><span class="nc-sub">Escoge tu color y reserva</span>
-                <span class="nc-sw"><i style="--c:#d8a7a0"></i><i style="--c:#8b1e2d"></i><i style="--c:#c9a48a"></i><i style="--c:#8e5a6b"></i><i style="--c:#efe6e1"></i><i style="--c:#2a2224"></i></span>
-                <span class="nc-btn">Reservar con este color</span></span>
-              <span class="nc-nails"><i></i><i></i><i></i><i></i><i></i></span>
-            </span>
-        </a>
+        <a class="demo-shot shot-card" href="demos/nacar/" aria-label="Abrir demo Nácar Nail Studio"><img src="img/demos/nacar-1200.webp" srcset="img/demos/nacar-640.webp 640w, img/demos/nacar-1200.webp 1200w" sizes="(max-width: 900px) 92vw, 600px" width="1200" height="750" alt="Portada de la demo Nácar Nail Studio" loading="lazy" decoding="async"></a>
         <div class="demo-body">
           <span class="pill">Estudio de uñas · Página web con carta de colores</span>
           <h3>Nácar Nail Studio</h3>
           <ul>
-            <li><svg class="icon"><use href="#i-check"/></svg>Carta de colores: el cliente prueba tonos y acabados en una mano dibujada</li>
+            <li><svg class="icon"><use href="#i-check"/></svg>Carta de colores: la clienta prueba tonos y acabados antes de reservar</li>
             <li><svg class="icon"><use href="#i-check"/></svg>El color escogido pasa directo a la reserva</li>
-            <li><svg class="icon"><use href="#i-check"/></svg>Precios como menú, galería y reservas por día y hora</li>
+            <li><svg class="icon"><use href="#i-check"/></svg>Servicios con fotos y precios, galería y reservas por día y hora</li>
           </ul>
           <div class="demo-actions">
             <a class="btn btn-main" href="demos/nacar/">Abrir demo<svg class="icon"><use href="#i-arrow"/></svg></a>
@@ -922,7 +869,7 @@ details, details:first-child { border: 0; background: var(--paper); border-radiu
 
   // Hero showcase: rotates through the four demos
   var DEMOS = [
-    { url: 'tusalon.com', href: 'https://lumiere-salon-demo.vercel.app', ext: true, name: 'Lumière Salón & Spa', tag: 'Nueva cita por WhatsApp' },
+    { url: 'tusalon.com', href: 'demos/lumiere/', ext: false, name: 'Lumière Salón & Spa', tag: 'Nueva cita por WhatsApp' },
     { url: 'tubarberia.com', href: 'demos/navaja/', ext: false, name: 'Navaja Barber Studio', tag: 'Turno reservado: sábado 10:00 a. m.' },
     { url: 'app de tu barbería', href: 'demos/fade-club/', ext: false, name: 'Fade Club', tag: 'Se abre como una app, sin descargar' },
     { url: 'tuestudiodeunas.com', href: 'demos/nacar/', ext: false, name: 'Nácar Nail Studio', tag: 'Cita con el color ya escogido' }

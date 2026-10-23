@@ -1,0 +1,740 @@
+<!doctype html>
+<html lang="es" data-theme="dark">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Lumière · Salón & Spa</title>
+<meta name="description" content="Salón de belleza para mujeres: cabello, uñas, maquillaje, faciales y spa. Reserva tu cita en línea.">
+<meta name="theme-color" content="#0b0a08">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%230b0a08'/%3E%3Ctext x='32' y='44' font-family='Georgia,serif' font-size='36' text-anchor='middle' fill='%23d4af6a'%3EL%3C/text%3E%3C/svg%3E">
+<link rel="preload" href="fonts/cormorant-garamond-latin-600-normal.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="fonts/manrope-latin-400-normal.woff2" as="font" type="font/woff2" crossorigin>
+<script>
+  try {
+    var t = localStorage.getItem('lumiere-theme'); if (t) document.documentElement.dataset.theme = t;
+    var l = localStorage.getItem('lumiere-lang'); if (l) document.documentElement.lang = l;
+  } catch (e) {}
+</script>
+<style>
+@font-face { font-family: 'Cormorant Garamond'; font-style: normal; font-weight: 500; font-display: swap; src: url(fonts/cormorant-garamond-latin-500-normal.woff2) format('woff2'); }
+@font-face { font-family: 'Cormorant Garamond'; font-style: normal; font-weight: 600; font-display: swap; src: url(fonts/cormorant-garamond-latin-600-normal.woff2) format('woff2'); }
+@font-face { font-family: 'Cormorant Garamond'; font-style: italic; font-weight: 500; font-display: swap; src: url(fonts/cormorant-garamond-latin-500-italic.woff2) format('woff2'); }
+@font-face { font-family: 'Manrope'; font-style: normal; font-weight: 400; font-display: swap; src: url(fonts/manrope-latin-400-normal.woff2) format('woff2'); }
+@font-face { font-family: 'Manrope'; font-style: normal; font-weight: 500; font-display: swap; src: url(fonts/manrope-latin-500-normal.woff2) format('woff2'); }
+@font-face { font-family: 'Manrope'; font-style: normal; font-weight: 600; font-display: swap; src: url(fonts/manrope-latin-600-normal.woff2) format('woff2'); }
+@font-face { font-family: 'Manrope'; font-style: normal; font-weight: 700; font-display: swap; src: url(fonts/manrope-latin-700-normal.woff2) format('woff2'); }
+
+:root {
+  --font-display: 'Cormorant Garamond', 'Times New Roman', serif;
+  --font-body: 'Manrope', system-ui, sans-serif;
+  --radius: 14px;
+  --ease: cubic-bezier(.16, 1, .3, 1);
+  --max: 1200px;
+}
+[data-theme="dark"] {
+  --bg: #0b0a08;
+  --surface: #15130f;
+  --surface-2: #1d1a14;
+  --line: rgba(212, 175, 106, .18);
+  --text: #f4ede0;
+  --muted: #b9ad98;
+  --gold: #d4af6a;
+  --gold-strong: #e6c785;
+  --on-gold: #1a140a;
+  --shadow: 0 18px 40px -18px rgba(0, 0, 0, .7);
+  --ph: linear-gradient(140deg, #2a2216, #0f0d09);
+  color-scheme: dark;
+}
+[data-theme="light"] {
+  --bg: #f8f3ea;
+  --surface: #fffdf8;
+  --surface-2: #f1e8d8;
+  --line: rgba(122, 92, 40, .2);
+  --text: #1c1710;
+  --muted: #5e5343;
+  --gold: #8a6526;
+  --gold-strong: #74531c;
+  --on-gold: #fffaf0;
+  --shadow: 0 18px 40px -20px rgba(80, 56, 20, .35);
+  --ph: linear-gradient(140deg, #e8dcc6, #cdb994);
+  color-scheme: light;
+}
+*, *::before, *::after { box-sizing: border-box; }
+html { scroll-behavior: smooth; scroll-padding-top: 84px; }
+body {
+  margin: 0; background: var(--bg); color: var(--text);
+  font: 400 1rem/1.6 var(--font-body);
+  -webkit-font-smoothing: antialiased;
+  transition: background-color .4s var(--ease), color .4s var(--ease);
+}
+::selection { background: var(--gold); color: var(--on-gold); }
+::-webkit-scrollbar { width: 10px; }
+::-webkit-scrollbar-track { background: var(--bg); }
+::-webkit-scrollbar-thumb { background: var(--surface-2); border-radius: 10px; border: 2px solid var(--bg); }
+html { scrollbar-color: var(--surface-2) var(--bg); }
+img { display: block; max-width: 100%; }
+a { color: inherit; text-underline-offset: 4px; }
+:focus-visible { outline: 2px solid var(--gold); outline-offset: 3px; border-radius: 6px; }
+.wrap { width: min(100% - 32px, var(--max)); margin-inline: auto; }
+h1, h2, h3 { font-family: var(--font-display); font-weight: 600; line-height: 1.05; margin: 0; text-wrap: balance; letter-spacing: -.01em; }
+h2 { font-size: clamp(2.2rem, 4.5vw, 3.4rem); }
+p { margin: 0; }
+.ph { background: var(--ph); overflow: hidden; }
+.ph img { width: 100%; height: 100%; object-fit: cover; }
+.icon { width: 20px; height: 20px; stroke: currentColor; fill: none; stroke-width: 1.5; stroke-linecap: round; stroke-linejoin: round; flex: none; }
+
+/* Buttons */
+.btn {
+  display: inline-flex; align-items: center; justify-content: center; gap: 10px;
+  min-height: 48px; padding: 0 24px; border-radius: 999px;
+  font: 600 .95rem/1 var(--font-body); text-decoration: none; cursor: pointer;
+  border: 1px solid transparent; transition: transform .25s var(--ease), background-color .25s, color .25s, border-color .25s, box-shadow .25s;
+}
+.btn-gold { background: var(--gold); color: var(--on-gold); box-shadow: 0 10px 24px -12px rgba(212, 175, 106, .7); }
+.btn-gold:hover { background: var(--gold-strong); transform: translateY(-2px); }
+.btn-line { border-color: var(--gold); color: var(--text); background: transparent; }
+.btn-line:hover { background: var(--gold); color: var(--on-gold); }
+.btn:active { transform: translateY(0) scale(.98); }
+
+.skip { position: absolute; left: 16px; top: -80px; z-index: 100; }
+.skip:focus { top: 12px; }
+/* Header */
+.site-header {
+  position: sticky; top: 0; z-index: 50;
+  background: color-mix(in srgb, var(--bg) 82%, transparent);
+  backdrop-filter: saturate(140%) blur(14px); -webkit-backdrop-filter: saturate(140%) blur(14px);
+  border-bottom: 1px solid var(--line);
+}
+.nav { display: flex; align-items: center; gap: 24px; height: 72px; }
+.brand { display: flex; align-items: baseline; gap: 8px; text-decoration: none; }
+.brand-name { font: 600 1.9rem/1 var(--font-display); color: var(--gold); letter-spacing: .02em; }
+.brand-sub { font-size: .7rem; letter-spacing: .22em; text-transform: uppercase; color: var(--muted); }
+.nav-links { display: flex; gap: 28px; margin-left: auto; list-style: none; padding: 0; margin-block: 0; }
+.nav-links a { text-decoration: none; font-size: .92rem; color: var(--muted); transition: color .2s; }
+.nav-links a:hover { color: var(--text); }
+.nav-tools { display: flex; align-items: center; gap: 8px; }
+.tool {
+  height: 40px; min-width: 40px; padding: 0 10px; border-radius: 999px; border: 1px solid var(--line);
+  background: transparent; color: var(--text); display: inline-flex; align-items: center; justify-content: center; gap: 6px;
+  cursor: pointer; font: 600 .8rem var(--font-body); transition: border-color .2s, background-color .2s;
+}
+.tool:hover { border-color: var(--gold); }
+.tool .sun { display: none; }
+[data-theme="light"] .tool .sun { display: block; }
+[data-theme="light"] .tool .moon { display: none; }
+.nav .btn { min-height: 42px; padding: 0 18px; }
+.menu-btn { display: none; }
+
+/* Hero */
+.hero { padding: clamp(40px, 7vw, 88px) 0 56px; }
+.hero-grid { display: grid; grid-template-columns: 1.05fr .95fr; gap: clamp(32px, 5vw, 72px); align-items: center; }
+.hero h1 { font-size: clamp(3rem, 7.4vw, 5.9rem); letter-spacing: -.02em; }
+.hero h1 em { font-style: normal; color: var(--gold); font-weight: 500; }
+.hero-lead { margin-top: 24px; max-width: 46ch; font-size: 1.12rem; color: var(--muted); }
+.hero-actions { display: flex; flex-wrap: wrap; gap: 12px; margin-top: 32px; }
+.hero-proof { display: flex; align-items: center; gap: 14px; margin-top: 36px; color: var(--muted); font-size: .92rem; }
+.stars { display: flex; gap: 2px; color: var(--gold); }
+.stars svg { width: 16px; height: 16px; fill: currentColor; }
+.hero-media { position: relative; }
+.arch {
+  aspect-ratio: 4 / 5; border-radius: 999px 999px var(--radius) var(--radius);
+  border: 1px solid var(--line); padding: 10px; box-shadow: var(--shadow);
+}
+.arch .ph { height: 100%; border-radius: 999px 999px 8px 8px; }
+.arch img { animation: settle 1.6s var(--ease) both; }
+@keyframes settle { from { transform: scale(1.08); filter: blur(6px); } to { transform: scale(1); filter: blur(0); } }
+.badge {
+  position: absolute; left: -24px; bottom: 48px; background: var(--surface); border: 1px solid var(--line);
+  border-radius: var(--radius); padding: 16px 20px; box-shadow: var(--shadow); display: flex; gap: 12px; align-items: center;
+}
+.badge strong { font: 600 2rem/1 var(--font-display); color: var(--gold); }
+.badge span { font-size: .82rem; color: var(--muted); line-height: 1.35; }
+
+/* Trust strip */
+.trust { border-block: 1px solid var(--line); }
+.trust ul { list-style: none; margin: 0 auto; padding: 22px 0; display: flex; justify-content: space-between; gap: 24px; flex-wrap: wrap; }
+.trust li { display: flex; align-items: center; gap: 10px; font-size: .9rem; color: var(--muted); }
+.trust .icon { color: var(--gold); width: 22px; height: 22px; }
+
+/* Sections */
+section { padding: clamp(72px, 10vw, 128px) 0 0; }
+.sec-head { display: flex; justify-content: space-between; align-items: end; gap: 24px; margin-bottom: 48px; }
+.sec-head p { max-width: 44ch; color: var(--muted); }
+
+/* Services */
+.services { display: grid; grid-template-columns: .9fr 1.1fr; gap: clamp(32px, 5vw, 64px); align-items: start; }
+.svc-stage { position: sticky; top: 104px; aspect-ratio: 4 / 5; border-radius: var(--radius); box-shadow: var(--shadow); }
+.svc-stage .ph { position: absolute; inset: 0; border-radius: var(--radius); opacity: 0; transform: scale(1.03); transition: opacity .6s var(--ease), transform 1s var(--ease); }
+.svc-stage .ph.on { opacity: 1; transform: scale(1); }
+.svc-list { list-style: none; margin: 0; padding: 0; border-top: 1px solid var(--line); }
+.svc {
+  display: grid; grid-template-columns: 1fr auto; gap: 6px 24px; padding: 26px 8px; border-bottom: 1px solid var(--line);
+  cursor: pointer; transition: background-color .3s, padding .4s var(--ease);
+}
+.svc:hover, .svc.on { background: var(--surface); padding-inline: 20px; }
+.svc h3 { font-size: clamp(1.6rem, 2.6vw, 2.1rem); }
+.svc .price { font: 600 1.05rem var(--font-body); color: var(--gold); white-space: nowrap; align-self: center; font-variant-numeric: tabular-nums; }
+.svc p { grid-column: 1 / -1; color: var(--muted); max-width: 56ch; }
+.svc .thumb { display: none; }
+.fine { margin-top: 16px; font-size: .8rem; color: var(--muted); }
+
+/* About */
+.about { display: grid; grid-template-columns: 1fr 1fr; gap: clamp(32px, 5vw, 72px); align-items: center; }
+.about .ph { aspect-ratio: 5 / 4; border-radius: var(--radius); box-shadow: var(--shadow); }
+.about p { color: var(--muted); margin-top: 20px; max-width: 52ch; }
+.facts { display: flex; gap: 36px; margin-top: 32px; flex-wrap: wrap; }
+.facts div { font-size: .88rem; color: var(--muted); }
+.facts strong { display: block; font: 600 2.2rem/1.1 var(--font-display); color: var(--text); font-variant-numeric: tabular-nums; }
+
+/* Gallery */
+.gallery { display: grid; grid-template-columns: repeat(4, 1fr); grid-auto-rows: 220px; gap: 14px; }
+.gallery .ph { border-radius: var(--radius); }
+.gallery .ph img { transition: transform 1s var(--ease); }
+.gallery .ph:hover img { transform: scale(1.05); }
+.g-tall { grid-row: span 2; }
+.g-wide { grid-column: span 2; }
+
+/* Testimonials */
+.quotes { display: grid; grid-template-columns: repeat(3, 1fr); gap: 0; border-top: 1px solid var(--line); }
+.quote { padding: 36px 32px 8px 0; }
+.quote + .quote { padding-left: 32px; border-left: 1px solid var(--line); }
+.quote blockquote { margin: 16px 0 20px; font: 500 1.45rem/1.35 var(--font-display); }
+.quote cite { font-style: normal; font-size: .9rem; color: var(--muted); }
+.quote cite b { color: var(--text); font-weight: 600; }
+
+/* Booking */
+.book { margin-top: clamp(72px, 10vw, 128px); background: var(--surface); border-block: 1px solid var(--line); padding: clamp(56px, 8vw, 96px) 0; }
+.book-grid { display: grid; grid-template-columns: .9fr 1.1fr; gap: clamp(32px, 5vw, 72px); }
+.book-info p { color: var(--muted); margin-top: 18px; max-width: 42ch; }
+.contact-list { list-style: none; padding: 0; margin: 32px 0 0; display: grid; gap: 16px; }
+.contact-list li { display: flex; gap: 12px; align-items: flex-start; color: var(--muted); }
+.contact-list .icon { color: var(--gold); margin-top: 2px; }
+.contact-list b { color: var(--text); font-weight: 600; display: block; }
+form { display: grid; grid-template-columns: 1fr 1fr; gap: 18px; }
+.field { display: grid; gap: 8px; }
+.field.full { grid-column: 1 / -1; }
+label { font-size: .85rem; font-weight: 600; }
+input, select, textarea {
+  width: 100%; min-height: 50px; padding: 12px 16px; border-radius: 12px; border: 1px solid var(--line);
+  background: var(--bg); color: var(--text); font: 400 1rem var(--font-body); caret-color: var(--gold);
+  transition: border-color .2s, box-shadow .2s;
+}
+textarea { min-height: 96px; resize: vertical; }
+input::placeholder, textarea::placeholder { color: var(--muted); opacity: .8; }
+input:focus, select:focus, textarea:focus { outline: none; border-color: var(--gold); box-shadow: 0 0 0 3px color-mix(in srgb, var(--gold) 25%, transparent); }
+.field .err { font-size: .8rem; color: #e0786b; min-height: 1em; }
+[data-theme="light"] .field .err { color: #a3352a; }
+[aria-invalid="true"] { border-color: #e0786b; }
+.form-actions { grid-column: 1 / -1; display: flex; flex-wrap: wrap; gap: 12px; align-items: center; }
+.btn[disabled] { opacity: .6; cursor: progress; }
+.success {
+  grid-column: 1 / -1; display: none; gap: 12px; align-items: center; padding: 16px 18px; border-radius: 12px;
+  border: 1px solid var(--gold); background: color-mix(in srgb, var(--gold) 10%, transparent);
+}
+.success.show { display: flex; animation: rise .5s var(--ease); }
+.success .icon { color: var(--gold); }
+@keyframes rise { from { opacity: 0; transform: translateY(8px); } }
+
+/* Footer */
+footer { padding: 56px 0 32px; }
+.foot { display: grid; grid-template-columns: 1.4fr 1fr 1fr; gap: 32px; }
+.foot h4 { margin: 0 0 14px; font-size: .78rem; letter-spacing: .18em; text-transform: uppercase; color: var(--gold); }
+.foot ul { list-style: none; margin: 0; padding: 0; display: grid; gap: 8px; color: var(--muted); font-size: .92rem; }
+.foot a { text-decoration: none; }
+.foot a:hover { color: var(--text); }
+.hours li { display: flex; justify-content: space-between; gap: 16px; font-variant-numeric: tabular-nums; }
+.social { display: flex; gap: 10px; margin-top: 18px; }
+.social a { width: 44px; height: 44px; border-radius: 999px; border: 1px solid var(--line); display: grid; place-items: center; color: var(--gold); transition: border-color .2s; }
+.social a:hover { border-color: var(--gold); }
+.legal { margin-top: 40px; padding-top: 20px; border-top: 1px solid var(--line); display: flex; justify-content: space-between; gap: 16px; flex-wrap: wrap; font-size: .8rem; color: var(--muted); }
+
+.wa {
+  position: fixed; right: 20px; bottom: 20px; z-index: 40; width: 56px; height: 56px; border-radius: 999px;
+  display: grid; place-items: center; background: var(--gold); color: var(--on-gold); box-shadow: 0 14px 30px -10px rgba(0,0,0,.5);
+  transition: transform .25s var(--ease);
+}
+.wa:hover { transform: translateY(-3px); }
+.wa .icon { width: 26px; height: 26px; }
+
+.toast {
+  position: fixed; left: 50%; bottom: 24px; transform: translate(-50%, 20px); opacity: 0; pointer-events: none; z-index: 60;
+  background: var(--surface-2); color: var(--text); border: 1px solid var(--line); border-radius: 999px; padding: 12px 20px;
+  font-size: .9rem; box-shadow: var(--shadow); transition: opacity .3s, transform .4s var(--ease);
+}
+.toast.show { opacity: 1; transform: translate(-50%, 0); }
+
+/* Reveal */
+.reveal { opacity: 1; }
+.js .reveal { opacity: 0; transform: translateY(24px); transition: opacity .9s var(--ease), transform .9s var(--ease); }
+.js .reveal.in { opacity: 1; transform: none; }
+
+@media (max-width: 960px) {
+  .nav-links, .nav .btn-book { display: none; }
+  .menu-btn { display: inline-flex; }
+  .nav-links.open {
+    display: flex; flex-direction: column; position: absolute; top: 72px; left: 0; right: 0; gap: 0;
+    background: var(--bg); border-bottom: 1px solid var(--line); padding: 8px 16px 16px;
+  }
+  .nav-links.open a { display: block; padding: 14px 4px; font-size: 1.05rem; border-bottom: 1px solid var(--line); }
+  .nav-tools { margin-left: auto; }
+  .hero-grid, .services, .about, .book-grid { grid-template-columns: 1fr; }
+  .hero-media { max-width: 440px; margin-inline: auto; width: 100%; }
+  .badge { left: 0; }
+  .svc-stage { display: none; }
+  .svc { grid-template-columns: 72px 1fr auto; }
+  .svc .thumb { display: block; grid-row: span 2; width: 72px; height: 72px; border-radius: 12px; }
+  .svc p { grid-column: 2 / -1; }
+  .quotes { grid-template-columns: 1fr; }
+  .quote, .quote + .quote { padding: 28px 0; border-left: 0; border-bottom: 1px solid var(--line); }
+  .gallery { grid-template-columns: repeat(2, 1fr); grid-auto-rows: 180px; }
+  .foot { grid-template-columns: 1fr 1fr; }
+  .foot > div:first-child { grid-column: 1 / -1; }
+  .sec-head { flex-direction: column; align-items: start; }
+}
+@media (max-width: 560px) {
+  .brand-sub { display: none; }
+  form { grid-template-columns: 1fr; }
+  .trust ul { justify-content: flex-start; }
+  .trust li { width: calc(50% - 12px); }
+  .facts { gap: 24px; }
+}
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after { animation: none !important; transition: none !important; }
+  html { scroll-behavior: auto; }
+  .js .reveal { opacity: 1; transform: none; }
+}
+</style>
+</head>
+<body>
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <symbol id="i-star" viewBox="0 0 24 24"><path d="M12 2.5l2.9 6 6.6.9-4.8 4.6 1.2 6.5L12 17.4l-5.9 3.1 1.2-6.5L2.5 9.4l6.6-.9z"/></symbol>
+  <symbol id="i-cal" viewBox="0 0 24 24"><rect x="3" y="4.5" width="18" height="16" rx="2.5"/><path d="M8 2.5v4M16 2.5v4M3 9.5h18"/></symbol>
+  <symbol id="i-gem" viewBox="0 0 24 24"><path d="M6 3h12l3 6-9 12L3 9z"/><path d="M3 9h18M9 3l3 18 3-18"/></symbol>
+  <symbol id="i-user" viewBox="0 0 24 24"><circle cx="12" cy="8" r="4"/><path d="M4 21c1.5-4 4.5-6 8-6s6.5 2 8 6"/></symbol>
+  <symbol id="i-shield" viewBox="0 0 24 24"><path d="M12 2.5l8 3v6c0 5-3.4 8.6-8 10-4.6-1.4-8-5-8-10v-6z"/><path d="M8.5 12l2.5 2.5 4.5-5"/></symbol>
+  <symbol id="i-leaf" viewBox="0 0 24 24"><path d="M5 19c0-9 6-14 15-14 0 9-5 15-14 15"/><path d="M5 19c3-4 6-7 10-9"/></symbol>
+  <symbol id="i-heart" viewBox="0 0 24 24"><path d="M12 20s-8-4.7-8-11a4.5 4.5 0 0 1 8-2.8A4.5 4.5 0 0 1 20 9c0 6.3-8 11-8 11z"/></symbol>
+  <symbol id="i-moon" viewBox="0 0 24 24"><path d="M20 14.5A8 8 0 1 1 9.5 4a6.5 6.5 0 0 0 10.5 10.5z"/></symbol>
+  <symbol id="i-sun" viewBox="0 0 24 24"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"/></symbol>
+  <symbol id="i-globe" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3c2.5 2.6 3.8 5.6 3.8 9s-1.3 6.4-3.8 9c-2.5-2.6-3.8-5.6-3.8-9S9.5 5.6 12 3z"/></symbol>
+  <symbol id="i-menu" viewBox="0 0 24 24"><path d="M4 7h16M4 12h16M4 17h16"/></symbol>
+  <symbol id="i-pin" viewBox="0 0 24 24"><path d="M12 21s7-6.2 7-12a7 7 0 0 0-14 0c0 5.8 7 12 7 12z"/><circle cx="12" cy="9" r="2.5"/></symbol>
+  <symbol id="i-phone" viewBox="0 0 24 24"><path d="M5 3h4l2 5-2.5 1.5a11 11 0 0 0 6 6L16 13l5 2v4a2 2 0 0 1-2 2A16 16 0 0 1 3 5a2 2 0 0 1 2-2z"/></symbol>
+  <symbol id="i-clock" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></symbol>
+  <symbol id="i-chat" viewBox="0 0 24 24"><path d="M4 20l1.3-3.9A8 8 0 1 1 8 19z"/><path d="M9 10.5c.3 1.8 2.2 3.7 4 4l1.2-1.2 1.8.8c-.3 1-1.2 1.6-2.2 1.4-3-.6-5.3-2.9-5.9-5.9-.2-1 .4-1.9 1.4-2.2l.8 1.8z"/></symbol>
+  <symbol id="i-check" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M8 12.5l2.7 2.7L16 9.8"/></symbol>
+  <symbol id="i-ig" viewBox="0 0 24 24"><rect x="3.5" y="3.5" width="17" height="17" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.2" cy="6.8" r=".6"/></symbol>
+  <symbol id="i-tt" viewBox="0 0 24 24"><path d="M14 3v11.5a3.5 3.5 0 1 1-3.5-3.5"/><path d="M14 3c.5 2.8 2.3 4.5 5 4.8"/></symbol>
+  <symbol id="i-fb" viewBox="0 0 24 24"><path d="M14 8h3V4h-3a4 4 0 0 0-4 4v3H7v4h3v6h4v-6h3l1-4h-4V8z"/></symbol>
+</svg>
+
+<a class="btn btn-gold skip" href="#reservar" data-i18n="skip">Saltar a reservar</a>
+
+<header class="site-header">
+  <nav class="wrap nav" aria-label="Principal">
+    <a class="brand" href="#inicio" aria-label="Lumière, inicio">
+      <span class="brand-name">Lumière</span><span class="brand-sub">Salón &amp; Spa</span>
+    </a>
+    <ul class="nav-links" id="navlinks">
+      <li><a href="#servicios" data-i18n="nav.services">Servicios</a></li>
+      <li><a href="#nosotras" data-i18n="nav.about">Nosotras</a></li>
+      <li><a href="#galeria" data-i18n="nav.gallery">Galería</a></li>
+      <li><a href="#opiniones" data-i18n="nav.reviews">Opiniones</a></li>
+      <li><a href="#reservar" data-i18n="nav.contact">Contacto</a></li>
+    </ul>
+    <div class="nav-tools">
+      <button class="tool" id="langBtn" type="button" aria-label="Cambiar idioma"><svg class="icon"><use href="#i-globe"/></svg><span id="langLabel">EN</span></button>
+      <button class="tool" id="themeBtn" type="button" aria-label="Cambiar a tema claro"><svg class="icon moon"><use href="#i-sun"/></svg><svg class="icon sun"><use href="#i-moon"/></svg></button>
+      <a class="btn btn-gold btn-book" href="#reservar"><svg class="icon"><use href="#i-cal"/></svg><span data-i18n="cta.book">Reservar cita</span></a>
+      <button class="tool menu-btn" id="menuBtn" type="button" aria-expanded="false" aria-controls="navlinks" aria-label="Abrir menú"><svg class="icon"><use href="#i-menu"/></svg></button>
+    </div>
+  </nav>
+</header>
+
+<main id="inicio">
+  <div class="wrap hero">
+    <div class="hero-grid">
+      <div>
+        <h1><span data-i18n="hero.t1">Belleza.</span> <span data-i18n="hero.t2">Lujo.</span><br><em data-i18n="hero.t3">Confianza.</em></h1>
+        <p class="hero-lead" data-i18n="hero.lead">Cabello, uñas, maquillaje y spa en un solo lugar, con productos profesionales y un equipo que te escucha antes de empezar.</p>
+        <div class="hero-actions">
+          <a class="btn btn-gold" href="#reservar"><svg class="icon"><use href="#i-cal"/></svg><span data-i18n="cta.book">Reservar cita</span></a>
+          <a class="btn btn-line" href="#servicios" data-i18n="cta.services">Ver servicios</a>
+        </div>
+        <div class="hero-proof">
+          <div class="stars" aria-label="5 de 5 estrellas"><svg><use href="#i-star"/></svg><svg><use href="#i-star"/></svg><svg><use href="#i-star"/></svg><svg><use href="#i-star"/></svg><svg><use href="#i-star"/></svg></div>
+          <span data-i18n="hero.proof">Más de 1,000 clientas felices</span>
+        </div>
+      </div>
+      <div class="hero-media">
+        <div class="arch"><div class="ph"><img src="https://images.unsplash.com/photo-1580618672591-eb180b1a973f?auto=format&fit=crop&w=900&q=75" alt="Clienta con el cabello recién peinado en ondas" fetchpriority="high" onerror="this.remove()"></div></div>
+        <div class="badge"><strong>8+</strong><span data-i18n-html="hero.badge">años cuidando<br>tu belleza</span></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="trust">
+    <ul class="wrap">
+      <li><svg class="icon"><use href="#i-gem"/></svg><span data-i18n="trust.1">Productos premium</span></li>
+      <li><svg class="icon"><use href="#i-user"/></svg><span data-i18n="trust.2">Estilistas certificadas</span></li>
+      <li><svg class="icon"><use href="#i-shield"/></svg><span data-i18n="trust.3">Higiene garantizada</span></li>
+      <li><svg class="icon"><use href="#i-leaf"/></svg><span data-i18n="trust.4">Ambiente relajante</span></li>
+      <li><svg class="icon"><use href="#i-heart"/></svg><span data-i18n="trust.5">Atención personalizada</span></li>
+    </ul>
+  </div>
+
+  <section id="servicios">
+    <div class="wrap">
+      <div class="sec-head reveal">
+        <h2 data-i18n="svc.title">Servicios pensados para ti</h2>
+        <p data-i18n="svc.lead">Pasa el cursor o toca un servicio para verlo. Cada visita empieza con una consulta sin costo.</p>
+      </div>
+      <div class="services">
+        <div class="svc-stage" aria-hidden="true">
+          <div class="ph on" data-stage="0"><img src="https://images.unsplash.com/photo-1562322140-8baeececf3df?auto=format&fit=crop&w=900&q=75" alt="" onerror="this.remove()"></div>
+          <div class="ph" data-stage="1"><img src="https://images.unsplash.com/photo-1604654894610-df63bc536371?auto=format&fit=crop&w=900&q=75" alt="" loading="lazy" onerror="this.remove()"></div>
+          <div class="ph" data-stage="2"><img src="https://images.unsplash.com/photo-1487412947147-5cebf100ffc2?auto=format&fit=crop&w=900&q=75" alt="" loading="lazy" onerror="this.remove()"></div>
+          <div class="ph" data-stage="3"><img src="https://images.unsplash.com/photo-1570172619644-dfd03ed5d881?auto=format&fit=crop&w=900&q=75" alt="" loading="lazy" onerror="this.remove()"></div>
+          <div class="ph" data-stage="4"><img src="https://images.unsplash.com/photo-1544161515-4ab6ce6db874?auto=format&fit=crop&w=900&q=75" alt="" loading="lazy" onerror="this.remove()"></div>
+          <div class="ph" data-stage="5"><img src="https://images.unsplash.com/photo-1522337360788-8b13dee7a37e?auto=format&fit=crop&w=900&q=75" alt="" loading="lazy" onerror="this.remove()"></div>
+        </div>
+        <div>
+          <ul class="svc-list">
+            <li class="svc on reveal" data-svc="0" tabindex="0">
+              <div class="thumb ph"><img src="https://images.unsplash.com/photo-1562322140-8baeececf3df?auto=format&fit=crop&w=200&q=70" alt="" loading="lazy" onerror="this.remove()"></div>
+              <h3 data-i18n="s0.t">Corte y peinado</h3><span class="price" data-i18n="from" data-price="1,500">Desde RD$1,500</span>
+              <p data-i18n="s0.d">Corte a la medida de tu rostro, lavado, tratamiento y blower o ondas.</p>
+            </li>
+            <li class="svc reveal" data-svc="1" tabindex="0">
+              <div class="thumb ph"><img src="https://images.unsplash.com/photo-1604654894610-df63bc536371?auto=format&fit=crop&w=200&q=70" alt="" loading="lazy" onerror="this.remove()"></div>
+              <h3 data-i18n="s1.t">Uñas y extensiones</h3><span class="price" data-i18n="from" data-price="900">Desde RD$900</span>
+              <p data-i18n="s1.d">Manicure, pedicure, gel, acrílico y diseños a mano alzada.</p>
+            </li>
+            <li class="svc reveal" data-svc="2" tabindex="0">
+              <div class="thumb ph"><img src="https://images.unsplash.com/photo-1487412947147-5cebf100ffc2?auto=format&fit=crop&w=200&q=70" alt="" loading="lazy" onerror="this.remove()"></div>
+              <h3 data-i18n="s2.t">Maquillaje y novias</h3><span class="price" data-i18n="from" data-price="3,500">Desde RD$3,500</span>
+              <p data-i18n="s2.d">Maquillaje social, de novia y quinceañera, con prueba previa incluida.</p>
+            </li>
+            <li class="svc reveal" data-svc="3" tabindex="0">
+              <div class="thumb ph"><img src="https://images.unsplash.com/photo-1570172619644-dfd03ed5d881?auto=format&fit=crop&w=200&q=70" alt="" loading="lazy" onerror="this.remove()"></div>
+              <h3 data-i18n="s3.t">Faciales</h3><span class="price" data-i18n="from" data-price="2,200">Desde RD$2,200</span>
+              <p data-i18n="s3.d">Limpieza profunda, hidratación y tratamientos según tu tipo de piel.</p>
+            </li>
+            <li class="svc reveal" data-svc="4" tabindex="0">
+              <div class="thumb ph"><img src="https://images.unsplash.com/photo-1544161515-4ab6ce6db874?auto=format&fit=crop&w=200&q=70" alt="" loading="lazy" onerror="this.remove()"></div>
+              <h3 data-i18n="s4.t">Spa y masajes</h3><span class="price" data-i18n="from" data-price="2,800">Desde RD$2,800</span>
+              <p data-i18n="s4.d">Masaje relajante, piedras calientes y rituales de una o dos horas.</p>
+            </li>
+            <li class="svc reveal" data-svc="5" tabindex="0">
+              <div class="thumb ph"><img src="https://images.unsplash.com/photo-1522337360788-8b13dee7a37e?auto=format&fit=crop&w=200&q=70" alt="" loading="lazy" onerror="this.remove()"></div>
+              <h3 data-i18n="s5.t">Color y keratina</h3><span class="price" data-i18n="from" data-price="3,000">Desde RD$3,000</span>
+              <p data-i18n="s5.d">Balayage, mechas, tinte completo y alisados que cuidan la fibra.</p>
+            </li>
+          </ul>
+          <p class="fine" data-i18n="svc.fine">Precios ilustrativos para esta demo.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="nosotras">
+    <div class="wrap about">
+      <div class="ph reveal"><img src="https://images.unsplash.com/photo-1560066984-138dadb4c035?auto=format&fit=crop&w=1000&q=75" alt="Interior del salón con espejos y sillas de estilismo" loading="lazy" onerror="this.remove()"></div>
+      <div class="reveal">
+        <h2 data-i18n="about.title">Un espacio hecho para consentirte</h2>
+        <p data-i18n="about.p1">En Lumière creemos que una buena cita empieza antes del primer corte: te recibimos con calma, escuchamos lo que quieres y te explicamos cada paso.</p>
+        <p data-i18n="about.p2">Trabajamos solo con marcas profesionales y esterilizamos cada herramienta entre clienta y clienta.</p>
+        <div class="facts">
+          <div><strong>1,000+</strong><span data-i18n="about.f1">clientas atendidas</span></div>
+          <div><strong>12</strong><span data-i18n="about.f2">especialistas</span></div>
+          <div><strong>4.9</strong><span data-i18n="about.f3">valoración promedio</span></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="galeria">
+    <div class="wrap">
+      <div class="sec-head reveal">
+        <h2 data-i18n="gal.title">Nuestro trabajo</h2>
+        <p data-i18n="gal.lead">Resultados reales de nuestras estilistas, del lavado al último detalle.</p>
+      </div>
+      <div class="gallery reveal">
+        <div class="ph g-tall"><img src="https://images.unsplash.com/photo-1519699047748-de8e457a634e?auto=format&fit=crop&w=700&q=70" alt="Maquillaje de noche" loading="lazy" onerror="this.remove()"></div>
+        <div class="ph g-wide"><img src="https://images.unsplash.com/photo-1521590832167-7bcbfaa6381f?auto=format&fit=crop&w=1000&q=70" alt="Estación de estilismo del salón" loading="lazy" onerror="this.remove()"></div>
+        <div class="ph"><img src="https://images.unsplash.com/photo-1604654894610-df63bc536371?auto=format&fit=crop&w=600&q=70" alt="Uñas con esmalte en gel" loading="lazy" onerror="this.remove()"></div>
+        <div class="ph g-tall"><img src="https://images.unsplash.com/photo-1492106087820-71f1a00d2b11?auto=format&fit=crop&w=700&q=70" alt="Retrato con peinado suelto" loading="lazy" onerror="this.remove()"></div>
+        <div class="ph"><img src="https://images.unsplash.com/photo-1516975080664-ed2fc6a32937?auto=format&fit=crop&w=600&q=70" alt="Productos para el cabello" loading="lazy" onerror="this.remove()"></div>
+        <div class="ph g-wide"><img src="https://images.unsplash.com/photo-1600948836101-f9ffda59d250?auto=format&fit=crop&w=1000&q=70" alt="Sala de tratamientos" loading="lazy" onerror="this.remove()"></div>
+        <div class="ph"><img src="https://images.unsplash.com/photo-1595476108010-b4d1f102b1b1?auto=format&fit=crop&w=600&q=70" alt="Estilista trabajando" loading="lazy" onerror="this.remove()"></div>
+      </div>
+    </div>
+  </section>
+
+  <section id="opiniones">
+    <div class="wrap">
+      <div class="sec-head reveal">
+        <h2 data-i18n="rev.title">Lo que dicen nuestras clientas</h2>
+      </div>
+      <div class="quotes reveal">
+        <figure class="quote" style="margin:0">
+          <div class="stars" aria-label="5 de 5 estrellas"><svg><use href="#i-star"/></svg><svg><use href="#i-star"/></svg><svg><use href="#i-star"/></svg><svg><use href="#i-star"/></svg><svg><use href="#i-star"/></svg></div>
+          <blockquote data-i18n="rev.1">“Salí con el color que llevaba años buscando. Me explicaron todo y el resultado duró semanas.”</blockquote>
+          <cite><b>Clienta A.</b> · <span data-i18n="rev.1s">Color y balayage</span></cite>
+        </figure>
+        <figure class="quote" style="margin:0">
+          <div class="stars" aria-label="5 de 5 estrellas"><svg><use href="#i-star"/></svg><svg><use href="#i-star"/></svg><svg><use href="#i-star"/></svg><svg><use href="#i-star"/></svg><svg><use href="#i-star"/></svg></div>
+          <blockquote data-i18n="rev.2">“El maquillaje de mi boda aguantó toda la noche. Puntuales, tranquilas y muy profesionales.”</blockquote>
+          <cite><b>Clienta B.</b> · <span data-i18n="rev.2s">Maquillaje de novia</span></cite>
+        </figure>
+        <figure class="quote" style="margin:0">
+          <div class="stars" aria-label="5 de 5 estrellas"><svg><use href="#i-star"/></svg><svg><use href="#i-star"/></svg><svg><use href="#i-star"/></svg><svg><use href="#i-star"/></svg><svg><use href="#i-star"/></svg></div>
+          <blockquote data-i18n="rev.3">“Limpio, bonito y con una atención que te hace volver. Mis uñas nunca habían durado tanto.”</blockquote>
+          <cite><b>Clienta C.</b> · <span data-i18n="rev.3s">Uñas en gel</span></cite>
+        </figure>
+      </div>
+    </div>
+  </section>
+
+  <div class="book" id="reservar">
+    <div class="wrap book-grid">
+      <div class="book-info reveal">
+        <h2 data-i18n="book.title">Reserva tu cita</h2>
+        <p data-i18n="book.lead">Déjanos tus datos y te confirmamos por WhatsApp en menos de una hora dentro del horario de atención.</p>
+        <ul class="contact-list">
+          <li><svg class="icon"><use href="#i-pin"/></svg><span><b data-i18n="c.addr">Dirección</b>Av. Ejemplo 123, Santo Domingo</span></li>
+          <li><svg class="icon"><use href="#i-phone"/></svg><span><b data-i18n="c.phone">Teléfono</b>(809) 000-0000</span></li>
+          <li><svg class="icon"><use href="#i-clock"/></svg><span><b data-i18n="c.hours">Horario</b><span data-i18n="c.hoursv">Lun a sáb 9:00–19:00 · Dom 10:00–15:00</span></span></li>
+        </ul>
+      </div>
+      <form id="bookForm" class="reveal" novalidate>
+        <div class="field">
+          <label for="f-name" data-i18n="f.name">Nombre</label>
+          <input id="f-name" name="name" autocomplete="name" required data-ph="f.nameph" placeholder="Tu nombre">
+          <span class="err" id="e-name" aria-live="polite"></span>
+        </div>
+        <div class="field">
+          <label for="f-phone" data-i18n="f.phone">WhatsApp</label>
+          <input id="f-phone" name="phone" type="tel" autocomplete="tel" inputmode="tel" required placeholder="809-000-0000">
+          <span class="err" id="e-phone" aria-live="polite"></span>
+        </div>
+        <div class="field">
+          <label for="f-svc" data-i18n="f.svc">Servicio</label>
+          <select id="f-svc" name="service">
+            <option data-i18n="s0.t">Corte y peinado</option>
+            <option data-i18n="s1.t">Uñas y extensiones</option>
+            <option data-i18n="s2.t">Maquillaje y novias</option>
+            <option data-i18n="s3.t">Faciales</option>
+            <option data-i18n="s4.t">Spa y masajes</option>
+            <option data-i18n="s5.t">Color y keratina</option>
+          </select>
+        </div>
+        <div class="field">
+          <label for="f-date" data-i18n="f.date">Fecha</label>
+          <input id="f-date" name="date" type="date" required>
+          <span class="err" id="e-date" aria-live="polite"></span>
+        </div>
+        <div class="field full">
+          <label for="f-note" data-i18n="f.note">Comentarios (opcional)</label>
+          <textarea id="f-note" name="note" data-ph="f.noteph" placeholder="Cuéntanos qué te gustaría hacerte"></textarea>
+        </div>
+        <div class="form-actions">
+          <button class="btn btn-gold" type="submit" id="submitBtn"><svg class="icon"><use href="#i-cal"/></svg><span data-i18n="f.submit">Solicitar cita</span></button>
+          <a class="btn btn-line" href="#" data-demo><svg class="icon"><use href="#i-chat"/></svg><span data-i18n="f.wa">Escribir por WhatsApp</span></a>
+        </div>
+        <div class="success" id="success" role="status"><svg class="icon"><use href="#i-check"/></svg><span data-i18n="f.ok">¡Listo! Recibimos tu solicitud. Te escribiremos para confirmar la hora.</span></div>
+      </form>
+    </div>
+  </div>
+</main>
+
+<footer>
+  <div class="wrap">
+    <div class="foot">
+      <div>
+        <a class="brand" href="#inicio"><span class="brand-name">Lumière</span><span class="brand-sub">Salón &amp; Spa</span></a>
+        <p style="margin-top:14px;color:var(--muted);max-width:36ch" data-i18n="foot.tag">Belleza, calma y detalle en cada visita.</p>
+        <div class="social">
+          <a href="#" data-demo aria-label="Instagram"><svg class="icon"><use href="#i-ig"/></svg></a>
+          <a href="#" data-demo aria-label="TikTok"><svg class="icon"><use href="#i-tt"/></svg></a>
+          <a href="#" data-demo aria-label="Facebook"><svg class="icon"><use href="#i-fb"/></svg></a>
+        </div>
+      </div>
+      <div>
+        <h4 data-i18n="foot.links">Enlaces</h4>
+        <ul>
+          <li><a href="#servicios" data-i18n="nav.services">Servicios</a></li>
+          <li><a href="#galeria" data-i18n="nav.gallery">Galería</a></li>
+          <li><a href="#opiniones" data-i18n="nav.reviews">Opiniones</a></li>
+          <li><a href="#reservar" data-i18n="cta.book">Reservar cita</a></li>
+        </ul>
+      </div>
+      <div>
+        <h4 data-i18n="c.hours">Horario</h4>
+        <ul class="hours">
+          <li><span data-i18n="h.wk">Lun – Sáb</span><span>9:00 – 19:00</span></li>
+          <li><span data-i18n="h.sun">Domingo</span><span>10:00 – 15:00</span></li>
+        </ul>
+      </div>
+    </div>
+    <div class="legal">
+      <span>© 2026 Lumière Salón &amp; Spa</span>
+      <span data-i18n="foot.demo">Sitio de demostración: nombre, datos y precios son ficticios.</span>
+      <a href="../../#demos" style="color:var(--gold)">Hecha por Eric Design Web</a>
+    </div>
+  </div>
+</footer>
+
+<a class="wa" href="#" data-demo aria-label="WhatsApp"><svg class="icon"><use href="#i-chat"/></svg></a>
+<div class="toast" id="toast" role="status" aria-live="polite"></div>
+
+<script>
+(function () {
+  document.documentElement.classList.add('js');
+  var root = document.documentElement;
+
+  var EN = {
+    'skip': 'Skip to booking',
+    'nav.services': 'Services', 'nav.about': 'About', 'nav.gallery': 'Gallery', 'nav.reviews': 'Reviews', 'nav.contact': 'Contact',
+    'cta.book': 'Book now', 'cta.services': 'See services',
+    'hero.t1': 'Beauty.', 'hero.t2': 'Luxury.', 'hero.t3': 'Confidence.',
+    'hero.lead': 'Hair, nails, makeup and spa in one place, with professional products and a team that listens before it starts.',
+    'hero.proof': 'Over 1,000 happy clients', 'hero.badge': 'years caring<br>for your beauty',
+    'trust.1': 'Premium products', 'trust.2': 'Certified stylists', 'trust.3': 'Guaranteed hygiene', 'trust.4': 'Relaxing setting', 'trust.5': 'Personal attention',
+    'svc.title': 'Services made for you', 'svc.lead': 'Hover or tap a service to preview it. Every visit starts with a free consultation.',
+    'from': 'From RD$', 'svc.fine': 'Illustrative prices for this demo.',
+    's0.t': 'Cut & styling', 's0.d': 'A cut shaped to your face, wash, treatment and blowout or waves.',
+    's1.t': 'Nails & extensions', 's1.d': 'Manicure, pedicure, gel, acrylic and hand-painted designs.',
+    's2.t': 'Makeup & bridal', 's2.d': 'Event, bridal and quinceañera makeup, trial session included.',
+    's3.t': 'Facials', 's3.d': 'Deep cleansing, hydration and treatments for your skin type.',
+    's4.t': 'Spa & massage', 's4.d': 'Relaxing massage, hot stones and one- or two-hour rituals.',
+    's5.t': 'Color & keratin', 's5.d': 'Balayage, highlights, full color and smoothing that protects the hair.',
+    'about.title': 'A space made to pamper you',
+    'about.p1': 'At Lumière a good appointment starts before the first cut: we welcome you calmly, listen to what you want and explain every step.',
+    'about.p2': 'We only use professional brands and sterilize every tool between clients.',
+    'about.f1': 'clients served', 'about.f2': 'specialists', 'about.f3': 'average rating',
+    'gal.title': 'Our work', 'gal.lead': 'Real results from our stylists, from the wash to the final detail.',
+    'rev.title': 'What our clients say',
+    'rev.1': '“I left with the color I had been chasing for years. They explained everything and it lasted for weeks.”', 'rev.1s': 'Color & balayage',
+    'rev.2': '“My wedding makeup lasted all night. On time, calm and truly professional.”', 'rev.2s': 'Bridal makeup',
+    'rev.3': '“Clean, beautiful and service that brings you back. My nails have never lasted this long.”', 'rev.3s': 'Gel nails',
+    'book.title': 'Book your appointment', 'book.lead': 'Leave your details and we will confirm on WhatsApp within an hour during opening hours.',
+    'c.addr': 'Address', 'c.phone': 'Phone', 'c.hours': 'Hours', 'c.hoursv': 'Mon to Sat 9:00–19:00 · Sun 10:00–15:00',
+    'f.name': 'Name', 'f.nameph': 'Your name', 'f.phone': 'WhatsApp', 'f.svc': 'Service', 'f.date': 'Date',
+    'f.note': 'Notes (optional)', 'f.noteph': 'Tell us what you would like done',
+    'f.submit': 'Request appointment', 'f.wa': 'Message on WhatsApp',
+    'f.ok': 'Done! We received your request. We will message you to confirm the time.',
+    'foot.tag': 'Beauty, calm and detail in every visit.', 'foot.links': 'Links', 'h.wk': 'Mon – Sat', 'h.sun': 'Sunday',
+    'foot.demo': 'Demo site: name, details and prices are fictitious.'
+  };
+  var MSG = {
+    es: { theme: ['Cambiar a tema claro', 'Cambiar a tema oscuro'], lang: 'Change language to Spanish', demo: 'Enlace de demostración: en el sitio real abrirá WhatsApp o la red social.',
+          eName: 'Escribe tu nombre.', ePhone: 'Escribe un número de WhatsApp válido.', eDate: 'Elige una fecha de hoy en adelante.', sending: 'Enviando…', menu: 'Abrir menú' },
+    en: { theme: ['Switch to light theme', 'Switch to dark theme'], lang: 'Cambiar idioma a inglés', demo: 'Demo link: on the live site this opens WhatsApp or the social profile.',
+          eName: 'Enter your name.', ePhone: 'Enter a valid WhatsApp number.', eDate: 'Pick today or a later date.', sending: 'Sending…', menu: 'Open menu' }
+  };
+
+  var ES = {};
+  document.querySelectorAll('[data-i18n]').forEach(function (el) { if (!(el.dataset.i18n in ES)) ES[el.dataset.i18n] = el.textContent; });
+  document.querySelectorAll('[data-i18n-html]').forEach(function (el) { ES[el.dataset.i18nHtml] = el.innerHTML; });
+  document.querySelectorAll('[data-ph]').forEach(function (el) { ES[el.dataset.ph] = el.placeholder; });
+
+  function lang() { return root.lang === 'en' ? 'en' : 'es'; }
+  function applyLang() {
+    var en = lang() === 'en';
+    document.querySelectorAll('[data-i18n]').forEach(function (el) {
+      var k = el.dataset.i18n;
+      if (k === 'from') { el.textContent = (en ? 'From RD$' : 'Desde RD$') + el.dataset.price; return; }
+      el.textContent = en ? (EN[k] || ES[k]) : ES[k];
+    });
+    document.querySelectorAll('[data-i18n-html]').forEach(function (el) { var k = el.dataset.i18nHtml; el.innerHTML = en ? EN[k] : ES[k]; });
+    document.querySelectorAll('[data-ph]').forEach(function (el) { var k = el.dataset.ph; el.placeholder = en ? EN[k] : ES[k]; });
+    document.getElementById('langLabel').textContent = en ? 'ES' : 'EN';
+    document.getElementById('langBtn').setAttribute('aria-label', MSG[lang()].lang);
+    document.getElementById('menuBtn').setAttribute('aria-label', MSG[lang()].menu);
+    applyThemeLabel();
+  }
+  function applyThemeLabel() {
+    var dark = root.dataset.theme !== 'light';
+    document.getElementById('themeBtn').setAttribute('aria-label', MSG[lang()].theme[dark ? 0 : 1]);
+    document.querySelector('meta[name=theme-color]').content = dark ? '#0b0a08' : '#f8f3ea';
+  }
+  function save(k, v) { try { localStorage.setItem(k, v); } catch (e) {} }
+
+  document.getElementById('langBtn').addEventListener('click', function () {
+    root.lang = lang() === 'en' ? 'es' : 'en'; save('lumiere-lang', root.lang); applyLang();
+  });
+  document.getElementById('themeBtn').addEventListener('click', function () {
+    root.dataset.theme = root.dataset.theme === 'light' ? 'dark' : 'light'; save('lumiere-theme', root.dataset.theme); applyThemeLabel();
+  });
+
+  var menuBtn = document.getElementById('menuBtn'), links = document.getElementById('navlinks');
+  menuBtn.addEventListener('click', function () {
+    var open = links.classList.toggle('open'); menuBtn.setAttribute('aria-expanded', open);
+  });
+  links.addEventListener('click', function (e) { if (e.target.closest('a')) { links.classList.remove('open'); menuBtn.setAttribute('aria-expanded', false); } });
+
+  // Services preview
+  var svcs = document.querySelectorAll('.svc'), stages = document.querySelectorAll('[data-stage]');
+  function pick(i) {
+    svcs.forEach(function (s) { s.classList.toggle('on', s.dataset.svc === i); });
+    stages.forEach(function (s) { s.classList.toggle('on', s.dataset.stage === i); });
+  }
+  svcs.forEach(function (s) {
+    s.addEventListener('mouseenter', function () { pick(s.dataset.svc); });
+    s.addEventListener('focus', function () { pick(s.dataset.svc); });
+    s.addEventListener('click', function () { pick(s.dataset.svc); });
+  });
+
+  // Demo links
+  var toast = document.getElementById('toast'), tt;
+  document.querySelectorAll('[data-demo]').forEach(function (a) {
+    a.addEventListener('click', function (e) {
+      e.preventDefault(); toast.textContent = MSG[lang()].demo; toast.classList.add('show');
+      clearTimeout(tt); tt = setTimeout(function () { toast.classList.remove('show'); }, 3200);
+    });
+  });
+
+  // Booking form
+  var form = document.getElementById('bookForm'), date = document.getElementById('f-date');
+  var today = new Date(); today.setMinutes(today.getMinutes() - today.getTimezoneOffset());
+  date.min = today.toISOString().slice(0, 10);
+  function setErr(id, msg) {
+    var input = document.getElementById('f-' + id), err = document.getElementById('e-' + id);
+    err.textContent = msg || ''; input.setAttribute('aria-invalid', msg ? 'true' : 'false');
+    if (msg) input.setAttribute('aria-describedby', 'e-' + id); else input.removeAttribute('aria-describedby');
+    return !msg;
+  }
+  form.addEventListener('submit', function (e) {
+    e.preventDefault();
+    var m = MSG[lang()];
+    var ok = setErr('name', form.name.value.trim().length < 2 ? m.eName : '');
+    ok = setErr('phone', form.phone.value.replace(/\D/g, '').length < 10 ? m.ePhone : '') && ok;
+    ok = setErr('date', !date.value || date.value < date.min ? m.eDate : '') && ok;
+    if (!ok) { form.querySelector('[aria-invalid="true"]').focus(); return; }
+    var btn = document.getElementById('submitBtn'), label = btn.querySelector('span'), prev = label.textContent;
+    btn.disabled = true; label.textContent = m.sending;
+    setTimeout(function () {
+      btn.disabled = false; label.textContent = prev; form.reset();
+      document.getElementById('success').classList.add('show');
+    }, 900);
+  });
+  form.addEventListener('input', function (e) {
+    if (e.target.getAttribute('aria-invalid') === 'true') setErr(e.target.id.slice(2), '');
+  });
+
+  // Reveal on scroll
+  if ('IntersectionObserver' in window) {
+    var io = new IntersectionObserver(function (entries) {
+      entries.forEach(function (en) { if (en.isIntersecting) { en.target.classList.add('in'); io.unobserve(en.target); } });
+    }, { rootMargin: '0px 0px -8% 0px' });
+    document.querySelectorAll('.reveal').forEach(function (el) { io.observe(el); });
+  } else {
+    document.querySelectorAll('.reveal').forEach(function (el) { el.classList.add('in'); });
+  }
+
+  applyLang();
+})();
+</script>
+</body>
+</html>
