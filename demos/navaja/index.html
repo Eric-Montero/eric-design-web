@@ -50,17 +50,17 @@ p { margin: 0; text-wrap: pretty; }
 .btn-gold:hover { background: var(--gold-hi); transform: translateY(-1px); }
 .btn-line { border-color: var(--gold); color: var(--gold); background: transparent; }
 .btn-line:hover { background: var(--gold); color: var(--on-gold); }
-.btn[disabled] { opacity: .45; cursor: not-allowed; transform: none; }
+.btn[disabled] { background: transparent; color: var(--muted); border: 1px dashed var(--line); cursor: not-allowed; transform: none; }
 .skip { position: absolute; left: 16px; top: -80px; z-index: 100; }
 .skip:focus { top: 12px; }
 
 /* Header */
 header { position: sticky; top: 0; z-index: 40; background: color-mix(in srgb, var(--bg) 86%, transparent); backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px); border-bottom: 1px solid var(--line-2); }
 .nav { height: 72px; display: flex; align-items: center; gap: 28px; }
-.brand { display: flex; align-items: center; gap: 12px; text-decoration: none; }
+.brand { display: flex; align-items: center; gap: 12px; text-decoration: none; min-height: 44px; color: var(--text); }
 .brand .icon { width: 30px; height: 30px; color: var(--gold); stroke-width: 1.4; }
 .brand b { display: block; font: 600 1.45rem/1 var(--font-display); letter-spacing: .02em; }
-.brand small { display: block; font-size: .62rem; letter-spacing: .3em; text-transform: uppercase; color: var(--muted); margin-top: 3px; }
+.brand small { display: block; font-size: .72rem; letter-spacing: .3em; text-transform: uppercase; color: var(--muted); margin-top: 3px; }
 .nav ul { display: flex; gap: 26px; list-style: none; margin: 0 0 0 auto; padding: 0; }
 .nav ul a { display: inline-block; padding: 12px 0; text-decoration: none; font-size: .88rem; color: var(--muted); }
 .nav ul a:hover { color: var(--text); }
@@ -74,12 +74,14 @@ header { position: sticky; top: 0; z-index: 40; background: color-mix(in srgb, v
 /* Hero */
 .hero { position: relative; min-height: min(78vh, 640px); display: flex; align-items: center; overflow: hidden; background: #0a0907; }
 .hero-img { position: absolute; inset: 0; background: radial-gradient(80% 90% at 75% 40%, #3a2c18, #0a0907 70%); }
+.hero-img::before { content: ""; position: absolute; right: 6%; top: 50%; translate: 0 -50%; width: min(44vw, 520px); aspect-ratio: 1; opacity: .09; background: #c9a45c; -webkit-mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='.8' stroke-linecap='round'%3E%3Ccircle cx='6' cy='6' r='3'/%3E%3Ccircle cx='6' cy='18' r='3'/%3E%3Cpath d='M8.1 8.1L20 20M8.1 15.9L20 4'/%3E%3C/svg%3E") center / contain no-repeat; mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='.8' stroke-linecap='round'%3E%3Ccircle cx='6' cy='6' r='3'/%3E%3Ccircle cx='6' cy='18' r='3'/%3E%3Cpath d='M8.1 8.1L20 20M8.1 15.9L20 4'/%3E%3C/svg%3E") center / contain no-repeat; }
+.hero-img img { position: relative; }
 .hero-img img { width: 100%; height: 100%; object-fit: cover; object-position: 70% 30%; opacity: .78; animation: slow 14s ease-out both; }
 @keyframes slow { from { transform: scale(1.08); } }
 .hero::after { content: ""; position: absolute; inset: 0; background: linear-gradient(90deg, rgba(10, 9, 7, .94) 0%, rgba(10, 9, 7, .72) 42%, rgba(10, 9, 7, .1) 78%); }
 .hero .wrap { position: relative; z-index: 1; padding-block: 72px 120px; }
 .hero h1 { color: #f4ecdc; font-size: clamp(3rem, 7.5vw, 6rem); font-weight: 600; letter-spacing: -.01em; max-width: 11ch; }
-.hero h1 em { color: #c9a45c; font-style: italic; font-weight: 500; }
+.hero h1 em { color: #c9a45c; font-style: normal; font-weight: 600; }
 .hero p { color: #d6cbb6; margin-top: 20px; max-width: 40ch; font-size: 1.08rem; }
 .hero .row { display: flex; flex-wrap: wrap; gap: 12px; margin-top: 32px; }
 .hero .btn-gold { background: #c9a45c; color: #17110a; }
@@ -105,7 +107,8 @@ header { position: sticky; top: 0; z-index: 40; background: color-mix(in srgb, v
 .steps li.now span { border-color: var(--gold); color: var(--gold); }
 .steps li::after { content: ""; flex: 1; height: 1px; background: var(--line); }
 .steps li:last-child::after { display: none; }
-.grid { display: grid; grid-template-columns: 1fr 1fr 1.15fr 1fr; gap: 16px; }
+.grid { display: grid; grid-template-columns: 1fr 1fr 1.15fr 1fr; gap: 16px; align-items: start; }
+.col { scroll-margin-top: 88px; }
 .col { background: var(--panel-2); border: 1px solid var(--line-2); border-radius: var(--r); padding: 18px; min-width: 0; }
 .col h3 { font: 600 .95rem var(--font-body); display: flex; align-items: center; gap: 10px; margin-bottom: 14px; }
 .col h3 .icon { color: var(--gold); }
@@ -132,13 +135,15 @@ header { position: sticky; top: 0; z-index: 40; background: color-mix(in srgb, v
 .cal-nav[disabled] { opacity: .3; cursor: not-allowed; }
 .cal { display: grid; grid-template-columns: repeat(7, 1fr); gap: 4px; text-align: center; }
 .cal .dow { font-size: .68rem; letter-spacing: .06em; color: var(--muted); padding: 4px 0; }
-.day { aspect-ratio: 1; min-height: 36px; border-radius: 50%; border: 0; background: transparent; cursor: pointer; font-size: .86rem; font-variant-numeric: tabular-nums; transition: background-color .2s; }
+.day { aspect-ratio: 1; min-height: 40px; border-radius: 50%; border: 0; background: transparent; cursor: pointer; font-size: .86rem; font-variant-numeric: tabular-nums; transition: background-color .2s; }
 .day:hover:not([disabled]) { background: color-mix(in srgb, var(--gold) 14%, transparent); }
 .day[disabled] { color: var(--busy); cursor: not-allowed; }
 .day[aria-pressed="true"] { background: var(--gold); color: var(--on-gold); font-weight: 700; }
 .day.today:not([aria-pressed="true"]) { box-shadow: inset 0 0 0 1px var(--gold); }
 .times-label { margin: 16px 0 8px; font-weight: 600; font-size: .88rem; }
 .times { display: grid; grid-template-columns: repeat(3, 1fr); gap: 6px; }
+.tgroup { grid-column: 1 / -1; font-size: .74rem; color: var(--muted); margin-top: 4px; }
+.tgroup:first-child { margin-top: 0; }
 .time { min-height: 44px; border-radius: 8px; border: 1px solid var(--line-2); background: var(--panel); cursor: pointer; font-size: .86rem; font-variant-numeric: tabular-nums; }
 .time:hover:not([disabled]) { border-color: var(--gold); }
 .time[aria-pressed="true"] { background: var(--gold); color: var(--on-gold); border-color: var(--gold); font-weight: 700; }
@@ -149,7 +154,7 @@ header { position: sticky; top: 0; z-index: 40; background: color-mix(in srgb, v
 .summary .row { display: flex; justify-content: space-between; gap: 12px; padding: 10px 0; border-bottom: 1px solid var(--line-2); font-size: .88rem; }
 .summary dt { color: var(--muted); }
 .summary dd { margin: 0; text-align: right; font-weight: 600; }
-.summary dd.empty { color: var(--busy); font-weight: 500; }
+.summary dd.empty { color: var(--muted); font-weight: 500; }
 .total { display: flex; justify-content: space-between; align-items: baseline; margin: 16px 0; }
 .total b { font: 600 1.9rem/1 var(--font-display); color: var(--gold); font-variant-numeric: tabular-nums; }
 .field { display: grid; gap: 6px; margin-bottom: 10px; }
@@ -168,7 +173,23 @@ header { position: sticky; top: 0; z-index: 40; background: color-mix(in srgb, v
 .done-card .icon { width: 44px; height: 44px; color: var(--gold); margin: 0 auto 10px; stroke-width: 1.4; }
 .done-card h4 { margin: 0 0 6px; font: 600 1.5rem var(--font-display); }
 .done-card p { color: var(--muted); font-size: .88rem; }
-.done-card button { margin-top: 14px; }
+.done-card .btns { display: grid; gap: 8px; margin-top: 16px; }
+.done-card .btns .btn { width: 100%; }
+.done-card dl { margin: 14px 0 0; text-align: left; }
+.summary { scroll-margin-top: 88px; }
+/* Mobile booking bar */
+.mbar { display: none; }
+@media (max-width: 760px) {
+  .mbar { display: flex; position: sticky; bottom: 0; z-index: 30; margin: 16px -20px -20px; padding: 12px 16px calc(env(safe-area-inset-bottom, 0px) + 12px); gap: 12px; align-items: center; background: color-mix(in srgb, var(--panel) 94%, transparent); backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px); border-top: 1px solid var(--line); border-radius: 0 0 20px 20px; }
+  .mbar .msum { flex: 1; min-width: 0; font-size: .8rem; color: var(--muted); }
+  .mbar .msum b { display: block; color: var(--text); font-size: .95rem; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+  .mbar .btn { flex: none; padding: 0 16px; }
+  .steps li.now em { display: inline; font-style: normal; }
+  .hours { display: none; }
+  .hero .row .btn { flex: 1 1 100%; }
+  .menu-item .dots { display: none; }
+  .menu-item { justify-content: space-between; }
+}
 @keyframes rise { from { opacity: 0; transform: translateY(8px); } }
 
 /* Perks */
@@ -191,7 +212,13 @@ section { padding-top: clamp(72px, 9vw, 112px); }
 .menu-item .dots { flex: 1; border-bottom: 1px dotted var(--line); transform: translateY(-6px); }
 .menu-item span.p { color: var(--gold); font-weight: 600; font-variant-numeric: tabular-nums; white-space: nowrap; }
 .gallery { display: grid; grid-template-columns: 2fr 1fr 1fr; grid-auto-rows: 240px; gap: 12px; }
-.ph { border-radius: var(--r); overflow: hidden; background: radial-gradient(90% 90% at 30% 20%, color-mix(in srgb, var(--gold) 30%, var(--panel-2)), var(--panel-2)); position: relative; }
+.ph { border-radius: var(--r); overflow: hidden; background: radial-gradient(90% 90% at 30% 20%, color-mix(in srgb, var(--gold) 26%, var(--panel-2)), var(--panel-2)); position: relative; }
+.ph::before { content: ""; position: absolute; inset: 0; margin: auto; width: 34%; height: 34%; max-width: 120px; max-height: 120px; background: var(--gold); opacity: .14; -webkit-mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='1.4' stroke-linecap='round'%3E%3Ccircle cx='6' cy='6' r='3'/%3E%3Ccircle cx='6' cy='18' r='3'/%3E%3Cpath d='M8.1 8.1L20 20M8.1 15.9L20 4'/%3E%3C/svg%3E") center / contain no-repeat; mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='1.4' stroke-linecap='round'%3E%3Ccircle cx='6' cy='6' r='3'/%3E%3Ccircle cx='6' cy='18' r='3'/%3E%3Cpath d='M8.1 8.1L20 20M8.1 15.9L20 4'/%3E%3C/svg%3E") center / contain no-repeat; }
+.ph img { position: relative; }
+.ph:nth-child(2) { background: radial-gradient(90% 90% at 80% 10%, color-mix(in srgb, var(--gold) 22%, var(--panel-2)), var(--panel-2)); }
+.ph:nth-child(3) { background: linear-gradient(160deg, color-mix(in srgb, var(--gold) 18%, var(--panel-2)), var(--panel-2) 70%); }
+.ph:nth-child(4) { background: radial-gradient(90% 90% at 20% 90%, color-mix(in srgb, var(--gold) 24%, var(--panel-2)), var(--panel-2)); }
+.ph:nth-child(5) { background: linear-gradient(20deg, var(--panel-2) 30%, color-mix(in srgb, var(--gold) 20%, var(--panel-2))); }
 .ph img { width: 100%; height: 100%; object-fit: cover; transition: transform .8s var(--ease); }
 .ph:hover img { transform: scale(1.04); }
 .ph.tall { grid-row: span 2; }
@@ -204,6 +231,8 @@ footer { margin-top: clamp(72px, 9vw, 112px); border-top: 1px solid var(--line-2
 .foot li { display: flex; justify-content: space-between; gap: 12px; font-variant-numeric: tabular-nums; }
 .credit { margin-top: 32px; padding-top: 18px; border-top: 1px solid var(--line-2); display: flex; flex-wrap: wrap; justify-content: space-between; gap: 12px; font-size: .8rem; color: var(--muted); }
 .credit a { color: var(--gold); display: inline-block; padding: 12px 0; }
+.foot a { display: inline-block; padding: 10px 0; }
+.foot .brand { padding: 0; }
 
 .toast { position: fixed; left: 50%; bottom: 24px; transform: translate(-50%, 16px); opacity: 0; pointer-events: none; z-index: 60; background: var(--panel-2); border: 1px solid var(--line); border-radius: 999px; padding: 12px 20px; font-size: .88rem; box-shadow: var(--shadow); transition: opacity .25s, transform .35s var(--ease); }
 .toast.show { opacity: 1; transform: translate(-50%, 0); }
@@ -299,18 +328,18 @@ footer { margin-top: clamp(72px, 9vw, 112px); border-top: 1px solid var(--line-2
         <li id="st-4"><span>4</span><em>Confirmar</em></li>
       </ol>
       <div class="grid">
-        <div class="col">
-          <h3><svg class="icon"><use href="#i-sc"/></svg>1. Escoge el servicio</h3>
+        <div class="col" id="c-svc">
+          <h3><svg class="icon"><use href="#i-sc"/></svg>Escoge el servicio</h3>
           <div class="opts" id="services"></div>
           <p class="note"><svg class="icon"><use href="#i-info"/></svg>Todos incluyen lavado y toalla caliente.</p>
         </div>
-        <div class="col">
-          <h3><svg class="icon"><use href="#i-user"/></svg>2. Escoge tu barbero</h3>
+        <div class="col" id="c-bar">
+          <h3><svg class="icon"><use href="#i-user"/></svg>Escoge tu barbero</h3>
           <div class="opts" id="barbers"></div>
           <p class="note"><svg class="icon"><use href="#i-info"/></svg>"El que esté libre" te da más horarios.</p>
         </div>
-        <div class="col">
-          <h3><svg class="icon"><use href="#i-cal"/></svg>3. Fecha y hora</h3>
+        <div class="col" id="c-when">
+          <h3><svg class="icon"><use href="#i-cal"/></svg>Fecha y hora</h3>
           <div class="cal-head">
             <button class="cal-nav" id="prevM" type="button" aria-label="Mes anterior"><svg class="icon"><use href="#i-left"/></svg></button>
             <b id="monthLabel" aria-live="polite"></b>
@@ -320,8 +349,8 @@ footer { margin-top: clamp(72px, 9vw, 112px); border-top: 1px solid var(--line-2
           <p class="times-label">Horarios disponibles</p>
           <div class="times" id="times"><p class="hint" style="grid-column:1/-1">Escoge un día para ver las horas.</p></div>
         </div>
-        <div class="col summary">
-          <h3><svg class="icon"><use href="#i-doc"/></svg>4. Tu cita</h3>
+        <div class="col summary" id="c-sum">
+          <h3><svg class="icon"><use href="#i-doc"/></svg>Tu cita</h3>
           <div id="sumBox">
             <dl>
               <div class="row"><dt>Servicio</dt><dd id="s-svc" class="empty">Sin escoger</dd></div>
@@ -343,15 +372,21 @@ footer { margin-top: clamp(72px, 9vw, 112px); border-top: 1px solid var(--line-2
             <svg class="icon"><use href="#i-check"/></svg>
             <h4>¡Cita reservada!</h4>
             <p id="doneText"></p>
-            <button class="btn btn-line" id="again" type="button">Agendar otra</button>
+            <dl id="doneList"></dl>
+            <div class="btns">
+              <a class="btn btn-gold" id="waBtn" href="#">Confirmar por WhatsApp</a>
+              <a class="btn btn-line" id="icsBtn" href="#" download="cita-navaja.ics">Añadir a mi calendario</a>
+              <button class="btn btn-line" id="again" type="button">Agendar otra cita</button>
+            </div>
           </div>
         </div>
       </div>
+      <div class="mbar" id="mbar"><div class="msum"><b id="mbarTitle">Escoge un servicio</b><span id="mbarSub">Paso 1 de 4</span></div><button class="btn btn-gold" id="mbarBtn" type="button">Continuar</button></div>
     </div>
     <div class="perks">
-      <div class="perk"><svg class="icon"><use href="#i-bolt"/></svg><div><b>Reserva en un minuto</b><p>Sin llamar ni esperar respuesta.</p></div></div>
+      <div class="perk"><svg class="icon"><use href="#i-bolt"/></svg><div><b>8 años en el barrio</b><p>Clientes que vuelven cada dos semanas.</p></div></div>
       <div class="perk"><svg class="icon"><use href="#i-award"/></svg><div><b>Barberos con años en la silla</b><p>Fades, diseños y barba clásica.</p></div></div>
-      <div class="perk"><svg class="icon"><use href="#i-chair"/></svg><div><b>Llegas y te sientas</b><p>Tu turno te espera a la hora.</p></div></div>
+      <div class="perk"><svg class="icon"><use href="#i-chair"/></svg><div><b>Te avisamos antes</b><p>Recordatorio por WhatsApp una hora antes.</p></div></div>
       <div class="perk"><svg class="icon"><use href="#i-card"/></svg><div><b>Paga como quieras</b><p>Efectivo, tarjeta o transferencia.</p></div></div>
     </div>
   </div>
@@ -380,8 +415,8 @@ footer { margin-top: clamp(72px, 9vw, 112px); border-top: 1px solid var(--line-2
 <footer id="contacto">
   <div class="wrap">
     <div class="foot">
-      <div><a class="brand" href="#"><svg class="icon"><use href="#i-sc"/></svg><span><b>Navaja</b><small>Barber Studio</small></span></a><p style="margin-top:14px;max-width:34ch">Calle Ejemplo 45, Santo Domingo · (809) 000-0000</p></div>
-      <div><h4>Horario</h4><ul><li><span>Lun – Vie</span><span>9:00 – 20:00</span></li><li><span>Sábado</span><span>9:00 – 20:00</span></li><li><span>Domingo</span><span>Cerrado</span></li></ul></div>
+      <div><a class="brand" href="#"><svg class="icon"><use href="#i-sc"/></svg><span><b>Navaja</b><small>Barber Studio</small></span></a><p style="margin-top:14px;max-width:34ch">Calle Ejemplo 45, Santo Domingo</p><p><a href="tel:+18090000000">(809) 000-0000</a></p></div>
+      <div><h4>Horario</h4><ul><li><span>Lun – Sáb</span><span>9:00 a. m. – 8:00 p. m.</span></li><li><span>Domingo</span><span>Cerrado</span></li></ul></div>
       <div><h4>Agenda</h4><ul><li><a href="#agenda">Reservar en línea</a></li><li><a href="#servicios">Ver precios</a></li></ul></div>
     </div>
     <div class="credit"><span>Demo con datos ficticios. Nombre, dirección, teléfono y precios son de ejemplo.</span><a href="../../#demos">Hecha por Eric Design Web</a></div>
@@ -400,7 +435,7 @@ footer { margin-top: clamp(72px, 9vw, 112px); border-top: 1px solid var(--line-2
     { id: 'full', name: 'Corte + barba + cejas', min: 70, price: 700 }
   ];
   var BARBERS = [
-    { id: 'any', name: 'El que esté libre', mono: '·', rating: null },
+    { id: 'any', name: 'El que esté libre', mono: '<svg class="icon" style="width:18px;height:18px"><use href="#i-sc"/></svg>', rating: null },
     { id: 'luis', name: 'Luis M.', mono: 'LM', rating: 4.9 },
     { id: 'kelvin', name: 'Kelvin R.', mono: 'KR', rating: 4.8 },
     { id: 'angel', name: 'Ángel P.', mono: 'ÁP', rating: 4.9 }
@@ -456,8 +491,8 @@ footer { margin-top: clamp(72px, 9vw, 112px); border-top: 1px solid var(--line-2
   function press(container, attr, val) {
     container.querySelectorAll('[' + attr + ']').forEach(function (el) { el.setAttribute('aria-pressed', el.getAttribute(attr) === val ? 'true' : 'false'); });
   }
-  $('services').addEventListener('click', function (e) { var b = e.target.closest('[data-svc]'); if (!b) return; st.svc = b.dataset.svc; press($('services'), 'data-svc', st.svc); update(); });
-  $('barbers').addEventListener('click', function (e) { var b = e.target.closest('[data-bar]'); if (!b) return; st.bar = b.dataset.bar; press($('barbers'), 'data-bar', st.bar); st.time = null; renderTimes(); update(); });
+  $('services').addEventListener('click', function (e) { var b = e.target.closest('[data-svc]'); if (!b) return; st.svc = b.dataset.svc; press($('services'), 'data-svc', st.svc); update(); goNext(); });
+  $('barbers').addEventListener('click', function (e) { var b = e.target.closest('[data-bar]'); if (!b) return; var had = st.time; st.bar = b.dataset.bar; press($('barbers'), 'data-bar', st.bar); st.time = null; renderTimes(); update(); if (had) toast('Cambiaste de barbero: vuelve a escoger la hora.'); goNext(); });
 
   // Calendar
   function sameDay(a, b) { return a && b && a.getTime() === b.getTime(); }
@@ -499,12 +534,15 @@ footer { margin-top: clamp(72px, 9vw, 112px); border-top: 1px solid var(--line-2
   function ampm(slot) { var h = +slot.split(':')[0]; return slot + (h >= 9 && h < 12 ? ' a. m.' : ' p. m.'); }
   function renderTimes() {
     if (!st.date) return;
-    $('times').innerHTML = SLOTS.map(function (s) {
-      var off = busy(s) || passed(s);
-      return '<button type="button" class="time" data-time="' + s + '" aria-pressed="' + (st.time === s ? 'true' : 'false') + '"' + (off ? ' disabled aria-label="' + ampm(s) + ', ocupado"' : '') + '>' + s + '</button>';
-    }).join('');
+    var free = 0;
+    var btn = function (s) {
+      var off = busy(s) || passed(s); if (!off) free++;
+      return '<button type="button" class="time" data-time="' + s + '" aria-label="' + ampm(s) + (off ? ', ocupado' : '') + '" aria-pressed="' + (st.time === s ? 'true' : 'false') + '"' + (off ? ' disabled' : '') + '>' + s + '</button>';
+    };
+    var html = '<span class="tgroup">Mañana</span>' + SLOTS.slice(0, 4).map(btn).join('') + '<span class="tgroup">Tarde (cerramos de 1:00 a 2:00 p. m.)</span>' + SLOTS.slice(4).map(btn).join('');
+    $('times').innerHTML = free ? html : '<p class="hint" style="grid-column:1/-1">Ese día ya no quedan horas con este barbero. Prueba otro día o "El que esté libre".</p>';
   }
-  $('times').addEventListener('click', function (e) { var b = e.target.closest('[data-time]'); if (!b || b.disabled) return; st.time = b.dataset.time; renderTimes(); update(); });
+  $('times').addEventListener('click', function (e) { var b = e.target.closest('[data-time]'); if (!b || b.disabled) return; st.time = b.dataset.time; renderTimes(); update(); goNext(); });
 
   // Summary + steps
   function set(id, val) { var el = $(id); el.textContent = val || 'Sin escoger'; el.classList.toggle('empty', !val); }
@@ -527,32 +565,73 @@ footer { margin-top: clamp(72px, 9vw, 112px); border-top: 1px solid var(--line-2
     var miss = []; if (!st.svc) miss.push('servicio'); if (!st.bar) miss.push('barbero'); if (!st.date) miss.push('día'); if (!st.time) miss.push('hora');
     $('confirm').disabled = miss.length > 0;
     $('missing').textContent = miss.length ? 'Te falta: ' + miss.join(', ') + '.' : 'Todo listo. Solo falta tu nombre y WhatsApp.';
+    // Mobile bar
+    var step = !st.svc ? 0 : !st.bar ? 1 : !(st.date && st.time) ? 2 : 3;
+    var titles = ['Escoge un servicio', 'Escoge tu barbero', 'Escoge día y hora', 'Confirma tu cita'];
+    $('mbarTitle').textContent = s ? s.name + ' · ' + rd(s.price) : titles[0];
+    $('mbarSub').textContent = step < 3 ? 'Paso ' + (step + 1) + ' de 4 · ' + titles[step] : (st.date ? $('s-day').textContent + ', ' + $('s-time').textContent : '');
+    $('mbarBtn').textContent = step < 3 ? 'Continuar' : 'Confirmar';
+    $('mbarBtn').dataset.target = ['c-svc', 'c-bar', 'c-when', 'c-sum'][step];
+    try { sessionStorage.setItem('navaja-st', JSON.stringify({ svc: st.svc, bar: st.bar, date: st.date && st.date.getTime(), time: st.time })); } catch (e) {}
   }
+  var mobile = matchMedia('(max-width: 760px)');
+  var smooth = matchMedia('(prefers-reduced-motion: reduce)').matches ? 'auto' : 'smooth';
+  function goNext() { if (!mobile.matches) return; var t = $($('mbarBtn').dataset.target); if (t) t.scrollIntoView({ behavior: smooth, block: 'start' }); }
+  $('mbarBtn').addEventListener('click', function () { var t = $(this.dataset.target); t.scrollIntoView({ behavior: smooth, block: 'start' }); if (this.dataset.target === 'c-sum') setTimeout(function () { $('f-name').focus({ preventScroll: true }); }, 400); });
 
   // Confirm
   function err(id, msg) { var i = $('f-' + id); $('e-' + id).textContent = msg; i.setAttribute('aria-invalid', msg ? 'true' : 'false'); return !msg; }
   $('bookForm').addEventListener('submit', function (e) {
     e.preventDefault();
-    var ok = err('name', $('f-name').value.trim().length < 2 ? 'Escribe tu nombre.' : '');
-    ok = err('tel', $('f-tel').value.replace(/\D/g, '').length < 10 ? 'Escribe un WhatsApp de 10 dígitos.' : '') && ok;
+    var nm = $('f-name').value.trim(), digits = $('f-tel').value.replace(/\D/g, '');
+    var ok = err('name', !nm ? 'Escribe tu nombre.' : nm.length < 2 ? 'Escribe tu nombre completo.' : '');
+    if (digits.length === 11 && digits[0] === '1') digits = digits.slice(1);
+    ok = err('tel', digits.length !== 10 ? 'Escribe 10 dígitos, por ejemplo 809-555-1234.' : '') && ok;
     if (!ok) { document.querySelector('[aria-invalid="true"]').focus(); return; }
     var btn = $('confirm'); btn.disabled = true; btn.textContent = 'Reservando…';
     setTimeout(function () {
-      $('doneText').textContent = $('f-name').value.trim() + ', te esperamos el ' + $('s-day').textContent + ' a las ' + $('s-time').textContent + ' con ' + $('s-bar').textContent + '. Te llegará la confirmación por WhatsApp (en esta demo no se envía nada).';
-      $('sumBox').hidden = true; $('done').classList.add('show'); $('done').focus && $('done').setAttribute('tabindex', '-1'); $('done').focus();
+      var who = st.bar === 'any' ? 'el primer barbero libre' : $('s-bar').textContent.replace(/\.$/, '');
+      var svcName = $('s-svc').textContent, day = $('s-day').textContent, time = $('s-time').textContent, total = $('s-total').textContent;
+      $('doneText').textContent = nm + ', te esperamos el ' + day + ' a las ' + time + ' con ' + who + '.';
+      $('doneList').innerHTML = '<div class="row"><dt>Servicio</dt><dd>' + svcName + '</dd></div><div class="row"><dt>Total</dt><dd>' + total + '</dd></div><div class="row"><dt>Pagas</dt><dd>En el local</dd></div>';
+      var msg = 'Hola Navaja, reservé ' + svcName + ' el ' + day + ' a las ' + time + ' con ' + who + '. Soy ' + nm + '.';
+      $('waBtn').dataset.msg = msg;
+      var start = new Date(st.date); var parts = st.time.split(':'); var hh = +parts[0]; if (hh < 9) hh += 12; start.setHours(hh, 0, 0, 0);
+      var svc = SERVICES.filter(function (x) { return x.id === st.svc; })[0];
+      var end = new Date(start.getTime() + svc.min * 60000);
+      var f = function (d) { return d.getFullYear() + String(d.getMonth() + 1).padStart(2, '0') + String(d.getDate()).padStart(2, '0') + 'T' + String(d.getHours()).padStart(2, '0') + String(d.getMinutes()).padStart(2, '0') + '00'; };
+      $('icsBtn').href = 'data:text/calendar;charset=utf-8,' + encodeURIComponent('BEGIN:VCALENDAR\r\nVERSION:2.0\r\nPRODID:-//Navaja//Demo//ES\r\nBEGIN:VEVENT\r\nUID:' + Date.now() + '@navaja-demo\r\nDTSTAMP:' + f(new Date()) + '\r\nDTSTART:' + f(start) + '\r\nDTEND:' + f(end) + '\r\nSUMMARY:' + svcName + ' en Navaja Barber Studio\r\nLOCATION:Calle Ejemplo 45, Santo Domingo\r\nEND:VEVENT\r\nEND:VCALENDAR');
+      $('sumBox').hidden = true; $('done').classList.add('show');
+      ['st-1','st-2','st-3','st-4'].forEach(function (id) { $(id).classList.add('done'); $(id).classList.remove('now'); $(id).removeAttribute('aria-current'); });
+      $('mbar').hidden = true;
+      $('c-sum').scrollIntoView({ behavior: smooth, block: 'start' });
+      var hd = $('done').querySelector('h4'); hd.setAttribute('tabindex', '-1'); hd.focus({ preventScroll: true });
       btn.textContent = 'Confirmar cita';
+      try { sessionStorage.removeItem('navaja-st'); } catch (e) {}
     }, 800);
   });
   $('bookForm').addEventListener('input', function (e) { if (e.target.getAttribute('aria-invalid') === 'true') err(e.target.id.slice(2), ''); });
   $('again').addEventListener('click', function () {
     st = { svc: null, bar: null, date: null, time: null };
     press($('services'), 'data-svc', ''); press($('barbers'), 'data-bar', '');
-    $('bookForm').reset(); $('sumBox').hidden = false; $('done').classList.remove('show');
+    $('sumBox').hidden = false; $('done').classList.remove('show'); $('mbar').hidden = false;
     $('times').innerHTML = '<p class="hint" style="grid-column:1/-1">Escoge un día para ver las horas.</p>';
-    renderCal(); update(); document.querySelector('[data-svc]').focus();
+    renderCal(); update(); $('c-svc').scrollIntoView({ behavior: smooth, block: 'start' }); document.querySelector('[data-svc]').focus({ preventScroll: true });
   });
 
-  renderCal(); update();
+  var toastEl = $('toast'), tt;
+  function toast(m) { toastEl.textContent = m; toastEl.classList.add('show'); clearTimeout(tt); tt = setTimeout(function () { toastEl.classList.remove('show'); }, 2800); }
+  $('waBtn').addEventListener('click', function (e) { e.preventDefault(); toast('En el sitio real esto abre WhatsApp con tu cita escrita.'); });
+  // Restore an unfinished booking after a refresh
+  try {
+    var saved = JSON.parse(sessionStorage.getItem('navaja-st') || 'null');
+    if (saved) {
+      if (saved.svc) { st.svc = saved.svc; press($('services'), 'data-svc', st.svc); }
+      if (saved.bar) { st.bar = saved.bar; press($('barbers'), 'data-bar', st.bar); }
+      if (saved.date && saved.date >= today.getTime()) { st.date = new Date(saved.date); view = new Date(st.date.getFullYear(), st.date.getMonth(), 1); st.time = saved.time; }
+    }
+  } catch (e) {}
+  renderCal(); if (st.date) renderTimes(); update();
 })();
 </script>
 </body>
