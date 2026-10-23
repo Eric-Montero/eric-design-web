@@ -97,7 +97,7 @@ header { position: sticky; top: 0; z-index: 40; background: var(--bg); }
 .hero .row { display: flex; flex-wrap: wrap; gap: 12px; margin-top: 32px; }
 .hero .btn-gold { background: #c9a45c; color: #17110a; }
 .hero .btn-line { border-color: rgba(244, 236, 220, .5); color: #f4ecdc; }
-.hero .btn-line:hover { background: #f4ecdc; color: #0a0907; }
+@media (hover: hover) and (pointer: fine) { .hero .btn-line:hover { background: #f4ecdc; color: #0a0907; } }
 .open-now { display: inline-flex; align-items: center; gap: 8px; margin-top: 28px; color: #d6cbb6; font-size: .9rem; }
 .dot { width: 8px; height: 8px; border-radius: 50%; background: #3fbf6a; outline: 4px solid rgba(63, 191, 106, .2); }
 .dot.closed { background: #d26a4c; outline-color: rgba(210, 106, 76, .2); }
@@ -116,10 +116,11 @@ header { position: sticky; top: 0; z-index: 40; background: var(--bg); }
 .steps li.done span { background: var(--gold); color: var(--on-gold); border-color: var(--gold); }
 .steps li.done, .steps li.now { color: var(--text); }
 .steps li.now span { border-color: var(--gold); color: var(--gold); }
+.steps li em { font-style: normal; }
 .steps li::after { content: ""; flex: 1; height: 1px; background: var(--line); } /* taste-skill-ignore: progress connector */
 .steps li:last-child::after { display: none; }
 .grid { display: grid; grid-template-columns: 1fr 1fr 1.15fr 1fr; gap: 16px; align-items: start; }
-.col { scroll-margin-top: 88px; }
+.col { scroll-margin-top: 8px; } /* html scroll-padding-top already clears the sticky header; 8px + 80px = one grid gap below it */
 .col { background: var(--panel-2); border: 1px solid var(--line-2); border-radius: var(--r); padding: 18px; min-width: 0; }
 .col h3 { font: 700 1.1rem var(--font-body); display: flex; align-items: center; gap: 10px; margin-bottom: 14px; }
 .col h3 .icon { color: var(--gold); }
@@ -207,9 +208,10 @@ header { position: sticky; top: 0; z-index: 40; background: var(--bg); }
 .done-card h4 { margin: 0 0 6px; font: 600 1.5rem var(--font-display); }
 .done-card p { color: var(--muted); font-size: .88rem; }
 .done-card .btns { display: grid; gap: 8px; margin-top: 16px; }
-.done-card .btns .btn { width: 100%; }
+.done-card .btns .btn { width: 100%; padding-inline: 12px; letter-spacing: .05em; white-space: nowrap; }
 .done-card dl { margin: 14px 0 0; text-align: left; }
-.summary { scroll-margin-top: 88px; }
+.done-card .more { display: flex; flex-wrap: wrap; justify-content: center; gap: 0 20px; margin-top: 6px; }
+.done-card .more .linkbtn { display: inline-flex; align-items: center; margin: 0; padding-inline: 4px; min-height: 44px; }
 /* Mobile booking bar */
 .mbar { display: none; }
 @media (max-width: 760px) {
@@ -217,6 +219,8 @@ header { position: sticky; top: 0; z-index: 40; background: var(--bg); }
   .mbar .msum { flex: 1; min-width: 0; font-size: .8rem; color: var(--muted); }
   .mbar .msum b { display: block; color: var(--text); font-size: .95rem; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
   .mbar .btn { flex: none; padding: 0 16px; }
+  .mbar { transition: opacity 200ms ease, transform 200ms var(--ease-out), visibility 0s; }
+  .mbar.away { opacity: 0; transform: translateY(12px); visibility: hidden; pointer-events: none; transition: opacity 200ms ease, transform 200ms var(--ease-out), visibility 0s 200ms; }
   .mbar[hidden] { display: none; }
   .hours { display: none; }
   .hero .row .btn { flex: 1 1 100%; }
@@ -266,8 +270,11 @@ footer { margin-top: clamp(72px, 9vw, 112px); padding: 40px 0; }
 .foot a { display: inline-block; padding: 10px 0; }
 .foot .brand { padding: 0; }
 
-.toast { position: fixed; left: 50%; bottom: 24px; transform: translate(-50%, 16px); opacity: 0; pointer-events: none; z-index: 60; background: var(--panel-2); border: 1px solid var(--line); border-radius: 999px; padding: 12px 20px; font-size: .88rem; box-shadow: var(--shadow); transition: opacity 400ms ease, transform 400ms ease; } /* taste-skill-ignore: overlay */
-.toast.show { opacity: 1; transform: translate(-50%, 0); }
+.toast { position: fixed; left: 50%; bottom: 24px; transform: translate(-50%, 16px); opacity: 0; pointer-events: none; z-index: 60; background: var(--panel-2); border: 1px solid var(--line); border-radius: 999px; padding: 12px 20px; font-size: .88rem; box-shadow: var(--shadow); visibility: hidden; transition: opacity 400ms ease, transform 400ms ease, visibility 0s 400ms; } /* taste-skill-ignore: overlay */
+.toast.show { opacity: 1; transform: translate(-50%, 0); visibility: visible; transition-delay: 0s; }
+.toast.has-act { display: flex; align-items: center; gap: 14px; padding-block: 4px; padding-right: 10px; }
+.toast.show.has-act { pointer-events: auto; }
+.toast-act { background: transparent; border: 0; min-height: 40px; padding: 0 10px; color: var(--gold); font: 600 .88rem/1 var(--font-body); text-decoration: underline; text-underline-offset: 3px; cursor: pointer; }
 .toast { width: max-content; max-width: calc(100vw - 32px); text-align: center; }
 @media (max-width: 760px) { .toast { bottom: calc(env(safe-area-inset-bottom, 0px) + 88px); border-radius: 14px; } }
 
@@ -288,7 +295,6 @@ footer { margin-top: clamp(72px, 9vw, 112px); padding: 40px 0; }
   .grid, .menu-list, .foot { grid-template-columns: 1fr; }
   .steps { grid-template-columns: repeat(4, 1fr); gap: 6px; }
   .steps li { flex-direction: column; gap: 6px; font-size: .72rem; line-height: 1.2; text-align: center; }
-  .steps li em { font-style: normal; }
   .steps li::after { display: none; }
   .menu-item .end { flex-direction: column; align-items: flex-end; gap: 2px; }
   .perks { grid-template-columns: 1fr; }
@@ -431,7 +437,7 @@ footer { background: var(--panel); }
             <div class="total"><span>Total</span><b id="s-total">RD$0</b></div>
             <form id="bookForm" novalidate>
               <div class="field"><label for="f-name">Tu nombre</label><input id="f-name" autocomplete="name" maxlength="40" placeholder="Ej.: Carlos"><span class="err" id="e-name" aria-live="polite"></span></div>
-              <div class="field"><label for="f-tel">WhatsApp</label><input id="f-tel" type="tel" maxlength="16" inputmode="tel" autocomplete="tel" placeholder="809-000-0000"><span class="err" id="e-tel" aria-live="polite"></span></div>
+              <div class="field"><label for="f-tel">WhatsApp</label><input id="f-tel" type="tel" maxlength="20" inputmode="tel" autocomplete="tel" placeholder="809-000-0000"><span class="err" id="e-tel" aria-live="polite"></span></div>
               <button class="btn btn-gold" id="confirm" type="submit" disabled>Confirmar cita</button>
               <p class="missing" id="missing" aria-live="polite">Te falta: servicio, barbero, día y hora.</p>
               <button type="button" class="linkbtn" id="reset" hidden>Empezar de nuevo</button>
@@ -444,10 +450,12 @@ footer { background: var(--panel); }
             <p id="doneText"></p>
             <dl id="doneList"></dl>
             <div class="btns">
-              <a class="btn btn-gold" id="waBtn" href="#">Confirmar por WhatsApp</a>
+              <a class="btn btn-gold" id="waBtn" href="#">Enviar mi cita por WhatsApp</a>
               <a class="btn btn-line" id="icsBtn" href="#" download="cita-navaja.ics">Añadir a mi calendario</a>
-              <button class="btn btn-line" id="edit" type="button">Cambiar esta cita</button>
-              <button class="btn btn-line" id="again" type="button">Agendar otra cita</button>
+            </div>
+            <div class="more">
+              <button class="linkbtn" id="edit" type="button">Cambiar esta cita</button>
+              <button class="linkbtn" id="again" type="button">Agendar otra cita</button>
             </div>
           </div>
         </div>
@@ -473,11 +481,11 @@ footer { background: var(--panel); }
     <div class="wrap">
       <div class="sec-title enter"><h2>Trabajos recientes</h2><p>Un poco de lo que sale de nuestras sillas cada semana.</p></div>
       <div class="gallery enter">
-        <figure class="ph tall" style="margin:0"><img src="img/photo-1621605815971-fbc98d665033.webp" alt="Barbero haciendo un fade" loading="lazy" onerror="this.remove()"><figcaption>Low fade</figcaption></figure>
+        <figure class="ph tall" style="margin:0"><img src="img/photo-1605497788044-5a32c7078486.webp" alt="Barbero haciendo un fade" loading="lazy" onerror="this.remove()"><figcaption>Low fade</figcaption></figure>
         <figure class="ph" style="margin:0"><img src="img/photo-1599351431202-1e0f0137899a.webp" alt="Arreglo de barba" loading="lazy" onerror="this.remove()"><figcaption>Barba</figcaption></figure>
         <figure class="ph" style="margin:0"><img src="img/photo-1622286342621-4bd786c2447c.webp" alt="Corte con diseño" loading="lazy" onerror="this.remove()"><figcaption>Diseño</figcaption></figure>
         <figure class="ph" style="margin:0"><img src="img/photo-1585747860715-2ba37e788b70.webp" alt="Interior de la barbería" loading="lazy" onerror="this.remove()"><figcaption>El local</figcaption></figure>
-        <figure class="ph" style="margin:0"><img src="img/photo-1605497788044-5a32c7078486.webp" alt="Herramientas de barbería" loading="lazy" onerror="this.remove()"><figcaption>Navaja y toalla</figcaption></figure>
+        <figure class="ph" style="margin:0"><img src="img/photo-1621605815971-fbc98d665033.webp" alt="Herramientas de barbería" loading="lazy" onerror="this.remove()"><figcaption>Máquinas y tijeras</figcaption></figure>
       </div>
     </div>
   </section>
@@ -488,7 +496,7 @@ footer { background: var(--panel); }
     <div class="foot enter">
       <div><a class="brand" href="#"><svg class="icon"><use href="#i-sc"/></svg><span><b>Navaja</b><small>Barber Studio</small></span></a><p style="margin-top:14px;max-width:34ch">Calle Ejemplo 45, Santo Domingo</p><p><a href="tel:+18090000000">(809) 000-0000</a></p></div>
       <div><h4>Horario</h4><ul><li><span>Lun – Sáb</span><span>9:00 a. m. – 8:00 p. m.</span></li><li><span>Domingo</span><span>Cerrado</span></li></ul></div>
-      <div><h4>Agenda</h4><ul><li><a href="#agenda">Reservar en línea</a></li><li><a href="#servicios">Ver precios</a></li></ul></div>
+      <div><h4>Agenda</h4><ul><li><a href="#agenda">Agendar en línea</a></li><li><a href="#servicios">Ver precios</a></li></ul></div>
     </div>
     <div class="credit"><span>Demo con datos ficticios. Nombre, dirección, teléfono y precios son de ejemplo.</span><a href="../../#demos">Hecha por Eric Design Web</a></div>
   </div>
@@ -563,7 +571,7 @@ footer { background: var(--panel); }
     container.querySelectorAll('[' + attr + ']').forEach(function (el) { el.setAttribute('aria-pressed', el.getAttribute(attr) === val ? 'true' : 'false'); });
   }
   $('services').addEventListener('click', function (e) { var b = e.target.closest('[data-svc]'); if (!b) return; st.svc = b.dataset.svc; press($('services'), 'data-svc', st.svc); update(); goNext(); });
-  $('barbers').addEventListener('click', function (e) { var b = e.target.closest('[data-bar]'); if (!b) return; var had = st.time; st.bar = b.dataset.bar; press($('barbers'), 'data-bar', st.bar); st.time = null; renderTimes(); update(); if (had) toast('Cambiaste de barbero: vuelve a escoger la hora.'); goNext(); });
+  $('barbers').addEventListener('click', function (e) { var b = e.target.closest('[data-bar]'); if (!b) return; if (b.dataset.bar === st.bar) return; var had = st.time; st.bar = b.dataset.bar; press($('barbers'), 'data-bar', st.bar); st.time = null; renderTimes(); update(); if (had) toast('Cambiaste de barbero: vuelve a escoger la hora.'); goNext(); });
 
   // Calendar
   function sameDay(a, b) { return a && b && a.getTime() === b.getTime(); }
@@ -655,9 +663,14 @@ footer { background: var(--panel); }
     $('mbarSub').textContent = step < 3 ? 'Paso ' + (step + 1) + ' de 4 · ' + titles[step] : (st.date ? val('s-day') + ', ' + val('s-time') : '');
     $('mbarBtn').textContent = step < 3 ? 'Continuar' : 'Confirmar';
     $('mbarBtn').dataset.target = ['c-svc', 'c-bar', 'c-when', 'c-sum'][step];
+    syncMbar();
     try { sessionStorage.setItem('navaja-st', JSON.stringify({ svc: st.svc, bar: st.bar, date: st.date && st.date.getTime(), time: st.time })); } catch (e) {}
   }
   var mobile = matchMedia('(max-width: 760px)');
+  // Step 4: the summary already shows the confirm button, so the bar steps aside while it is on screen
+  var sumInView = false;
+  function syncMbar() { $('mbar').classList.toggle('away', sumInView && !!(st.svc && st.bar && st.date && st.time)); }
+  if ('IntersectionObserver' in window) new IntersectionObserver(function (es) { sumInView = es[0].isIntersecting; syncMbar(); }, { threshold: 0.2 }).observe($('c-sum'));
   var smooth = matchMedia('(prefers-reduced-motion: reduce)').matches ? 'auto' : 'smooth';
   function goNext() { if (!mobile.matches) return; var t = $($('mbarBtn').dataset.target); if (t) t.scrollIntoView({ behavior: smooth, block: 'start' }); }
   $('mbarBtn').addEventListener('click', function () { var t = $(this.dataset.target); t.scrollIntoView({ behavior: smooth, block: 'start' }); if (this.dataset.target === 'c-sum') setTimeout(function () { $('f-name').focus({ preventScroll: true }); }, 400); });
@@ -669,6 +682,7 @@ footer { background: var(--panel); }
   function telMsg(v) {
     var raw = v.replace(/\D/g, ''), d = telDigits(v);
     if (!raw) return 'Escribe tu WhatsApp, por ejemplo 809-555-1234.';
+    if (raw.length === 10 && raw[0] === '1') return 'Parece que falta un dígito: 1 + 809/829/849 + 7 dígitos.';
     if (d.length < 10) return 'Tienes ' + d.length + (d.length === 1 ? ' dígito' : ' dígitos') + '; faltan ' + (10 - d.length) + '.';
     if (d.length > 10) return 'Tienes ' + d.length + ' dígitos; sobran ' + (d.length - 10) + '.';
     if (!/^8[024]9/.test(d)) return 'Usa un número dominicano: 809, 829 u 849 y 7 dígitos.';
@@ -693,7 +707,7 @@ footer { background: var(--panel); }
   function setBooked(on) {
     $('grid').classList.toggle('booked', on);
     ['c-svc', 'c-bar', 'c-when'].forEach(function (id) { if (on) $(id).setAttribute('inert', ''); else $(id).removeAttribute('inert'); });
-    $('sumBox').hidden = on; $('done').classList.toggle('show', on); $('mbar').hidden = on;
+    $('sumBox').hidden = on; $('done').classList.toggle('show', on); $('mbar').hidden = on; syncMbar();
   }
   function focusIn(id) {
     var c = $(id);
@@ -727,8 +741,9 @@ footer { background: var(--panel); }
       var svc = SERVICES.filter(function (x) { return x.id === st.svc; })[0];
       var end = new Date(start.getTime() + svc.min * 60000);
       var f = function (d) { return d.getFullYear() + String(d.getMonth() + 1).padStart(2, '0') + String(d.getDate()).padStart(2, '0') + 'T' + String(d.getHours()).padStart(2, '0') + String(d.getMinutes()).padStart(2, '0') + '00'; };
+      var TZ = 'America/Santo_Domingo';
       var esc = function (t) { return String(t).replace(/\\/g, '\\\\').replace(/([,;])/g, '\\$1').replace(/\n/g, '\\n'); };
-      $('icsBtn').href = 'data:text/calendar;charset=utf-8,' + encodeURIComponent('BEGIN:VCALENDAR\r\nVERSION:2.0\r\nPRODID:-//Navaja//Demo//ES\r\nBEGIN:VEVENT\r\nUID:' + Date.now() + '@navaja-demo\r\nDTSTAMP:' + f(new Date()) + '\r\nDTSTART:' + f(start) + '\r\nDTEND:' + f(end) + '\r\nSUMMARY:' + esc(svcName + ' en Navaja Barber Studio') + '\r\nLOCATION:' + esc('Calle Ejemplo 45, Santo Domingo') + '\r\nEND:VEVENT\r\nEND:VCALENDAR');
+      $('icsBtn').href = 'data:text/calendar;charset=utf-8,' + encodeURIComponent('BEGIN:VCALENDAR\r\nVERSION:2.0\r\nPRODID:-//Navaja//Demo//ES\r\nBEGIN:VTIMEZONE\r\nTZID:' + TZ + '\r\nBEGIN:STANDARD\r\nDTSTART:19700101T000000\r\nTZOFFSETFROM:-0400\r\nTZOFFSETTO:-0400\r\nTZNAME:AST\r\nEND:STANDARD\r\nEND:VTIMEZONE\r\nBEGIN:VEVENT\r\nUID:' + Date.now() + '@navaja-demo\r\nDTSTAMP:' + new Date().toISOString().replace(/[-:]/g, '').slice(0, 15) + 'Z\r\nDTSTART;TZID=' + TZ + ':' + f(start) + '\r\nDTEND;TZID=' + TZ + ':' + f(end) + '\r\nSUMMARY:' + esc(svcName + ' en Navaja Barber Studio') + '\r\nLOCATION:' + esc('Calle Ejemplo 45, Santo Domingo') + '\r\nEND:VEVENT\r\nEND:VCALENDAR');
       setBooked(true);
       ['st-1','st-2','st-3','st-4'].forEach(function (id) { $(id).classList.add('done'); $(id).classList.remove('now'); $(id).removeAttribute('aria-current'); });
       $('c-sum').scrollIntoView({ behavior: smooth, block: 'start' });
@@ -736,6 +751,13 @@ footer { background: var(--panel); }
       btn.textContent = 'Confirmar cita';
       try { sessionStorage.removeItem('navaja-st'); } catch (e) {}
     }, 800);
+  });
+  // Check a field as soon as the person leaves it, but never nag about an empty one they only tabbed through
+  ['f-name', 'f-tel'].forEach(function (id) {
+    $(id).addEventListener('blur', function () {
+      if (!this.value.trim()) return;
+      err(id.slice(2), id === 'f-tel' ? telMsg(this.value) : nameMsg(this.value.trim()));
+    });
   });
   $('bookForm').addEventListener('input', function (e) {
     var t = e.target; if (t.getAttribute('aria-invalid') !== 'true') return;
@@ -751,7 +773,18 @@ footer { background: var(--panel); }
   }
   function startOver() { resetAll(); $('c-svc').scrollIntoView({ behavior: smooth, block: 'start' }); document.querySelector('[data-svc]').focus({ preventScroll: true }); }
   $('again').addEventListener('click', startOver);
-  $('reset').addEventListener('click', function () { startOver(); toast('Listo, empezamos de cero.'); });
+  $('reset').addEventListener('click', function () {
+    var snap = { svc: st.svc, bar: st.bar, date: st.date, time: st.time, view: view };
+    startOver();
+    toast('Listo, empezamos de cero.', { label: 'Deshacer', fn: function () {
+      st = { svc: snap.svc, bar: snap.bar, date: snap.date, time: snap.time }; view = snap.view;
+      press($('services'), 'data-svc', st.svc || ''); press($('barbers'), 'data-bar', st.bar || '');
+      renderCal(); if (st.date) { renderTimes(); if (st.time && !slotOk(st.time)) { st.time = null; renderTimes(); } }
+      update();
+      $('c-sum').scrollIntoView({ behavior: smooth, block: 'start' });
+      ($('confirm').disabled ? $('reset') : $('confirm')).focus({ preventScroll: true });
+    } });
+  });
   $('edit').addEventListener('click', function () {
     setBooked(false); update();
     $('c-sum').scrollIntoView({ behavior: smooth, block: 'start' });
@@ -767,7 +800,15 @@ footer { background: var(--panel); }
   });
 
   var toastEl = $('toast'), tt;
-  function toast(m) { toastEl.textContent = m; toastEl.classList.add('show'); clearTimeout(tt); tt = setTimeout(function () { toastEl.classList.remove('show'); }, 2800); }
+  function toast(m, act) {
+    toastEl.textContent = m; toastEl.classList.toggle('has-act', !!act);
+    if (act) {
+      var b = document.createElement('button'); b.type = 'button'; b.className = 'toast-act'; b.textContent = act.label;
+      b.addEventListener('click', function () { clearTimeout(tt); toastEl.classList.remove('show'); act.fn(); });
+      toastEl.appendChild(b);
+    }
+    toastEl.classList.add('show'); clearTimeout(tt); tt = setTimeout(function () { toastEl.classList.remove('show'); }, act ? 7000 : 2800);
+  }
   $('waBtn').addEventListener('click', function (e) { e.preventDefault(); toast('En el sitio real esto abre WhatsApp con tu cita escrita.'); });
   // Restore an unfinished booking after a refresh
   var restored = false;
@@ -787,8 +828,8 @@ footer { background: var(--panel); }
   var navTick = false;
   function markNav() {
     navTick = false; var cur = null, line = innerHeight * 0.4;
-    navLinks.forEach(function (a) { var sec = $(a.getAttribute('href').slice(1)); if (sec) { var r = sec.getBoundingClientRect(); if (r.top <= line && r.bottom > line) cur = a; } });
-    if (!cur && innerHeight + scrollY >= document.documentElement.scrollHeight - 4) cur = navLinks[navLinks.length - 1];
+    if (innerHeight + scrollY >= document.documentElement.scrollHeight - 4) cur = navLinks[navLinks.length - 1];
+    else navLinks.forEach(function (a) { var sec = $(a.getAttribute('href').slice(1)); if (sec) { var r = sec.getBoundingClientRect(); if (r.top <= line && r.bottom > line) cur = a; } });
     navLinks.forEach(function (a) { if (a === cur) a.setAttribute('aria-current', 'true'); else a.removeAttribute('aria-current'); });
   }
   addEventListener('scroll', function () { if (!navTick) { navTick = true; requestAnimationFrame(markNav); } }, { passive: true });
