@@ -132,10 +132,32 @@ header.top { position: sticky; top: 0; z-index: 50; background: color-mix(in srg
 .mini-arch { aspect-ratio: 3 / 4; border-radius: 999px 999px 8px 8px; border: 1px solid var(--m-line); background: radial-gradient(120% 80% at 50% 10%, color-mix(in srgb, var(--m-gold) 55%, transparent), transparent 70%), linear-gradient(170deg, color-mix(in srgb, var(--m-gold) 25%, var(--m-bg)), var(--m-bg)); }
 .mini-row { display: grid; grid-template-columns: repeat(4, 1fr); gap: 6px; margin-top: 16px; }
 .mini-row div { height: 34px; border-radius: 6px; border: 1px solid var(--m-line); background: color-mix(in srgb, var(--m-gold) 10%, transparent); }
+.slides { position: relative; aspect-ratio: 16 / 10.5; background: #0b0a08; }
+.slide { position: absolute; inset: 0; display: flex; flex-direction: column; justify-content: center; opacity: 0; transform: scale(1.02); transition: opacity .6s var(--ease), transform .8s var(--ease); }
+.slide.on { opacity: 1; transform: none; }
+.slide .mini { height: 100%; display: flex; flex-direction: column; justify-content: center; }
+.s-navaja { background: radial-gradient(80% 90% at 80% 20%, #2a1f12, #0a0907 70%); padding: 6%; align-items: center; }
+.s-navaja .nv { max-width: none; width: 100%; }
+.s-navaja .nv-h { font-size: clamp(1.2rem, 2.2vw, 1.7rem); }
+.s-fade { background: linear-gradient(160deg, #2a2117, #0d0c0a 70%); flex-direction: row; align-items: center; justify-content: center; gap: 8%; }
+.fc-side { display: flex; flex-direction: column; gap: 6px; color: #f3ece0; }
+.fc-side b { font: 900 clamp(1.6rem, 3vw, 2.3rem)/.9 'Arial Narrow', var(--font-display); letter-spacing: -.01em; }
+.fc-side em { font-style: normal; display: block; color: #c79a5b; }
+.fc-side small { font-size: .75rem; color: #a89e8f; }
+.s-fade .fc { transform: scale(1.05); }
+.device { display: block; text-decoration: none; color: inherit; }
+.open-pill { font-size: .72rem; font-weight: 700; color: var(--teal); white-space: nowrap; padding-left: 8px; }
+.switch { position: relative; z-index: 3; display: flex; flex-wrap: wrap; justify-content: center; gap: 8px; margin-top: 28px; }
+.switch button { position: relative; overflow: hidden; min-height: 44px; padding: 0 16px; border-radius: 999px; border: 1px solid var(--line); background: var(--paper); color: var(--muted); font: 600 .9rem var(--font-body); cursor: pointer; }
+.switch button:hover { color: var(--ink); border-color: var(--ink); }
+.switch button[aria-selected="true"] { color: var(--ink); border-color: var(--teal); }
+.switch button[aria-selected="true"]::after { content: ""; position: absolute; left: 0; right: 0; bottom: 0; height: 3px; background: var(--teal); transform-origin: left; animation: fill var(--slide-ms, 5000ms) linear both; }
+.switch.paused button::after { animation-play-state: paused; }
+@keyframes fill { from { transform: scaleX(0); } }
 .tag { position: absolute; z-index: 2; background: var(--paper); border: 1px solid var(--line); border-radius: 12px; padding: 10px 14px; box-shadow: var(--shadow); display: flex; gap: 10px; align-items: center; font-size: .88rem; font-weight: 600; }
 .tag .icon { color: var(--teal); }
-.tag-1 { left: -18px; bottom: 34px; }
-.tag-2 { right: -12px; bottom: 96px; }
+.tag-1 { left: -18px; bottom: 104px; }
+.tag-2 { right: 18px; top: -22px; }
 .dot { width: 9px; height: 9px; border-radius: 50%; background: #22a35a; box-shadow: 0 0 0 4px color-mix(in srgb, #22a35a 25%, transparent); }
 
 /* Sections */
@@ -177,7 +199,7 @@ section { padding: clamp(72px, 9vw, 120px) 0 0; }
 .nv-top b { font: 600 1rem Georgia, serif; color: #c9a45c; }
 .nv-top i { width: 54px; height: 16px; border: 1px solid #c9a45c; border-radius: 4px; }
 .nv-h { font: 600 1.35rem/1.05 Georgia, serif; color: #f4ecdc; }
-.nv-h em { color: #c9a45c; }
+.nv-h em { color: #c9a45c; font-style: normal; }
 .nv-console { display: grid; grid-template-columns: 1fr 1fr 1.2fr 1fr; gap: 6px; padding: 8px; border-radius: 8px; background: #17140f; border: 1px solid rgba(201,164,92,.18); }
 .nv-col { display: grid; gap: 4px; align-content: start; }
 .nv-col i { height: 12px; border-radius: 3px; border: 1px solid rgba(244,236,220,.12); }
@@ -302,7 +324,7 @@ footer a:hover { color: var(--ink); }
 @media (max-width: 560px) {
   .logo small { display: none; }
   .tag-2 { display: none; }
-  .tag-1 { left: 8px; bottom: -18px; }
+  .tag-1 { display: none; }
   .mini-hero { grid-template-columns: 1fr; }
   .mini-arch { display: none; }
   .steps { grid-template-columns: 1fr; }
@@ -427,20 +449,45 @@ footer a:hover { color: var(--ink); }
         <li><svg class="icon"><use href="#i-check"/></svg>Ves la demo antes de pagar</li>
       </ul>
     </div>
-    <div class="stage" aria-hidden="true">
-      <div class="device">
-        <div class="bar"><i></i><i></i><i></i><span>tusalon.com</span></div>
-        <div class="mini" id="heroMini">
-          <div class="mini-nav"><b>Lumière</b><span>Servicios · Galería · Opiniones</span><em>Reservar</em></div>
-          <div class="mini-hero">
-            <div><div class="m-h">Belleza. Lujo.<span>Confianza.</span></div><p>Cabello, uñas, maquillaje y spa en un solo lugar.</p><span class="mini-btn">Reservar cita</span></div>
-            <div class="mini-arch"></div>
+    <div class="stage" id="showcase" role="region" aria-roledescription="carrusel" aria-label="Demos de Eric Design Web">
+      <a class="device" id="heroDevice" href="https://lumiere-salon-demo.vercel.app" target="_blank" rel="noopener" aria-label="Abrir la demo Lumière Salón &amp; Spa">
+        <div class="bar"><i></i><i></i><i></i><span id="heroUrl">tusalon.com</span><b class="open-pill">Abrir demo →</b></div>
+        <div class="slides" aria-hidden="true">
+          <div class="slide on" aria-hidden="false">
+            <div class="mini" id="heroMini">
+              <div class="mini-nav"><b>Lumière</b><span>Servicios · Galería · Opiniones</span><em>Reservar</em></div>
+              <div class="mini-hero">
+                <div><div class="m-h">Belleza. Lujo.<span>Confianza.</span></div><p>Cabello, uñas, maquillaje y spa en un solo lugar.</p><span class="mini-btn">Reservar cita</span></div>
+                <div class="mini-arch"></div>
+              </div>
+              <div class="mini-row"><div></div><div></div><div></div><div></div></div>
+            </div>
           </div>
-          <div class="mini-row"><div></div><div></div><div></div><div></div></div>
+          <div class="slide s-navaja" aria-hidden="true">
+            <span class="nv">
+              <span class="nv-top"><b>Navaja</b><i></i></span>
+              <span class="nv-h">Tu corte,<em> sin esperar turno.</em></span>
+              <span class="nv-console"><span class="nv-col"><i class="on"></i><i></i><i></i></span><span class="nv-col"><i></i><i class="on"></i><i></i></span><span class="nv-col nv-cal"><i></i><i></i><i></i><i></i><i></i><i class="on"></i><i></i><i></i><i></i><i></i><i></i><i></i></span><span class="nv-col nv-sum"><i></i><i></i><i class="btnl"></i></span></span>
+            </span>
+          </div>
+          <div class="slide s-fade" aria-hidden="true">
+            <span class="fc-side"><b>FADE<em>CLUB</em></b><small>Reserva en tres toques</small></span>
+            <span class="fc">
+              <span class="fc-title">FADE<b>CLUB</b></span>
+              <span class="fc-promo"><i></i></span>
+              <span class="fc-cats"><i></i><i></i><i></i><i></i></span>
+              <span class="fc-row"><i></i><i></i><i></i></span>
+              <span class="fc-tabs"><i></i><i></i><i class="fab"></i><i></i><i></i></span>
+            </span>
+          </div>
         </div>
+      </a>
+      <div class="tag tag-1" aria-hidden="true"><span class="dot"></span><span id="heroTag">Nueva cita por WhatsApp</span></div>
+      <div class="switch" role="tablist" aria-label="Escoge una demo">
+        <button type="button" role="tab" aria-selected="true" data-slide="0">Salón</button>
+        <button type="button" role="tab" aria-selected="false" data-slide="1">Barbería web</button>
+        <button type="button" role="tab" aria-selected="false" data-slide="2">App de barbería</button>
       </div>
-      <div class="tag tag-1"><span class="dot"></span>Nueva cita por WhatsApp</div>
-      <div class="tag tag-2"><svg class="icon"><use href="#i-check"/></svg>Precios y horario a la vista</div>
     </div>
   </div>
 
@@ -739,11 +786,43 @@ footer a:hover { color: var(--ink); }
   if ('IntersectionObserver' in window) new IntersectionObserver(function (es) { float.classList.toggle('away', es[0].isIntersecting); }).observe(document.getElementById('contacto'));
   links.addEventListener('click', function (e) { if (e.target.closest('a')) { links.classList.remove('open'); menu.setAttribute('aria-expanded', false); } });
 
-  // The hero mock flips between the demo's dark and light themes
-  var hero = document.getElementById('heroMini');
-  if (!matchMedia('(prefers-reduced-motion: reduce)').matches) {
-    setInterval(function () { hero.classList.toggle('light'); }, 3200);
+  // Hero showcase: rotates through the three demos
+  var DEMOS = [
+    { url: 'tusalon.com', href: 'https://lumiere-salon-demo.vercel.app', ext: true, name: 'Lumière Salón & Spa', tag: 'Nueva cita por WhatsApp' },
+    { url: 'tubarberia.com', href: 'demos/navaja/', ext: false, name: 'Navaja Barber Studio', tag: 'Turno reservado: sábado 10:00 a. m.' },
+    { url: 'app de tu barbería', href: 'demos/fade-club/', ext: false, name: 'Fade Club', tag: 'Se abre como una app, sin descargar' }
+  ];
+  var SLIDE_MS = 5000;
+  var showcase = document.getElementById('showcase'), dev = document.getElementById('heroDevice');
+  var slides = showcase.querySelectorAll('.slide'), tabs = showcase.querySelectorAll('[data-slide]'), sw = showcase.querySelector('.switch');
+  var cur = 0, timer = null, paused = false, still = matchMedia('(prefers-reduced-motion: reduce)').matches;
+  showcase.style.setProperty('--slide-ms', SLIDE_MS + 'ms');
+  function go(i) {
+    cur = (i + DEMOS.length) % DEMOS.length; var d = DEMOS[cur];
+    slides.forEach(function (sl, k) { sl.classList.toggle('on', k === cur); sl.setAttribute('aria-hidden', k === cur ? 'false' : 'true'); });
+    tabs.forEach(function (t, k) { t.setAttribute('aria-selected', 'false'); t.tabIndex = k === cur ? 0 : -1; });
+    void sw.offsetWidth; // restart the progress bar
+    tabs[cur].setAttribute('aria-selected', 'true');
+    document.getElementById('heroUrl').textContent = d.url;
+    document.getElementById('heroTag').textContent = d.tag;
+    dev.href = d.href; dev.setAttribute('aria-label', 'Abrir la demo ' + d.name);
+    if (d.ext) { dev.target = '_blank'; dev.rel = 'noopener'; } else { dev.removeAttribute('target'); dev.removeAttribute('rel'); }
   }
+  function schedule() { clearInterval(timer); if (still || paused) return; timer = setInterval(function () { go(cur + 1); }, SLIDE_MS); }
+  tabs.forEach(function (t, k) {
+    t.addEventListener('click', function () { go(k); schedule(); });
+    t.addEventListener('keydown', function (e) {
+      if (e.key === 'ArrowRight' || e.key === 'ArrowLeft') { e.preventDefault(); go(cur + (e.key === 'ArrowRight' ? 1 : -1)); tabs[cur].focus(); schedule(); }
+    });
+  });
+  function pause(on) { paused = on; sw.classList.toggle('paused', on); schedule(); }
+  showcase.addEventListener('mouseenter', function () { pause(true); });
+  showcase.addEventListener('mouseleave', function () { pause(false); });
+  showcase.addEventListener('focusin', function () { pause(true); });
+  showcase.addEventListener('focusout', function (e) { if (!showcase.contains(e.relatedTarget)) pause(false); });
+  document.addEventListener('visibilitychange', function () { if (document.hidden) clearInterval(timer); else schedule(); });
+  if (still) sw.classList.add('paused');
+  go(0); schedule();
 
   var toast = document.getElementById('toast'), tt;
   function say(msg) { toast.textContent = msg; toast.classList.add('show'); clearTimeout(tt); tt = setTimeout(function () { toast.classList.remove('show'); }, 2600); }
