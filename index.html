@@ -9,11 +9,13 @@
 <meta property="og:title" content="Eric Design Web · Páginas que venden">
 <meta property="og:description" content="Tu negocio con página propia en días. Pide tu demo gratis por WhatsApp.">
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='16' fill='%23101418'/%3E%3Cpath d='M20 18h24M20 32h18M20 46h24M20 18v28' stroke='%23ffc93c' stroke-width='6' stroke-linecap='round'/%3E%3C/svg%3E">
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,700;12..96,800&family=Figtree:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="preload" href="fonts/bricolage-grotesque-latin-opsz-normal.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="fonts/figtree-latin-wght-normal.woff2" as="font" type="font/woff2" crossorigin>
 <script>try{var t=localStorage.getItem('edw-theme');if(t)document.documentElement.dataset.theme=t;else if(matchMedia('(prefers-color-scheme: dark)').matches)document.documentElement.dataset.theme='dark'}catch(e){}</script>
 <style>
+/* Self-hosted variable fonts (Fontsource, latin subset): Bricolage carries wght + opsz, Figtree carries wght */
+@font-face { font-family: 'Bricolage Grotesque'; font-style: normal; font-weight: 200 800; font-display: swap; src: url(fonts/bricolage-grotesque-latin-opsz-normal.woff2) format('woff2-variations'), url(fonts/bricolage-grotesque-latin-opsz-normal.woff2) format('woff2'); }
+@font-face { font-family: 'Figtree'; font-style: normal; font-weight: 300 900; font-display: swap; src: url(fonts/figtree-latin-wght-normal.woff2) format('woff2-variations'), url(fonts/figtree-latin-wght-normal.woff2) format('woff2'); }
 /* Layout: editorial left-aligned columns, one tilted device mock as the hero moment, Caribbean teal + sun yellow on paper */
 :root {
   --font-display: 'Bricolage Grotesque', 'Arial Narrow', system-ui, sans-serif;
@@ -24,7 +26,6 @@
   --ease-drawer: cubic-bezier(0.32, 0.72, 0, 1);
   --radius: 16px;
   --max: 1180px;
-  --wa: 18292600023;
 }
 [data-theme="light"] {
   --bg: #f1f4f3;
@@ -81,7 +82,6 @@ p { margin: 0; text-wrap: pretty; }
 @media (hover: hover) and (pointer: fine) {
   .btn-ghost:hover { background: var(--ink); color: var(--bg); }
   .btn-main:hover { filter: brightness(1.08); }
-    .dc-shot:hover > span { transform: translateY(-4px); }
   .wa-float:hover { transform: translateY(-2px); }
 }
 .btn:active { transform: scale(.98); }
@@ -90,7 +90,7 @@ p { margin: 0; text-wrap: pretty; }
 /* Header */
 .skip { position: absolute; left: 16px; top: -80px; z-index: 100; }
 .skip:focus { top: 12px; }
-header.top { position: sticky; top: 0; z-index: 50; background: color-mix(in srgb, var(--bg) 85%, transparent); backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px); border-bottom: 1px solid var(--line); }
+header.top { position: sticky; top: 0; z-index: 50; background: var(--bg); }
 .nav { display: flex; align-items: center; gap: 28px; height: 68px; }
 .logo { min-height: 44px; display: flex; align-items: center; gap: 10px; text-decoration: none; font: 800 1.25rem/1 var(--font-display); letter-spacing: -.02em; }
 .logo-mark { width: 32px; height: 32px; border-radius: 9px; background: var(--slab); display: grid; place-items: center; }
@@ -99,8 +99,11 @@ header.top { position: sticky; top: 0; z-index: 50; background: color-mix(in srg
 .nav ul { display: flex; gap: 24px; list-style: none; margin: 0 0 0 auto; padding: 0; }
 .nav ul a { display: inline-block; padding: 12px 0; text-decoration: none; color: var(--muted); font-weight: 500; font-size: 1.0625rem; }
 .nav ul a:hover { color: var(--ink); }
+.nav ul a { position: relative; transition: color 200ms ease; }
+.nav ul a[aria-current] { color: var(--ink); }
+.nav ul a[aria-current]::after { content: ""; position: absolute; left: 0; right: 0; bottom: 6px; height: 2px; border-radius: 2px; background: var(--teal); }
 .tools { display: flex; gap: 8px; align-items: center; }
-.tbtn { width: 44px; height: 44px; border-radius: 12px; border: 1px solid var(--line); background: var(--paper); color: var(--ink); display: grid; place-items: center; cursor: pointer; }
+.tbtn { width: 44px; height: 44px; border-radius: 12px; border: 0; background: var(--paper); color: var(--ink); display: grid; place-items: center; cursor: pointer; }
 .tbtn { transition: transform 160ms var(--ease-out), border-color 200ms ease; }
 .tbtn:active, .switch button:active, .copy:active { transform: scale(0.95); }
 .tbtn:hover { border-color: var(--ink); }
@@ -109,6 +112,8 @@ header.top { position: sticky; top: 0; z-index: 50; background: color-mix(in srg
 [data-theme="dark"] .tbtn .i-sun { display: none; }
 .nav .btn { min-height: 44px; padding: 0 16px; font-size: .875rem; }
 .menu { display: none; }
+.menu .i-close, .menu[aria-expanded="true"] .i-open { display: none; }
+.menu[aria-expanded="true"] .i-close { display: block; }
 
 /* Hero */
 .hero { padding: clamp(48px, 8vw, 104px) 0 clamp(56px, 8vw, 96px); display: grid; grid-template-columns: 1.1fr .9fr; gap: clamp(32px, 5vw, 64px); align-items: center; }
@@ -123,53 +128,30 @@ header.top { position: sticky; top: 0; z-index: 50; background: color-mix(in srg
 .proofs li { display: flex; align-items: center; gap: 8px; }
 .proofs .icon { color: var(--teal); }
 
-/* Device mock: the Lumière demo, drawn in HTML */
+/* Device frame: screenshots of the four demos rotate inside it */
 .stage { position: relative; perspective: 1400px; }
 .device[data-ui] { border-radius: 18px; background: var(--paper); border: 1px solid var(--line); box-shadow: var(--shadow); transform: rotateY(-10deg) rotateX(4deg); transition: transform 500ms var(--ease-out); overflow: hidden; }
 .stage:hover .device { transform: none; }
 [data-ui] .bar { display: flex; align-items: center; gap: 6px; padding: 10px 14px; border-bottom: 1px solid var(--line); }
 [data-ui] .bar i { width: 10px; height: 10px; border-radius: 50%; background: var(--line); }
 [data-ui] .bar span { margin-left: 10px; flex: 1; font-size: .72rem; color: var(--muted); background: var(--bg); border-radius: 6px; padding: 4px 10px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
-[data-ui] .mini { --m-bg: #0b0a08; --m-text: #f4ede0; --m-muted: #b9ad98; --m-gold: #d4af6a; --m-line: rgba(212,175,106,.25); background: var(--m-bg); color: var(--m-text); padding: 18px 20px 22px; transition: background-color .6s, color .6s; }
-[data-ui] .mini.light { --m-bg: #f8f3ea; --m-text: #1c1710; --m-muted: #5e5343; --m-gold: #6b4c1a; --m-line: rgba(122,92,40,.25); }
-[data-ui] .mini-nav { display: flex; justify-content: space-between; align-items: center; font-size: .62rem; color: var(--m-muted); }
-[data-ui] .mini-nav b { font: 600 1rem 'Georgia', serif; color: var(--m-gold); }
-[data-ui] .mini-nav em { font-style: normal; border: 1px solid var(--m-gold); color: var(--m-gold); border-radius: 99px; padding: 3px 8px; }
-[data-ui] .mini-hero { display: grid; grid-template-columns: 1.2fr .8fr; gap: 14px; margin-top: 18px; align-items: center; }
-[data-ui] .mini-hero .m-h { margin: 0; font: 600 clamp(1.3rem, 2.4vw, 1.75rem)/1.02 'Georgia', serif; }
-[data-ui] .mini-hero .m-h span { color: var(--m-gold); display: block; }
-[data-ui] .mini-hero p { font-size: .62rem; color: var(--m-muted); margin-top: 8px; line-height: 1.5; }
-[data-ui] .mini-btn { display: inline-block; margin-top: 10px; background: var(--m-gold); color: var(--m-bg); font-size: .6rem; font-weight: 700; padding: 5px 10px; border-radius: 99px; }
-[data-ui] .mini-arch { aspect-ratio: 3 / 4; border-radius: 999px 999px 8px 8px; border: 1px solid var(--m-line); background: color-mix(in srgb, var(--m-gold) 26%, var(--m-bg)); }
-[data-ui] .mini-row { display: grid; grid-template-columns: repeat(4, 1fr); gap: 6px; margin-top: 16px; }
-[data-ui] .mini-row div { height: 34px; border-radius: 6px; border: 1px solid var(--m-line); background: color-mix(in srgb, var(--m-gold) 10%, transparent); }
 [data-ui] .slides { position: relative; aspect-ratio: 16 / 10.5; background: #0b0a08; }
 [data-ui] .slide { position: absolute; inset: 0; display: flex; flex-direction: column; justify-content: center; opacity: 0; transform: scale(1.02); transition: opacity 400ms ease, transform 500ms var(--ease-out); }
 [data-ui] .slide.on { opacity: 1; transform: none; }
-[data-ui] .slide .mini { height: 100%; display: flex; flex-direction: column; justify-content: center; }
-[data-ui] .s-navaja { background: #15110b; padding: 6%; align-items: center; }
-[data-ui] .s-navaja .nv { max-width: none; width: 100%; }
-[data-ui] .s-navaja .nv-h { font-size: clamp(1.2rem, 2.2vw, 1.7rem); }
-[data-ui] .s-fade { background: #1a1510; flex-direction: row; align-items: center; justify-content: center; gap: 8%; }
-[data-ui] .fc-side { display: flex; flex-direction: column; gap: 6px; color: #f3ece0; }
-[data-ui] .fc-side b { font: 900 clamp(1.6rem, 3vw, 2.3rem)/.9 'Arial Narrow', var(--font-display); letter-spacing: -.01em; }
-[data-ui] .fc-side em { font-style: normal; display: block; color: #c79a5b; }
-[data-ui] .fc-side small { font-size: .75rem; color: #a89e8f; }
-[data-ui] .s-fade .fc { transform: scale(1.05); }
 .device { display: block; text-decoration: none; color: inherit; }
 [data-ui] .open-pill { font-size: .72rem; font-weight: 700; color: var(--teal); white-space: nowrap; padding-left: 8px; }
 .switch { position: relative; z-index: 3; display: flex; flex-wrap: wrap; justify-content: center; gap: 8px; margin-top: 28px; }
-.switch button { transition: transform 160ms var(--ease-out), color 200ms ease, border-color 200ms ease; position: relative; overflow: hidden; min-height: 44px; padding: 0 16px; border-radius: 999px; border: 1px solid var(--line); background: var(--paper); color: var(--muted); font: 600 .875rem var(--font-body); cursor: pointer; }
+.switch button { transition: transform 160ms var(--ease-out), color 200ms ease, border-color 200ms ease; position: relative; overflow: hidden; min-height: 44px; padding: 0 16px; border-radius: 999px; border: 0; background: var(--paper); color: var(--muted); font: 600 .875rem var(--font-body); cursor: pointer; }
 .switch button:hover { color: var(--ink); border-color: var(--ink); }
-.switch button[aria-selected="true"] { color: var(--ink); border-color: var(--teal); }
-.switch button[aria-selected="true"]::after { content: ""; position: absolute; left: 0; right: 0; bottom: 0; height: 3px; background: var(--teal); transform-origin: left; animation: fill var(--slide-ms, 5000ms) linear both; }
+.switch button[aria-pressed="true"] { color: var(--ink); border-color: var(--teal); }
+.switch button[aria-pressed="true"]::after { content: ""; position: absolute; left: 0; right: 0; bottom: 0; height: 3px; background: var(--teal); transform-origin: left; animation: fill var(--slide-ms, 5000ms) linear both; }
 .switch.paused button::after { animation-play-state: paused; }
+.switch .play { width: 44px; padding: 0; display: grid; place-items: center; color: var(--ink); flex: none; }
+@media (min-width: 981px) { .switch { gap: 6px; } .switch button { padding: 0 13px; } .switch .play { padding: 0; } }
+.switch .play .icon { width: 18px; height: 18px; }
+.switch .play .i-play, .switch .play.is-paused .i-pause { display: none; }
+.switch .play.is-paused .i-play { display: block; }
 @keyframes fill { from { transform: scaleX(0); } }
-.tag { position: absolute; z-index: 2; background: var(--paper); border: 1px solid var(--line); border-radius: 12px; padding: 10px 14px; box-shadow: var(--shadow); display: flex; gap: 10px; align-items: center; font-size: .875rem; font-weight: 600; }
-.tag .icon { color: var(--teal); }
-.tag-1 { left: -18px; bottom: 104px; }
-.tag-2 { right: 18px; top: -22px; }
-.dot { width: 9px; height: 9px; border-radius: 50%; background: #22a35a; box-shadow: 0 0 0 4px color-mix(in srgb, #22a35a 25%, transparent); }
 
 /* Sections */
 section { padding: clamp(104px, 12vw, 176px) 0 0; }
@@ -177,64 +159,28 @@ section { padding: clamp(104px, 12vw, 176px) 0 0; }
 .head p { color: var(--muted); max-width: 48ch; }
 
 .niches { display: flex; flex-wrap: wrap; gap: 12px; }
-.niche { display: flex; align-items: center; gap: 12px; padding: 14px 20px 14px 14px; border-radius: 999px; background: var(--paper); border: 1px solid var(--line); font-weight: 600; }
+.niche { display: flex; align-items: center; gap: 12px; padding: 14px 20px 14px 14px; border-radius: 999px; background: var(--paper); border: 0; font-weight: 600; }
 .niche span { width: 38px; height: 38px; border-radius: 50%; background: var(--soft); color: var(--teal); display: grid; place-items: center; }
 .niche-link { text-decoration: none; color: inherit; border-color: var(--teal); }
 .niche-link:hover { background: var(--soft); }
 .niche small { display: block; font-weight: 400; color: var(--muted); font-size: .875rem; }
 
 /* Demos */
-.demo { display: grid; grid-template-columns: 1.2fr .8fr; gap: 0; background: var(--paper); border: 1px solid var(--line); border-radius: 22px; overflow: hidden; }
-.demo-shot[data-ui] { background: #0b0a08; padding: clamp(20px, 3vw, 36px); display: grid; place-items: center; min-height: 320px; position: relative; overflow: hidden; }
-[data-ui] .demo-shot .mini { width: 100%; max-width: 520px; border-radius: 12px; border: 1px solid rgba(212,175,106,.25); box-shadow: 0 30px 60px -30px rgba(0,0,0,.9); }
+.demo { display: grid; grid-template-columns: 1.2fr .8fr; gap: 0; background: var(--paper); border: 0; border-radius: 22px; overflow: hidden; }
 .demo-body { padding: clamp(24px, 3.5vw, 44px); display: flex; flex-direction: column; gap: 18px; }
 .demo-body ul { margin: 0; padding: 0; list-style: none; display: grid; gap: 10px; color: var(--muted); }
 .demo-body li { display: flex; gap: 10px; align-items: flex-start; }
 .demo-body li .icon { color: var(--teal); margin-top: 3px; }
 .pill { align-self: flex-start; font-size: .8rem; font-weight: 700; padding: 5px 12px; border-radius: 99px; background: var(--soft); color: var(--teal); }
 .demo-actions { display: flex; flex-wrap: wrap; gap: 10px; margin-top: auto; }
-.next { margin-top: 16px; display: flex; flex-wrap: wrap; gap: 12px; color: var(--muted); font-size: 1.0625rem; }
-.next span { border: 1px dashed var(--line); border-radius: 12px; padding: 12px 16px; }
 
 .demo-pair { display: grid; grid-template-columns: 1fr 1fr; gap: 18px; margin-top: 18px; }
 .demo-nacar { margin-top: 18px; grid-template-columns: .8fr 1.2fr; }
 .demo-nacar .demo-shot { order: 2; text-decoration: none; }
-.demo-card { background: var(--paper); border: 1px solid var(--line); border-radius: 22px; overflow: hidden; display: flex; flex-direction: column; }
-.dc-shot[data-ui] { display: grid; place-items: center; height: 290px; padding: 28px; text-decoration: none; overflow: hidden; }
-[data-ui] .dc-shot > span { transition: transform 300ms var(--ease-out); }
+.demo-card { background: var(--paper); border: 0; border-radius: 22px; overflow: hidden; display: flex; flex-direction: column; }
 
 .dc-body { padding: clamp(22px, 3vw, 32px); display: flex; flex-direction: column; gap: 14px; flex: 1; }
 .dc-body .demo-actions { margin-top: auto; }
-/* Navaja mock */
-.dc-navaja[data-ui] { background: #0a0907; }
-[data-ui] .nv { width: 100%; max-width: 420px; border: 1px solid rgba(201,164,92,.28); border-radius: 12px; padding: 14px; background: #100e0b; display: grid; gap: 12px; }
-[data-ui] .nv-top { display: flex; justify-content: space-between; align-items: center; }
-[data-ui] .nv-top b { font: 600 1rem Georgia, serif; color: #c9a45c; }
-[data-ui] .nv-top i { width: 54px; height: 16px; border: 1px solid #c9a45c; border-radius: 4px; }
-[data-ui] .nv-h { font: 600 1.35rem/1.05 Georgia, serif; color: #f4ecdc; }
-[data-ui] .nv-h em { color: #c9a45c; font-style: normal; }
-[data-ui] .nv-console { display: grid; grid-template-columns: 1fr 1fr 1.2fr 1fr; gap: 6px; padding: 8px; border-radius: 8px; background: #17140f; border: 1px solid rgba(201,164,92,.18); }
-[data-ui] .nv-col { display: grid; gap: 4px; align-content: start; }
-[data-ui] .nv-col i { height: 12px; border-radius: 3px; border: 1px solid rgba(244,236,220,.12); }
-[data-ui] .nv-col i.on { border-color: #c9a45c; background: rgba(201,164,92,.18); }
-[data-ui] .nv-cal { grid-template-columns: repeat(4, 1fr); }
-[data-ui] .nv-cal i { height: 9px; border-radius: 50%; border: 0; background: rgba(244,236,220,.1); }
-[data-ui] .nv-cal i.on { background: #c9a45c; }
-[data-ui] .nv-sum i.btnl { background: #c9a45c; border-color: #c9a45c; margin-top: 8px; }
-/* Nácar mock */
-[data-ui] .s-nacar { background: #120d0d; padding: 6%; align-items: center; }
-.dc-nacar[data-ui] { background: #120d0d; min-height: 320px; }
-[data-ui] .nc { width: 100%; max-width: 520px; display: grid; grid-template-columns: 1fr 1fr; gap: 18px; align-items: center; color: #f2e6e2; }
-[data-ui] .nc-name { font: 400 clamp(1.5rem, 2.8vw, 2.2rem)/1 'Bodoni Moda', Didot, Georgia, serif; letter-spacing: -.02em; }
-[data-ui] .nc-sub { display: block; font-size: .72rem; color: #c4b0ab; margin-top: 8px; }
-[data-ui] .nc-sw { display: grid; grid-template-columns: repeat(6, 1fr); gap: 4px; margin-top: 16px; }
-[data-ui] .nc-sw i { aspect-ratio: 4 / 5; background: var(--c); }
-[data-ui] .nc-sw i:first-child { outline: 2px solid #f2e6e2; outline-offset: -2px; }
-[data-ui] .nc-btn { display: inline-block; margin-top: 14px; padding: 6px 12px; background: #d8a7a0; color: #1a1110; font-size: .66rem; font-weight: 600; }
-[data-ui] .nc-nails { background: #1c1515; padding: 14% 8% 0; display: flex; align-items: flex-end; justify-content: center; gap: 6%; height: 100%; min-height: 150px; }
-[data-ui] .nc-nails i { width: 15%; background: #d8a7a0; border-radius: 999px 999px 0 0; position: relative; }
-[data-ui] .nc-nails i::after { content: ""; position: absolute; left: 0; right: 0; bottom: 0; height: 22%; background: #e8c9b8; }
-[data-ui] .nc-nails i:nth-child(1) { height: 52%; } [data-ui] .nc-nails i:nth-child(2) { height: 74%; } [data-ui] .nc-nails i:nth-child(3) { height: 82%; } [data-ui] .nc-nails i:nth-child(4) { height: 70%; } [data-ui] .nc-nails i:nth-child(5) { height: 44%; }
 /* Real screenshots of the demos */
 [data-ui] .slide.shot { padding: 0; background: #0b0a08; }
 [data-ui] .slide.shot img, .shot-card img { width: 100%; height: 100%; object-fit: cover; object-position: 50% 0; display: block; }
@@ -243,25 +189,10 @@ section { padding: clamp(104px, 12vw, 176px) 0 0; }
 .shot-card img { transition: transform 500ms var(--ease-out); }
 @media (hover: hover) and (pointer: fine) { .shot-card:hover img { transform: scale(1.03); } }
 @media (prefers-reduced-motion: reduce) { .shot-card:hover img { transform: none; } }
-/* Fade mock */
-.dc-fade[data-ui] { background: #1a1510; }
-[data-ui] .fc { width: 150px; height: 230px; border-radius: 26px; border: 6px solid #141210; background: #0d0c0a; padding: 16px 12px 10px; display: flex; flex-direction: column; gap: 8px; box-shadow: 0 24px 40px -20px rgba(0,0,0,.8); position: relative; }
-[data-ui] .fc-title { font: 900 1.05rem/.9 'Arial Narrow', sans-serif; color: #f3ece0; letter-spacing: .02em; }
-[data-ui] .fc-title b { display: block; color: #c79a5b; }
-[data-ui] .fc-promo { height: 42px; border-radius: 10px; background: #2b2116; border: 1px solid rgba(240,230,214,.1); position: relative; }
-[data-ui] .fc-promo i { position: absolute; left: 8px; bottom: 7px; width: 34px; height: 10px; border-radius: 4px; background: #c79a5b; }
-[data-ui] .fc-cats, [data-ui] .fc-row { display: grid; gap: 5px; }
-[data-ui] .fc-cats { grid-template-columns: repeat(4, 1fr); }
-[data-ui] .fc-cats i { aspect-ratio: 1; border-radius: 7px; background: #171512; border: 1px solid rgba(199,154,91,.35); }
-[data-ui] .fc-row { grid-template-columns: repeat(3, 1fr); flex: 1; }
-[data-ui] .fc-row i { border-radius: 8px; background: #241d15; }
-[data-ui] .fc-tabs { display: grid; grid-template-columns: repeat(5, 1fr); align-items: end; gap: 4px; padding-top: 6px; border-top: 1px solid rgba(240,230,214,.08); }
-[data-ui] .fc-tabs i { height: 6px; width: 10px; margin: 0 auto; border-radius: 3px; background: rgba(240,230,214,.25); }
-[data-ui] .fc-tabs i.fab { width: 20px; height: 20px; border-radius: 50%; background: #c79a5b; margin-top: -10px; }
 
 /* Pricing */
 .plans { display: grid; grid-template-columns: repeat(3, 1fr); gap: 18px; align-items: stretch; }
-.plan { background: var(--paper); border: 1px solid var(--line); border-radius: var(--radius); padding: 28px; display: flex; flex-direction: column; gap: 18px; }
+.plan { background: var(--paper); border: 0; border-radius: var(--radius); padding: 28px; display: flex; flex-direction: column; gap: 18px; }
 .plan.star { background: var(--slab); color: var(--on-slab); border-color: var(--slab); position: relative; }
 .plan.star .muted, .plan.star li { color: color-mix(in srgb, var(--on-slab) 74%, var(--slab)); }
 .plan.star .icon { color: var(--sun); }
@@ -273,7 +204,7 @@ section { padding: clamp(104px, 12vw, 176px) 0 0; }
 .plan li { display: flex; gap: 10px; }
 .plan li .icon { color: var(--teal); margin-top: 3px; width: 18px; height: 18px; }
 .plan .btn { margin-top: auto; }
-.plan.star .btn-main { background: var(--sun); color: var(--sun-ink); box-shadow: none; }
+.plan.star .btn-main { background: var(--sun); color: var(--sun-ink); }
 .upkeep { margin-top: 18px; display: flex; flex-wrap: wrap; justify-content: space-between; align-items: center; gap: 16px; padding: 22px 28px; border-radius: var(--radius); background: var(--soft); }
 .upkeep b { font-family: var(--font-display); font-size: 1.25rem; }
 .terms { margin-top: 14px; font-size: .875rem; color: var(--muted); }
@@ -288,7 +219,7 @@ section { padding: clamp(104px, 12vw, 176px) 0 0; }
 /* About */
 .about { display: grid; grid-template-columns: minmax(0, .8fr) minmax(0, 1.2fr); gap: clamp(32px, 5vw, 72px); align-items: center; }
 .about-photo { display: block; max-width: 420px; width: 100%; }
-.about-photo img { width: 100%; height: auto; aspect-ratio: 4 / 5; object-fit: cover; object-position: center 18%; border-radius: 20px; box-shadow: var(--shadow); background: var(--slab); }
+.about-photo img { width: 100%; height: auto; aspect-ratio: 4 / 5; object-fit: cover; object-position: center 18%; border-radius: 20px; background: var(--slab); }
 .about-text { display: flex; flex-direction: column; align-items: flex-start; gap: 18px; }
 .about-text .lead { font-size: 1.25rem; color: var(--ink); }
 .place { display: flex; align-items: center; gap: 8px; font-weight: 600; }
@@ -296,8 +227,6 @@ section { padding: clamp(104px, 12vw, 176px) 0 0; }
 
 /* FAQ */
 .faq { display: grid; grid-template-columns: .8fr 1.2fr; gap: 48px; }
-details { border-bottom: 1px solid var(--line); }
-details:first-child { border-top: 1px solid var(--line); }
 summary { list-style: none; cursor: pointer; padding: 20px 0; display: flex; justify-content: space-between; gap: 16px; font-weight: 600; font-size: 1.0625rem; }
 summary::-webkit-details-marker { display: none; }
 summary .icon { transition: transform 200ms var(--ease-out); color: var(--teal); }
@@ -317,7 +246,7 @@ details p { color: var(--muted); padding: 0 0 20px; max-width: 60ch; }
 .contact .lead { color: color-mix(in srgb, var(--on-slab) 74%, var(--slab)); margin-top: 18px; }
 .phone { margin-top: 28px; display: flex; flex-wrap: wrap; align-items: center; gap: 12px; }
 .phone strong { font: 800 1.75rem/1 var(--font-display); letter-spacing: -.02em; user-select: all; }
-.copy { border: 1px solid color-mix(in srgb, var(--on-slab) 45%, transparent); background: transparent; color: var(--on-slab); border-radius: 10px; padding: 8px 12px; font: 600 .875rem var(--font-body); cursor: pointer; }
+.copy { border: 0; background: color-mix(in srgb, var(--on-slab) 14%, var(--slab)); color: var(--on-slab); border-radius: 10px; padding: 8px 12px; font: 600 .875rem var(--font-body); cursor: pointer; }
 .copy:hover { border-color: var(--sun); }
 .contact .btn-wa { margin-top: 24px; background: var(--sun); color: var(--sun-ink); }
 form { background: var(--paper); color: var(--ink); border-radius: 20px; padding: clamp(22px, 3vw, 32px); display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
@@ -326,8 +255,10 @@ form { background: var(--paper); color: var(--ink); border-radius: 20px; padding
 label { font-size: .875rem; font-weight: 600; }
 input, select, textarea { width: 100%; min-height: 48px; padding: 11px 14px; border-radius: 10px; border: 1.5px solid var(--line); background: var(--bg); color: var(--ink); font: 400 1.0625rem var(--font-body); caret-color: var(--teal); }
 textarea { min-height: 90px; resize: vertical; }
-input::placeholder, textarea::placeholder { color: var(--muted); }
-input:focus, select:focus, textarea:focus { outline: none; border-color: var(--teal); box-shadow: 0 0 0 3px color-mix(in srgb, var(--teal) 22%, transparent); }
+input::placeholder, textarea::placeholder { color: color-mix(in srgb, var(--muted) 62%, var(--bg)); opacity: 1; }
+select:invalid { color: color-mix(in srgb, var(--muted) 62%, var(--bg)); }
+select option { color: var(--ink); }
+input:focus, select:focus, textarea:focus { outline: none; border-color: var(--teal); box-shadow: 0 0 0 3px color-mix(in srgb, var(--teal) 22%, transparent); } /* taste-skill-ignore: focus ring, never at rest */
 .err { font-size: .82rem; color: #b42318; min-height: 1em; }
 [data-theme="dark"] .err { color: #ff8a7a; }
 [aria-invalid="true"], [aria-invalid="true"]:focus { border-color: #b42318; }
@@ -354,23 +285,18 @@ footer a:hover { color: var(--ink); }
   .menu { display: grid; }
   .tools { margin-left: auto; }
   @starting-style { .nav ul.open { opacity: 0; transform: translateY(-8px); } }
-  .nav ul.open { transition: opacity 200ms var(--ease-out), transform 200ms var(--ease-out); display: flex; flex-direction: column; gap: 0; position: absolute; top: 68px; left: 0; right: 0; margin: 0; padding: 8px 16px 16px; background: var(--bg); border-bottom: 1px solid var(--line); }
-  .nav ul.open a { display: block; padding: 14px 4px; border-bottom: 1px solid var(--line); color: var(--ink); font-size: 1.0625rem; }
+  .nav ul.open { transition: opacity 200ms var(--ease-out), transform 200ms var(--ease-out); display: flex; flex-direction: column; gap: 0; position: absolute; top: 68px; left: 0; right: 0; margin: 0; padding: 8px 16px 16px; background: var(--bg); border-bottom: 1px solid var(--line); } /* taste-skill-ignore: edge of the open menu overlay */
+  .nav ul.open a { display: block; padding: 14px 4px; color: var(--ink); font-size: 1.0625rem; }
   .hero, .demo, .faq, .contact .wrap, .head, .about, .demo-pair { grid-template-columns: 1fr; }
   .demo-nacar .demo-shot { order: 0; }
   .about-photo { max-width: 340px; }
   .about-photo img { aspect-ratio: 1 / 1; object-position: center 12%; }
   .stage { max-width: 560px; }
   .plans { grid-template-columns: 1fr; max-width: 520px; }
-  .plan.star { order: -1; }
   .steps { grid-template-columns: 1fr 1fr; }
 }
 @media (max-width: 560px) {
   .logo small { display: none; }
-  .tag-2 { display: none; }
-  .tag-1 { display: none; }
-  [data-ui] .mini-hero { grid-template-columns: 1fr; }
-  [data-ui] .mini-arch { display: none; }
   .steps { grid-template-columns: 1fr; }
   form { grid-template-columns: 1fr; }
   .wa-float span { display: none; }
@@ -380,15 +306,15 @@ footer a:hover { color: var(--ink); }
 /* Problem vs solution */
 .versus { display: grid; grid-template-columns: 1fr 1fr; gap: 18px; }
 .vs-col { border-radius: 20px; padding: clamp(22px, 3vw, 32px); display: flex; flex-direction: column; gap: 16px; }
-.vs-before { background: var(--paper); border: 1px solid var(--line); }
-.vs-after { background: var(--soft); border: 1px solid color-mix(in srgb, var(--teal) 30%, transparent); }
+.vs-before { background: var(--paper); }
+.vs-after { background: var(--soft); }
 .vs-label { font: 700 1.0625rem var(--font-body); color: var(--muted); }
 .vs-after .vs-label { color: var(--teal); }
 .chat[data-ui] { display: grid; gap: 8px; }
 [data-ui] .msg { max-width: 82%; padding: 10px 14px; border-radius: 16px 16px 16px 4px; background: var(--bg); border: 1px solid var(--line); font-size: .95rem; }
 [data-ui] .msg time { display: block; font-size: .72rem; color: var(--muted); margin-top: 2px; font-variant-numeric: tabular-nums; }
 [data-ui] .msg.late { border-color: color-mix(in srgb, #c2410c 45%, var(--line)); }
-.vs-cost { margin-top: auto; padding-top: 14px; border-top: 1px dashed var(--line); color: var(--muted); font-size: 1.0625rem; }
+.vs-cost { margin-top: auto; color: var(--muted); font-size: 1.0625rem; }
 .page-card[data-ui] { background: var(--paper); border-radius: 14px; border: 1px solid var(--line); overflow: hidden; }
 [data-ui] .page-row { display: flex; justify-content: space-between; gap: 12px; padding: 12px 16px; border-bottom: 1px solid var(--line); font-size: .95rem; }
 [data-ui] .page-row:last-child { border-bottom: 0; }
@@ -396,9 +322,8 @@ footer a:hover { color: var(--ink); }
 [data-ui] .page-cta { display: flex; align-items: center; justify-content: center; gap: 8px; margin: 12px 16px 16px; min-height: 44px; border-radius: 10px; background: var(--teal); color: var(--teal-ink); font-weight: 700; font-size: .95rem; }
 
 /* Guarantees */
-.promises { display: grid; grid-template-columns: repeat(3, 1fr); gap: 0; border-block: 1px solid var(--line); margin-top: 48px; }
-.promise { padding: 26px 24px 26px 0; display: flex; gap: 14px; }
-.promise + .promise { padding-left: 24px; border-left: 1px solid var(--line); }
+.promises { display: grid; grid-template-columns: repeat(3, 1fr); gap: 32px; margin-top: 48px; }
+.promise { padding: 0; display: flex; gap: 14px; }
 .promise span { width: 44px; height: 44px; border-radius: 12px; background: var(--slab); color: var(--sun); display: grid; place-items: center; flex: none; }
 .promise b { display: block; font-size: 1.0625rem; }
 .promise p { color: var(--muted); font-size: 1.0625rem; margin-top: 2px; }
@@ -408,7 +333,7 @@ footer a:hover { color: var(--ink); }
 .sec-cta p { color: var(--muted); }
 
 /* Form result */
-.sent { grid-column: 1 / -1; display: none; gap: 12px; align-items: flex-start; padding: 14px 16px; border-radius: 12px; background: var(--soft); border: 1px solid color-mix(in srgb, var(--teal) 35%, transparent); font-size: 1.0625rem; }
+.sent { grid-column: 1 / -1; display: none; gap: 12px; align-items: flex-start; padding: 14px 16px; border-radius: 12px; background: var(--soft); font-size: 1.0625rem; }
 .sent.show { display: flex; animation: rise 300ms var(--ease-out); }
 .sent .icon { color: var(--teal); margin-top: 2px; }
 .sent a { font-weight: 700; color: var(--teal); }
@@ -422,45 +347,27 @@ footer a:hover { color: var(--ink); }
 @media (max-width: 980px) {
   .versus { grid-template-columns: 1fr; }
   .promises { grid-template-columns: 1fr; }
-  .promise, .promise + .promise { padding: 20px 0; border-left: 0; }
-  .promise + .promise { border-top: 1px solid var(--line); }
 }
 @media (max-width: 560px) { body { padding-bottom: 72px; } }
 
 /* tasteskill restyle: no rules, no outlines, no resting shadows; surfaces by tone */
 [data-theme="light"] { --muted: #3a424b; }
-header.top { background: var(--bg); backdrop-filter: none; -webkit-backdrop-filter: none; border-bottom: 0; }
-.btn-main { box-shadow: none; }
-.tbtn { border: 0; background: var(--paper); }
-.switch button { border: 0; background: var(--paper); }
-.switch button[aria-selected="true"] { background: var(--ink); color: var(--bg); }
-.switch button[aria-selected="true"]::after { background: var(--sun); }
-@media (hover: hover) and (pointer: fine) { .switch button:hover { color: var(--ink); } .switch button[aria-selected="true"]:hover { color: var(--bg); } }
+.switch button[aria-pressed="true"] { background: var(--ink); color: var(--bg); }
+.switch button[aria-pressed="true"]::after { background: var(--sun); }
+@media (hover: hover) and (pointer: fine) { .switch button:hover { color: var(--ink); } .switch button[aria-pressed="true"]:hover { color: var(--bg); } }
 .slide:not(.on) { visibility: hidden; transition: opacity 400ms ease, transform 500ms var(--ease-out), visibility 0s linear 400ms; }
-.niche { border: 0; }
 .niche-link { background: var(--soft); }
-.demo, .demo-card { border: 0; }
+.niche:not(.niche-link) { background: transparent; border: 1px solid var(--line); }
 .pill { font-size: .875rem; }
-.plan { border: 0; }
 .rec { font-weight: 700; color: var(--sun); }
 .steps .when, .err { font-size: .875rem; }
 .logo small { font-size: .875rem; }
-.vs-before, .vs-after { border: 0; }
-.vs-cost { border-top: 0; padding-top: 0; }
-.promises { border-block: 0; gap: 32px; }
-.promise, .promise + .promise { padding: 0; border: 0; }
 .promise b { font: 800 1.75rem/1.1 var(--font-display); letter-spacing: -.02em; }
 .promise p { font-size: 1.0625rem; color: var(--ink); margin-top: 8px; }
-.about-photo img { box-shadow: none; }
 .faq > div { display: grid; gap: 8px; }
-details, details:first-child { border: 0; background: var(--paper); border-radius: 14px; padding: 0 20px; }
-.copy { border: 0; background: color-mix(in srgb, var(--on-slab) 14%, var(--slab)); }
+details { border: 0; background: var(--paper); border-radius: 14px; padding: 0 20px; }
 .lead, .head p, details p, .steps p, .sec-cta p, .demo-body ul, .plan ul { color: var(--ink); }
 .plan.star li { color: var(--on-slab); }
-@media (max-width: 980px) {
-  .nav ul.open a { border-bottom: 0; }
-  .promise + .promise { border-top: 0; }
-}
 
 /* Pricing as a ledger: one row per plan, not a row of identical cards */
 .plans { grid-template-columns: 1fr; gap: 8px; }
@@ -481,10 +388,10 @@ details, details:first-child { border: 0; background: var(--paper); border-radiu
   .device, .stage .device { transform: none; transition: none; }
   [data-ui] .slide, [data-ui] .slide.on { transform: none; }
   .js .stagger > * { transform: none; transition: opacity 200ms ease; transition-delay: 0ms; }
-  .dc-shot > span, .dc-shot:hover > span, .wa-float, .btn, .btn:active { transform: none; }
+  .wa-float, .wa-float.away, .btn, .btn:active { transform: none; }
   .toast, .toast.show { transform: translate(-50%, 0); }
   .sent.show { animation: none; }
-  .switch button[aria-selected="true"]::after { animation: none; }
+  .switch button[aria-pressed="true"]::after { animation: none; }
   html { scroll-behavior: auto; }
   .js .stagger > * { opacity: 1; transform: none; }
 }
@@ -509,6 +416,9 @@ details, details:first-child { border: 0; background: var(--paper); border-radiu
   <symbol id="i-moon" viewBox="0 0 24 24"><path d="M20 14.5A8 8 0 1 1 9.5 4a6.5 6.5 0 0 0 10.5 10.5z"/></symbol>
   <symbol id="i-pin" viewBox="0 0 24 24"><path d="M12 21s7-6.2 7-12a7 7 0 0 0-14 0c0 5.8 7 12 7 12z"/><circle cx="12" cy="9" r="2.5"/></symbol>
   <symbol id="i-menu" viewBox="0 0 24 24"><path d="M4 7h16M4 12h16M4 17h16"/></symbol>
+  <symbol id="i-close" viewBox="0 0 24 24"><path d="M6 6l12 12M18 6L6 18"/></symbol>
+  <symbol id="i-pause" viewBox="0 0 24 24"><path d="M9 5v14M15 5v14"/></symbol>
+  <symbol id="i-play" viewBox="0 0 24 24"><path d="M8 5.5v13l10.5-6.5z"/></symbol>
 </svg>
 
 <a class="btn btn-main skip" href="#contacto">Saltar al contacto</a>
@@ -530,7 +440,7 @@ details, details:first-child { border: 0; background: var(--paper); border-radiu
     <div class="tools">
       <button class="tbtn" id="theme" type="button" aria-label="Cambiar a tema oscuro"><svg class="icon i-sun"><use href="#i-moon"/></svg><svg class="icon i-moon"><use href="#i-sun"/></svg></button>
       <a class="btn btn-main btn-nav" data-wa="Hola Eric, quiero una página para mi negocio." href="https://wa.me/18292600023"><svg class="icon"><use href="#i-wa"/></svg>Escríbeme</a>
-      <button class="tbtn menu" id="menu" type="button" aria-expanded="false" aria-controls="links" aria-label="Abrir menú"><svg class="icon"><use href="#i-menu"/></svg></button>
+      <button class="tbtn menu" id="menu" type="button" aria-expanded="false" aria-controls="links" aria-label="Abrir menú"><svg class="icon i-open" aria-hidden="true"><use href="#i-menu"/></svg><svg class="icon i-close" aria-hidden="true"><use href="#i-close"/></svg></button>
     </div>
   </nav>
 </header>
@@ -545,8 +455,6 @@ details, details:first-child { border: 0; background: var(--paper); border-radiu
         <a class="btn btn-ghost" href="#demos">Ver ejemplos<svg class="icon"><use href="#i-arrow"/></svg></a>
       </div>
       <ul class="proofs">
-        <li><svg class="icon"><use href="#i-bolt"/></svg>Lista desde 48 horas</li>
-        <li><svg class="icon"><use href="#i-phone"/></svg>Hecha para el celular</li>
         <li><svg class="icon"><use href="#i-check"/></svg>Ves la demo antes de pagar</li>
       </ul>
     </div>
@@ -560,12 +468,12 @@ details, details:first-child { border: 0; background: var(--paper); border-radiu
           <div class="slide shot" aria-hidden="true"><img src="img/demos/nacar-1200.webp" srcset="img/demos/nacar-640.webp 640w, img/demos/nacar-1200.webp 1200w" sizes="(max-width: 900px) 92vw, 600px" width="1200" height="750" alt="" loading="lazy" decoding="async"></div>
         </div>
       </a>
-      <span id="heroTag" hidden></span>
-      <div class="switch" role="tablist" aria-label="Escoge una demo">
-        <button type="button" role="tab" aria-selected="true" data-slide="0">Salón</button>
-        <button type="button" role="tab" aria-selected="false" data-slide="1">Barbería web</button>
-        <button type="button" role="tab" aria-selected="false" data-slide="2">App de barbería</button>
-        <button type="button" role="tab" aria-selected="false" data-slide="3">Estudio de uñas</button>
+      <div class="switch" role="group" aria-label="Escoge una demo">
+        <button type="button" aria-pressed="true" data-slide="0">Salón</button>
+        <button type="button" aria-pressed="false" data-slide="1">Barbería web</button>
+        <button type="button" aria-pressed="false" data-slide="2">App de barbería</button>
+        <button type="button" aria-pressed="false" data-slide="3">Estudio de uñas</button>
+        <button type="button" class="play" id="playPause" aria-label="Pausar demos"><svg class="icon i-pause" aria-hidden="true"><use href="#i-pause"/></svg><svg class="icon i-play" aria-hidden="true"><use href="#i-play"/></svg></button>
       </div>
     </div>
   </div>
@@ -651,7 +559,7 @@ details, details:first-child { border: 0; background: var(--paper); border-radiu
       </article>
       <div class="stagger demo-pair">
         <article class="demo-card">
-          <a class="dc-shot shot-card" href="demos/navaja/" aria-label="Abrir demo Navaja Barber Studio"><img src="img/demos/navaja-1200.webp" srcset="img/demos/navaja-640.webp 640w, img/demos/navaja-1200.webp 1200w" sizes="(max-width: 900px) 92vw, 600px" width="1200" height="750" alt="Portada de la demo Navaja Barber Studio" loading="lazy" decoding="async"></a>
+          <a class="shot-card" href="demos/navaja/" aria-label="Abrir demo Navaja Barber Studio"><img src="img/demos/navaja-1200.webp" srcset="img/demos/navaja-640.webp 640w, img/demos/navaja-1200.webp 1200w" sizes="(max-width: 900px) 92vw, 600px" width="1200" height="750" alt="Portada de la demo Navaja Barber Studio" loading="lazy" decoding="async"></a>
           <div class="dc-body">
             <span class="pill">Barbería · Página web con reservas</span>
             <h3>Navaja Barber Studio</h3>
@@ -663,7 +571,7 @@ details, details:first-child { border: 0; background: var(--paper); border-radiu
           </div>
         </article>
         <article class="demo-card">
-          <a class="dc-shot shot-card" href="demos/fade-club/" aria-label="Abrir demo Fade Club"><img src="img/demos/fade-1200.webp" srcset="img/demos/fade-640.webp 640w, img/demos/fade-1200.webp 1200w" sizes="(max-width: 900px) 92vw, 600px" width="1200" height="750" alt="Portada de la demo Fade Club" loading="lazy" decoding="async"></a>
+          <a class="shot-card" href="demos/fade-club/" aria-label="Abrir demo Fade Club"><img src="img/demos/fade-1200.webp" srcset="img/demos/fade-640.webp 640w, img/demos/fade-1200.webp 1200w" sizes="(max-width: 900px) 92vw, 600px" width="1200" height="750" alt="Portada de la demo Fade Club" loading="lazy" decoding="async"></a>
           <div class="dc-body">
             <span class="pill">Barbería · Estilo app en el celular</span>
             <h3>Fade Club</h3>
@@ -698,7 +606,7 @@ details, details:first-child { border: 0; background: var(--paper); border-radiu
     <div class="wrap">
       <div class="stagger head">
         <h2>Precios claros, sin sorpresas</h2>
-        <p>Pagas 50% para empezar y 50% cuando la página está lista y te gusta. Todos los planes incluyen una ronda de cambios y llevan el mantenimiento mensual.</p>
+        <p>Pagas 50% para empezar y 50% cuando la página está lista y te gusta. Todos los planes incluyen una ronda de cambios y llevan el mantenimiento mensual, que se paga aparte.</p>
       </div>
       <div class="plans stagger">
         <article class="plan" style="--i:0">
@@ -710,7 +618,7 @@ details, details:first-child { border: 0; background: var(--paper); border-radiu
             <li><b>Entrega en 48 horas</b></li>
             <li>Una página con tus servicios y precios</li>
             <li>Botón de WhatsApp y mapa</li>
-            <li>Link gratis tipo tunegocio.vercel.app</li>
+            <li>Un link gratis (ej.: salonbella.vercel.app)</li>
             <li>Link listo para tu bio de Instagram y TikTok</li>
           </ul>
           <a class="btn btn-ghost" data-wa="Hola Eric, me interesa el plan Básico." href="https://wa.me/18292600023">Elegir Básico</a>
@@ -723,7 +631,7 @@ details, details:first-child { border: 0; background: var(--paper); border-radiu
           </div>
           <ul>
             <li><b>Entrega en 3 a 5 días</b></li>
-            <li>Todo lo del Básico</li>
+            <li>Todo lo del Básico: página, WhatsApp, mapa y link para tu bio</li>
             <li>Galería de fotos y testimonios</li>
             <li>Formulario de citas</li>
             <li>Dominio propio (tunegocio.com)</li>
@@ -746,10 +654,10 @@ details, details:first-child { border: 0; background: var(--paper); border-radiu
         </article>
       </div>
       <div class="upkeep">
-        <div><b>Mantenimiento mensual · RD$1,500–3,000</b><p class="muted">Incluido en todos los planes: mantiene tu página en línea, con cambios de precios, fotos nuevas y soporte. Tú no tocas nada técnico.</p></div>
+        <div><b>Mantenimiento mensual · RD$1,500–3,000</b><p class="muted">Se paga aparte cada mes y todos los planes lo llevan: mantiene tu página en línea, con cambios de precios, fotos nuevas y soporte. Tú no tocas nada técnico.</p></div>
         <a class="btn btn-ghost" data-wa="Hola Eric, tengo una pregunta sobre el mantenimiento mensual." href="https://wa.me/18292600023">Preguntar</a>
       </div>
-      <p class="terms">Si no te gusta la demo, no pagas nada. El precio final depende de cuántas secciones y fotos lleve tu página, y te lo confirmo antes de empezar.</p>
+      <p class="terms">Antes de pagar el 50% ya viste y aprobaste tu demo. Si no te gusta la demo, no pagas nada. El precio final depende de cuántas secciones y fotos lleve tu página, y te lo confirmo antes de empezar.</p>
     </div>
   </section>
 
@@ -762,7 +670,7 @@ details, details:first-child { border: 0; background: var(--paper); border-radiu
       <ol class="stagger steps">
         <li><h3>Me escribes</h3><p>Me cuentas qué vendes y me mandas tu logo, fotos y lista de precios.</p><span class="when">Día 1</span></li>
         <li><h3>Te mando la demo</h3><p>Ves tu página funcionando en tu celular antes de pagar nada.</p><span class="when">En 24 horas</span></li>
-        <li><h3>Ajustamos</h3><p>Cambiamos textos, colores o fotos hasta que te guste. Pagas el 50% para seguir.</p><span class="when">Básico 48 h · Pro 3–5 días</span></li>
+        <li><h3>Ajustamos</h3><p>Cambiamos textos, colores o fotos hasta que te guste. Pagas el 50% para seguir.</p><span class="when">Básico 48 h · Pro 3–5 días · Premium 7 días</span></li>
         <li><h3>Publicamos</h3><p>Conecto tu dominio, pagas el resto y te entrego el link para tus redes.</p><span class="when">Lista</span></li>
       </ol>
       <div class="sec-cta">
@@ -792,7 +700,7 @@ details, details:first-child { border: 0; background: var(--paper); border-radiu
     <div class="stagger wrap faq">
       <h2>Preguntas frecuentes</h2>
       <div>
-        <details><summary>¿Necesito tener dominio o hosting?<svg class="icon"><use href="#i-plus"/></svg></summary><p>No. En el Básico tu página sale con un link gratis tipo tunegocio.vercel.app. En Pro y Premium te ayudo a comprar tu propio dominio y lo dejo conectado. El hosting siempre va dentro del mantenimiento mensual.</p></details>
+        <details><summary>¿Necesito tener dominio o hosting?<svg class="icon"><use href="#i-plus"/></svg></summary><p>No. En el Básico tu página sale con un link gratis (ej.: salonbella.vercel.app). En Pro y Premium te ayudo a comprar tu propio dominio y lo dejo conectado. El servidor donde vive tu página (hosting) siempre va dentro del mantenimiento mensual.</p></details>
         <details><summary>¿Cómo pago?<svg class="icon"><use href="#i-plus"/></svg></summary><p>Por transferencia bancaria: 50% para empezar y 50% al entregar. Te mando los datos por WhatsApp.</p></details>
         <details><summary>¿Puedo cambiar precios o fotos después?<svg class="icon"><use href="#i-plus"/></svg></summary><p>Sí. Me mandas el cambio por WhatsApp y lo actualizo; eso es parte del mantenimiento mensual que llevan todos los planes.</p></details>
         <details><summary>¿Y si ya tengo Instagram?<svg class="icon"><use href="#i-plus"/></svg></summary><p>Perfecto: la página no lo reemplaza, lo completa. Pones el link en tu bio y tus clientes ven precios, horarios y fotos sin esperar tu respuesta.</p></details>
@@ -810,16 +718,16 @@ details, details:first-child { border: 0; background: var(--paper); border-radiu
         <a class="btn btn-wa" data-wa="Hola Eric, quiero mi demo gratis. Mi negocio es: " href="https://wa.me/18292600023"><svg class="icon"><use href="#i-wa"/></svg>Abrir WhatsApp</a>
       </div>
       <form id="lead" novalidate>
-        <div class="field"><label for="f-name">Tu nombre</label><input id="f-name" name="name" autocomplete="name" placeholder="María Pérez"><span class="err" id="e-name" aria-live="polite"></span></div>
-        <div class="field"><label for="f-biz">Nombre del negocio</label><input id="f-biz" name="biz" autocomplete="organization" placeholder="Salón Bella"><span class="err" id="e-biz" aria-live="polite"></span></div>
+        <div class="field"><label for="f-name">Tu nombre</label><input id="f-name" name="name" autocomplete="name" placeholder="Ej.: María Pérez" required aria-required="true" maxlength="60"><span class="err" id="e-name" aria-live="polite"></span></div>
+        <div class="field"><label for="f-biz">Nombre del negocio</label><input id="f-biz" name="biz" autocomplete="organization" placeholder="Ej.: Salón Bella" required aria-required="true" maxlength="60"><span class="err" id="e-biz" aria-live="polite"></span></div>
         <div class="field"><label for="f-type">Tipo de negocio</label>
-          <select id="f-type" name="type"><option>Salón o barbería</option><option>Restaurante</option><option>Clínica o estética</option><option>Renta vacacional</option><option>Gimnasio o entrenador</option><option>Dealer o rent-a-car</option><option>Otro</option></select></div>
+          <select id="f-type" name="type" required aria-required="true"><option value="" selected disabled>Escoge uno</option><option>Salón o barbería</option><option>Restaurante</option><option>Clínica o estética</option><option>Renta vacacional</option><option>Gimnasio o entrenador</option><option>Dealer o rent-a-car</option><option>Otro</option></select><span class="err" id="e-type" aria-live="polite"></span></div>
         <div class="field"><label for="f-plan">Plan que te interesa</label>
           <select id="f-plan" name="plan"><option selected>Todavía no sé</option><option>Básico</option><option>Pro</option><option>Premium</option></select></div>
         <div class="field full"><label for="f-msg">¿Qué te gustaría que tenga tu página? (opcional)</label><textarea id="f-msg" name="msg" placeholder="Ej.: precios, fotos de mis trabajos y que me agenden por WhatsApp"></textarea></div>
-        <button class="btn btn-main full" type="submit"><svg class="icon"><use href="#i-wa"/></svg>Enviar por WhatsApp</button>
+        <button class="btn btn-main full" type="submit"><svg class="icon"><use href="#i-wa"/></svg><span class="lbl">Enviar por WhatsApp</span></button>
         <p class="form-note">Se abre WhatsApp con tu mensaje ya escrito; solo tienes que darle a enviar.</p>
-        <div class="sent" id="sent" role="status"><svg class="icon"><use href="#i-check"/></svg><span>Abrimos WhatsApp con tu mensaje. Si no se abrió, <a id="sentLink" href="https://wa.me/18292600023" target="_blank" rel="noopener">toca aquí para enviarlo</a>.</span></div>
+        <div class="sent" id="sent" role="status"><svg class="icon"><use href="#i-check"/></svg><span>Te abrí WhatsApp con tu mensaje. Si no se abrió, <a id="sentLink" href="https://wa.me/18292600023" target="_blank" rel="noopener">toca aquí para enviarlo</a>.</span></div>
       </form>
     </div>
   </div>
@@ -859,52 +767,88 @@ details, details:first-child { border: 0; background: var(--paper); border-radiu
   syncTheme();
 
   var menu = document.getElementById('menu'), links = document.getElementById('links');
-  menu.addEventListener('click', function () { var o = links.classList.toggle('open'); menu.setAttribute('aria-expanded', o); });
-  function closeMenu() { links.classList.remove('open'); menu.setAttribute('aria-expanded', false); }
+  function setMenu(o) { links.classList.toggle('open', o); menu.setAttribute('aria-expanded', o ? 'true' : 'false'); menu.setAttribute('aria-label', o ? 'Cerrar menú' : 'Abrir menú'); }
+  menu.addEventListener('click', function () { setMenu(!links.classList.contains('open')); });
+  function closeMenu() { setMenu(false); }
   document.addEventListener('keydown', function (e) { if (e.key === 'Escape' && links.classList.contains('open')) { closeMenu(); menu.focus(); } });
   document.addEventListener('click', function (e) { if (links.classList.contains('open') && !e.target.closest('#links, #menu')) closeMenu(); });
-  var float = document.querySelector('.wa-float');
-  if ('IntersectionObserver' in window) new IntersectionObserver(function (es) { float.classList.toggle('away', es[0].isIntersecting); }).observe(document.getElementById('contacto'));
-  links.addEventListener('click', function (e) { if (e.target.closest('a')) { links.classList.remove('open'); menu.setAttribute('aria-expanded', false); } });
+  // Floating WhatsApp: hidden over the contact block, and over the hero on phones (the hero already has the CTA)
+  var float = document.querySelector('.wa-float'), phone = matchMedia('(max-width: 560px)'), overContact = false, overHero = false;
+  function syncFloat() { float.classList.toggle('away', overContact || (overHero && phone.matches)); }
+  if ('IntersectionObserver' in window) {
+    new IntersectionObserver(function (es) { overContact = es[0].isIntersecting; syncFloat(); }).observe(document.getElementById('contacto'));
+    new IntersectionObserver(function (es) { overHero = es[0].isIntersecting; syncFloat(); }).observe(document.querySelector('.hero'));
+    if (phone.addEventListener) phone.addEventListener('change', syncFloat);
+  }
+  links.addEventListener('click', function (e) { if (e.target.closest('a')) closeMenu(); });
+
+  // Nav: mark the section you are reading
+  var navLinks = {};
+  links.querySelectorAll('a[href^="#"]').forEach(function (a) { navLinks[a.getAttribute('href').slice(1)] = a; });
+  var curSec = null;
+  function setCurrent(id) {
+    if (id === curSec) return; curSec = id;
+    Object.keys(navLinks).forEach(function (k) { if (k === id) navLinks[k].setAttribute('aria-current', 'true'); else navLinks[k].removeAttribute('aria-current'); });
+  }
+  if ('IntersectionObserver' in window) {
+    var spy = new IntersectionObserver(function (es) {
+      es.forEach(function (e) { if (!e.isIntersecting && e.target.id === curSec) setCurrent(null); });
+      es.forEach(function (e) { if (e.isIntersecting) setCurrent(navLinks[e.target.id] ? e.target.id : null); });
+    }, { rootMargin: '-40% 0px -59% 0px' });
+    document.querySelectorAll('main section[id], #contacto').forEach(function (el) { spy.observe(el); });
+  }
 
   // Hero showcase: rotates through the four demos
   var DEMOS = [
-    { url: 'tusalon.com', href: 'demos/lumiere/', ext: false, name: 'Lumière Salón & Spa', tag: 'Nueva cita por WhatsApp' },
-    { url: 'tubarberia.com', href: 'demos/navaja/', ext: false, name: 'Navaja Barber Studio', tag: 'Turno reservado: sábado 10:00 a. m.' },
-    { url: 'app de tu barbería', href: 'demos/fade-club/', ext: false, name: 'Fade Club', tag: 'Se abre como una app, sin descargar' },
-    { url: 'tuestudiodeunas.com', href: 'demos/nacar/', ext: false, name: 'Nácar Nail Studio', tag: 'Cita con el color ya escogido' }
+    { url: 'tusalon.com', href: 'demos/lumiere/', ext: false, name: 'Lumière Salón & Spa' },
+    { url: 'tubarberia.com', href: 'demos/navaja/', ext: false, name: 'Navaja Barber Studio' },
+    { url: 'tubarberia.app', href: 'demos/fade-club/', ext: false, name: 'Fade Club' },
+    { url: 'tuestudiodeunas.com', href: 'demos/nacar/', ext: false, name: 'Nácar Nail Studio' }
   ];
   var SLIDE_MS = 5000;
   var showcase = document.getElementById('showcase'), dev = document.getElementById('heroDevice');
   var slides = showcase.querySelectorAll('.slide'), tabs = showcase.querySelectorAll('[data-slide]'), sw = showcase.querySelector('.switch');
-  var cur = 0, timer = null, paused = false, still = matchMedia('(prefers-reduced-motion: reduce)').matches;
+  var still = matchMedia('(prefers-reduced-motion: reduce)').matches;
+  // stopped: the visitor pressed pause (or prefers reduced motion); held: hover or keyboard focus inside the carousel
+  var cur = 0, timer = null, stopped = still, held = false, playBtn = document.getElementById('playPause');
   showcase.style.setProperty('--slide-ms', SLIDE_MS + 'ms');
   function go(i) {
     cur = (i + DEMOS.length) % DEMOS.length; var d = DEMOS[cur];
     slides.forEach(function (sl, k) { sl.classList.toggle('on', k === cur); sl.setAttribute('aria-hidden', k === cur ? 'false' : 'true'); });
-    tabs.forEach(function (t, k) { t.setAttribute('aria-selected', 'false'); t.tabIndex = k === cur ? 0 : -1; });
+    tabs.forEach(function (t) { t.setAttribute('aria-pressed', 'false'); });
     void sw.offsetWidth; // restart the progress bar
-    tabs[cur].setAttribute('aria-selected', 'true');
+    tabs[cur].setAttribute('aria-pressed', 'true');
     document.getElementById('heroUrl').textContent = d.url;
-    document.getElementById('heroTag').textContent = d.tag;
     dev.href = d.href; dev.setAttribute('aria-label', 'Abrir la demo ' + d.name);
     if (d.ext) { dev.target = '_blank'; dev.rel = 'noopener'; } else { dev.removeAttribute('target'); dev.removeAttribute('rel'); }
   }
-  function schedule() { clearInterval(timer); if (still || paused) return; timer = setInterval(function () { go(cur + 1); }, SLIDE_MS); }
+  function schedule() {
+    clearInterval(timer);
+    var off = stopped || held;
+    sw.classList.toggle('paused', off);
+    if (off || document.hidden) return;
+    timer = setInterval(function () { go(cur + 1); }, SLIDE_MS);
+  }
+  function syncPlay() {
+    playBtn.classList.toggle('is-paused', stopped);
+    playBtn.setAttribute('aria-label', stopped ? 'Reanudar demos' : 'Pausar demos');
+  }
+  playBtn.addEventListener('click', function () {
+    stopped = !stopped; held = false; syncPlay();
+    if (!stopped) go(cur); // restart the progress bar from zero
+    schedule();
+  });
   tabs.forEach(function (t, k) {
     t.addEventListener('click', function () { go(k); schedule(); });
-    t.addEventListener('keydown', function (e) {
-      if (e.key === 'ArrowRight' || e.key === 'ArrowLeft') { e.preventDefault(); go(cur + (e.key === 'ArrowRight' ? 1 : -1)); tabs[cur].focus(); schedule(); }
-    });
   });
-  function pause(on) { paused = on; sw.classList.toggle('paused', on); schedule(); }
-  showcase.addEventListener('mouseenter', function () { pause(true); });
-  showcase.addEventListener('mouseleave', function () { pause(false); });
-  showcase.addEventListener('focusin', function () { pause(true); });
-  showcase.addEventListener('focusout', function (e) { if (!showcase.contains(e.relatedTarget)) pause(false); });
-  document.addEventListener('visibilitychange', function () { if (document.hidden) clearInterval(timer); else schedule(); });
-  if (still) sw.classList.add('paused');
-  go(0); schedule();
+  function hold(on) { held = on; schedule(); }
+  // Hold only for a real mouse and keyboard focus, so a tap on a phone never freezes the carousel
+  showcase.addEventListener('pointerenter', function (e) { if (e.pointerType === 'mouse') hold(true); });
+  showcase.addEventListener('pointerleave', function (e) { if (e.pointerType === 'mouse') hold(false); });
+  showcase.addEventListener('focusin', function (e) { var kb = true; try { kb = e.target.matches(':focus-visible'); } catch (x) {} if (e.target !== playBtn && kb) hold(true); });
+  showcase.addEventListener('focusout', function (e) { if (!showcase.contains(e.relatedTarget) || e.relatedTarget === playBtn) hold(false); });
+  document.addEventListener('visibilitychange', schedule);
+  syncPlay(); go(0); schedule();
 
   var toast = document.getElementById('toast'), tt;
   function say(msg) { toast.textContent = msg; toast.classList.add('show'); clearTimeout(tt); tt = setTimeout(function () { toast.classList.remove('show'); }, 2600); }
@@ -923,8 +867,9 @@ details, details:first-child { border: 0; background: var(--paper); border-radiu
   }
   form.addEventListener('submit', function (e) {
     e.preventDefault();
-    var ok = setErr('name', !form.name.value.trim() ? 'Escribe tu nombre.' : form.name.value.trim().length < 2 ? 'Escribe tu nombre completo.' : '');
-    ok = setErr('biz', !form.biz.value.trim() ? 'Escribe el nombre de tu negocio.' : form.biz.value.trim().length < 2 ? 'Escribe el nombre completo de tu negocio.' : '') && ok;
+    var ok = setErr('name', !form.name.value.trim() ? 'Escribe tu nombre.' : form.name.value.trim().length < 2 ? 'Tu nombre necesita al menos 2 letras.' : '');
+    ok = setErr('biz', !form.biz.value.trim() ? 'Escribe el nombre de tu negocio.' : form.biz.value.trim().length < 2 ? 'El nombre del negocio necesita al menos 2 letras.' : '') && ok;
+    ok = setErr('type', !form.type.value ? 'Escoge el tipo de negocio.' : '') && ok;
     if (!ok) { form.querySelector('[aria-invalid="true"]').focus(); return; }
     var text = 'Hola Eric, soy ' + form.name.value.trim() + ' de ' + form.biz.value.trim() + ' (' + form.type.value + ').\n' +
       'Me interesa el plan: ' + form.plan.value + '.' + (form.msg.value.trim() ? '\nQuiero que mi página tenga: ' + form.msg.value.trim() : '') +
@@ -932,8 +877,9 @@ details, details:first-child { border: 0; background: var(--paper); border-radiu
     var url = waLink(text);
     document.getElementById('sentLink').href = url;
     document.getElementById('sent').classList.add('show');
-    var btn = form.querySelector('[type=submit]'); btn.disabled = true;
-    setTimeout(function () { btn.disabled = false; }, 4000);
+    var btn = form.querySelector('[type=submit]'), lbl = btn.querySelector('.lbl');
+    btn.disabled = true; lbl.textContent = 'Abriendo WhatsApp…';
+    setTimeout(function () { btn.disabled = false; lbl.textContent = 'Enviar por WhatsApp'; }, 4000);
     window.open(url, '_blank', 'noopener');
     document.getElementById('sent').scrollIntoView({ block: 'center', behavior: 'smooth' });
   });
@@ -942,7 +888,9 @@ details, details:first-child { border: 0; background: var(--paper); border-radiu
     var io = new IntersectionObserver(function (es) { es.forEach(function (e) { if (e.isIntersecting) { e.target.classList.add('in'); io.unobserve(e.target); } }); }, { rootMargin: '0px 0px -10% 0px' });
     document.querySelectorAll('.stagger').forEach(function (el) { io.observe(el); });
   } else { document.querySelectorAll('.stagger').forEach(function (el) { el.classList.add('in'); }); }
-  form.addEventListener('input', function (e) { if (e.target.getAttribute('aria-invalid') === 'true') setErr(e.target.id.slice(2), ''); });
+  function clearOnFix(e) { if (e.target.getAttribute('aria-invalid') === 'true') setErr(e.target.id.slice(2), ''); }
+  form.addEventListener('input', clearOnFix);
+  form.addEventListener('change', clearOnFix);
 })();
 </script>
 </body>
