@@ -1,0 +1,527 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Nácar Nail Studio · Uñas en Piantini</title>
+<meta name="description" content="Manicure, gel, nail art y pedicure en Piantini, Santo Domingo. Escoge tu color en nuestra carta y reserva tu cita en línea.">
+<meta name="theme-color" content="#120d0d">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' fill='%23120d0d'/%3E%3Cpath d='M32 10c9 0 14 9 14 20v24H18V30c0-11 5-20 14-20z' fill='%23d8a7a0'/%3E%3C/svg%3E">
+<link rel="preload" href="fonts/bodoni-moda-latin-400-normal.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="fonts/jost-latin-400-normal.woff2" as="font" type="font/woff2" crossorigin>
+<style>
+@font-face { font-family: 'Bodoni Moda'; font-style: normal; font-weight: 400; font-display: swap; src: url(fonts/bodoni-moda-latin-400-normal.woff2) format('woff2'); }
+@font-face { font-family: 'Bodoni Moda'; font-style: normal; font-weight: 500; font-display: swap; src: url(fonts/bodoni-moda-latin-500-normal.woff2) format('woff2'); }
+@font-face { font-family: 'Jost'; font-style: normal; font-weight: 400; font-display: swap; src: url(fonts/jost-latin-400-normal.woff2) format('woff2'); }
+@font-face { font-family: 'Jost'; font-style: normal; font-weight: 500; font-display: swap; src: url(fonts/jost-latin-500-normal.woff2) format('woff2'); }
+/* The dark room: one brown-black ground, lit things in it. Square corners, one accent (rose) on the action. */
+:root {
+  --display: 'Bodoni Moda', 'Didot', Georgia, serif;
+  --text: 'Jost', 'Futura', system-ui, sans-serif;
+  --bg: #120d0d;
+  --surface: #1c1515;
+  --field: #261c1b;
+  --ink: #f2e6e2;
+  --muted: #c4b0ab;
+  --accent: #d8a7a0;
+  --on-accent: #1a1110;
+  --s1: .875rem;   /* 14 */
+  --s2: 1.0625rem; /* 17 */
+  --s3: 1.375rem;  /* 22 */
+  --s4: 2.5rem;    /* 40 */
+  --s5: clamp(3.5rem, 6.4vw, 6rem);
+  --m: clamp(20px, 4vw, 56px);
+  --ease-out: cubic-bezier(0.23, 1, 0.32, 1);
+  --ease-in-out: cubic-bezier(0.77, 0, 0.175, 1);
+  color-scheme: dark;
+}
+*, *::before, *::after { box-sizing: border-box; }
+[hidden] { display: none !important; }
+html { scroll-behavior: smooth; scroll-padding-top: 72px; }
+body { margin: 0; background: var(--bg); color: var(--ink); font: 400 var(--s2)/1.6 var(--text); -webkit-font-smoothing: antialiased; font-variant-numeric: tabular-nums; }
+::selection { background: var(--accent); color: var(--on-accent); }
+html { scrollbar-color: var(--field) var(--bg); }
+img { display: block; max-width: 100%; }
+a { color: inherit; text-underline-offset: 5px; }
+button { font: inherit; color: inherit; }
+:focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; }
+h1, h2, h3 { margin: 0; font-family: var(--display); font-weight: 400; line-height: 1; letter-spacing: -.02em; text-wrap: balance; }
+p { margin: 0; text-wrap: pretty; }
+.wrap { padding-inline: var(--m); max-width: 1440px; margin-inline: auto; }
+.icon { width: 20px; height: 20px; stroke: currentColor; fill: none; stroke-width: 1.5; stroke-linecap: round; stroke-linejoin: round; flex: none; }
+.btn { display: inline-flex; align-items: center; justify-content: center; gap: 10px; min-height: 48px; padding: 0 26px; border: 0; background: var(--accent); color: var(--on-accent); font: 500 var(--s2)/1 var(--text); text-decoration: none; cursor: pointer; transition: transform 160ms var(--ease-out), background-color 200ms ease; }
+.btn:active:not([disabled]) { transform: scale(0.97); }
+.btn[disabled] { background: var(--field); color: var(--muted); cursor: not-allowed; }
+.link { display: inline-flex; align-items: center; min-height: 44px; font-size: var(--s1); color: var(--ink); text-decoration: none; }
+button.link { background: none; border: 0; padding: 0; cursor: pointer; justify-self: start; text-decoration: underline; }
+@media (hover: hover) and (pointer: fine) {
+  .btn:hover:not([disabled]) { background: #e6bab3; }
+  .link:hover { text-decoration: underline; }
+}
+.skip { position: absolute; left: 16px; top: -80px; z-index: 100; }
+.skip:focus { top: 12px; }
+
+/* Hero: one photograph, everything on the midline rail */
+.hero { position: relative; height: 100svh; min-height: 560px; background: var(--surface); }
+.hero-photo { position: absolute; inset: 0; overflow: hidden; background: var(--surface); }
+.hero-photo img { width: 100%; height: 100%; object-fit: cover; object-position: 50% 45%; }
+.hero-photo .fallback { position: absolute; inset: 0; display: grid; place-items: end; padding-right: var(--m); }
+.hero-photo .fallback svg { width: min(40vw, 460px); height: auto; }
+.hero-title { position: absolute; left: var(--m); right: var(--m); bottom: calc(50svh + 40px); z-index: 4; font-size: clamp(3rem, 7.4vw, 7.25rem); line-height: .95; color: var(--ink); }
+.hero-photo::after { content: ""; position: absolute; inset: 0; background: rgba(10, 6, 6, .38); }
+.brand { font: 400 var(--s3)/1 var(--display); white-space: nowrap; text-decoration: none; color: inherit; min-height: 44px; display: inline-flex; align-items: center; }
+.rail { position: sticky; top: 0; z-index: 20; margin-block: calc(-50svh - 32px) calc(50svh - 32px); min-height: 64px; display: grid; grid-template-columns: auto 1fr auto; align-items: center; gap: 24px 40px; padding: 10px var(--m); background: rgba(0, 0, 0, .55); }
+.rail.docked { background: var(--bg); }
+.rail p { max-width: 44ch; font-size: var(--s2); }
+.rail nav { display: flex; align-items: center; gap: 24px; }
+.hero-cta { display: none; }
+.detail { height: 80svh; background: var(--surface); overflow: hidden; }
+.detail:not(:has(img)) { display: none; }
+.detail img { width: 100%; height: 100%; object-fit: cover; object-position: 50% 60%; }
+
+/* Masked headline */
+.line { display: block; overflow: hidden; padding-bottom: .08em; margin-bottom: -.08em; }
+.line > span { display: block; }
+@media (prefers-reduced-motion: no-preference) {
+  .js .line > span { transform: translateY(105%); animation: line-up 900ms var(--ease-out) forwards; animation-delay: calc(var(--i, 0) * 110ms + 150ms); }
+  .js .rail p, .js .rail nav { opacity: 0; animation: fade-in 600ms var(--ease-out) 500ms forwards; }
+}
+@keyframes line-up { to { transform: none; } }
+@keyframes fade-in { to { opacity: 1; } }
+
+section { padding-block: clamp(120px, 14vw, 200px) 0; }
+h2 { font-size: var(--s4); }
+
+/* Carta de colores: specimens on colour tiles, and the live thing */
+.carta { display: grid; grid-template-columns: repeat(12, 1fr); gap: 0 10px; }
+.carta-head { grid-column: 1 / 4; display: grid; gap: 20px; align-content: start; }
+.carta-head p { max-width: 30ch; color: var(--muted); }
+.tiles { grid-column: 4 / 13; display: grid; grid-template-columns: repeat(4, 1fr); gap: 32px 10px; }
+.tile { display: grid; gap: 12px; text-align: left; background: none; border: 0; padding: 0; cursor: pointer; transition: transform 120ms var(--ease-out); }
+.tile:active { transform: scale(0.98); }
+.tile .sw { aspect-ratio: 4 / 5; display: grid; place-items: center; background: var(--c); position: relative; }
+.tile.wide { grid-column: span 2; }
+.tile.wide .sw { aspect-ratio: 8 / 5; }
+.tile .sw svg { height: 70%; width: auto; }
+.tile .sw::after { content: ""; position: absolute; inset: 0; outline: 3px solid var(--ink); outline-offset: -3px; opacity: 0; transition: opacity 200ms ease; }
+.tile[aria-pressed="true"] .sw::after { opacity: 1; }
+.tile b { font: 500 var(--s3)/1.2 var(--text); }
+.tile small { display: block; font-size: var(--s2); color: var(--muted); }
+.preview { grid-column: 4 / 13; margin-top: 56px; display: grid; grid-template-columns: 1.1fr 1fr; gap: 40px; align-items: center; background: var(--surface); padding: clamp(24px, 4vw, 48px); }
+.nails { width: 100%; height: auto; }
+.nails .nail { transition: fill 300ms ease; }
+.nails .shine { transition: opacity 300ms ease; }
+.pick { display: grid; gap: 20px; }
+.pick h3 { font-size: var(--s4); }
+.finish { display: flex; flex-wrap: wrap; gap: 8px; }
+.finish button { min-height: 44px; padding: 0 18px; border: 0; background: var(--field); color: var(--ink); font-size: var(--s2); cursor: pointer; transition: background-color 200ms ease, transform 120ms var(--ease-out); }
+.finish button:active { transform: scale(0.97); }
+.finish button[aria-pressed="true"] { background: var(--ink); color: var(--bg); }
+.pick .note { color: var(--muted); }
+
+/* Gallery: staggered pairs in empty ground */
+.gallery { display: grid; grid-template-columns: repeat(12, 1fr); column-gap: 10px; row-gap: 96px; }
+.gallery h2 { grid-column: 1 / -1; margin-bottom: -60px; }
+.g { margin: 0; }
+.g .ph { overflow: hidden; background: var(--surface); position: relative; }
+.g img { width: 100%; height: 100%; object-fit: cover; filter: brightness(.88) contrast(1.05); }
+.g figcaption { margin-top: 10px; font-size: var(--s1); color: var(--muted); }
+.g1 { grid-column: 1 / 5; grid-row: 2; } .g1 .ph { aspect-ratio: 3 / 4; }
+.g2 { grid-column: 7 / 13; grid-row: 2; margin-top: 180px; } .g2 .ph { aspect-ratio: 5 / 4; }
+.g3 { grid-column: 6 / 12; grid-row: 3; margin-top: 60px; } .g3 .ph { aspect-ratio: 3 / 2; }
+.g4 { grid-column: 2 / 5; grid-row: 3; margin-top: 240px; } .g4 .ph { aspect-ratio: 4 / 5; }
+.ph .fallback { position: absolute; inset: 0; display: grid; place-items: center; }
+.ph .fallback svg { width: 38%; height: auto; }
+.js .reveal .ph { clip-path: inset(100% 0 0 0); transition: clip-path 900ms var(--ease-in-out); }
+.js .reveal.in .ph { clip-path: inset(0 0 0 0); }
+
+/* Prices like a menu */
+.menu { display: grid; grid-template-columns: repeat(12, 1fr); gap: 0 10px; }
+.menu-head { grid-column: 1 / 4; display: grid; gap: 24px; align-content: start; }
+.menu-head p { color: var(--muted); max-width: 26ch; }
+.menu-cols { grid-column: 5 / 13; display: grid; grid-template-columns: 1fr 1fr; gap: 0 64px; }
+.group h3 { font: 500 var(--s3)/1.2 var(--text); margin: 48px 0 22px; letter-spacing: 0; }
+.group:nth-child(-n+2) h3 { margin-top: 0; }
+.item { display: grid; gap: 2px; margin-bottom: 22px; }
+.item .row { display: flex; justify-content: space-between; gap: 16px; font-size: var(--s3); }
+.item p { font-size: var(--s2); color: var(--muted); max-width: 36ch; }
+
+/* About: inset panel, shaped portrait */
+.panel { margin-inline: 20px; min-height: 92svh; background: var(--surface); position: relative; overflow: hidden; display: grid; grid-template-columns: 1fr 1fr; grid-template-rows: auto 1fr; padding: 56px; gap: 40px; }
+.panel h2 { font-size: var(--s5); grid-column: 1; grid-row: 1; }
+.panel .shape { grid-column: 1; grid-row: 2; align-self: end; width: min(100%, 34vw); aspect-ratio: 3 / 4; margin-bottom: -56px; clip-path: inset(0 round 50% 50% 0 0); background: var(--field); overflow: hidden; }
+.panel .shape { position: relative; }
+.panel .shape img { position: relative; width: 100%; height: 100%; object-fit: cover; }
+.panel .shape .fallback { position: absolute; inset: 0; display: grid; place-items: center; }
+.panel .shape .fallback svg { width: 30%; height: auto; }
+.panel .texts { grid-column: 2; grid-row: 1 / 3; padding-left: 20%; display: grid; gap: 64px; align-content: start; max-width: 620px; }
+.panel .texts h3 { font: 500 var(--s3)/1.2 var(--text); letter-spacing: 0; margin-bottom: 10px; }
+.panel .texts p { color: var(--muted); }
+
+/* Booking */
+.book { display: grid; grid-template-columns: repeat(12, 1fr); gap: 0 10px; }
+.book-head { grid-column: 1 / 5; display: grid; gap: 20px; align-content: start; }
+.book-head p { color: var(--muted); max-width: 32ch; }
+.chosen { display: flex; align-items: center; gap: 14px; font-size: var(--s2); }
+.chosen i { width: 36px; height: 44px; background: var(--c, var(--accent)); display: block; transition: background-color 300ms ease; }
+.chosen b { font-weight: 500; }
+form { grid-column: 6 / 13; display: grid; grid-template-columns: 1fr 1fr; gap: 28px 20px; }
+.field { display: grid; gap: 8px; }
+.full { grid-column: 1 / -1; }
+label, .label { font-size: var(--s1); color: var(--muted); }
+select, input { width: 100%; min-height: 50px; padding: 0 14px; background: var(--surface); border: 1px solid #6b5853; color: var(--ink); font: 400 var(--s2) var(--text); border-radius: 0; caret-color: var(--accent); }
+select:focus-visible, input:focus-visible { outline: 2px solid var(--ink); outline-offset: 2px; border-color: var(--accent); }
+input[aria-invalid="true"] { border-color: #ff9a8a; }
+.err { font-size: var(--s1); color: #ffb3a7; min-height: 1.2em; }
+.chips { display: flex; flex-wrap: wrap; gap: 8px; }
+.chip { min-width: 64px; min-height: 52px; padding: 6px 12px; border: 0; background: var(--surface); color: var(--ink); display: grid; place-items: center; line-height: 1.2; font-size: var(--s1); cursor: pointer; transition: background-color 200ms ease, transform 120ms var(--ease-out); }
+.chip b { font: 500 var(--s2)/1.1 var(--text); display: block; }
+.chip:active:not([disabled]) { transform: scale(0.96); }
+.chip[aria-pressed="true"] { background: var(--ink); color: var(--bg); }
+.chip[disabled] { color: #8a7773; text-decoration: line-through; cursor: not-allowed; }
+.form-end { grid-column: 1 / -1; display: flex; flex-wrap: wrap; align-items: center; gap: 16px 24px; }
+.form-end p { color: var(--muted); font-size: var(--s1); }
+.done { grid-column: 6 / 13; display: none; background: var(--surface); padding: clamp(24px, 4vw, 48px); gap: 18px; }
+.done.show { display: grid; animation: rise 400ms var(--ease-out); }
+.done h3 { font-size: var(--s4); }
+.done dl { margin: 0; display: grid; gap: 10px; }
+.done dl div { display: flex; justify-content: space-between; gap: 16px; }
+.done dt { color: var(--muted); }
+.done dd { margin: 0; }
+@keyframes rise { from { opacity: 0; transform: translateY(12px); } }
+
+/* Contact: the number as display type */
+.contact { min-height: 64svh; margin-top: clamp(120px, 14vw, 200px); background: var(--ink); color: var(--bg); padding: 40px var(--m) 32px; display: grid; grid-template-rows: auto 1fr auto auto; gap: 24px; }
+.contact > p:first-child { font-size: var(--s3); max-width: 28ch; }
+.big { align-self: end; font: 400 clamp(2.6rem, 9.4vw, 9rem)/1 var(--display); letter-spacing: -.03em; color: inherit; text-decoration: none; white-space: nowrap; transition: color 200ms ease; }
+@media (hover: hover) and (pointer: fine) { .big:hover { color: #8e4f47; } }
+.corners { display: flex; flex-wrap: wrap; justify-content: space-between; gap: 12px 24px; font-size: var(--s1); }
+.corners a { color: inherit; display: inline-block; padding: 12px 0; }
+.contact :focus-visible, footer :focus-visible { outline-color: var(--bg); }
+
+/* Footer: columns above, wordmark below */
+footer { background: var(--ink); color: var(--bg); display: grid; padding: 40px var(--m) 20px; gap: 16px; }
+footer .wordmark { margin-top: clamp(96px, 12vw, 180px); }
+.fcols { display: grid; grid-template-columns: repeat(4, 1fr); gap: 32px; font-size: var(--s2); }
+.fcols ul { list-style: none; margin: 0; padding: 0; display: grid; gap: 4px; }
+.fcols li:first-child { font-weight: 500; }
+.fcols li:not(:first-child) { color: #5c4a46; }
+.fcols a { color: inherit; display: inline-block; padding: 11px 0; }
+.wordmark { width: 100%; height: auto; display: block; }
+.legal { font-size: var(--s1); color: #5c4a46; display: flex; flex-wrap: wrap; justify-content: space-between; gap: 8px 24px; }
+.legal a { color: #3b2f2c; display: inline-block; padding: 12px 0; }
+
+/* Entrances (content visible without script) */
+.js .enter > * { opacity: 0; transform: translateY(24px); transition: opacity 600ms var(--ease-out), transform 600ms var(--ease-out); }
+.js .enter.in > * { opacity: 1; transform: none; }
+.js .enter.in > :nth-child(2) { transition-delay: 80ms; }
+.js .enter.in > :nth-child(3) { transition-delay: 160ms; }
+.js .enter.in > :nth-child(4) { transition-delay: 240ms; }
+.js .enter.in > :nth-child(n+5) { transition-delay: 300ms; }
+
+.toast { position: fixed; left: 50%; bottom: 24px; z-index: 60; transform: translate(-50%, 16px); opacity: 0; pointer-events: none; background: var(--ink); color: var(--bg); padding: 12px 20px; font-size: var(--s1); transition: opacity 400ms ease, transform 400ms ease; }
+.toast.show { opacity: 1; transform: translate(-50%, 0); }
+
+@media (max-width: 900px) {
+  .rail { grid-template-columns: 1fr auto; gap: 8px 16px; }
+  .hero-title { font-size: 13.5vw; bottom: auto; top: 96px; }
+  .rail p, .rail nav .link, .rail nav .btn { display: none; }
+  .rail.docked nav .btn { display: inline-flex; }
+  .hero-cta { display: grid; gap: 12px; position: absolute; left: 20px; right: 20px; bottom: 24px; z-index: 5; padding: 16px; background: rgba(0, 0, 0, .55); }
+  .hero-cta .btn { width: 100%; }
+  .carta-head, .tiles, .preview, .menu-head, .menu-cols, .book-head, form, .done { grid-column: 1 / -1; }
+  .carta-head { margin-bottom: 40px; }
+  .tiles { grid-template-columns: 1fr 1fr; gap: 24px 8px; }
+  .tile.wide { grid-column: 1 / -1; order: -1; }
+  .tile b { font-size: var(--s2); }
+  .tile small { font-size: var(--s1); }
+  .preview { grid-template-columns: 1fr; }
+  .gallery { grid-template-columns: 1fr; row-gap: 64px; }
+  .gallery h2 { margin-bottom: 0; }
+  .g1, .g2, .g3, .g4 { grid-column: 1; grid-row: auto; margin-top: 0; }
+  .g1 { width: 70%; } .g2 { width: 84%; justify-self: end; } .g3 { width: 100%; } .g4 { width: 56%; }
+  .menu-head { margin-bottom: 40px; }
+  .menu-cols { grid-template-columns: 1fr; }
+  .group:nth-child(2) h3 { margin-top: 40px; }
+  .panel { margin-inline: 10px; grid-template-columns: 1fr; padding: 48px 20px 0; min-height: 0; }
+  .panel h2 { font-size: var(--s4); }
+  .panel .texts { grid-column: 1; grid-row: auto; padding-left: 0; gap: 32px; }
+  .panel .shape { order: 3; grid-row: auto; width: 86vw; justify-self: center; margin-bottom: 0; }
+  .book-head { margin-bottom: 40px; }
+  form { grid-template-columns: 1fr; }
+  .big { font-size: 11.5vw; white-space: normal; }
+  .fcols { grid-template-columns: 1fr 1fr; }
+}
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  .js .enter > * { transform: none; transition: opacity 200ms ease; transition-delay: 0ms !important; }
+  .js .reveal .ph { clip-path: none; transition: none; }
+  .btn, .tile, .chip, .finish button { transition: background-color 200ms ease; }
+  .btn:active, .tile:active, .chip:active, .finish button:active { transform: none !important; }
+  .done.show { animation: fade-in 200ms ease; }
+  .toast, .toast.show { transform: translate(-50%, 0); }
+}
+</style>
+</head>
+<body>
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <symbol id="bottle" viewBox="0 0 60 120"><rect x="20" y="0" width="20" height="40" fill="#141010"/><rect x="24" y="40" width="12" height="10" fill="#141010"/><rect x="6" y="50" width="48" height="70" fill="currentColor"/><rect x="12" y="58" width="6" height="52" fill="#ffffff" fill-opacity=".22"/><rect x="6" y="50" width="48" height="70" fill="none" stroke="#000" stroke-opacity=".18" stroke-width="2"/></symbol>
+  <symbol id="i-arrow" viewBox="0 0 24 24"><path d="M5 12h14M13 6l6 6-6 6"/></symbol>
+  <symbol id="i-check" viewBox="0 0 24 24"><path d="M5 12.5l4.5 4.5L19 7.5"/></symbol>
+</svg>
+
+<a class="btn skip" href="#reserva">Ir a reservar</a>
+
+<main>
+  <div class="hero" id="inicio">
+    <div class="hero-photo">
+      <div class="fallback" aria-hidden="true"><svg viewBox="0 0 400 300"><g fill="#d8a7a0"><path d="M60 300V170c0-44 18-70 40-70s40 26 40 70v130z"/><path d="M150 300V130c0-48 20-78 44-78s44 30 44 78v170z"/><path d="M248 300V150c0-46 19-74 42-74s42 28 42 74v150z"/></g><g fill="#fff" fill-opacity=".2"><rect x="76" y="130" width="8" height="90"/><rect x="168" y="90" width="9" height="110"/><rect x="265" y="110" width="8" height="100"/></g></svg></div>
+      <img src="https://images.unsplash.com/photo-1604654894610-df63bc536371?auto=format&fit=crop&w=2000&q=75" alt="Manos con uñas largas en tono rosa sobre fondo oscuro" fetchpriority="high" onerror="this.remove()">
+    </div>
+    <h1 class="hero-title"><span class="line"><span style="--i:0">Uñas hechas</span></span><span class="line"><span style="--i:1">sin prisa</span></span></h1>
+    <div class="hero-cta"><p>Manicure, gel, nail art y pedicure en Piantini, con cita.</p><a class="btn" href="#reserva">Reservar cita</a></div>
+  </div>
+  <div class="rail" id="rail">
+      <a class="brand" href="#inicio">Nácar Nail Studio</a>
+      <p>Manicure, gel, nail art y pedicure en Piantini, con cita.</p>
+      <nav aria-label="Principal">
+        <a class="link" href="#carta">Carta de colores</a>
+        <a class="link" href="#precios">Precios</a>
+        <a class="btn" href="#reserva">Reservar</a>
+      </nav>
+    </div>
+  <div class="detail" aria-hidden="true"><img src="https://images.unsplash.com/photo-1610992015732-2449b76344bc?auto=format&fit=crop&w=2000&q=70" alt="" loading="lazy" onerror="this.remove()"></div>
+
+  <section id="carta" aria-labelledby="carta-t">
+    <div class="wrap carta">
+      <div class="carta-head enter">
+        <h2 id="carta-t">Carta de colores</h2>
+        <p>Toca un tono para verlo en tus uñas. Lo guardamos en tu reserva.</p>
+      </div>
+      <div class="tiles enter" id="tiles" role="group" aria-label="Tonos"></div>
+      <div class="preview enter" data-ui aria-live="polite">
+        <svg class="nails" viewBox="0 0 420 220" role="img" aria-labelledby="pv-name">
+          <g id="nailset"></g>
+        </svg>
+        <div class="pick">
+          <h3 id="pv-name">Rosa nácar</h3>
+          <div class="finish" role="group" aria-label="Acabado">
+            <button type="button" data-finish="brillo" aria-pressed="true">Brillo</button>
+            <button type="button" data-finish="mate" aria-pressed="false">Mate</button>
+            <button type="button" data-finish="cromo" aria-pressed="false">Cromo</button>
+          </div>
+          <p class="note" id="pv-note">En gel dura tres semanas sin perder el brillo.</p>
+          <a class="btn" href="#reserva" id="pv-book">Reservar con este color<svg class="icon"><use href="#i-arrow"/></svg></a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section aria-labelledby="gal-t">
+    <div class="wrap gallery">
+      <h2 id="gal-t" class="enter"><span>Trabajos de la semana</span></h2>
+      <figure class="g g1 reveal"><div class="ph"><div class="fallback" aria-hidden="true"><svg viewBox="0 0 60 120"><use href="#bottle" color="#d8a7a0"/></svg></div><img src="https://images.unsplash.com/photo-1632345031435-8727f6897d53?auto=format&fit=crop&w=900&q=70" alt="Manicure en tono nude con almendra larga" loading="lazy" onerror="this.remove()"></div><figcaption>Almendra larga en Nude arena</figcaption></figure>
+      <figure class="g g2 reveal"><div class="ph"><div class="fallback" aria-hidden="true"><svg viewBox="0 0 60 120"><use href="#bottle" color="#8e5a6b"/></svg></div><img src="https://images.unsplash.com/photo-1519014816548-bf5fe059798b?auto=format&fit=crop&w=1200&q=70" alt="Esmaltes de colores sobre una mesa" loading="lazy" onerror="this.remove()"></div><figcaption>La carta completa, en la mesa dos</figcaption></figure>
+      <figure class="g g3 reveal"><div class="ph"><div class="fallback" aria-hidden="true"><svg viewBox="0 0 60 120"><use href="#bottle" color="#8b1e2d"/></svg></div><img src="https://images.unsplash.com/photo-1607779097040-26e80aa78e66?auto=format&fit=crop&w=1400&q=70" alt="Uñas cortas en rojo cereza" loading="lazy" onerror="this.remove()"></div><figcaption>Cereza en uña corta, gel</figcaption></figure>
+      <figure class="g g4 reveal"><div class="ph"><div class="fallback" aria-hidden="true"><svg viewBox="0 0 60 120"><use href="#bottle" color="#efe6e1"/></svg></div><img src="https://images.unsplash.com/photo-1600428877878-1a0fd85beda8?auto=format&fit=crop&w=800&q=70" alt="Francesa clásica en blanco" loading="lazy" onerror="this.remove()"></div><figcaption>Francesa clásica</figcaption></figure>
+    </div>
+  </section>
+
+  <section id="precios" aria-labelledby="pre-t">
+    <div class="wrap menu">
+      <div class="menu-head enter">
+        <h2 id="pre-t">Precios</h2>
+        <p>Todo incluye limpieza de cutícula y crema de manos. Pagas en el local.</p>
+      </div>
+      <div class="menu-cols enter">
+        <div class="group">
+          <h3>Manos · RD$</h3>
+          <div class="item"><div class="row"><span>Manicure clásica</span><span>650</span></div><p>Lima, cutícula y esmalte tradicional. 45 minutos.</p></div>
+          <div class="item"><div class="row"><span>Manicure en gel</span><span>1,200</span></div><p>Dura tres semanas. Cualquier tono de la carta.</p></div>
+          <div class="item"><div class="row"><span>Extensiones en gel</span><span>2,500</span></div><p>Almendra, cuadrada o bailarina. 90 minutos.</p></div>
+          <div class="item"><div class="row"><span>Retiro de gel</span><span>400</span></div><p>Sin limar la uña natural.</p></div>
+        </div>
+        <div class="group">
+          <h3>Pies · RD$</h3>
+          <div class="item"><div class="row"><span>Pedicure spa</span><span>1,100</span></div><p>Baño tibio, exfoliación y masaje de diez minutos.</p></div>
+          <div class="item"><div class="row"><span>Pedicure en gel</span><span>1,400</span></div><p>Para las tres semanas de playa.</p></div>
+        </div>
+        <div class="group">
+          <h3>Arte · RD$</h3>
+          <div class="item"><div class="row"><span>Nail art por uña</span><span>150</span></div><p>Líneas, flores o cromo a mano alzada.</p></div>
+          <div class="item"><div class="row"><span>Set completo de arte</span><span>900</span></div><p>Diseño en las diez uñas. Trae tu foto de referencia.</p></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section aria-labelledby="sobre-t">
+    <div class="panel enter">
+      <h2 id="sobre-t">Cuatro mesas</h2>
+      <div class="shape"><div class="fallback" aria-hidden="true"><svg viewBox="0 0 60 120"><use href="#bottle" color="#d8a7a0"/></svg></div><img src="https://images.unsplash.com/photo-1560066984-138dadb4c035?auto=format&fit=crop&w=1000&q=70" alt="Mesas de manicure del estudio" loading="lazy" onerror="this.remove()"></div>
+      <div class="texts">
+        <div><h3>Por cita, siempre</h3><p>Tenemos solo cuatro mesas. Por eso trabajamos con cita: llegas, te sientas y nadie te apura.</p></div>
+        <div><h3>Herramientas esterilizadas</h3><p>Cada set de limas y alicates sale sellado de la autoclave y se abre frente a ti.</p></div>
+        <a class="btn" href="#reserva">Reservar cita</a>
+      </div>
+    </div>
+  </section>
+
+  <section id="reserva" aria-labelledby="res-t">
+    <div class="wrap book">
+      <div class="book-head enter">
+        <h2 id="res-t">Reserva tu cita</h2>
+        <p>Escoge servicio, día y hora. Te confirmamos por WhatsApp.</p>
+        <p class="chosen"><i id="chosenSw"></i><span>Tu color: <b id="chosenName">Rosa nácar</b> · <span id="chosenFin">brillo</span></span></p>
+      </div>
+      <form id="bookForm" novalidate>
+        <div class="field full"><label for="f-svc">Servicio</label>
+          <select id="f-svc"><option>Manicure en gel · RD$1,200</option><option>Manicure clásica · RD$650</option><option>Extensiones en gel · RD$2,500</option><option>Pedicure spa · RD$1,100</option><option>Pedicure en gel · RD$1,400</option><option>Set completo de arte · RD$900</option><option>Nail art por uña · RD$150</option><option>Retiro de gel · RD$400</option></select></div>
+        <div class="field full"><span class="label" id="l-day">Día</span><div class="chips" id="days" role="group" aria-labelledby="l-day"></div></div>
+        <div class="field full"><span class="label" id="l-time">Hora</span><div class="chips" id="times" role="group" aria-labelledby="l-time"><p class="label">Escoge un día primero.</p></div></div>
+        <div class="field"><label for="f-name">Nombre</label><input id="f-name" autocomplete="name"><span class="err" id="e-name" aria-live="polite"></span></div>
+        <div class="field"><label for="f-tel">WhatsApp</label><input id="f-tel" type="tel" inputmode="tel" autocomplete="tel" placeholder="809-000-0000"><span class="err" id="e-tel" aria-live="polite"></span></div>
+        <div class="form-end"><button class="btn" type="submit" id="confirm" disabled>Escoge día y hora</button><p>No cobramos nada por reservar.</p></div>
+      </form>
+      <div class="done" id="done" role="status">
+        <h3 tabindex="-1" id="doneTitle">Te esperamos</h3>
+        <dl id="doneList"></dl>
+        <a class="btn" href="#" data-demo>Confirmar por WhatsApp</a>
+        <button class="link" type="button" id="again">Hacer otra reserva</button>
+      </div>
+    </div>
+  </section>
+
+  <div class="contact">
+    <p>Para dudas sobre tonos, diseños o tu cita, escríbenos.</p>
+    <a class="big" href="#" data-demo>(809) 000-0000</a>
+    <div class="corners"><span>Calle Ejemplo 8, Piantini · Santo Domingo</span><span><a href="#" data-demo>Instagram</a> · <a href="#" data-demo>TikTok</a></span></div>
+  </div>
+</main>
+
+<footer>
+  <div class="fcols">
+    <ul><li>Dónde</li><li>Calle Ejemplo 8</li><li>Piantini, Santo Domingo</li></ul>
+    <ul><li>Horario</li><li>Martes a sábado, 10 a. m. a 8 p. m.</li><li>Domingo, 10 a. m. a 3 p. m.</li><li>Lunes cerrado</li></ul>
+    <ul><li>Página</li><li><a href="#carta">Carta de colores</a></li><li><a href="#precios">Precios</a></li><li><a href="#reserva">Reservar</a></li></ul>
+    <ul><li>Demo</li><li>Nombre, datos y precios ficticios</li><li><a href="../../#demos">Hecha por Eric Design Web</a></li></ul>
+  </div>
+  <svg class="wordmark" viewBox="0 0 1000 222" role="img" aria-label="Nácar"><text x="0" y="200" font-family="Bodoni Moda, Didot, Georgia, serif" font-size="196" letter-spacing="-6" fill="currentColor" textLength="1000" lengthAdjust="spacingAndGlyphs">NÁCAR</text></svg>
+  <div class="legal"><span>© 2026 Nácar Nail Studio · Demo</span><a href="../../">Eric Design Web</a></div>
+</footer>
+<div class="toast" id="toast" role="status" aria-live="polite"></div>
+
+<script>
+(function () {
+  document.documentElement.classList.add('js');
+  var $ = function (id) { return document.getElementById(id); };
+  var SHADES = [
+    { id: 'rosa', name: 'Rosa nácar', c: '#d8a7a0', fact: 'El de la casa', note: 'En gel dura tres semanas sin perder el brillo.', wide: false },
+    { id: 'cereza', name: 'Cereza', c: '#8b1e2d', fact: 'Rojo profundo', note: 'Se ve mejor en uña corta y cuadrada.', wide: true },
+    { id: 'nude', name: 'Nude arena', c: '#c9a48a', fact: 'Para la oficina', note: 'Alarga los dedos en almendra larga.', wide: false },
+    { id: 'malva', name: 'Malva', c: '#8e5a6b', fact: 'Tono de temporada', note: 'Queda muy bien en acabado mate.', wide: false },
+    { id: 'frances', name: 'Blanco francés', c: '#efe6e1', fact: 'Clásico', note: 'Punta blanca sobre base rosada.', wide: false },
+    { id: 'negro', name: 'Negro brillo', c: '#2a2224', fact: 'Con cromo', note: 'Pide el acabado cromo para un reflejo plateado.', wide: false }
+  ];
+  var st = { shade: SHADES[0], finish: 'brillo', day: null, time: null };
+
+  // Tiles
+  $('tiles').innerHTML = SHADES.map(function (s, i) {
+    return '<button type="button" class="tile' + (s.wide ? ' wide' : '') + '" data-shade="' + s.id + '" aria-pressed="' + (i === 0) + '" style="--c:' + (s.id === 'negro' ? '#3a3033' : s.id === 'frances' ? '#d9ccc6' : '#2a1f1e') + '">' +
+      '<span class="sw" aria-hidden="true"><svg viewBox="0 0 60 120"><use href="#bottle" color="' + s.c + '"/></svg></span>' +
+      '<span><b>' + s.name + '</b><small>' + s.fact + '</small></span></button>';
+  }).join('');
+
+  // Nail preview: five almond nails, flat shapes
+  var NAILS = [[40, 70, 52, 120], [118, 30, 58, 150], [204, 18, 60, 160], [292, 34, 58, 146], [366, 90, 46, 104]];
+  function almond(x, y, w, h) { var r = w / 2; return 'M' + x + ' ' + (y + h) + 'V' + (y + r * 1.4) + 'C' + x + ' ' + (y + r * .2) + ' ' + (x + r * .5) + ' ' + y + ' ' + (x + r) + ' ' + y + 'C' + (x + r * 1.5) + ' ' + y + ' ' + (x + w) + ' ' + (y + r * .2) + ' ' + (x + w) + ' ' + (y + r * 1.4) + 'V' + (y + h) + 'Z'; }
+  $('nailset').innerHTML = NAILS.map(function (n) {
+    return '<path d="' + almond(n[0], n[1] + 10, n[2] + 12, n[3] + 30) + '" fill="#e8c9b8"/>' +
+      '<path class="nail" d="' + almond(n[0] + 6, n[1], n[2], n[3]) + '" fill="#d8a7a0"/>' +
+      '<rect class="shine" x="' + (n[0] + 14) + '" y="' + (n[1] + 22) + '" width="7" height="' + (n[3] * .55) + '" fill="#fff"/>' +
+      '<rect class="chrome" x="' + (n[0] + 6) + '" y="' + (n[1] + n[3] * .45) + '" width="' + n[2] + '" height="' + (n[3] * .05) + '" fill="#fff" opacity="0"/>';
+  }).join('') + '<rect x="0" y="206" width="420" height="14" fill="#1c1515"/>';
+  function paint() {
+    var s = st.shade, f = st.finish;
+    document.querySelectorAll('#nailset .nail').forEach(function (n) { n.setAttribute('fill', s.c); });
+    document.querySelectorAll('#nailset .shine').forEach(function (n) { n.style.opacity = f === 'mate' ? 0 : f === 'cromo' ? .55 : .3; });
+    document.querySelectorAll('#nailset .chrome').forEach(function (n) { n.setAttribute('opacity', f === 'cromo' ? .18 : 0); });
+    $('pv-name').textContent = s.name;
+    $('pv-note').textContent = s.note;
+    $('chosenSw').style.setProperty('--c', s.c);
+    $('chosenName').textContent = s.name; $('chosenFin').textContent = f;
+    document.querySelectorAll('[data-shade]').forEach(function (t) { t.setAttribute('aria-pressed', t.dataset.shade === s.id ? 'true' : 'false'); });
+    document.querySelectorAll('[data-finish]').forEach(function (b) { b.setAttribute('aria-pressed', b.dataset.finish === f ? 'true' : 'false'); });
+  }
+  $('tiles').addEventListener('click', function (e) { var t = e.target.closest('[data-shade]'); if (!t) return; st.shade = SHADES.filter(function (s) { return s.id === t.dataset.shade; })[0]; paint(); });
+  document.querySelector('.finish').addEventListener('click', function (e) { var b = e.target.closest('[data-finish]'); if (!b) return; st.finish = b.dataset.finish; paint(); });
+
+  // Days: next 8 open days (closed Monday)
+  var DOW = ['dom', 'lun', 'mar', 'mié', 'jue', 'vie', 'sáb'], DOWL = ['domingo', 'lunes', 'martes', 'miércoles', 'jueves', 'viernes', 'sábado'];
+  var MON = ['enero', 'febrero', 'marzo', 'abril', 'mayo', 'junio', 'julio', 'agosto', 'septiembre', 'octubre', 'noviembre', 'diciembre'];
+  var days = [], d0 = new Date(); d0.setHours(0, 0, 0, 0);
+  var lateToday = new Date().getHours() >= (d0.getDay() === 0 ? 14 : 19);
+  for (var i = lateToday ? 1 : 0; days.length < 8; i++) { var d = new Date(d0); d.setDate(d0.getDate() + i); if (d.getDay() !== 1) days.push(d); }
+  $('days').innerHTML = days.map(function (d, i) {
+    var lbl = (i === 0 && d.getTime() === d0.getTime() ? 'hoy' : DOW[d.getDay()]);
+    return '<button type="button" class="chip" data-day="' + i + '" aria-pressed="false" aria-label="' + DOWL[d.getDay()] + ' ' + d.getDate() + ' de ' + MON[d.getMonth()] + '"><span>' + lbl + '</span><b>' + d.getDate() + '</b></button>';
+  }).join('');
+  function slotsFor(d) { var end = d.getDay() === 0 ? 15 : 20; var out = []; for (var h = 10; h < end; h++) out.push(h); return out; }
+  function hlabel(h) { return (h > 12 ? h - 12 : h) + ':00 ' + (h < 12 ? 'a. m.' : 'p. m.'); }
+  function renderTimes() {
+    var d = st.day, now = new Date();
+    $('times').innerHTML = slotsFor(d).map(function (h) {
+      var past = d.getTime() === d0.getTime() && h <= now.getHours();
+      var busy = (d.getDate() * 3 + h * 7) % 5 === 0;
+      var off = past || busy;
+      return '<button type="button" class="chip" data-time="' + h + '" aria-pressed="false"' + (off ? ' disabled aria-label="' + hlabel(h) + ', ocupado"' : '') + '>' + hlabel(h) + '</button>';
+    }).join('');
+    if (!$('times').querySelector('[data-time]:not([disabled])')) $('times').innerHTML = '<p class="label">Ese día ya está lleno. Prueba otro.</p>';
+  }
+  function gate() {
+    var b = $('confirm');
+    b.disabled = !(st.day && st.time);
+    b.textContent = !st.day ? 'Escoge día y hora' : !st.time ? 'Escoge una hora' : 'Reservar ' + DOWL[st.day.getDay()] + ' ' + st.day.getDate() + ', ' + hlabel(st.time);
+  }
+  $('days').addEventListener('click', function (e) { var b = e.target.closest('[data-day]'); if (!b) return; st.day = days[+b.dataset.day]; st.time = null; $('days').querySelectorAll('[data-day]').forEach(function (x) { x.setAttribute('aria-pressed', x === b ? 'true' : 'false'); }); renderTimes(); gate(); });
+  $('times').addEventListener('click', function (e) { var b = e.target.closest('[data-time]'); if (!b || b.disabled) return; st.time = +b.dataset.time; $('times').querySelectorAll('[data-time]').forEach(function (x) { x.setAttribute('aria-pressed', x === b ? 'true' : 'false'); }); gate(); });
+
+  function err(id, m) { $('e-' + id).textContent = m; $('f-' + id).setAttribute('aria-invalid', m ? 'true' : 'false'); return !m; }
+  $('bookForm').addEventListener('submit', function (e) {
+    e.preventDefault();
+    var nm = $('f-name').value.trim(), dg = $('f-tel').value.replace(/\D/g, '');
+    if (dg.length === 11 && dg[0] === '1') dg = dg.slice(1);
+    var ok = err('name', !nm ? 'Escribe tu nombre.' : nm.length < 2 ? 'Escribe tu nombre completo.' : '');
+    ok = err('tel', dg.length !== 10 ? 'Escribe 10 dígitos, por ejemplo 809-555-1234.' : '') && ok;
+    if (!ok) { document.querySelector('[aria-invalid="true"]').focus(); return; }
+    var svc = $('f-svc').value.split(' · ');
+    $('doneTitle').textContent = 'Te esperamos, ' + nm.split(' ')[0];
+    $('doneList').innerHTML = [['Servicio', svc[0]], ['Color', st.shade.name + ', ' + st.finish], ['Día', DOWL[st.day.getDay()] + ' ' + st.day.getDate() + ' de ' + MON[st.day.getMonth()]], ['Hora', hlabel(st.time)], ['Total', svc[1] + ', en el local']].map(function (r) { return '<div><dt>' + r[0] + '</dt><dd>' + r[1] + '</dd></div>'; }).join('');
+    $('bookForm').hidden = true; $('done').classList.add('show'); $('doneTitle').focus();
+  });
+  $('bookForm').addEventListener('input', function (e) { if (e.target.getAttribute('aria-invalid') === 'true') err(e.target.id.slice(2), ''); });
+  $('again').addEventListener('click', function () { $('done').classList.remove('show'); $('bookForm').hidden = false; st.time = null; renderTimes && st.day && renderTimes(); gate(); $('f-svc').focus(); });
+
+  // Demo links
+  var toast = $('toast'), tt;
+  document.addEventListener('click', function (e) { var a = e.target.closest('[data-demo]'); if (!a) return; e.preventDefault(); toast.textContent = 'Es una demo: en el sitio real esto abre WhatsApp o la red social.'; toast.classList.add('show'); clearTimeout(tt); tt = setTimeout(function () { toast.classList.remove('show'); }, 2800); });
+
+  // Rail docks once the pictures have passed
+  var rail = $('rail');
+  window.addEventListener('scroll', function () { rail.classList.toggle('docked', rail.getBoundingClientRect().top <= 0 && window.scrollY > window.innerHeight * .4); }, { passive: true });
+
+  // Entrances, once
+  var groups = document.querySelectorAll('.enter, .reveal');
+  if ('IntersectionObserver' in window) {
+    var io = new IntersectionObserver(function (es) { es.forEach(function (en) { if (en.isIntersecting) { en.target.classList.add('in'); io.unobserve(en.target); } }); }, { rootMargin: '0px 0px -10% 0px' });
+    groups.forEach(function (g) { io.observe(g); });
+  } else { groups.forEach(function (g) { g.classList.add('in'); }); }
+  // Safety net: never leave content hidden if the observer does not fire
+  setTimeout(function () { groups.forEach(function (g) { if (g.getBoundingClientRect().top < innerHeight * 1.5) g.classList.add('in'); }); }, 2500);
+  window.addEventListener('load', function () { setTimeout(function () { groups.forEach(function (g) { g.classList.add('in'); }); }, 6000); });
+
+  paint(); gate();
+})();
+</script>
+</body>
+</html>

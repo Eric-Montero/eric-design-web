@@ -197,6 +197,8 @@ section { padding: clamp(104px, 12vw, 176px) 0 0; }
 .next span { border: 1px dashed var(--line); border-radius: 12px; padding: 12px 16px; }
 
 .demo-pair { display: grid; grid-template-columns: 1fr 1fr; gap: 18px; margin-top: 18px; }
+.demo-nacar { margin-top: 18px; grid-template-columns: .8fr 1.2fr; }
+.demo-nacar .demo-shot { order: 2; text-decoration: none; }
 .demo-card { background: var(--paper); border: 1px solid var(--line); border-radius: 22px; overflow: hidden; display: flex; flex-direction: column; }
 .dc-shot[data-ui] { display: grid; place-items: center; height: 290px; padding: 28px; text-decoration: none; overflow: hidden; }
 [data-ui] .dc-shot > span { transition: transform 300ms var(--ease-out); }
@@ -219,6 +221,20 @@ section { padding: clamp(104px, 12vw, 176px) 0 0; }
 [data-ui] .nv-cal i { height: 9px; border-radius: 50%; border: 0; background: rgba(244,236,220,.1); }
 [data-ui] .nv-cal i.on { background: #c9a45c; }
 [data-ui] .nv-sum i.btnl { background: #c9a45c; border-color: #c9a45c; margin-top: 8px; }
+/* Nácar mock */
+[data-ui] .s-nacar { background: #120d0d; padding: 6%; align-items: center; }
+.dc-nacar[data-ui] { background: #120d0d; min-height: 320px; }
+[data-ui] .nc { width: 100%; max-width: 520px; display: grid; grid-template-columns: 1fr 1fr; gap: 18px; align-items: center; color: #f2e6e2; }
+[data-ui] .nc-name { font: 400 clamp(1.5rem, 2.8vw, 2.2rem)/1 'Bodoni Moda', Didot, Georgia, serif; letter-spacing: -.02em; }
+[data-ui] .nc-sub { display: block; font-size: .72rem; color: #c4b0ab; margin-top: 8px; }
+[data-ui] .nc-sw { display: grid; grid-template-columns: repeat(6, 1fr); gap: 4px; margin-top: 16px; }
+[data-ui] .nc-sw i { aspect-ratio: 4 / 5; background: var(--c); }
+[data-ui] .nc-sw i:first-child { outline: 2px solid #f2e6e2; outline-offset: -2px; }
+[data-ui] .nc-btn { display: inline-block; margin-top: 14px; padding: 6px 12px; background: #d8a7a0; color: #1a1110; font-size: .66rem; font-weight: 600; }
+[data-ui] .nc-nails { background: #1c1515; padding: 14% 8% 0; display: flex; align-items: flex-end; justify-content: center; gap: 6%; height: 100%; min-height: 150px; }
+[data-ui] .nc-nails i { width: 15%; background: #d8a7a0; border-radius: 999px 999px 0 0; position: relative; }
+[data-ui] .nc-nails i::after { content: ""; position: absolute; left: 0; right: 0; bottom: 0; height: 22%; background: #e8c9b8; }
+[data-ui] .nc-nails i:nth-child(1) { height: 52%; } [data-ui] .nc-nails i:nth-child(2) { height: 74%; } [data-ui] .nc-nails i:nth-child(3) { height: 82%; } [data-ui] .nc-nails i:nth-child(4) { height: 70%; } [data-ui] .nc-nails i:nth-child(5) { height: 44%; }
 /* Fade mock */
 .dc-fade[data-ui] { background: #1a1510; }
 [data-ui] .fc { width: 150px; height: 230px; border-radius: 26px; border: 6px solid #141210; background: #0d0c0a; padding: 16px 12px 10px; display: flex; flex-direction: column; gap: 8px; box-shadow: 0 24px 40px -20px rgba(0,0,0,.8); position: relative; }
@@ -333,6 +349,7 @@ footer a:hover { color: var(--ink); }
   .nav ul.open { transition: opacity 200ms var(--ease-out), transform 200ms var(--ease-out); display: flex; flex-direction: column; gap: 0; position: absolute; top: 68px; left: 0; right: 0; margin: 0; padding: 8px 16px 16px; background: var(--bg); border-bottom: 1px solid var(--line); }
   .nav ul.open a { display: block; padding: 14px 4px; border-bottom: 1px solid var(--line); color: var(--ink); font-size: 1.0625rem; }
   .hero, .demo, .faq, .contact .wrap, .head, .about, .demo-pair { grid-template-columns: 1fr; }
+  .demo-nacar .demo-shot { order: 0; }
   .about-photo { max-width: 340px; }
   .about-photo img { aspect-ratio: 1 / 1; object-position: center 12%; }
   .stage { max-width: 560px; }
@@ -556,6 +573,14 @@ details, details:first-child { border: 0; background: var(--paper); border-radiu
               <span class="fc-tabs"><i></i><i></i><i class="fab"></i><i></i><i></i></span>
             </span>
           </div>
+          <div class="slide s-nacar" aria-hidden="true">
+            <span class="nc">
+              <span><span class="nc-name">Nácar</span><span class="nc-sub">Escoge tu color y reserva</span>
+                <span class="nc-sw"><i style="--c:#d8a7a0"></i><i style="--c:#8b1e2d"></i><i style="--c:#c9a48a"></i><i style="--c:#8e5a6b"></i><i style="--c:#efe6e1"></i><i style="--c:#2a2224"></i></span>
+                <span class="nc-btn">Reservar con este color</span></span>
+              <span class="nc-nails"><i></i><i></i><i></i><i></i><i></i></span>
+            </span>
+          </div>
         </div>
       </a>
       <span id="heroTag" hidden></span>
@@ -563,6 +588,7 @@ details, details:first-child { border: 0; background: var(--paper); border-radiu
         <button type="button" role="tab" aria-selected="true" data-slide="0">Salón</button>
         <button type="button" role="tab" aria-selected="false" data-slide="1">Barbería web</button>
         <button type="button" role="tab" aria-selected="false" data-slide="2">App de barbería</button>
+        <button type="button" role="tab" aria-selected="false" data-slide="3">Estudio de uñas</button>
       </div>
     </div>
   </div>
@@ -610,7 +636,7 @@ details, details:first-child { border: 0; background: var(--paper); border-radiu
         <p>Si tus clientes te preguntan precios y horarios por mensaje todos los días, una página les responde sola y te deja solo agendar.</p>
       </div>
       <div class="niches stagger">
-        <a class="niche niche-link" href="#demos" style="--i:0"><span><svg class="icon"><use href="#i-scissors"/></svg></span><div>Salones y barberías<small>Ver 3 demos →</small></div></a>
+        <a class="niche niche-link" href="#demos" style="--i:0"><span><svg class="icon"><use href="#i-scissors"/></svg></span><div>Salones, uñas y barberías<small>Ver 4 demos →</small></div></a>
         <div class="niche" style="--i:1"><span><svg class="icon"><use href="#i-food"/></svg></span><div>Restaurantes<small>Menú digital y pedidos</small></div></div>
         <div class="niche" style="--i:2"><span><svg class="icon"><use href="#i-tooth"/></svg></span><div>Clínicas y estética<small>Consultas y testimonios</small></div></div>
         <div class="niche" style="--i:3"><span><svg class="icon"><use href="#i-palm"/></svg></span><div>Rentas vacacionales<small>Galería y reservas, en inglés</small></div></div>
@@ -695,6 +721,29 @@ details, details:first-child { border: 0; background: var(--paper); border-radiu
           </div>
         </article>
       </div>
+      <article class="stagger demo demo-nacar">
+        <a class="demo-shot dc-nacar" data-ui href="demos/nacar/" aria-label="Abrir demo Nácar Nail Studio">
+          <span class="nc" aria-hidden="true">
+              <span><span class="nc-name">Nácar</span><span class="nc-sub">Escoge tu color y reserva</span>
+                <span class="nc-sw"><i style="--c:#d8a7a0"></i><i style="--c:#8b1e2d"></i><i style="--c:#c9a48a"></i><i style="--c:#8e5a6b"></i><i style="--c:#efe6e1"></i><i style="--c:#2a2224"></i></span>
+                <span class="nc-btn">Reservar con este color</span></span>
+              <span class="nc-nails"><i></i><i></i><i></i><i></i><i></i></span>
+            </span>
+        </a>
+        <div class="demo-body">
+          <span class="pill">Estudio de uñas · Página web con carta de colores</span>
+          <h3>Nácar Nail Studio</h3>
+          <ul>
+            <li><svg class="icon"><use href="#i-check"/></svg>Carta de colores: el cliente prueba tonos y acabados en una mano dibujada</li>
+            <li><svg class="icon"><use href="#i-check"/></svg>El color escogido pasa directo a la reserva</li>
+            <li><svg class="icon"><use href="#i-check"/></svg>Precios como menú, galería y reservas por día y hora</li>
+          </ul>
+          <div class="demo-actions">
+            <a class="btn btn-main" href="demos/nacar/">Abrir demo<svg class="icon"><use href="#i-arrow"/></svg></a>
+            <a class="btn btn-ghost" data-wa="Hola Eric, quiero una página como la demo de uñas. Mi negocio es: " href="https://wa.me/18292600023">Quiero una así</a>
+          </div>
+        </div>
+      </article>
     </div>
   </section>
 
@@ -871,11 +920,12 @@ details, details:first-child { border: 0; background: var(--paper); border-radiu
   if ('IntersectionObserver' in window) new IntersectionObserver(function (es) { float.classList.toggle('away', es[0].isIntersecting); }).observe(document.getElementById('contacto'));
   links.addEventListener('click', function (e) { if (e.target.closest('a')) { links.classList.remove('open'); menu.setAttribute('aria-expanded', false); } });
 
-  // Hero showcase: rotates through the three demos
+  // Hero showcase: rotates through the four demos
   var DEMOS = [
     { url: 'tusalon.com', href: 'https://lumiere-salon-demo.vercel.app', ext: true, name: 'Lumière Salón & Spa', tag: 'Nueva cita por WhatsApp' },
     { url: 'tubarberia.com', href: 'demos/navaja/', ext: false, name: 'Navaja Barber Studio', tag: 'Turno reservado: sábado 10:00 a. m.' },
-    { url: 'app de tu barbería', href: 'demos/fade-club/', ext: false, name: 'Fade Club', tag: 'Se abre como una app, sin descargar' }
+    { url: 'app de tu barbería', href: 'demos/fade-club/', ext: false, name: 'Fade Club', tag: 'Se abre como una app, sin descargar' },
+    { url: 'tuestudiodeunas.com', href: 'demos/nacar/', ext: false, name: 'Nácar Nail Studio', tag: 'Cita con el color ya escogido' }
   ];
   var SLIDE_MS = 5000;
   var showcase = document.getElementById('showcase'), dev = document.getElementById('heroDevice');
