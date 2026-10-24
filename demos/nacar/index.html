@@ -133,8 +133,8 @@ section { padding-top: clamp(72px, 9vw, 112px); }
 .preview[data-ui] { background: var(--panel-2); border-radius: var(--r); padding: 28px 24px 0; overflow: hidden; }
 .nails { width: 100%; height: auto; display: block; }
 .nails .nail { transition: fill 300ms ease; }
-.nails .shine, .nails .chrome { transition: opacity 300ms ease; }
-.nails.mate .nail { filter: saturate(.85) brightness(.94); }
+.nails .shine, .nails .chrome, .nails .tip { transition: opacity 300ms ease; }
+.nails.mate .nail, .nails.mate .tip { filter: saturate(.85) brightness(.94); }
 .pick h3 { font-size: clamp(2rem, 3.6vw, 2.6rem); }
 .pick > p { color: var(--muted); margin-top: 8px; }
 .swatches { display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; margin-top: 22px; }
@@ -142,6 +142,9 @@ section { padding-top: clamp(72px, 9vw, 112px); }
 .sw:active { transform: scale(0.97); }
 .sw i { width: 26px; height: 32px; border-radius: 13px 13px 5px 5px; background: var(--c); flex: none; }
 .sw i, .opt i.c { outline: 1px solid var(--line-2); outline-offset: -1px; }
+/* Blanco francés: white free edge over a rosy base, as in the hand preview */
+.sw i.fr, .opt i.c.fr { position: relative; overflow: hidden; background: #fbf7f5; outline-color: var(--line); }
+.sw i.fr::after, .opt i.c.fr::after { content: ""; position: absolute; inset: 34% 0 0; background: #f1d3cc; border-radius: 50% 50% 0 0 / 22% 22% 0 0; }
 .sw span { font-size: .875rem; font-weight: 600; line-height: 1.2; }
 .sw[aria-pressed="true"] { border-color: var(--rose); background: color-mix(in srgb, var(--rose) 10%, var(--bg)); }
 .finish { display: flex; gap: 8px; margin-top: 14px; }
@@ -201,7 +204,7 @@ section { padding-top: clamp(72px, 9vw, 112px); }
 .cal .dow { font-size: .875rem; letter-spacing: .06em; color: var(--muted); padding: 4px 0; }
 .day { aspect-ratio: 1; min-height: 44px; width: 100%; max-width: 52px; justify-self: center; border-radius: 50%; border: 0; background: transparent; cursor: pointer; font-size: .875rem; font-variant-numeric: tabular-nums; transition: transform 120ms var(--ease-out), background-color 200ms ease; }
 .day:active:not([disabled]) { transform: scale(0.95); }
-.day:hover:not([disabled]) { background: color-mix(in srgb, var(--rose) 14%, transparent); }
+@media (hover: hover) and (pointer: fine) { .day:hover:not([disabled]):not([aria-pressed="true"]) { background: color-mix(in srgb, var(--rose) 14%, transparent); } }
 .day[disabled] { color: var(--busy); cursor: not-allowed; }
 .day[aria-pressed="true"] { background: var(--rose); color: var(--on-rose); font-weight: 700; }
 .day.today:not([aria-pressed="true"]) { outline: 1px solid var(--rose); outline-offset: -1px; }
@@ -272,7 +275,8 @@ footer { margin-top: clamp(72px, 9vw, 112px); background: var(--panel); padding:
 .credit a { color: var(--rose); display: inline-block; padding: 12px 0; }
 .toast { position: fixed; left: 50%; bottom: 24px; transform: translate(-50%, 16px); opacity: 0; pointer-events: none; z-index: 60; display: flex; align-items: center; gap: 8px; width: max-content; max-width: calc(100% - 32px); background: var(--panel-2); border: 1px solid var(--line); border-radius: 999px; padding: 12px 20px; font-size: .875rem; transition: opacity 400ms ease, transform 400ms ease; }
 .toast.show { opacity: 1; transform: translate(-50%, 0); }
-.toast.has-undo { padding: 0 10px 0 20px; }
+.toast.has-undo { padding: 2px 10px 2px 20px; }
+.toast .kb { color: var(--muted); white-space: nowrap; }
 .toast.show.has-undo { pointer-events: auto; }
 /* Desktop: bottom-left, narrow, so it never sits over the summary column (#missing, "Empezar de nuevo") */
 @media (min-width: 1081px) {
@@ -539,7 +543,7 @@ footer { margin-top: clamp(72px, 9vw, 112px); background: var(--panel); padding:
     <div class="credit"><span>Demo con datos ficticios. Nombre, dirección, teléfono y precios son de ejemplo.</span><a href="../../#demos">Hecha por Eric Design Web</a></div>
   </div>
 </footer>
-<div class="toast" id="toast"><span id="toastMsg" role="status" aria-live="polite"></span><button class="linkbtn" id="toastUndo" type="button" hidden>Deshacer</button></div>
+<div class="toast" id="toast"><span id="toastMsg" role="status" aria-live="polite"></span><button class="linkbtn" id="toastUndo" type="button" aria-keyshortcuts="Control+Z Meta+Z" hidden>Deshacer</button></div>
 
 <script>
 (function () {
@@ -601,20 +605,25 @@ footer { margin-top: clamp(72px, 9vw, 112px); background: var(--panel); padding:
 
   // Shade card
   $('swatches').innerHTML = SHADES.map(function (s, i) {
-    return '<button type="button" class="sw" data-shade="' + s.id + '" aria-pressed="' + (i === 0) + '"><i style="--c:' + s.c + '"></i><span>' + s.name + '</span></button>';
+    return '<button type="button" class="sw" data-shade="' + s.id + '" aria-pressed="' + (i === 0) + '"><i' + (s.id === 'frances' ? ' class="fr"' : '') + ' style="--c:' + s.c + '"></i><span>' + s.name + '</span></button>';
   }).join('');
   var NAILS = [[40, 70, 52, 120], [118, 30, 58, 150], [204, 18, 60, 160], [292, 34, 58, 146], [366, 90, 46, 104]];
+  // French tip: the white free edge, its smile line arching higher in the centre than at the sides
+  function tipPath(x, y, w, h) { var r = w / 2, yb = y + Math.max(h * .32, r * 1.4 + 4); return 'M' + x + ' ' + yb + 'V' + (y + r * 1.4) + 'C' + x + ' ' + (y + r * .2) + ' ' + (x + r * .5) + ' ' + y + ' ' + (x + r) + ' ' + y + 'C' + (x + r * 1.5) + ' ' + y + ' ' + (x + w) + ' ' + (y + r * .2) + ' ' + (x + w) + ' ' + (y + r * 1.4) + 'V' + yb + 'Q' + (x + r) + ' ' + (yb - h * .2) + ' ' + x + ' ' + yb + 'Z'; }
   function almond(x, y, w, h) { var r = w / 2; return 'M' + x + ' ' + (y + h) + 'V' + (y + r * 1.4) + 'C' + x + ' ' + (y + r * .2) + ' ' + (x + r * .5) + ' ' + y + ' ' + (x + r) + ' ' + y + 'C' + (x + r * 1.5) + ' ' + y + ' ' + (x + w) + ' ' + (y + r * .2) + ' ' + (x + w) + ' ' + (y + r * 1.4) + 'V' + (y + h) + 'Z'; }
   $('nailset').innerHTML = NAILS.map(function (n) {
     return '<path d="' + almond(n[0], n[1] + 10, n[2] + 12, n[3] + 30) + '" fill="#e8c9b8"/>' +
       '<path class="nail" d="' + almond(n[0] + 6, n[1], n[2], n[3]) + '" fill="#d8a7a0"/>' +
+      '<path class="tip" d="' + tipPath(n[0] + 6, n[1], n[2], n[3]) + '" fill="#fbf7f5" opacity="0"/>' +
       '<rect class="shine" x="' + (n[0] + 14) + '" y="' + (n[1] + 22) + '" width="7" height="' + (n[3] * .55) + '" rx="3.5" fill="#fff" opacity=".3"/>' +
       '<path class="chrome" d="' + almond(n[0] + 6, n[1], n[2], n[3]) + '" fill="url(#cg)" opacity="0"/>';
   }).join('');
   function shadeById(id) { return SHADES.filter(function (s) { return s.id === id; })[0]; }
   function paint() {
     var s = pv.shade, f = pv.fin;
-    document.querySelectorAll('#nailset .nail').forEach(function (n) { n.setAttribute('fill', s.c); });
+    var fr = s.id === 'frances';
+    document.querySelectorAll('#nailset .nail').forEach(function (n) { n.setAttribute('fill', fr ? '#f1d3cc' : s.c); });
+    document.querySelectorAll('#nailset .tip').forEach(function (n) { n.setAttribute('opacity', fr ? 1 : 0); });
     document.querySelectorAll('#nailset .shine').forEach(function (n) { n.setAttribute('opacity', f === 'mate' ? 0 : f === 'cromo' ? .55 : .3); });
     document.querySelectorAll('#nailset .chrome').forEach(function (n) { n.setAttribute('opacity', f === 'cromo' ? .9 : 0); });
     $('nails').classList.toggle('mate', f === 'mate');
@@ -630,7 +639,7 @@ footer { margin-top: clamp(72px, 9vw, 112px); background: var(--panel); padding:
     if (locked) { toast(LOCKED_MSG); return; }
     var prev = snap();
     st.col = pv.shade.id; st.fin = pv.fin; sync();
-    toast(pv.shade.name + ' en ' + pv.fin + ' quedó en tu reserva.', undoTo(prev));
+    toast(pv.shade.name + ' en ' + pv.fin + ' quedó en tu reserva.', undoTo(prev, ['col', 'fin']));
     if (mobile.matches) { e.preventDefault(); goNext(); }
   });
   $('cards').addEventListener('click', function (e) {
@@ -638,10 +647,13 @@ footer { margin-top: clamp(72px, 9vw, 112px); background: var(--panel); padding:
     if (locked) { toast(LOCKED_MSG); return; }
     var prev = snap();
     st.svc = b.dataset.pick; sync();
-    toast(SERVICES.filter(function (x) { return x.id === st.svc; })[0].name + ' quedó en tu reserva.', undoTo(prev));
+    toast(SERVICES.filter(function (x) { return x.id === st.svc; })[0].name + ' quedó en tu reserva.', undoTo(prev, ['svc']));
     if (mobile.matches) { e.preventDefault(); goNext(); }
   });
-  function undoTo(prev) { return function () { apply(prev); toast('Listo, volvimos a lo que tenías.'); }; }
+  // Undo puts back only what that action changed; later picks in other steps stay
+  function undoTo(prev, keys) { return function () { var s = snap(); keys.forEach(function (k) { s[k] = prev[k]; }); apply(s); toast('Listo, volvimos a lo que tenías.'); }; }
+  // A new pick in the console makes any pending undo stale, so it goes away
+  function dropUndo() { if (undoFn) hideToast(); }
 
   function check() { return '<span class="tick"><svg class="icon"><use href="#i-check"/></svg></span>'; }
   function press(container, attr, val) { container.querySelectorAll('[' + attr + ']').forEach(function (el) { el.setAttribute('aria-pressed', el.getAttribute(attr) === val ? 'true' : 'false'); }); }
@@ -649,7 +661,7 @@ footer { margin-top: clamp(72px, 9vw, 112px); background: var(--panel); padding:
     return '<button type="button" class="opt" data-svc="' + s.id + '" aria-pressed="false"><span class="t"><b>' + s.name + '</b><small>' + rd(s.price) + ' · ' + s.min + ' min</small></span>' + check() + '</button>';
   }).join('');
   $('colors').innerHTML = SHADES.concat([{ id: 'luego', name: 'Lo decido allá', c: 'transparent' }]).map(function (s) {
-    return '<button type="button" class="opt" data-col="' + s.id + '" aria-pressed="false"><i class="c" style="--c:' + s.c + '"></i><span class="t"><b>' + s.name + '</b>' + (s.id === 'frances' ? '<small>+ RD$300</small>' : '') + '</span>' + check() + '</button>';
+    return '<button type="button" class="opt" data-col="' + s.id + '" aria-pressed="false"><i class="c' + (s.id === 'frances' ? ' fr' : '') + '" style="--c:' + s.c + '"></i><span class="t"><b>' + s.name + '</b>' + (s.id === 'frances' ? '<small>+ RD$300</small>' : '') + '</span>' + check() + '</button>';
   }).join('');
   function isShade(id) { return !!id && id !== 'luego'; }
   // Pressed states for service, colour and finish follow st
@@ -661,9 +673,9 @@ footer { margin-top: clamp(72px, 9vw, 112px); background: var(--panel); padding:
     $('cFinLabel').querySelector('span').textContent = on ? '· Francesa o cromo + RD$300' : '· Escoge un tono para elegir el acabado';
     update();
   }
-  $('services').addEventListener('click', function (e) { var b = e.target.closest('[data-svc]'); if (!b) return; st.svc = b.dataset.svc; sync(); goNext(); });
+  $('services').addEventListener('click', function (e) { var b = e.target.closest('[data-svc]'); if (!b) return; dropUndo(); st.svc = b.dataset.svc; sync(); goNext(); });
   $('colors').addEventListener('click', function (e) {
-    var b = e.target.closest('[data-col]'); if (!b) return;
+    var b = e.target.closest('[data-col]'); if (!b) return; dropUndo();
     st.col = b.dataset.col; // the finish is kept: re-picking or switching shades never drops it
     if (isShade(st.col)) { pv.shade = shadeById(st.col); pv.fin = st.fin; paint(); }
     sync();
@@ -671,7 +683,7 @@ footer { margin-top: clamp(72px, 9vw, 112px); background: var(--panel); padding:
     else if (st.col === 'luego') goNext();
   });
   $('cFin').addEventListener('click', function (e) {
-    var b = e.target.closest('[data-cfin]'); if (!b || b.disabled) return;
+    var b = e.target.closest('[data-cfin]'); if (!b || b.disabled) return; dropUndo();
     st.fin = b.dataset.cfin; pv.fin = st.fin; if (isShade(st.col)) pv.shade = shadeById(st.col);
     paint(); sync();
   });
@@ -699,12 +711,14 @@ footer { margin-top: clamp(72px, 9vw, 112px); background: var(--panel); padding:
   }
   var newDay = false;
   $('cal').addEventListener('click', function (e) {
-    var b = e.target.closest('[data-day]'); if (!b || b.disabled) return;
-    var d = new Date(view.getFullYear(), view.getMonth(), +b.dataset.day);
-    if (!sameDay(d, st.date)) { newDay = st.time != null; st.time = null; }
+    var b = e.target.closest('[data-day]'); if (!b || b.disabled) return; dropUndo();
+    var d = new Date(view.getFullYear(), view.getMonth(), +b.dataset.day), prev = snap(), dropped = null;
+    if (!sameDay(d, st.date)) { newDay = st.time != null; dropped = st.time; st.time = null; }
     st.date = d;
     $('cal').querySelectorAll('[data-day]').forEach(function (x) { x.setAttribute('aria-pressed', x === b ? 'true' : 'false'); });
     renderTimes(); update();
+    // Changing the day clears the hour you had; say so and let it come back
+    if (dropped != null) toast('Quitamos la hora de las ' + hl(dropped) + ' Escoge otra para este día.', undoTo(prev, ['date', 'time']), function () { return $('cal').querySelector('[aria-pressed="true"]'); });
   });
   $('prevM').addEventListener('click', function () { view = new Date(view.getFullYear(), view.getMonth() - 1, 1); renderCal(); });
   $('nextM').addEventListener('click', function () { view = new Date(view.getFullYear(), view.getMonth() + 1, 1); renderCal(); });
@@ -719,7 +733,7 @@ footer { margin-top: clamp(72px, 9vw, 112px); background: var(--panel); padding:
     }).join('');
     $('times').innerHTML = free ? html : '<p class="hint">Ese día ya está lleno. Prueba otro.</p>';
   }
-  $('times').addEventListener('click', function (e) { var b = e.target.closest('[data-time]'); if (!b || b.disabled) return; st.time = +b.dataset.time; newDay = false; $('times').querySelectorAll('[data-time]').forEach(function (x) { x.setAttribute('aria-pressed', x === b ? 'true' : 'false'); }); update(); goNext(); });
+  $('times').addEventListener('click', function (e) { var b = e.target.closest('[data-time]'); if (!b || b.disabled) return; dropUndo(); st.time = +b.dataset.time; newDay = false; $('times').querySelectorAll('[data-time]').forEach(function (x) { x.setAttribute('aria-pressed', x === b ? 'true' : 'false'); }); update(); goNext(); });
 
   // Saved progress: survives a reload, cleared on "Hacer otra reserva" / "Empezar de nuevo"
   var KEY = 'nacar-booking';
@@ -758,6 +772,17 @@ footer { margin-top: clamp(72px, 9vw, 112px); background: var(--panel); padding:
   }
 
   // Summary + steps
+  // The line under "Confirmar cita" always says what still stands between you and the booking
+  function refreshMissing() {
+    var miss = []; if (!st.svc) miss.push('servicio'); if (!st.col) miss.push('color'); if (!st.date) miss.push('día'); if (!st.time) miss.push('hora');
+    var msg, bad = ['name', 'tel'].filter(function (id) { return $('f-' + id).getAttribute('aria-invalid') === 'true'; });
+    var todo = [msgName() && 'tu nombre', msgTel() && 'tu WhatsApp'].filter(Boolean);
+    if (newDay && st.date && !st.time) { miss.pop(); msg = (miss.length ? 'Te falta: ' + miss.join(', ') + '. ' : '') + 'Escoge una hora para el nuevo día.'; }
+    else if (miss.length) msg = 'Te falta: ' + miss.join(', ') + '.';
+    else if (bad.length) msg = 'Revisa ' + (bad.length === 2 ? 'tu nombre y tu WhatsApp' : bad[0] === 'name' ? 'tu nombre' : 'tu WhatsApp') + ' arriba.';
+    else msg = todo.length ? 'Todo listo. Solo falta ' + todo.join(' y ') + '.' : 'Todo listo. Toca “Confirmar cita”.';
+    if ($('missing').textContent !== msg) $('missing').textContent = msg;
+  }
   function setv(id, val) { var el = $(id); el.textContent = val || 'Sin escoger'; el.classList.toggle('empty', !val); var c = el.nextElementSibling; if (c) c.hidden = !val; }
   function colorLabel() { if (!st.col) return ''; return st.col === 'luego' ? 'Lo decido allá' : shadeById(st.col).name; }
   function extra() { return isShade(st.col) && (st.fin === 'cromo' || st.col === 'frances') ? 300 : 0; }
@@ -783,8 +808,7 @@ footer { margin-top: clamp(72px, 9vw, 112px); background: var(--panel); padding:
     }
     var miss = []; if (!st.svc) miss.push('servicio'); if (!st.col) miss.push('color'); if (!st.date) miss.push('día'); if (!st.time) miss.push('hora');
     $('confirm').disabled = miss.length > 0;
-    if (newDay && st.date && !st.time) { miss.pop(); $('missing').textContent = (miss.length ? 'Te falta: ' + miss.join(', ') + '. ' : '') + 'Escoge una hora para el nuevo día.'; }
-    else $('missing').textContent = miss.length ? 'Te falta: ' + miss.join(', ') + '.' : 'Todo listo. Solo falta tu nombre y WhatsApp.';
+    refreshMissing();
     $('reset').hidden = locked || !(st.svc || st.col || st.date);
     var picks = [s && s.name, st.col && (st.col === 'luego' ? 'Color allá' : shadeById(st.col).name), st.date && (DOW[st.date.getDay()].toLowerCase() + ' ' + st.date.getDate()), st.time && hl(st.time)].filter(Boolean);
     var names = ['Servicio', 'Color', 'Fecha y hora', 'Confirmar'];
@@ -810,18 +834,20 @@ footer { margin-top: clamp(72px, 9vw, 112px); background: var(--panel); padding:
 
   // Form: validate on blur, live phone format 809-555-1234
   var INFO = '<svg class="icon" aria-hidden="true"><use href="#i-info"/></svg>';
-  function err(id, msg) { $('e-' + id).innerHTML = msg ? INFO + '<span>' + msg + '</span>' : ''; $('f-' + id).setAttribute('aria-invalid', msg ? 'true' : 'false'); return !msg; }
+  function err(id, msg) { $('e-' + id).innerHTML = msg ? INFO + '<span>' + msg + '</span>' : ''; $('f-' + id).setAttribute('aria-invalid', msg ? 'true' : 'false'); refreshMissing(); return !msg; }
   function digits() { var dg = $('f-tel').value.replace(/\D/g, ''); return dg.length === 11 && dg[0] === '1' ? dg.slice(1) : dg; }
-  function checkName() {
+  function msgName() {
     var nm = $('f-name').value.trim(), letters = nm.replace(/[^A-Za-zÀ-ÿñÑ]/g, '').length;
-    return err('name', !nm ? 'Escribe tu nombre.' : letters < 2 ? 'Escribe al menos 2 letras.' : '');
+    return !nm ? 'Escribe tu nombre.' : letters < 2 ? 'Escribe al menos 2 letras.' : '';
   }
-  function checkTel() {
+  function msgTel() {
     var n = digits().length, left = 10 - n;
-    return err('tel', !n ? 'Escribe tu WhatsApp, por ejemplo 809-555-1234.' :
+    return !n ? 'Escribe tu WhatsApp, por ejemplo 809-555-1234.' :
       n < 10 ? 'Llevas ' + n + (n === 1 ? ' dígito' : ' dígitos') + '; ' + (left === 1 ? 'falta 1' : 'faltan ' + left) + '. Ej.: 809-555-1234.' :
-      !/^8[024]9/.test(digits()) ? 'Los números de RD empiezan con 809, 829 o 849.' : '');
+      !/^8[024]9/.test(digits()) ? 'Los números de RD empiezan con 809, 829 o 849.' : '';
   }
+  function checkName() { return err('name', msgName()); }
+  function checkTel() { return err('tel', msgTel()); }
   function fmtTel(v) {
     var d = v.replace(/\D/g, ''), pre = '';
     if (d.length > 1 && d[0] === '1') { pre = '1-'; d = d.slice(1); }
@@ -844,6 +870,7 @@ footer { margin-top: clamp(72px, 9vw, 112px); background: var(--panel); padding:
   $('bookForm').addEventListener('input', function (e) {
     var f = e.target; f.dataset.dirty = '1'; $('reuse').hidden = true;
     if (f.getAttribute('aria-invalid') === 'true') { if (f.id === 'f-name') checkName(); else checkTel(); }
+    else refreshMissing();
   });
   $('bookForm').addEventListener('focusout', function (e) {
     var f = e.target; if (!f.dataset || !f.dataset.dirty) return;
@@ -890,8 +917,8 @@ footer { margin-top: clamp(72px, 9vw, 112px); background: var(--panel); padding:
     apply(BLANK); document.querySelector('[data-svc]').focus();
     toast('Tu cita del ' + day + ' sigue en pie. Escoge la nueva.', was && was.booked ? function () {
       try { localStorage.setItem(KEY, JSON.stringify(was)); } catch (e) {}
-      if (restoreBooked(was)) { $('done').querySelector('h4').focus(); toast('Listo, volvimos a tu cita reservada.'); }
-    } : null);
+      if (restoreBooked(was)) toast('Listo, volvimos a tu cita reservada.');
+    } : null, function () { return $('done').querySelector('h4'); });
   });
   $('reset').addEventListener('click', function () {
     var prev = snap();
@@ -899,19 +926,33 @@ footer { margin-top: clamp(72px, 9vw, 112px); background: var(--panel); padding:
     apply(BLANK); clearSaved();
     document.querySelector('[data-svc]').focus({ preventScroll: true });
     if (mobile.matches) $('c-svc').scrollIntoView({ behavior: smooth, block: 'start' }); // back to step 1, and the toast stays off the form
-    toast('Borramos lo que habías escogido.', function () { apply(prev); toast('Listo, recuperamos tu selección.'); });
+    toast('Borramos lo que habías escogido.', function () { apply(prev); toast('Listo, recuperamos tu selección.'); }, function () { return $('reset').hidden ? document.querySelector('[data-svc]') : $('reset'); });
   });
 
-  var toastEl = $('toast'), toastMsg = $('toastMsg'), undoBtn = $('toastUndo'), tt, undoFn = null;
-  function hideToast() { toastEl.classList.remove('show'); undoFn = null; }
+  var toastEl = $('toast'), toastMsg = $('toastMsg'), undoBtn = $('toastUndo'), tt, undoFn = null, undoReturn = null;
+  // Keyboard hint only where there is a keyboard
+  var KB = matchMedia('(hover: hover) and (pointer: fine)').matches ? (/Mac|iPhone|iPad/.test(navigator.platform) ? '⌘Z' : 'Ctrl+Z') : '';
+  function hideToast() { toastEl.classList.remove('show'); undoFn = null; undoReturn = null; }
   function armToast() { clearTimeout(tt); tt = setTimeout(hideToast, undoFn ? 6000 : 2800); }
-  function toast(m, onUndo) {
-    toastMsg.textContent = m; undoFn = onUndo || null;
+  // onUndo: offers "Deshacer"; back: where focus goes after undoing (defaults to what had focus)
+  function toast(m, onUndo, back) {
+    toastMsg.textContent = m; undoFn = onUndo || null; undoReturn = undoFn ? (back || document.activeElement) : null;
+    if (undoFn && KB) { var k = document.createElement('span'); k.className = 'kb'; k.textContent = ' ' + KB + ' para deshacer.'; toastMsg.appendChild(k); }
     undoBtn.hidden = !undoFn; toastEl.classList.toggle('has-undo', !!undoFn);
     toastEl.classList.add('show'); armToast();
   }
-  undoBtn.addEventListener('click', function () { var f = undoFn; hideToast(); if (f) f(); });
-  document.addEventListener('keydown', function (e) { if (e.key === 'Escape' && toastEl.classList.contains('show')) hideToast(); });
+  function runUndo() {
+    var f = undoFn, back = undoReturn; hideToast(); if (!f) return;
+    f();
+    var t = typeof back === 'function' ? back() : back;
+    if (t && t.isConnected && !t.hidden && !t.disabled && !t.closest('[inert]')) t.focus();
+  }
+  undoBtn.addEventListener('click', runUndo);
+  document.addEventListener('keydown', function (e) {
+    if (e.key === 'Escape' && toastEl.classList.contains('show')) hideToast();
+    // Ctrl/⌘+Z undoes the pending action, except inside a text field (its own undo wins there)
+    else if ((e.ctrlKey || e.metaKey) && !e.shiftKey && !e.altKey && (e.key === 'z' || e.key === 'Z') && undoFn && !e.target.closest('input, textarea, [contenteditable]')) { e.preventDefault(); runUndo(); }
+  });
   toastEl.addEventListener('mouseenter', function () { clearTimeout(tt); });
   toastEl.addEventListener('mouseleave', function () { if (toastEl.classList.contains('show')) armToast(); });
   toastEl.addEventListener('focusin', function () { clearTimeout(tt); });
