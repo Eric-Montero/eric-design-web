@@ -45,6 +45,7 @@
   --ph: #1d1a14;
   --chev: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23d4af6a' stroke-width='1.8' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M6 9l6 6 6-6'/%3E%3C/svg%3E");
   --err: #e0786b;
+  --field-line: #7a6c52;
   color-scheme: dark;
 }
 [data-theme="light"] {
@@ -61,6 +62,7 @@
   --ph: #e8dcc6;
   --chev: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%238a6526' stroke-width='1.8' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M6 9l6 6 6-6'/%3E%3C/svg%3E");
   --err: #a3352a;
+  --field-line: #8a7a60;
   color-scheme: light;
 }
 *, *::before, *::after { box-sizing: border-box; }
@@ -129,6 +131,7 @@ p { margin: 0; }
 .nav .btn { min-height: 42px; padding: 0 18px; }
 .bk-short { display: none; }
 .menu-btn { display: none; }
+@media (min-width: 961px) { .nav-book { display: none; } }
 .menu-btn .i-close { display: none; }
 .menu-btn[aria-expanded="true"] .i-open { display: none; }
 .menu-btn[aria-expanded="true"] .i-close { display: block; }
@@ -180,7 +183,7 @@ section { padding: clamp(72px, 10vw, 128px) 0 0; }
   width: 100%; text-align: left; background: var(--surface); border: 0; border-radius: var(--radius); color: inherit; font: inherit;
   cursor: pointer; transition: background-color .3s;
 }
-.svc:hover, .svc.on { background: var(--surface-2); }
+.svc:hover, .svc.on, .svc.chosen { background: var(--surface-2); }
 .svc-t { grid-area: t; font: 600 clamp(1.6rem, 2.6vw, 2.1rem)/1.05 var(--font-display); letter-spacing: -.01em; }
 .svc .price { grid-area: pr; font: 600 1.05rem var(--font-body); color: var(--gold); white-space: nowrap; align-self: center; font-variant-numeric: tabular-nums; }
 .svc-d { grid-area: d; color: var(--muted); max-width: 56ch; }
@@ -224,17 +227,18 @@ section { padding: clamp(72px, 10vw, 128px) 0 0; }
 .contact-list .icon { color: var(--gold); margin-top: 2px; }
 .contact-list b { color: var(--text); font-weight: 600; display: block; }
 form { display: grid; grid-template-columns: 1fr 1fr; gap: 18px; }
-.field { display: grid; gap: 8px; }
+.field { display: grid; gap: 8px; align-content: start; }
 .field.full { grid-column: 1 / -1; }
 label { font-size: .85rem; font-weight: 600; }
-.field-head { display: flex; justify-content: space-between; align-items: baseline; gap: 12px; }
+.field > label, .field-head { min-height: 24px; display: flex; align-items: center; }
+.field-head { justify-content: space-between; gap: 12px; }
 .link-btn {
   background: none; border: 0; padding: 2px 0; min-height: 24px; cursor: pointer; color: var(--gold);
   font: 600 .85rem var(--font-body); text-decoration: underline; text-decoration-thickness: 1px; text-underline-offset: 4px;
 }
 .link-btn:hover { color: var(--gold-strong); }
 input, select, textarea {
-  width: 100%; min-height: 50px; padding: 12px 16px; border-radius: 12px; border: 1px solid var(--line);
+  width: 100%; min-height: 50px; padding: 12px 16px; border-radius: 12px; border: 1px solid var(--field-line);
   background: var(--bg); color: var(--text); font: 400 1rem var(--font-body); caret-color: var(--gold);
   transition: border-color .2s, box-shadow .2s;
 }
@@ -260,7 +264,10 @@ input[aria-invalid="true"], select[aria-invalid="true"] { border-color: var(--er
   grid-column: 1 / -1; display: none; gap: 12px; align-items: flex-start; padding: 16px 18px; border-radius: 12px;
   border: 1px solid var(--gold); background: color-mix(in srgb, var(--gold) 10%, transparent);
 }
+.success { scroll-margin: 24px; }
 .success.show { display: flex; animation: rise .5s var(--ease); }
+.success:focus { outline: none; }
+.success:focus-visible { outline: 2px solid var(--gold); outline-offset: 3px; }
 .success .icon { color: var(--gold); margin-top: 2px; }
 .success p { margin-bottom: 6px; }
 @keyframes rise { from { opacity: 0; transform: translateY(8px); } }
@@ -282,9 +289,10 @@ footer { padding: 56px 0 32px; }
 .wa {
   position: fixed; right: 20px; bottom: 20px; z-index: 40; width: 56px; height: 56px; border-radius: 999px;
   display: grid; place-items: center; background: var(--gold); color: var(--on-gold); box-shadow: 0 14px 30px -10px rgba(0,0,0,.5); /* taste-skill-ignore: floating overlay button */
-  transition: transform .25s var(--ease);
+  transition: transform .25s var(--ease), opacity .25s, visibility .25s;
 }
 .wa:hover { transform: translateY(-3px); }
+.wa.away { opacity: 0; visibility: hidden; pointer-events: none; transform: translateY(12px); }
 .wa .icon { width: 26px; height: 26px; }
 
 .toast {
@@ -321,6 +329,8 @@ footer { padding: 56px 0 32px; }
   .svc .price { align-self: start; }
   .svc-c { align-self: start; color: var(--gold); }
   .svc-d { margin-top: 8px; }
+  .svc.on { background: var(--surface); }
+  .svc.chosen { background: var(--surface-2); }
   .quotes { grid-template-columns: 1fr; }
   .quotes { gap: 40px; }
   .gallery { grid-template-columns: repeat(2, 1fr); grid-template-rows: repeat(6, 180px); grid-template-areas: "b b" "a c" "a d" "e d" "f f" "g g"; }
@@ -384,7 +394,7 @@ footer { padding: 56px 0 32px; }
       <li><a href="#nosotras" data-i18n="nav.about">Nosotras</a></li>
       <li><a href="#galeria" data-i18n="nav.gallery">Galería</a></li>
       <li><a href="#opiniones" data-i18n="nav.reviews">Opiniones</a></li>
-      <li><a href="#reservar" data-i18n="nav.book">Reservar</a></li>
+      <li class="nav-book"><a href="#reservar" data-i18n="nav.book">Reservar</a></li>
     </ul>
     <div class="nav-tools">
       <button class="tool" id="langBtn" type="button" aria-label="Cambiar idioma a inglés" title="Cambiar idioma a inglés"><svg class="icon" aria-hidden="true"><use href="#i-globe"/></svg><span id="langLabel">EN</span></button>
@@ -402,7 +412,7 @@ footer { padding: 56px 0 32px; }
         <h1><span data-i18n="hero.t1">Belleza.</span> <span data-i18n="hero.t2">Lujo.</span><br><em data-i18n="hero.t3">Confianza.</em></h1>
         <p class="hero-lead" data-i18n="hero.lead">Cabello, uñas, maquillaje y spa en un solo lugar, con productos profesionales y un equipo que te escucha antes de empezar.</p>
         <div class="hero-actions">
-          <a class="btn btn-gold" href="#reservar"><svg class="icon"><use href="#i-cal"/></svg><span data-i18n="cta.book">Reservar cita</span></a>
+          <a class="btn btn-gold" href="#reservar"><svg class="icon" aria-hidden="true"><use href="#i-cal"/></svg><span data-i18n="cta.book">Reservar cita</span></a>
           <a class="btn btn-line" href="#servicios" data-i18n="cta.services">Ver servicios</a>
         </div>
         <div class="hero-proof">
@@ -419,7 +429,7 @@ footer { padding: 56px 0 32px; }
 
   <div class="trust">
     <ul class="wrap">
-      <li><svg class="icon" aria-hidden="true"><use href="#i-user"/></svg><span data-i18n="trust.1">12 estilistas certificadas</span></li>
+      <li><svg class="icon" aria-hidden="true"><use href="#i-user"/></svg><span data-i18n="trust.1">12 especialistas certificadas</span></li>
       <li><svg class="icon" aria-hidden="true"><use href="#i-shield"/></svg><span data-i18n="trust.2">Herramientas esterilizadas tras cada clienta</span></li>
       <li><svg class="icon" aria-hidden="true"><use href="#i-heart"/></svg><span data-i18n="trust.3">Consulta sin costo antes de empezar</span></li>
     </ul>
@@ -429,7 +439,7 @@ footer { padding: 56px 0 32px; }
     <div class="wrap">
       <div class="sec-head reveal">
         <h2 data-i18n="svc.title">Servicios pensados para ti</h2>
-        <p data-i18n="svc.lead">Toca un servicio para reservarlo. Cada visita empieza con una consulta sin costo.</p>
+        <p data-i18n="svc.lead">Elige un servicio para reservarlo. Cada visita empieza con una consulta sin costo.</p>
       </div>
       <div class="services">
         <div class="svc-stage" aria-hidden="true">
@@ -442,7 +452,7 @@ footer { padding: 56px 0 32px; }
         </div>
         <div>
           <ul class="svc-list">
-            <li class="reveal"><button type="button" class="svc on" data-svc="0" aria-labelledby="s0-t s0-c" aria-describedby="s0-p s0-d">
+            <li class="reveal"><button type="button" class="svc" data-svc="0" aria-labelledby="s0-t s0-c" aria-describedby="s0-p s0-d">
               <span class="thumb ph"><img src="img/photo-1562322140-8baeececf3df.webp" alt="" loading="lazy" onerror="this.remove()"></span>
               <span class="svc-t" id="s0-t" data-i18n="s0.t">Corte y peinado</span><span class="price" id="s0-p" data-i18n="from" data-price="1,500">Desde RD$1,500</span>
               <span class="svc-d" id="s0-d" data-i18n="s0.d">Corte a la medida de tu rostro, lavado, tratamiento y blower o ondas.</span>
@@ -493,9 +503,9 @@ footer { padding: 56px 0 32px; }
         <p data-i18n="about.p1">En Lumière creemos que una buena cita empieza antes del primer corte: te recibimos con calma, escuchamos lo que quieres y te explicamos cada paso.</p>
         <p data-i18n="about.p2">Trabajamos solo con marcas profesionales y esterilizamos cada herramienta entre clienta y clienta.</p>
         <div class="facts">
-          <div><strong>1,000+</strong><span data-i18n="about.f1">clientas atendidas</span></div>
-          <div><strong>12</strong><span data-i18n="about.f2">especialistas</span></div>
-          <div><strong>4.9</strong><span data-i18n="about.f3">valoración promedio</span></div>
+          <div><strong>6</strong><span data-i18n="about.f1">servicios</span></div>
+          <div><strong>7</strong><span data-i18n="about.f2">días a la semana</span></div>
+          <div><strong>2</strong><span data-i18n="about.f3">salas privadas de spa</span></div>
         </div>
       </div>
     </div>
@@ -550,9 +560,9 @@ footer { padding: 56px 0 32px; }
         <h2 data-i18n="book.title">Reserva tu cita</h2>
         <p data-i18n="book.lead">Déjanos tus datos y te confirmamos por WhatsApp en menos de una hora dentro del horario de atención.</p>
         <ul class="contact-list">
-          <li><svg class="icon"><use href="#i-pin"/></svg><span><b data-i18n="c.addr">Dirección</b>Av. Ejemplo 123, Santo Domingo</span></li>
-          <li><svg class="icon"><use href="#i-phone"/></svg><span><b data-i18n="c.phone">Teléfono</b>(809) 000-0000</span></li>
-          <li><svg class="icon"><use href="#i-clock"/></svg><span><b data-i18n="c.hours">Horario</b><span data-i18n="c.hoursv">Lun a sáb 9:00–19:00 · Dom 10:00–15:00</span></span></li>
+          <li><svg class="icon" aria-hidden="true"><use href="#i-pin"/></svg><span><b data-i18n="c.addr">Dirección</b>Av. Ejemplo 123, Santo Domingo</span></li>
+          <li><svg class="icon" aria-hidden="true"><use href="#i-phone"/></svg><span><b data-i18n="c.phone">Teléfono</b>(809) 000-0000</span></li>
+          <li><svg class="icon" aria-hidden="true"><use href="#i-clock"/></svg><span><b data-i18n="c.hours">Horario</b><span data-i18n="c.hoursv">Lun – Sáb 9:00 – 19:00 · Dom 10:00 – 15:00</span></span></li>
         </ul>
       </div>
       <form id="bookForm" class="reveal" novalidate data-ui>
@@ -573,19 +583,19 @@ footer { padding: 56px 0 32px; }
           </div>
           <select id="f-svc" name="service" required>
             <option value="" disabled selected data-i18n="f.svcph">Elige un servicio</option>
-            <option value="0" data-i18n="s0.t">Corte y peinado</option>
-            <option value="1" data-i18n="s1.t">Uñas y extensiones</option>
-            <option value="2" data-i18n="s2.t">Maquillaje y novias</option>
-            <option value="3" data-i18n="s3.t">Faciales</option>
-            <option value="4" data-i18n="s4.t">Spa y masajes</option>
-            <option value="5" data-i18n="s5.t">Color y keratina</option>
+            <option value="0" data-opt="s0.t" data-price="1,500">Corte y peinado · desde RD$1,500</option>
+            <option value="1" data-opt="s1.t" data-price="900">Uñas y extensiones · desde RD$900</option>
+            <option value="2" data-opt="s2.t" data-price="3,500">Maquillaje y novias · desde RD$3,500</option>
+            <option value="3" data-opt="s3.t" data-price="2,200">Faciales · desde RD$2,200</option>
+            <option value="4" data-opt="s4.t" data-price="2,800">Spa y masajes · desde RD$2,800</option>
+            <option value="5" data-opt="s5.t" data-price="3,000">Color y keratina · desde RD$3,000</option>
           </select>
           <span class="err" id="e-svc" aria-live="polite"></span>
         </div>
         <div class="field">
           <label for="f-date" data-i18n="f.date">Fecha</label>
           <input id="f-date" name="date" type="date" required aria-describedby="h-date">
-          <span class="hint" id="h-date" data-i18n="f.datehint">Abrimos todos los días; el domingo de 10:00 a 15:00.</span>
+          <span class="hint" id="h-date" data-i18n="f.datehint">Abrimos todos los días; Dom 10:00 – 15:00.</span>
           <span class="err" id="e-date" aria-live="polite"></span>
         </div>
         <div class="field full">
@@ -594,10 +604,10 @@ footer { padding: 56px 0 32px; }
         </div>
         <p class="form-status" id="formStatus" aria-live="polite"></p>
         <div class="form-actions">
-          <button class="btn btn-gold" type="submit" id="submitBtn"><svg class="icon"><use href="#i-cal"/></svg><span data-i18n="f.submit">Solicitar cita</span></button>
-          <a class="btn btn-line" href="#" data-demo><svg class="icon"><use href="#i-chat"/></svg><span data-i18n="f.wa">Escribir por WhatsApp</span></a>
+          <button class="btn btn-gold" type="submit" id="submitBtn"><svg class="icon" aria-hidden="true"><use href="#i-cal"/></svg><span data-i18n="f.submit">Solicitar cita</span></button>
+          <a class="btn btn-line" href="#" data-demo><svg class="icon" aria-hidden="true"><use href="#i-chat"/></svg><span data-i18n="f.wa">Escribir por WhatsApp</span></a>
         </div>
-        <div class="success" id="success" role="status"><svg class="icon" aria-hidden="true"><use href="#i-check"/></svg><div><p id="okMsg"></p><button class="link-btn" type="button" id="againBtn" data-i18n="f.again">Hacer otra solicitud</button></div></div>
+        <div class="success" id="success" role="status" tabindex="-1"><svg class="icon" aria-hidden="true"><use href="#i-check"/></svg><div><p id="okMsg"></p><button class="link-btn" type="button" id="againBtn" data-i18n="f.again">Pedir otra cita</button></div></div>
       </form>
     </div>
   </div>
@@ -610,9 +620,9 @@ footer { padding: 56px 0 32px; }
         <a class="brand" href="#inicio" aria-label="Lumière, inicio" data-i18n-aria="a.brand"><span class="brand-name">Lumière</span><span class="brand-sub" data-i18n="brand.sub">Salón &amp; Spa</span></a>
         <p style="margin-top:14px;color:var(--muted);max-width:36ch" data-i18n="foot.tag">Belleza, calma y detalle en cada visita.</p>
         <div class="social">
-          <a href="#" data-demo aria-label="Instagram"><svg class="icon"><use href="#i-ig"/></svg></a>
-          <a href="#" data-demo aria-label="TikTok"><svg class="icon"><use href="#i-tt"/></svg></a>
-          <a href="#" data-demo aria-label="Facebook"><svg class="icon"><use href="#i-fb"/></svg></a>
+          <a href="#" data-demo aria-label="Instagram"><svg class="icon" aria-hidden="true"><use href="#i-ig"/></svg></a>
+          <a href="#" data-demo aria-label="TikTok"><svg class="icon" aria-hidden="true"><use href="#i-tt"/></svg></a>
+          <a href="#" data-demo aria-label="Facebook"><svg class="icon" aria-hidden="true"><use href="#i-fb"/></svg></a>
         </div>
       </div>
       <div>
@@ -629,7 +639,7 @@ footer { padding: 56px 0 32px; }
         <h4 data-i18n="c.hours">Horario</h4>
         <ul class="hours">
           <li><span data-i18n="h.wk">Lun – Sáb</span><span>9:00 – 19:00</span></li>
-          <li><span data-i18n="h.sun">Domingo</span><span>10:00 – 15:00</span></li>
+          <li><span data-i18n="h.sun">Dom</span><span>10:00 – 15:00</span></li>
         </ul>
       </div>
     </div>
@@ -641,7 +651,7 @@ footer { padding: 56px 0 32px; }
   </div>
 </footer>
 
-<a class="wa" href="#" data-demo aria-label="WhatsApp"><svg class="icon"><use href="#i-chat"/></svg></a>
+<a class="wa" id="waFab" href="#" data-demo aria-label="WhatsApp"><svg class="icon" aria-hidden="true"><use href="#i-chat"/></svg></a>
 <div class="toast" id="toast" role="status" aria-live="polite"></div>
 
 <script>
@@ -658,10 +668,10 @@ footer { padding: 56px 0 32px; }
     'nav.services': 'Services', 'nav.about': 'About', 'nav.gallery': 'Gallery', 'nav.reviews': 'Reviews', 'nav.book': 'Book',
     'cta.book': 'Book now', 'cta.services': 'See services',
     'hero.t1': 'Beauty.', 'hero.t2': 'Luxury.', 'hero.t3': 'Confidence.',
-    'hero.lead': 'Hair, nails, makeup and spa in one place, with professional products and a team that listens before it starts.',
+    'hero.lead': 'Hair, nails, makeup and spa in one place, with professional products and a team that listens before we begin.',
     'hero.proof': '4.9 · Over 1,000 happy clients', 'hero.badge': 'years caring<br>for your beauty',
-    'trust.1': '12 certified stylists', 'trust.2': 'Tools sterilized after every client', 'trust.3': 'Free consultation before we start',
-    'svc.title': 'Services made for you', 'svc.lead': 'Tap a service to book it. Every visit starts with a free consultation.',
+    'trust.1': '12 certified specialists', 'trust.2': 'Tools sterilized after every client', 'trust.3': 'Free consultation before we start',
+    'svc.title': 'Services made for you', 'svc.lead': 'Choose a service to book it. Every visit starts with a free consultation.',
     'svc.fine': 'Illustrative prices for this demo.',
     's0.t': 'Cut & styling', 's0.d': 'A cut shaped to your face, wash, treatment and blowout or waves.',
     's1.t': 'Nails & extensions', 's1.d': 'Manicure, pedicure, gel, acrylic and hand-painted designs.',
@@ -672,19 +682,19 @@ footer { padding: 56px 0 32px; }
     'about.title': 'A space made to pamper you',
     'about.p1': 'At Lumière a good appointment starts before the first cut: we welcome you calmly, listen to what you want and explain every step.',
     'about.p2': 'We only use professional brands and sterilize every tool between clients.',
-    'about.f1': 'clients served', 'about.f2': 'specialists', 'about.f3': 'average rating',
+    'about.f1': 'services', 'about.f2': 'days a week', 'about.f3': 'private spa rooms',
     'gal.title': 'Our work', 'gal.lead': 'Real results from our stylists, from the wash to the final detail.',
     'rev.title': 'What our clients say',
     'rev.1': '“I left with the color I had been chasing for years. They explained everything and it lasted for weeks.”', 'rev.1s': 'Color & balayage',
     'rev.2': '“My wedding makeup lasted all night. On time, calm and truly professional.”', 'rev.2s': 'Bridal makeup',
     'rev.3': '“Clean, beautiful and service that brings you back. My nails have never lasted this long.”', 'rev.3s': 'Gel nails',
     'book.title': 'Book your appointment', 'book.lead': 'Leave your details and we will confirm on WhatsApp within an hour during opening hours.',
-    'c.addr': 'Address', 'c.phone': 'Phone', 'c.hours': 'Hours', 'c.hoursv': 'Mon to Sat 9:00–19:00 · Sun 10:00–15:00',
+    'c.addr': 'Address', 'c.phone': 'Phone', 'c.hours': 'Hours', 'c.hoursv': 'Mon – Sat 9:00 – 19:00 · Sun 10:00 – 15:00',
     'f.name': 'Name', 'f.nameph': 'Your name', 'f.phone': 'WhatsApp', 'f.svc': 'Service', 'f.svcph': 'Choose a service', 'f.change': 'Change',
-    'f.date': 'Date', 'f.datehint': 'Open daily; Sundays 10:00–15:00.',
+    'f.date': 'Date', 'f.datehint': 'Open daily; Sun 10:00 – 15:00.',
     'f.note': 'Notes (optional)', 'f.noteph': 'Tell us what you would like done',
-    'f.submit': 'Request appointment', 'f.wa': 'Message on WhatsApp', 'f.again': 'Make another request',
-    'foot.tag': 'Beauty, calm and detail in every visit.', 'foot.links': 'Links', 'h.wk': 'Mon – Sat', 'h.sun': 'Sunday',
+    'f.submit': 'Request appointment', 'f.wa': 'Message on WhatsApp', 'f.again': 'Book another appointment',
+    'foot.tag': 'Beauty, calm and detail in every visit.', 'foot.links': 'Links', 'h.wk': 'Mon – Sat', 'h.sun': 'Sun',
     'foot.demo': 'Demo site: name, details and prices are fictitious.',
     'legal.c': '© 2026 Lumière Salon & Spa', 'made': 'Made by Eric Design Web',
     'a.nav': 'Main', 'a.brand': 'Lumière, home', 'a.stars': '5 out of 5 stars',
@@ -694,7 +704,8 @@ footer { padding: 56px 0 32px; }
   };
   var MSG = {
     es: {
-      title: 'Lumière · Salón & Spa', locale: 'es-DO', from: 'Desde RD$',
+      title: 'Lumière · Salón & Spa', locale: 'es-DO', from: 'Desde RD$', fromLc: 'desde RD$',
+      day: function (d, h) { return d.charAt(0).toUpperCase() + d.slice(1) + ': abrimos ' + h + '.'; },
       theme: ['Cambiar a tema claro', 'Cambiar a tema oscuro'], lang: 'Cambiar idioma a inglés', menu: ['Abrir menú', 'Cerrar menú'],
       demo: 'Enlace de demostración: en el sitio real abrirá WhatsApp o la red social.',
       eName: 'Escribe tu nombre.', ePhone: 'Escribe los 10 dígitos de tu WhatsApp, por ejemplo 809-555-1234.',
@@ -703,7 +714,8 @@ footer { padding: 56px 0 32px; }
       ok: function (b) { return '¡Listo, ' + b.name + '! Pediste ' + b.svc + ' para el ' + b.date + '. Te escribiremos por WhatsApp para confirmar la hora.'; }
     },
     en: {
-      title: 'Lumière · Salon & Spa', locale: 'en-US', from: 'From RD$',
+      title: 'Lumière · Salon & Spa', locale: 'en-US', from: 'From RD$', fromLc: 'from RD$',
+      day: function (d, h) { return d + ': open ' + h + '.'; },
       theme: ['Switch to light theme', 'Switch to dark theme'], lang: 'Switch language to Spanish', menu: ['Open menu', 'Close menu'],
       demo: 'Demo link: on the live site this opens WhatsApp or the social profile.',
       eName: 'Enter your name.', ePhone: 'Enter your 10-digit WhatsApp number, e.g. 809-555-1234.',
@@ -729,6 +741,14 @@ footer { padding: 56px 0 32px; }
       var k = el.dataset.i18n;
       el.textContent = k === 'from' ? m.from + el.dataset.price : t(k);
     });
+    svcSel.querySelectorAll('option[data-opt]').forEach(function (o) {
+      o.dataset.name = t(o.dataset.opt);
+      o.textContent = o.dataset.name + ' · ' + m.fromLc + o.dataset.price;
+    });
+    var sb = $('submitBtn');
+    if (sb.disabled) sb.querySelector('span').textContent = m.sending;
+    if (toast.textContent) toast.textContent = m.demo;
+    renderDateHint();
     document.querySelectorAll('[data-i18n-html]').forEach(function (el) { el.innerHTML = t(el.dataset.i18nHtml); });
     document.querySelectorAll('[data-ph]').forEach(function (el) { el.placeholder = t(el.dataset.ph); });
     document.querySelectorAll('[data-i18n-aria]').forEach(function (el) { el.setAttribute('aria-label', t(el.dataset.i18nAria)); });
@@ -787,8 +807,19 @@ footer { padding: 56px 0 32px; }
   var F = { name: $('f-name'), phone: $('f-phone'), svc: svcSel, date: date };
   var ORDER = ['name', 'phone', 'svc', 'date'];
   var dirty = {}, statusShown = false, booking = null;
-  var today = new Date(); today.setMinutes(today.getMinutes() - today.getTimezoneOffset());
-  date.min = today.toISOString().slice(0, 10);
+  function setMin() {
+    var d = new Date(); d.setMinutes(d.getMinutes() - d.getTimezoneOffset());
+    date.min = d.toISOString().slice(0, 10);
+  }
+  setMin();
+  date.addEventListener('focus', setMin);
+  function parseDate(v) { var p = v.split('-'); return new Date(+p[0], +p[1] - 1, +p[2]); }
+  function renderDateHint() {
+    var hint = $('h-date'), m = MSG[lang()];
+    if (!date.value || CHECK.date(date.value)) { hint.textContent = t('f.datehint'); return; }
+    var d = parseDate(date.value);
+    hint.textContent = m.day(d.toLocaleDateString(m.locale, { weekday: 'long', day: 'numeric', month: 'long' }), d.getDay() === 0 ? '10:00 – 15:00' : '9:00 – 19:00');
+  }
 
   function digits(v) { return v.replace(/\D/g, ''); }
   function formatPhone(v) {
@@ -801,7 +832,7 @@ footer { padding: 56px 0 32px; }
     name: function (v) { return v.trim().length < 2 ? 'eName' : ''; },
     phone: function (v) { var d = digits(v); return (d.length === 10 && d.charAt(0) !== '1') || (d.length === 11 && d.charAt(0) === '1') ? '' : 'ePhone'; },
     svc: function (v) { return v ? '' : 'eSvc'; },
-    date: function (v) { return !v || v < date.min ? 'eDate' : ''; }
+    date: function (v) { setMin(); return !v || v < date.min ? 'eDate' : ''; }
   };
   function describe(id, withErr) {
     var ids = [], hint = $('h-' + id);
@@ -833,9 +864,9 @@ footer { padding: 56px 0 32px; }
   }
   function renderOk() {
     if (!booking) { okMsg.textContent = ''; return; }
-    var m = MSG[lang()], p = booking.date.split('-');
-    var when = new Date(+p[0], +p[1] - 1, +p[2]).toLocaleDateString(m.locale, { weekday: 'long', day: 'numeric', month: 'long' });
-    var svc = svcSel.querySelector('option[value="' + booking.svc + '"]').textContent;
+    var m = MSG[lang()];
+    var when = parseDate(booking.date).toLocaleDateString(m.locale, { weekday: 'long', day: 'numeric', month: 'long' });
+    var svc = svcSel.querySelector('option[value="' + booking.svc + '"]').dataset.name;
     okMsg.textContent = m.ok({ name: booking.name, svc: svc.charAt(0).toLowerCase() + svc.slice(1), date: when });
   }
 
@@ -849,8 +880,9 @@ footer { padding: 56px 0 32px; }
     });
     el.addEventListener('blur', function () { if (dirty[id] || el.getAttribute('aria-invalid') === 'true') validate(id); });
   });
-  svcSel.addEventListener('change', function () { dirty.svc = true; validate('svc'); });
-  date.addEventListener('change', function () { dirty.date = true; validate('date'); });
+  svcSel.addEventListener('change', function () { dirty.svc = true; validate('svc'); markChosen(svcSel.value); });
+  date.addEventListener('change', function () { dirty.date = true; validate('date'); renderDateHint(); });
+  date.addEventListener('input', renderDateHint);
 
   changeBtn.addEventListener('click', function () {
     svcSel.focus();
@@ -869,22 +901,26 @@ footer { padding: 56px 0 32px; }
       return;
     }
     var btn = $('submitBtn'), label = btn.querySelector('span'), m = MSG[lang()];
-    btn.disabled = true; label.textContent = m.sending;
+    btn.disabled = true; label.textContent = m.sending; form.setAttribute('aria-busy', 'true');
     setTimeout(function () {
-      btn.disabled = false; label.textContent = t('f.submit');
+      btn.disabled = false; label.textContent = t('f.submit'); form.removeAttribute('aria-busy');
       booking = { name: F.name.value.trim(), svc: svcSel.value, date: date.value };
       renderOk();
       success.classList.add('show');
+      success.focus({ preventScroll: true });
+      success.scrollIntoView({ block: 'nearest', behavior: motion() });
     }, 900);
   });
 
+  // Keep name and WhatsApp; start a fresh service, date and note
   $('againBtn').addEventListener('click', function () {
-    form.reset();
-    ORDER.forEach(clearField);
-    dirty = {}; statusShown = false; renderStatus();
+    svcSel.value = ''; date.value = ''; $('f-note').value = '';
+    ['svc', 'date'].forEach(function (id) { clearField(id); delete dirty[id]; });
+    statusShown = false; renderStatus(); renderDateHint();
     booking = null; renderOk(); success.classList.remove('show');
-    svcField.classList.remove('picked'); changeBtn.hidden = true;
-    F.name.focus();
+    svcField.classList.remove('picked'); changeBtn.hidden = true; markChosen(null);
+    svcSel.focus({ preventScroll: true });
+    svcField.scrollIntoView({ block: 'nearest', behavior: motion() });
   });
 
   // Services: preview on hover/focus, book on click/Enter
@@ -893,10 +929,11 @@ footer { padding: 56px 0 32px; }
     svcs.forEach(function (s) { s.classList.toggle('on', s.dataset.svc === i); });
     stages.forEach(function (s) { s.classList.toggle('on', s.dataset.stage === i); });
   }
+  function markChosen(i) { svcs.forEach(function (s) { s.classList.toggle('chosen', s.dataset.svc === i); }); }
   function choose(i) {
-    svcSel.value = i; dirty.svc = true; validate('svc');
+    svcSel.value = i; dirty.svc = true; validate('svc'); markChosen(i);
     svcField.classList.add('picked'); changeBtn.hidden = false;
-    $('reservar').scrollIntoView({ behavior: motion(), block: 'start' });
+    svcField.scrollIntoView({ behavior: motion(), block: 'center' });
     svcSel.focus({ preventScroll: true });
   }
   svcs.forEach(function (s) {
@@ -925,6 +962,11 @@ footer { padding: 56px 0 32px; }
       entries.forEach(function (en) { if (en.isIntersecting) setCurrent(en.target.id || ''); });
     }, { rootMargin: '-45% 0px -50% 0px' });
     document.querySelectorAll('section[id], #reservar, .hero').forEach(function (el) { spy.observe(el); });
+    // The form has its own WhatsApp button; keep the floating one off the form
+    var fab = $('waFab');
+    new IntersectionObserver(function (entries) {
+      entries.forEach(function (en) { fab.classList.toggle('away', en.isIntersecting); });
+    }).observe(form);
   } else {
     document.querySelectorAll('.reveal').forEach(function (el) { el.classList.add('in'); });
   }
