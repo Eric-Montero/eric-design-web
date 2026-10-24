@@ -91,6 +91,7 @@ header { position: sticky; top: 0; z-index: 40; background: var(--bg); }
 @keyframes slow { from { transform: scale(1.08); } }
 .hero::after { content: ""; position: absolute; inset: 0; background: linear-gradient(180deg, transparent calc(100% - 150px), var(--bg)), linear-gradient(90deg, rgba(10, 9, 7, .94) 0%, rgba(10, 9, 7, .72) 42%, rgba(10, 9, 7, .1) 78%); } /* taste-skill-ignore: photo scrim + fade into the page under the console */
 .hero .wrap { position: relative; z-index: 1; padding-block: 72px 120px; }
+[data-theme="light"] .hero::after { background: linear-gradient(90deg, rgba(10, 9, 7, .94) 0%, rgba(10, 9, 7, .72) 42%, rgba(10, 9, 7, .1) 78%); } /* taste-skill-ignore: photo scrim only; no fade into the cream page */
 .hero h1 { color: #f4ecdc; font-size: clamp(3rem, 7.5vw, 6rem); font-weight: 600; letter-spacing: -.01em; max-width: 11ch; }
 .hero h1 em { color: #c9a45c; font-style: normal; font-weight: 600; }
 .hero p { color: #d6cbb6; margin-top: 20px; max-width: 40ch; font-size: 1.08rem; }
@@ -277,7 +278,7 @@ footer { margin-top: clamp(72px, 9vw, 112px); padding: 40px 0; }
 .toast-msg { min-width: 0; }
 .toast-act { flex: none; background: transparent; border: 0; min-height: 40px; padding: 0 10px; color: var(--gold); font: 600 .88rem/1 var(--font-body); text-decoration: underline; text-underline-offset: 3px; cursor: pointer; }
 .toast { width: max-content; max-width: calc(100vw - 32px); text-align: center; }
-@media (max-width: 760px) { .toast { bottom: calc(env(safe-area-inset-bottom, 0px) + 88px); border-radius: 14px; } }
+@media (max-width: 760px) { .toast { top: 84px; bottom: auto; transform: translate(-50%, -16px); border-radius: 14px; } .toast.show { transform: translate(-50%, 0); } }
 
 @media (max-width: 1080px) {
   .grid { grid-template-columns: 1fr 1fr; }
@@ -293,6 +294,8 @@ footer { margin-top: clamp(72px, 9vw, 112px); padding: 40px 0; }
   .hero { min-height: 0; }
   .hero::after { background: linear-gradient(180deg, transparent calc(100% - 64px), var(--bg)), linear-gradient(180deg, rgba(10, 9, 7, .55) 0%, rgba(10, 9, 7, .92) 70%); } /* taste-skill-ignore: photo scrim */
   .hero .wrap { padding-block: 56px 104px; }
+  [data-theme="light"] .hero::after { background: linear-gradient(180deg, rgba(10, 9, 7, .55) 0%, rgba(10, 9, 7, .92) 70%); } /* taste-skill-ignore: photo scrim */
+  .chg { min-height: 44px; }
   .grid, .menu-list, .foot { grid-template-columns: 1fr; }
   .steps { grid-template-columns: repeat(4, 1fr); gap: 6px; }
   .steps li { flex-direction: column; gap: 6px; font-size: .72rem; line-height: 1.2; text-align: center; }
@@ -442,6 +445,7 @@ footer { background: var(--panel); }
               <button class="btn btn-gold" id="confirm" type="submit" disabled>Confirmar cita</button>
               <p class="missing" id="missing" aria-live="polite">Te falta: servicio, barbero, día y hora.</p>
               <button type="button" class="linkbtn" id="reset" hidden>Empezar de nuevo</button>
+              <button type="button" class="linkbtn" id="discard" hidden>Descartar cambios y volver a mi cita</button>
               <p class="secure"><svg class="icon"><use href="#i-lock"/></svg>Solo usamos tu número para confirmar la cita.</p>
             </form>
           </div>
@@ -582,8 +586,9 @@ footer { background: var(--panel); }
     else $('times').innerHTML = '<p class="hint" style="grid-column:1/-1">Escoge un día para ver las horas.</p>';
     update();
   }
-  function undoAct(snap) { return { label: 'Deshacer', undo: true, fn: function () { restoreState(snap); } }; }
-  $('barbers').addEventListener('click', function (e) { var b = e.target.closest('[data-bar]'); if (!b) return; if (b.dataset.bar === st.bar) return; var snap = snapshot(); st.bar = b.dataset.bar; press($('barbers'), 'data-bar', st.bar); st.time = null; if (st.date) renderTimes(); update(); if (snap.time) toast('Cambiaste de barbero: vuelve a escoger la hora.', undoAct(snap)); goNext(); });
+  // Undo puts focus back on the choice it restored, so keyboard users land where they were
+  function undoAct(snap, sel) { return { label: 'Deshacer', undo: true, fn: function () { restoreState(snap); var el = document.querySelector(sel); if (el) el.focus({ preventScroll: true }); } }; }
+  $('barbers').addEventListener('click', function (e) { var b = e.target.closest('[data-bar]'); if (!b) return; if (b.dataset.bar === st.bar) return; var snap = snapshot(); st.bar = b.dataset.bar; press($('barbers'), 'data-bar', st.bar); st.time = null; if (st.date) renderTimes(); update(); if (snap.time) toast('Cambiaste de barbero: vuelve a escoger la hora.', undoAct(snap, '#barbers [aria-pressed="true"]')); goNext(); });
 
   // Calendar
   function sameDay(a, b) { return a && b && a.getTime() === b.getTime(); }
@@ -609,7 +614,7 @@ footer { background: var(--panel); }
     if (sameDay(nd, st.date)) return;
     var snap = snapshot();
     st.date = nd; st.time = null;
-    if (snap.time) toast('Cambiaste de día: vuelve a escoger la hora.', undoAct(snap));
+    if (snap.time) toast('Cambiaste de día: vuelve a escoger la hora.', undoAct(snap, '#cal [aria-pressed="true"]'));
     $('cal').querySelectorAll('[data-day]').forEach(function (x) { x.setAttribute('aria-pressed', x === b ? 'true' : 'false'); });
     renderTimes(); var tl = $('times'); tl.classList.remove('fresh'); void tl.offsetWidth; tl.classList.add('fresh'); update();
   });
@@ -664,21 +669,33 @@ footer { background: var(--panel); }
       if (i === nowIdx) li.setAttribute('aria-current', 'step'); else li.removeAttribute('aria-current');
     }
     var miss = []; if (!st.svc) miss.push('servicio'); if (!st.bar) miss.push('barbero'); if (!st.date) miss.push('día'); if (!st.time) miss.push('hora');
+    var editing = isEditing();
     $('confirm').disabled = miss.length > 0;
-    $('reset').hidden = miss.length === 4;
-    $('missing').textContent = miss.length ? 'Te falta: ' + miss.join(', ') + '.' : 'Todo listo. Solo falta tu nombre y WhatsApp.';
+    if (!locking) $('confirm').textContent = editing ? 'Guardar cambios' : 'Confirmar cita';
+    $('reset').hidden = miss.length === 4 || locking || editing; // while editing, the way out is "Descartar cambios" 
+    $('discard').hidden = !editing || locking;
+    // What is still missing, counting the name and WhatsApp fields as they stand right now
+    var fmiss = []; if (nameMsg($('f-name').value.trim())) fmiss.push('tu nombre'); if (telMsg($('f-tel').value)) fmiss.push('WhatsApp');
+    var fText = fmiss.length === 2 ? 'tu nombre y WhatsApp' : fmiss[0] === 'WhatsApp' ? 'tu WhatsApp' : fmiss[0];
+    var was = editing ? 'tu cita del ' + dayText(bookedSnap.date) + ' a las ' + ampm(bookedSnap.time) : '';
+    var dot = function (t) { return /\.$/.test(t) ? t : t + '.'; }; // "a. m." already ends the sentence
+    $('missing').textContent = miss.length ? 'Te falta: ' + miss.join(', ') + '.' + (editing ? ' Hasta que guardes, sigue en pie ' + dot(was) : '')
+      : fmiss.length ? 'Te falta: ' + fText + '.'
+      : editing ? 'Estás cambiando ' + dot(was) + ' Confirma para guardar los cambios.'
+      : 'Todo listo. Revisa y confirma.';
     // Mobile bar
     var step = !st.svc ? 0 : !st.bar ? 1 : !(st.date && st.time) ? 2 : 3;
     var titles = ['Escoge un servicio', 'Escoge tu barbero', 'Escoge día y hora', 'Confirma tu cita'];
     $('mbarTitle').textContent = s ? s.name + ' · ' + rd(s.price) : titles[0];
-    $('mbarSub').textContent = step < 3 ? 'Paso ' + (step + 1) + ' de 4 · ' + titles[step] : (st.date ? val('s-day') + ', ' + val('s-time') : '');
-    $('mbarBtn').textContent = step < 3 ? 'Continuar' : 'Confirmar';
+    $('mbarSub').textContent = step < 3 ? 'Paso ' + (step + 1) + ' de 4' + (s ? ' · ' + titles[step] : '') : (st.date ? val('s-day') + ', ' + val('s-time') : '');
+    $('mbarBtn').textContent = step < 3 ? 'Continuar' : editing ? 'Guardar' : 'Confirmar';
     $('mbarBtn').dataset.target = ['c-svc', 'c-bar', 'c-when', 'c-sum'][step];
     syncMbar();
     save();
   }
   // A confirmed booking survives a refresh (and an unconfirmed edit of it); otherwise the draft does
   var bookedSnap = null, locking = false;
+  function isEditing() { return !!bookedSnap && !$('grid').classList.contains('booked'); }
   function save() {
     var b = bookedSnap, o = b ? { booked: true, svc: b.svc, bar: b.bar, date: b.date.getTime(), time: b.time, name: b.name, tel: b.tel } : { svc: st.svc, bar: st.bar, date: st.date && st.date.getTime(), time: st.time };
     try { sessionStorage.setItem('navaja-st', JSON.stringify(o)); } catch (e) {}
@@ -733,7 +750,7 @@ footer { background: var(--panel); }
     ['c-svc', 'c-bar', 'c-when'].forEach(function (id) { if (on) $(id).setAttribute('inert', ''); else if (!$('grid').classList.contains('booked')) $(id).removeAttribute('inert'); });
     $('f-name').readOnly = on; $('f-tel').readOnly = on;
     $('c-sum').setAttribute('aria-busy', on ? 'true' : 'false');
-    if (on) $('reset').hidden = true;
+    if (on) { $('reset').hidden = true; $('discard').hidden = true; }
   }
   function focusIn(id) {
     var c = $(id);
@@ -761,8 +778,9 @@ footer { background: var(--panel); }
     $('icsBtn').href = 'data:text/calendar;charset=utf-8,' + encodeURIComponent('BEGIN:VCALENDAR\r\nVERSION:2.0\r\nPRODID:-//Navaja//Demo//ES\r\nBEGIN:VTIMEZONE\r\nTZID:' + TZ + '\r\nBEGIN:STANDARD\r\nDTSTART:19700101T000000\r\nTZOFFSETFROM:-0400\r\nTZOFFSETTO:-0400\r\nTZNAME:AST\r\nEND:STANDARD\r\nEND:VTIMEZONE\r\nBEGIN:VEVENT\r\nUID:' + start.getTime() + '-' + b.svc + '@navaja-demo\r\nDTSTAMP:' + new Date().toISOString().replace(/[-:]/g, '').slice(0, 15) + 'Z\r\nDTSTART;TZID=' + TZ + ':' + f(start) + '\r\nDTEND;TZID=' + TZ + ':' + f(end) + '\r\nSUMMARY:' + esc(svc.name + ' en Navaja Barber Studio') + '\r\nLOCATION:' + esc('Calle Ejemplo 45, Santo Domingo') + '\r\nEND:VEVENT\r\nEND:VCALENDAR');
   }
   // Show a confirmed booking: live state, fields and steps all match it
-  function showBooked(b) {
+  function showBooked(b, heading) {
     bookedSnap = b;
+    $('done').querySelector('h4').textContent = heading || '¡Cita reservada!';
     restoreState({ svc: b.svc, bar: b.bar, date: new Date(b.date), time: b.time });
     $('f-name').value = b.name; $('f-tel').value = b.tel;
     renderDone(b); setBooked(true);
@@ -788,15 +806,16 @@ footer { background: var(--panel); }
     }
     var snap = { svc: st.svc, bar: st.bar, date: new Date(st.date), time: st.time, name: nm, tel: tel };
     hideToast();
-    var btn = $('confirm'); btn.disabled = true; btn.textContent = 'Reservando…';
+    var wasEdit = isEditing();
+    var btn = $('confirm'); btn.disabled = true; btn.textContent = wasEdit ? 'Guardando…' : 'Reservando…';
     lock(true);
     setTimeout(function () {
       try {
-        showBooked(snap);
+        showBooked(snap, wasEdit ? '¡Cambios guardados!' : null);
         focusDone();
       } finally {
-        btn.textContent = 'Confirmar cita';
         lock(false);
+        btn.textContent = isEditing() ? 'Guardar cambios' : 'Confirmar cita';
         if (!$('grid').classList.contains('booked')) update();
       }
     }, 800);
@@ -809,8 +828,9 @@ footer { background: var(--panel); }
     });
   });
   $('bookForm').addEventListener('input', function (e) {
-    var t = e.target; if (t.getAttribute('aria-invalid') !== 'true') return;
-    err(t.id.slice(2), t.id === 'f-tel' ? telMsg(t.value) : nameMsg(t.value.trim()));
+    var t = e.target;
+    if (t.getAttribute('aria-invalid') === 'true') err(t.id.slice(2), t.id === 'f-tel' ? telMsg(t.value) : nameMsg(t.value.trim()));
+    update();
   });
   function resetAll() {
     st = { svc: null, bar: null, date: null, time: null };
@@ -848,8 +868,9 @@ footer { background: var(--panel); }
     setBooked(false); update();
     $('c-sum').scrollIntoView({ behavior: smooth, block: 'start' });
     $('sumBox').querySelector('.chg:not([hidden])').focus({ preventScroll: true });
-    toast('Cambia lo que quieras y confirma de nuevo.', backToBooking(prev));
+    toast('Cambia lo que quieras y guarda los cambios.', backToBooking(prev));
   });
+  $('discard').addEventListener('click', function () { var prev = bookedSnap; if (!prev) return; hideToast(); showBooked(prev); focusDone(); });
   // Menu rows preselect the service
   $('menu').addEventListener('click', function (e) {
     var b = e.target.closest('[data-pick]'); if (!b) return;
