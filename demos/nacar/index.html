@@ -171,7 +171,7 @@ section { padding-top: clamp(72px, 9vw, 112px); }
 .steps li:last-child::after { display: none; }
 .grid { display: grid; grid-template-columns: 1fr 1fr minmax(320px, 1.25fr) 1fr; gap: 24px; align-items: start; }
 .col { scroll-margin-top: 8px; /* adds to html scroll-padding-top: lands just under the header */ min-width: 0; transition: opacity 300ms ease; }
-.col[inert] { opacity: .5; }
+.col[inert] { opacity: .5; transition: none; }
 .sub-label { margin: 16px 0 8px; font-weight: 600; font-size: .875rem; }
 .sub-label span { color: var(--muted); font-weight: 400; }
 .finish button[disabled] { color: var(--busy); cursor: not-allowed; }
@@ -320,7 +320,8 @@ footer { margin-top: clamp(72px, 9vw, 112px); background: var(--panel); padding:
   .ph.tall { grid-row: span 1; grid-column: span 2; }
   .hours { display: none; }
   .cal { gap: 0; }
-  .toast { bottom: calc(env(safe-area-inset-bottom, 0px) + 88px); border-radius: 16px; }
+  /* Mobile: top, under the nav, so it never covers the list you act on next or the sticky step bar */
+  .toast { top: 84px; bottom: auto; transform: translate(-50%, -16px); border-radius: 16px; }
   .mbar { display: flex; position: sticky; bottom: 0; z-index: 30; margin: 16px -20px -20px; padding: 12px 16px calc(env(safe-area-inset-bottom, 0px) + 12px); gap: 12px; align-items: center; background: var(--panel); border-radius: 0 0 20px 20px; }
   .mbar .msum { flex: 1; min-width: 0; font-size: .875rem; color: var(--muted); }
   .mbar .msum b { display: block; color: var(--text); font-size: 1rem; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
@@ -628,7 +629,7 @@ footer { margin-top: clamp(72px, 9vw, 112px); background: var(--panel); padding:
     document.querySelectorAll('#nailset .chrome').forEach(function (n) { n.setAttribute('opacity', f === 'cromo' ? .9 : 0); });
     $('nails').classList.toggle('mate', f === 'mate');
     $('pvName').textContent = s.name; $('pvNote').textContent = s.note;
-    $('pvExtra').textContent = s.id === 'frances' || f === 'cromo' ? (s.id === 'frances' ? 'Francesa' : 'Cromo') + ': + RD$300 sobre el servicio.' : '';
+    $('pvExtra').textContent = fr || f === 'cromo' ? (fr && f === 'cromo' ? 'Francesa con cromo' : fr ? 'Francesa' : 'Cromo') + ': + RD$300 sobre el servicio.' : '';
     document.querySelectorAll('[data-shade]').forEach(function (b) { b.setAttribute('aria-pressed', b.dataset.shade === s.id ? 'true' : 'false'); });
     document.querySelectorAll('[data-finish]').forEach(function (b) { b.setAttribute('aria-pressed', b.dataset.finish === f ? 'true' : 'false'); });
   }
@@ -835,7 +836,8 @@ footer { margin-top: clamp(72px, 9vw, 112px); background: var(--panel); padding:
   // Form: validate on blur, live phone format 809-555-1234
   var INFO = '<svg class="icon" aria-hidden="true"><use href="#i-info"/></svg>';
   function err(id, msg) { $('e-' + id).innerHTML = msg ? INFO + '<span>' + msg + '</span>' : ''; $('f-' + id).setAttribute('aria-invalid', msg ? 'true' : 'false'); refreshMissing(); return !msg; }
-  function digits() { var dg = $('f-tel').value.replace(/\D/g, ''); return dg.length === 11 && dg[0] === '1' ? dg.slice(1) : dg; }
+  function digits() { var dg = $('f-tel').value.replace(/\D/g, ''); return dg.length > 1 && dg[0] === '1' ? dg.slice(1) : dg; }
+  function lead1() { var dg = $('f-tel').value.replace(/\D/g, ''); return dg.length > 1 && dg[0] === '1'; }
   function msgName() {
     var nm = $('f-name').value.trim(), letters = nm.replace(/[^A-Za-zÀ-ÿñÑ]/g, '').length;
     return !nm ? 'Escribe tu nombre.' : letters < 2 ? 'Escribe al menos 2 letras.' : '';
@@ -843,7 +845,7 @@ footer { margin-top: clamp(72px, 9vw, 112px); background: var(--panel); padding:
   function msgTel() {
     var n = digits().length, left = 10 - n;
     return !n ? 'Escribe tu WhatsApp, por ejemplo 809-555-1234.' :
-      n < 10 ? 'Llevas ' + n + (n === 1 ? ' dígito' : ' dígitos') + '; ' + (left === 1 ? 'falta 1' : 'faltan ' + left) + '. Ej.: 809-555-1234.' :
+      n < 10 ? (lead1() ? 'Sin contar el 1, llevas ' : 'Llevas ') + n + (n === 1 ? ' dígito' : ' dígitos') + '; ' + (left === 1 ? 'falta 1' : 'faltan ' + left) + '.' + (lead1() ? '' : ' Ej.: 809-555-1234.') :
       !/^8[024]9/.test(digits()) ? 'Los números de RD empiezan con 809, 829 o 849.' : '';
   }
   function checkName() { return err('name', msgName()); }
@@ -883,21 +885,33 @@ footer { margin-top: clamp(72px, 9vw, 112px); background: var(--panel); padding:
     if ($('confirm').disabled) return;
     var ok = checkName(); ok = checkTel() && ok;
     if (!ok) { document.querySelector('[aria-invalid="true"]').focus(); return; }
-    var nm = $('f-name').value.trim();
+    var nm = $('f-name').value.trim(), tv = $('f-tel').value;
+    // From here the booking is frozen: no picks, no reset, no pending undo can change what gets confirmed
+    lock(true); $('reset').hidden = true; clearTimeout(tt); hideToast();
+    var b = bookSnap(), saved = snap();
+    ['f-name', 'f-tel'].forEach(function (id) { $(id).readOnly = true; });
     var btn = $('confirm'); btn.disabled = true; btn.textContent = 'Reservando…';
     setTimeout(function () {
-      lock(true);
-      save({ booked: true, name: nm, tel: $('f-tel').value });
-      showDone(nm, true);
-      btn.textContent = 'Confirmar cita';
+      try {
+        save(Object.assign({}, saved, { date: saved.date ? iso(saved.date) : null, booked: true, name: nm, tel: tv }));
+        showDone(nm, true, b);
+      } finally {
+        btn.textContent = 'Confirmar cita';
+        ['f-name', 'f-tel'].forEach(function (id) { $(id).readOnly = false; });
+      }
     }, 700);
   });
-  function showDone(nm, fresh) {
-    var day = $('s-day').textContent, time = $('s-time').textContent;
+  function bookSnap() {
+    return { day: $('s-day').textContent, time: $('s-time').textContent, svc: $('s-svc').textContent, col: $('s-col').textContent,
+      fin: isShade(st.col) ? finLabel() + (extra() ? ' + RD$300' : '') : '', total: $('s-total').textContent };
+  }
+  function showDone(nm, fresh, b) {
+    b = b || bookSnap();
+    var day = b.day, time = b.time;
     $('doneText').textContent = nm.split(' ')[0] + ', te esperamos el ' + day + ' a las ' + time + (/\.$/.test(time) ? '' : '.');
-    $('doneList').innerHTML = '<div class="row"><dt>Servicio</dt><dd>' + $('s-svc').textContent + '</dd></div><div class="row"><dt>Color</dt><dd>' + $('s-col').textContent + '</dd></div>' +
-      (isShade(st.col) ? '<div class="row"><dt>Acabado</dt><dd>' + finLabel() + (extra() ? ' + RD$300' : '') + '</dd></div>' : '') +
-      '<div class="row"><dt>Total</dt><dd>' + $('s-total').textContent + ', en el local</dd></div>';
+    $('doneList').innerHTML = '<div class="row"><dt>Servicio</dt><dd>' + b.svc + '</dd></div><div class="row"><dt>Color</dt><dd>' + b.col + '</dd></div>' +
+      (b.fin ? '<div class="row"><dt>Acabado</dt><dd>' + b.fin + '</dd></div>' : '') +
+      '<div class="row"><dt>Total</dt><dd>' + b.total + ', en el local</dd></div>';
     $('sumBox').hidden = true; $('done').classList.add('show'); $('mbar').hidden = true;
     ['st-1', 'st-2', 'st-3', 'st-4'].forEach(function (id) { $(id).classList.add('done'); $(id).classList.remove('now'); $(id).removeAttribute('aria-current'); });
     var hd = $('done').querySelector('h4'); hd.setAttribute('tabindex', '-1');
