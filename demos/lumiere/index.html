@@ -129,6 +129,8 @@ p { margin: 0; }
 [data-theme="light"] .tool .sun { display: block; }
 [data-theme="light"] .tool .moon { display: none; }
 .nav .btn { min-height: 42px; padding: 0 18px; }
+.site-header .btn-book[aria-current="true"] { background: var(--gold-strong); outline: 1px solid var(--gold); outline-offset: 3px; }
+.site-header .btn-book[aria-current="true"] span { text-decoration: underline; text-decoration-thickness: 1px; text-underline-offset: 4px; }
 .bk-short { display: none; }
 .menu-btn { display: none; }
 @media (min-width: 961px) { .nav-book { display: none; } }
@@ -260,6 +262,8 @@ input[aria-invalid="true"], select[aria-invalid="true"] { border-color: var(--er
 .form-status:empty { display: none; }
 .form-actions { grid-column: 1 / -1; display: flex; flex-wrap: wrap; gap: 12px; align-items: center; }
 .btn[disabled] { opacity: .6; cursor: progress; }
+.btn-gold[disabled]:hover { background: var(--gold); transform: none; }
+.btn.sent, .btn.sent:hover { opacity: 1; cursor: default; background: transparent; color: var(--gold); border-color: transparent; padding-inline: 4px 12px; transform: none; }
 .success {
   grid-column: 1 / -1; display: none; gap: 12px; align-items: flex-start; padding: 16px 18px; border-radius: 12px;
   border: 1px solid var(--gold); background: color-mix(in srgb, var(--gold) 10%, transparent);
@@ -313,13 +317,13 @@ footer { padding: 56px 0 32px; }
   .bk-long { display: none; }
   .bk-short { display: inline; }
   .nav .btn-book { padding: 0 14px; gap: 6px; }
-  .menu-btn { display: inline-flex; }
+  .menu-btn { display: inline-flex; order: 3; margin-left: -16px; }
   .nav-links.open {
     display: flex; flex-direction: column; position: absolute; top: 72px; left: 0; right: 0; gap: 0;
     background: var(--surface); padding: 8px 16px 16px;
   }
   .nav-links.open a { display: block; padding: 14px 4px; font-size: 1.05rem; }
-  .nav-tools { margin-left: auto; }
+  .nav-tools { margin-left: auto; order: 2; }
   .hero-grid, .services, .about, .book-grid { grid-template-columns: 1fr; }
   .hero-media { max-width: 440px; margin-inline: auto; width: 100%; }
   .badge { left: 0; }
@@ -344,6 +348,7 @@ footer { padding: 56px 0 32px; }
   .brand-name { font-size: 1.6rem; }
   .nav { gap: 12px; }
   .nav-tools { gap: 6px; }
+  .menu-btn { margin-left: -6px; }
   #langBtn .icon { display: none; }
   form { grid-template-columns: 1fr; }
   .trust ul { flex-direction: column; }
@@ -389,6 +394,7 @@ footer { padding: 56px 0 32px; }
     <a class="brand" href="#inicio" aria-label="Lumière, inicio" data-i18n-aria="a.brand">
       <span class="brand-name">Lumière</span><span class="brand-sub" data-i18n="brand.sub">Salón &amp; Spa</span>
     </a>
+    <button class="tool menu-btn" id="menuBtn" type="button" aria-expanded="false" aria-controls="navlinks" aria-label="Abrir menú"><svg class="icon i-open" aria-hidden="true"><use href="#i-menu"/></svg><svg class="icon i-close" aria-hidden="true"><use href="#i-x"/></svg></button>
     <ul class="nav-links" id="navlinks">
       <li><a href="#servicios" data-i18n="nav.services">Servicios</a></li>
       <li><a href="#nosotras" data-i18n="nav.about">Nosotras</a></li>
@@ -400,7 +406,6 @@ footer { padding: 56px 0 32px; }
       <button class="tool" id="langBtn" type="button" aria-label="Cambiar idioma a inglés" title="Cambiar idioma a inglés"><svg class="icon" aria-hidden="true"><use href="#i-globe"/></svg><span id="langLabel">EN</span></button>
       <button class="tool" id="themeBtn" type="button" aria-label="Cambiar a tema claro" title="Cambiar a tema claro"><svg class="icon moon" aria-hidden="true"><use href="#i-sun"/></svg><svg class="icon sun" aria-hidden="true"><use href="#i-moon"/></svg></button>
       <a class="btn btn-gold btn-book" href="#reservar"><svg class="icon" aria-hidden="true"><use href="#i-cal"/></svg><span class="bk-long" data-i18n="cta.book">Reservar cita</span><span class="bk-short" data-i18n="nav.book">Reservar</span></a>
-      <button class="tool menu-btn" id="menuBtn" type="button" aria-expanded="false" aria-controls="navlinks" aria-label="Abrir menú"><svg class="icon i-open" aria-hidden="true"><use href="#i-menu"/></svg><svg class="icon i-close" aria-hidden="true"><use href="#i-x"/></svg></button>
     </div>
   </nav>
 </header>
@@ -568,7 +573,7 @@ footer { padding: 56px 0 32px; }
       <form id="bookForm" class="reveal" novalidate data-ui>
         <div class="field">
           <label for="f-name" data-i18n="f.name">Nombre</label>
-          <input id="f-name" name="name" autocomplete="name" required data-ph="f.nameph" placeholder="Tu nombre">
+          <input id="f-name" name="name" autocomplete="name" maxlength="60" required data-ph="f.nameph" placeholder="Tu nombre">
           <span class="err" id="e-name" aria-live="polite"></span>
         </div>
         <div class="field">
@@ -600,14 +605,14 @@ footer { padding: 56px 0 32px; }
         </div>
         <div class="field full">
           <label for="f-note" data-i18n="f.note">Comentarios (opcional)</label>
-          <textarea id="f-note" name="note" data-ph="f.noteph" placeholder="Cuéntanos qué te gustaría hacerte"></textarea>
+          <textarea id="f-note" name="note" maxlength="500" data-ph="f.noteph" placeholder="Cuéntanos qué te gustaría hacerte"></textarea>
         </div>
         <p class="form-status" id="formStatus" aria-live="polite"></p>
         <div class="form-actions">
           <button class="btn btn-gold" type="submit" id="submitBtn"><svg class="icon" aria-hidden="true"><use href="#i-cal"/></svg><span data-i18n="f.submit">Solicitar cita</span></button>
           <a class="btn btn-line" href="#" data-demo><svg class="icon" aria-hidden="true"><use href="#i-chat"/></svg><span data-i18n="f.wa">Escribir por WhatsApp</span></a>
         </div>
-        <div class="success" id="success" role="status" tabindex="-1"><svg class="icon" aria-hidden="true"><use href="#i-check"/></svg><div><p id="okMsg"></p><button class="link-btn" type="button" id="againBtn" data-i18n="f.again">Pedir otra cita</button></div></div>
+        <div class="success" id="success" role="status" tabindex="-1"><svg class="icon" aria-hidden="true"><use href="#i-check"/></svg><div><p id="okMsg"></p><button class="link-btn" type="button" id="againBtn" data-i18n="f.again">Solicitar otra cita</button></div></div>
       </form>
     </div>
   </div>
@@ -666,7 +671,7 @@ footer { padding: 56px 0 32px; }
     'skip': 'Skip to booking',
     'brand.sub': 'Salon & Spa',
     'nav.services': 'Services', 'nav.about': 'About', 'nav.gallery': 'Gallery', 'nav.reviews': 'Reviews', 'nav.book': 'Book',
-    'cta.book': 'Book now', 'cta.services': 'See services',
+    'cta.book': 'Book appointment', 'cta.services': 'See services',
     'hero.t1': 'Beauty.', 'hero.t2': 'Luxury.', 'hero.t3': 'Confidence.',
     'hero.lead': 'Hair, nails, makeup and spa in one place, with professional products and a team that listens before we begin.',
     'hero.proof': '4.9 · Over 1,000 happy clients', 'hero.badge': 'years caring<br>for your beauty',
@@ -693,7 +698,7 @@ footer { padding: 56px 0 32px; }
     'f.name': 'Name', 'f.nameph': 'Your name', 'f.phone': 'WhatsApp', 'f.svc': 'Service', 'f.svcph': 'Choose a service', 'f.change': 'Change',
     'f.date': 'Date', 'f.datehint': 'Open daily; Sun 10:00 – 15:00.',
     'f.note': 'Notes (optional)', 'f.noteph': 'Tell us what you would like done',
-    'f.submit': 'Request appointment', 'f.wa': 'Message on WhatsApp', 'f.again': 'Book another appointment',
+    'f.submit': 'Request appointment', 'f.wa': 'Message on WhatsApp', 'f.again': 'Request another appointment',
     'foot.tag': 'Beauty, calm and detail in every visit.', 'foot.links': 'Links', 'h.wk': 'Mon – Sat', 'h.sun': 'Sun',
     'foot.demo': 'Demo site: name, details and prices are fictitious.',
     'legal.c': '© 2026 Lumière Salon & Spa', 'made': 'Made by Eric Design Web',
@@ -709,9 +714,9 @@ footer { padding: 56px 0 32px; }
       theme: ['Cambiar a tema claro', 'Cambiar a tema oscuro'], lang: 'Cambiar idioma a inglés', menu: ['Abrir menú', 'Cerrar menú'],
       demo: 'Enlace de demostración: en el sitio real abrirá WhatsApp o la red social.',
       eName: 'Escribe tu nombre.', ePhone: 'Escribe los 10 dígitos de tu WhatsApp, por ejemplo 809-555-1234.',
-      eSvc: 'Elige un servicio.', eDate: 'Elige una fecha de hoy en adelante.', sending: 'Enviando…',
+      eSvc: 'Elige un servicio.', eDate: 'Elige una fecha de hoy en adelante.', eDateMax: 'Elige una fecha dentro de los próximos 6 meses.', sending: 'Enviando…', sent: 'Cita solicitada',
       status: function (n) { return n === 1 ? 'Revisa 1 campo marcado.' : 'Revisa ' + n + ' campos marcados.'; },
-      ok: function (b) { return '¡Listo, ' + b.name + '! Pediste ' + b.svc + ' para el ' + b.date + '. Te escribiremos por WhatsApp para confirmar la hora.'; }
+      ok: function (b) { return '¡Listo, ' + b.name + '! Solicitaste ' + b.svc + ' para el ' + b.date + '. Te escribiremos por WhatsApp para confirmar la hora.'; }
     },
     en: {
       title: 'Lumière · Salon & Spa', locale: 'en-US', from: 'From RD$', fromLc: 'from RD$',
@@ -719,7 +724,7 @@ footer { padding: 56px 0 32px; }
       theme: ['Switch to light theme', 'Switch to dark theme'], lang: 'Switch language to Spanish', menu: ['Open menu', 'Close menu'],
       demo: 'Demo link: on the live site this opens WhatsApp or the social profile.',
       eName: 'Enter your name.', ePhone: 'Enter your 10-digit WhatsApp number, e.g. 809-555-1234.',
-      eSvc: 'Choose a service.', eDate: 'Pick today or a later date.', sending: 'Sending…',
+      eSvc: 'Choose a service.', eDate: 'Pick today or a later date.', eDateMax: 'Pick a date within the next 6 months.', sending: 'Sending…', sent: 'Appointment requested',
       status: function (n) { return n === 1 ? 'Check the highlighted field.' : 'Check the ' + n + ' highlighted fields.'; },
       ok: function (b) { return 'Done, ' + b.name + '! You requested ' + b.svc + ' on ' + b.date + '. We’ll message you on WhatsApp to confirm the time.'; }
     }
@@ -745,8 +750,7 @@ footer { padding: 56px 0 32px; }
       o.dataset.name = t(o.dataset.opt);
       o.textContent = o.dataset.name + ' · ' + m.fromLc + o.dataset.price;
     });
-    var sb = $('submitBtn');
-    if (sb.disabled) sb.querySelector('span').textContent = m.sending;
+    renderSubmit();
     if (toast.textContent) toast.textContent = m.demo;
     renderDateHint();
     document.querySelectorAll('[data-i18n-html]').forEach(function (el) { el.innerHTML = t(el.dataset.i18nHtml); });
@@ -783,7 +787,18 @@ footer { padding: 56px 0 32px; }
     menuBtn.setAttribute('aria-label', MSG[lang()].menu[open ? 1 : 0]);
     if (!open && refocus) menuBtn.focus();
   }
-  menuBtn.addEventListener('click', function () { setMenu(!links.classList.contains('open')); });
+  menuBtn.addEventListener('click', function () {
+    var open = !links.classList.contains('open');
+    setMenu(open);
+    if (open) links.querySelector('a').focus();
+  });
+  // Close when focus moves somewhere other than the menu or its button
+  function menuFocusOut(e) {
+    var to = e.relatedTarget;
+    if (links.classList.contains('open') && to && !links.contains(to) && to !== menuBtn) setMenu(false);
+  }
+  links.addEventListener('focusout', menuFocusOut);
+  menuBtn.addEventListener('focusout', menuFocusOut);
   links.addEventListener('click', function (e) { if (e.target.closest('a')) setMenu(false); });
   document.addEventListener('keydown', function (e) {
     if (e.key === 'Escape' && links.classList.contains('open')) setMenu(false, true);
@@ -795,10 +810,12 @@ footer { padding: 56px 0 32px; }
   // Current section in the nav
   var navMap = {};
   links.querySelectorAll('a').forEach(function (a) { navMap[a.getAttribute('href').slice(1)] = a; });
+  var headBook = document.querySelector('.site-header .btn-book');
   function setCurrent(id) {
     Object.keys(navMap).forEach(function (k) {
       if (k === id) navMap[k].setAttribute('aria-current', 'true'); else navMap[k].removeAttribute('aria-current');
     });
+    if (id === 'reservar') headBook.setAttribute('aria-current', 'true'); else headBook.removeAttribute('aria-current');
   }
 
   // Booking form
@@ -810,6 +827,7 @@ footer { padding: 56px 0 32px; }
   function setMin() {
     var d = new Date(); d.setMinutes(d.getMinutes() - d.getTimezoneOffset());
     date.min = d.toISOString().slice(0, 10);
+    d.setDate(d.getDate() + 183); date.max = d.toISOString().slice(0, 10);
   }
   setMin();
   date.addEventListener('focus', setMin);
@@ -832,7 +850,7 @@ footer { padding: 56px 0 32px; }
     name: function (v) { return v.trim().length < 2 ? 'eName' : ''; },
     phone: function (v) { var d = digits(v); return (d.length === 10 && d.charAt(0) !== '1') || (d.length === 11 && d.charAt(0) === '1') ? '' : 'ePhone'; },
     svc: function (v) { return v ? '' : 'eSvc'; },
-    date: function (v) { setMin(); return !v || v < date.min ? 'eDate' : ''; }
+    date: function (v) { setMin(); return !v || v < date.min ? 'eDate' : v > date.max ? 'eDateMax' : ''; }
   };
   function describe(id, withErr) {
     var ids = [], hint = $('h-' + id);
@@ -862,6 +880,19 @@ footer { padding: 56px 0 32px; }
     if (!n) statusShown = false;
     statusEl.textContent = n ? MSG[lang()].status(n) : '';
   }
+  // Submit button: idle -> sending -> sent (locked until something changes)
+  var sendState = 'idle', submitBtn = $('submitBtn');
+  function renderSubmit() {
+    var m = MSG[lang()], busy = sendState !== 'idle';
+    submitBtn.disabled = busy;
+    if (busy) submitBtn.setAttribute('aria-disabled', 'true'); else submitBtn.removeAttribute('aria-disabled');
+    submitBtn.classList.toggle('sent', sendState === 'sent');
+    submitBtn.querySelector('use').setAttribute('href', sendState === 'sent' ? '#i-check' : '#i-cal');
+    submitBtn.querySelector('span').textContent = sendState === 'sending' ? m.sending : sendState === 'sent' ? m.sent : t('f.submit');
+  }
+  function releaseSubmit() { if (sendState === 'sent') { sendState = 'idle'; renderSubmit(); } }
+  form.addEventListener('input', releaseSubmit);
+  form.addEventListener('change', releaseSubmit);
   function renderOk() {
     if (!booking) { okMsg.textContent = ''; return; }
     var m = MSG[lang()];
@@ -891,6 +922,7 @@ footer { padding: 56px 0 32px; }
 
   form.addEventListener('submit', function (e) {
     e.preventDefault();
+    if (sendState !== 'idle') return;
     success.classList.remove('show');
     var bad = ORDER.filter(function (id) { return !setErr(id, CHECK[id](F[id].value)); });
     statusShown = bad.length > 0; renderStatus();
@@ -900,10 +932,9 @@ footer { padding: 56px 0 32px; }
       first.scrollIntoView({ block: 'center', behavior: motion() });
       return;
     }
-    var btn = $('submitBtn'), label = btn.querySelector('span'), m = MSG[lang()];
-    btn.disabled = true; label.textContent = m.sending; form.setAttribute('aria-busy', 'true');
+    sendState = 'sending'; renderSubmit(); form.setAttribute('aria-busy', 'true');
     setTimeout(function () {
-      btn.disabled = false; label.textContent = t('f.submit'); form.removeAttribute('aria-busy');
+      sendState = 'sent'; renderSubmit(); form.removeAttribute('aria-busy');
       booking = { name: F.name.value.trim(), svc: svcSel.value, date: date.value };
       renderOk();
       success.classList.add('show');
@@ -917,7 +948,7 @@ footer { padding: 56px 0 32px; }
     svcSel.value = ''; date.value = ''; $('f-note').value = '';
     ['svc', 'date'].forEach(function (id) { clearField(id); delete dirty[id]; });
     statusShown = false; renderStatus(); renderDateHint();
-    booking = null; renderOk(); success.classList.remove('show');
+    booking = null; renderOk(); success.classList.remove('show'); releaseSubmit();
     svcField.classList.remove('picked'); changeBtn.hidden = true; markChosen(null);
     svcSel.focus({ preventScroll: true });
     svcField.scrollIntoView({ block: 'nearest', behavior: motion() });
@@ -931,7 +962,7 @@ footer { padding: 56px 0 32px; }
   }
   function markChosen(i) { svcs.forEach(function (s) { s.classList.toggle('chosen', s.dataset.svc === i); }); }
   function choose(i) {
-    svcSel.value = i; dirty.svc = true; validate('svc'); markChosen(i);
+    svcSel.value = i; dirty.svc = true; validate('svc'); markChosen(i); releaseSubmit();
     svcField.classList.add('picked'); changeBtn.hidden = false;
     svcField.scrollIntoView({ behavior: motion(), block: 'center' });
     svcSel.focus({ preventScroll: true });
