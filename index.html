@@ -409,6 +409,7 @@ details { border: 0; background: var(--paper); border-radius: 14px; padding: 0 2
   html { scroll-behavior: auto; }
   .js .stagger > * { opacity: 1; transform: none; }
 }
+.sr-only { position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; border: 0; }
 </style>
 </head>
 <body>
@@ -706,7 +707,10 @@ details { border: 0; background: var(--paper); border-radius: 14px; padding: 0 2
         <p class="lead">Diseño páginas web para negocios dominicanos que ya venden por WhatsApp e Instagram y quieren verse más profesionales.</p>
         <p class="muted">No hay agencia ni intermediarios: desde la demo hasta que tu página está publicada, hablas directamente conmigo. Si algo no te gusta, me escribes y lo cambio.</p>
         <p class="place"><svg class="icon"><use href="#i-pin"/></svg>Los Alcarrizos, Santo Domingo</p>
-        <a class="btn btn-main" data-wa="Hola Eric, vi tu página y quiero hablar de mi negocio." href="https://wa.me/18292600023"><svg class="icon"><use href="#i-wa"/></svg>Escríbeme por WhatsApp</a>
+        <div class="demo-actions">
+          <a class="btn btn-main" data-wa="Hola Eric, vi tu página y quiero hablar de mi negocio." href="https://wa.me/18292600023"><svg class="icon"><use href="#i-wa"/></svg>Escríbeme por WhatsApp</a>
+          <a class="btn btn-ghost" href="https://eric-montero.github.io/personal-portfolio/" target="_blank" rel="noopener">Ver mi portafolio<svg class="icon"><use href="#i-arrow"/></svg><span class="sr-only"> (se abre en otra pestaña)</span></a>
+        </div>
       </div>
     </div>
   </section>
