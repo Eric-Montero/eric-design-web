@@ -167,7 +167,7 @@ section { padding-top: clamp(72px, 9vw, 112px); }
 .steps li::after { content: ""; flex: 1; height: 1px; background: var(--line); } /* taste-skill-ignore: progress connector, same as Navaja */
 .steps li:last-child::after { display: none; }
 .grid { display: grid; grid-template-columns: 1fr 1fr minmax(320px, 1.25fr) 1fr; gap: 24px; align-items: start; }
-.col { scroll-margin-top: 88px; min-width: 0; transition: opacity 300ms ease; }
+.col { scroll-margin-top: 8px; /* adds to html scroll-padding-top: lands just under the header */ min-width: 0; transition: opacity 300ms ease; }
 .col[inert] { opacity: .5; }
 .sub-label { margin: 16px 0 8px; font-weight: 600; font-size: .875rem; }
 .sub-label span { color: var(--muted); font-weight: 400; }
@@ -274,8 +274,9 @@ footer { margin-top: clamp(72px, 9vw, 112px); background: var(--panel); padding:
 .toast.show { opacity: 1; transform: translate(-50%, 0); }
 .toast.has-undo { padding: 0 10px 0 20px; }
 .toast.show.has-undo { pointer-events: auto; }
+/* Desktop: bottom-left, narrow, so it never sits over the summary column (#missing, "Empezar de nuevo") */
 @media (min-width: 1081px) {
-  .toast { left: auto; right: 32px; bottom: 32px; max-width: 420px; transform: translate(0, 16px); }
+  .toast { left: 24px; bottom: 24px; max-width: 340px; border-radius: 16px; transform: translate(0, 16px); }
   .toast.show { transform: translate(0, 0); }
 }
 
@@ -625,17 +626,22 @@ footer { margin-top: clamp(72px, 9vw, 112px); background: var(--panel); padding:
   $('swatches').addEventListener('click', function (e) { var b = e.target.closest('[data-shade]'); if (!b) return; pv.shade = shadeById(b.dataset.shade); paint(); });
   $('pvFin').addEventListener('click', function (e) { var b = e.target.closest('[data-finish]'); if (!b) return; pv.fin = b.dataset.finish; paint(); });
   var LOCKED_MSG = 'Tu cita ya está reservada. Toca “Hacer otra reserva” para escoger otra.';
-  $('pvBook').addEventListener('click', function () {
+  $('pvBook').addEventListener('click', function (e) {
     if (locked) { toast(LOCKED_MSG); return; }
     var prev = snap();
     st.col = pv.shade.id; st.fin = pv.fin; sync();
-    toast(pv.shade.name + ', ' + pv.fin + ', quedó en tu reserva.', function () { apply(prev); toast('Listo, volvimos a lo que tenías.'); });
+    toast(pv.shade.name + ' en ' + pv.fin + ' quedó en tu reserva.', undoTo(prev));
+    if (mobile.matches) { e.preventDefault(); goNext(); }
   });
   $('cards').addEventListener('click', function (e) {
     var b = e.target.closest('[data-pick]'); if (!b) return;
     if (locked) { toast(LOCKED_MSG); return; }
+    var prev = snap();
     st.svc = b.dataset.pick; sync();
+    toast(SERVICES.filter(function (x) { return x.id === st.svc; })[0].name + ' quedó en tu reserva.', undoTo(prev));
+    if (mobile.matches) { e.preventDefault(); goNext(); }
   });
+  function undoTo(prev) { return function () { apply(prev); toast('Listo, volvimos a lo que tenías.'); }; }
 
   function check() { return '<span class="tick"><svg class="icon"><use href="#i-check"/></svg></span>'; }
   function press(container, attr, val) { container.querySelectorAll('[' + attr + ']').forEach(function (el) { el.setAttribute('aria-pressed', el.getAttribute(attr) === val ? 'true' : 'false'); }); }
@@ -652,6 +658,7 @@ footer { margin-top: clamp(72px, 9vw, 112px); background: var(--panel); padding:
     press($('colors'), 'data-col', st.col || '');
     var on = isShade(st.col);
     $('cFin').querySelectorAll('[data-cfin]').forEach(function (b) { b.setAttribute('aria-pressed', on && b.dataset.cfin === st.fin ? 'true' : 'false'); b.disabled = !on; });
+    $('cFinLabel').querySelector('span').textContent = on ? '· Francesa o cromo + RD$300' : '· Escoge un tono para elegir el acabado';
     update();
   }
   $('services').addEventListener('click', function (e) { var b = e.target.closest('[data-svc]'); if (!b) return; st.svc = b.dataset.svc; sync(); goNext(); });
@@ -718,16 +725,28 @@ footer { margin-top: clamp(72px, 9vw, 112px); background: var(--panel); padding:
   var KEY = 'nacar-booking';
   function iso(d) { return d.getFullYear() + '-' + ('0' + (d.getMonth() + 1)).slice(-2) + '-' + ('0' + d.getDate()).slice(-2); }
   function snap() { return { svc: st.svc, col: st.col, fin: st.fin, date: st.date, time: st.time }; }
-  function save() { try { localStorage.setItem(KEY, JSON.stringify({ svc: st.svc, col: st.col, fin: st.fin, date: st.date ? iso(st.date) : null, time: st.time })); } catch (e) {} }
+  function save(extra) { try { localStorage.setItem(KEY, JSON.stringify(Object.assign({ svc: st.svc, col: st.col, fin: st.fin, date: st.date ? iso(st.date) : null, time: st.time }, extra || {}))); } catch (e) {} }
+  function parseDay(v) { var m = /^(\d{4})-(\d{2})-(\d{2})$/.exec(v || ''); return m ? new Date(+m[1], +m[2] - 1, +m[3]) : null; }
+  // A confirmed booking comes back as the confirmation, never as an editable draft; once its date has passed it is dropped
+  function restoreBooked(o) {
+    var d = parseDay(o.date), now = new Date();
+    if (!d || !SERVICES.some(function (x) { return x.id === o.svc; }) || !(o.col === 'luego' || shadeById(o.col)) || slotsFor(d).indexOf(o.time) < 0 || typeof o.name !== 'string' || !o.name.trim()) return false;
+    if (d < today || (sameDay(d, today) && o.time <= now.getHours())) return false;
+    lock(true);
+    apply({ svc: o.svc, col: o.col, fin: FIN[o.fin] ? o.fin : 'brillo', date: d, time: o.time });
+    $('f-name').value = o.name; $('f-tel').value = typeof o.tel === 'string' ? o.tel : '';
+    showDone(o.name.trim(), false);
+    return true;
+  }
   function load() {
     var o = null; try { o = JSON.parse(localStorage.getItem(KEY) || 'null'); } catch (e) {}
     if (!o || typeof o !== 'object') o = {};
+    if (o.booked) { if (restoreBooked(o)) return; clearSaved(); o = {}; }
     var s = { svc: null, col: null, fin: 'brillo', date: null, time: null };
     if (SERVICES.some(function (x) { return x.id === o.svc; })) s.svc = o.svc;
     if (o.col === 'luego' || shadeById(o.col)) s.col = o.col;
     if (FIN[o.fin]) s.fin = o.fin;
-    var m = /^(\d{4})-(\d{2})-(\d{2})$/.exec(o.date || '');
-    if (m) { var d = new Date(+m[1], +m[2] - 1, +m[3]); if (!dayOff(d)) s.date = d; }
+    var d = parseDay(o.date); if (d && !dayOff(d)) s.date = d;
     if (s.date && slotsFor(s.date).indexOf(o.time) > -1 && !busy(s.date, o.time)) s.time = o.time;
     apply(s);
   }
@@ -840,22 +859,28 @@ footer { margin-top: clamp(72px, 9vw, 112px); background: var(--panel); padding:
     var nm = $('f-name').value.trim();
     var btn = $('confirm'); btn.disabled = true; btn.textContent = 'Reservando…';
     setTimeout(function () {
-      var day = $('s-day').textContent, time = $('s-time').textContent;
-      $('doneText').textContent = nm.split(' ')[0] + ', te esperamos el ' + day + ' a las ' + time + (/\.$/.test(time) ? '' : '.');
-      $('doneList').innerHTML = '<div class="row"><dt>Servicio</dt><dd>' + $('s-svc').textContent + '</dd></div><div class="row"><dt>Color</dt><dd>' + $('s-col').textContent + '</dd></div>' +
-        (isShade(st.col) ? '<div class="row"><dt>Acabado</dt><dd>' + finLabel() + (extra() ? ' + RD$300' : '') + '</dd></div>' : '') +
-        '<div class="row"><dt>Total</dt><dd>' + $('s-total').textContent + ', en el local</dd></div>';
       lock(true);
-      $('sumBox').hidden = true; $('done').classList.add('show'); $('mbar').hidden = true;
-      ['st-1', 'st-2', 'st-3', 'st-4'].forEach(function (id) { $(id).classList.add('done'); $(id).classList.remove('now'); $(id).removeAttribute('aria-current'); });
-      var hd = $('done').querySelector('h4'); hd.setAttribute('tabindex', '-1'); hd.focus({ preventScroll: true });
-      $('c-sum').scrollIntoView({ behavior: smooth, block: 'nearest' });
+      save({ booked: true, name: nm, tel: $('f-tel').value });
+      showDone(nm, true);
       btn.textContent = 'Confirmar cita';
     }, 700);
   });
+  function showDone(nm, fresh) {
+    var day = $('s-day').textContent, time = $('s-time').textContent;
+    $('doneText').textContent = nm.split(' ')[0] + ', te esperamos el ' + day + ' a las ' + time + (/\.$/.test(time) ? '' : '.');
+    $('doneList').innerHTML = '<div class="row"><dt>Servicio</dt><dd>' + $('s-svc').textContent + '</dd></div><div class="row"><dt>Color</dt><dd>' + $('s-col').textContent + '</dd></div>' +
+      (isShade(st.col) ? '<div class="row"><dt>Acabado</dt><dd>' + finLabel() + (extra() ? ' + RD$300' : '') + '</dd></div>' : '') +
+      '<div class="row"><dt>Total</dt><dd>' + $('s-total').textContent + ', en el local</dd></div>';
+    $('sumBox').hidden = true; $('done').classList.add('show'); $('mbar').hidden = true;
+    ['st-1', 'st-2', 'st-3', 'st-4'].forEach(function (id) { $(id).classList.add('done'); $(id).classList.remove('now'); $(id).removeAttribute('aria-current'); });
+    var hd = $('done').querySelector('h4'); hd.setAttribute('tabindex', '-1');
+    if (fresh) { hd.focus({ preventScroll: true }); $('c-sum').scrollIntoView({ behavior: smooth, block: 'nearest' }); }
+  }
   var BLANK = { svc: null, col: null, fin: 'brillo', date: null, time: null };
   function clearSaved() { try { localStorage.removeItem(KEY); } catch (e) {} }
   $('again').addEventListener('click', function () {
+    var was = null; try { was = JSON.parse(localStorage.getItem(KEY) || 'null'); } catch (e) {}
+    var day = $('s-day').textContent;
     lock(false); clearSaved();
     view = new Date(today.getFullYear(), today.getMonth(), 1);
     $('sumBox').hidden = false; $('done').classList.remove('show');
@@ -863,12 +888,17 @@ footer { margin-top: clamp(72px, 9vw, 112px); background: var(--panel); padding:
     $('reuse').hidden = !($('f-name').value || $('f-tel').value);
     ['f-name', 'f-tel'].forEach(function (id) { delete $(id).dataset.dirty; });
     apply(BLANK); document.querySelector('[data-svc]').focus();
+    toast('Tu cita del ' + day + ' sigue en pie. Escoge la nueva.', was && was.booked ? function () {
+      try { localStorage.setItem(KEY, JSON.stringify(was)); } catch (e) {}
+      if (restoreBooked(was)) { $('done').querySelector('h4').focus(); toast('Listo, volvimos a tu cita reservada.'); }
+    } : null);
   });
   $('reset').addEventListener('click', function () {
     var prev = snap();
     view = new Date(today.getFullYear(), today.getMonth(), 1);
     apply(BLANK); clearSaved();
     document.querySelector('[data-svc]').focus({ preventScroll: true });
+    if (mobile.matches) $('c-svc').scrollIntoView({ behavior: smooth, block: 'start' }); // back to step 1, and the toast stays off the form
     toast('Borramos lo que habías escogido.', function () { apply(prev); toast('Listo, recuperamos tu selección.'); });
   });
 
@@ -881,6 +911,7 @@ footer { margin-top: clamp(72px, 9vw, 112px); background: var(--panel); padding:
     toastEl.classList.add('show'); armToast();
   }
   undoBtn.addEventListener('click', function () { var f = undoFn; hideToast(); if (f) f(); });
+  document.addEventListener('keydown', function (e) { if (e.key === 'Escape' && toastEl.classList.contains('show')) hideToast(); });
   toastEl.addEventListener('mouseenter', function () { clearTimeout(tt); });
   toastEl.addEventListener('mouseleave', function () { if (toastEl.classList.contains('show')) armToast(); });
   toastEl.addEventListener('focusin', function () { clearTimeout(tt); });
