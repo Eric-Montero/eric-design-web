@@ -126,6 +126,11 @@ h1, h2, h3, p { margin: 0; }
 .svc b { display: block; font-weight: 700; }
 .svc small { color: var(--muted); font-size: .82rem; }
 .svc .p { font-weight: 800; font-variant-numeric: tabular-nums; }
+.svc .t b { display: flex; align-items: center; gap: 6px; }
+.svc .fav-ic { width: 15px; height: 15px; fill: var(--copper); stroke: var(--copper); }
+.svc-empty { padding: 24px 0; text-align: center; color: var(--muted); display: grid; gap: 4px; justify-items: center; }
+.svc-empty .link { color: var(--copper); font-weight: 700; min-height: 44px; padding: 0 6px; }
+.svc-empty .sug { display: flex; flex-wrap: wrap; align-items: center; justify-content: center; gap: 0 4px; }
 
 /* Detail */
 .back-row { display: flex; justify-content: space-between; margin-bottom: 8px; position: relative; z-index: 2; }
@@ -174,7 +179,7 @@ h1, h2, h3, p { margin: 0; }
 .slot.mine small { font-size: .62rem; font-weight: 700; color: var(--copper); }
 #fav[aria-pressed="true"] { color: var(--copper); }
 #fav[aria-pressed="true"] .icon { fill: currentColor; }
-.paybar { position: absolute; left: 0; right: 0; bottom: 0; z-index: 15; padding: 14px 20px calc(env(safe-area-inset-bottom, 0px) + 16px); background: color-mix(in srgb, var(--bg) 92%, transparent); backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px); border-top: 1px solid var(--line); display: flex; align-items: center; gap: 14px; }
+.paybar { position: absolute; left: 0; right: 0; bottom: 0; z-index: 15; padding: 14px 20px calc(env(safe-area-inset-bottom, 0px) + 16px); background: color-mix(in srgb, var(--bg) 92%, transparent); backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px); border-top: 1px solid var(--line); display: flex; align-items: center; gap: 14px; } /* taste-skill-ignore: sticky action bar edge over scrolling content */
 .paybar .price { flex: 0 1 40%; min-width: 0; }
 .paybar .price b { display: block; font: 900 1.5rem/1 var(--font); font-variant-numeric: tabular-nums; }
 .paybar .price small { display: block; margin-top: 4px; color: var(--muted); font-size: .76rem; line-height: 1.3; }
@@ -186,7 +191,7 @@ h1, h2, h3, p { margin: 0; }
 .ok-actions { display: grid; gap: 8px; margin-bottom: 16px; }
 .alt { display: flex; align-items: center; justify-content: center; gap: 8px; min-height: 52px; border-radius: 16px; border: 1px solid var(--line); background: var(--s1); font-weight: 700; text-decoration: none; }
 .alt .icon { color: var(--copper); }
-.again { display: flex; align-items: center; gap: 14px; width: 100%; text-align: left; margin-top: 18px; padding: 14px 16px; border-radius: 18px; background: color-mix(in srgb, var(--copper) 12%, var(--s1)); border: 1px solid color-mix(in srgb, var(--copper) 45%, transparent); }
+.again { display: flex; align-items: center; gap: 14px; width: 100%; text-align: left; margin: 0 0 14px; padding: 14px 16px; border-radius: 18px; background: color-mix(in srgb, var(--copper) 12%, var(--s1)); border: 1px solid color-mix(in srgb, var(--copper) 45%, transparent); }
 .again .ic { width: 44px; height: 44px; border-radius: 12px; background: var(--copper); color: var(--on-copper); display: grid; place-items: center; font-weight: 900; }
 .again b { display: block; }
 .again small { color: var(--muted); font-size: .82rem; }
@@ -196,7 +201,7 @@ h1, h2, h3, p { margin: 0; }
 #ok h2 { font: 900 2rem/1 var(--font); font-stretch: 85%; }
 #ok p { color: var(--muted); margin: 10px auto 18px; max-width: 30ch; }
 .ticket { text-align: left; background: var(--s1); border: 1px solid var(--line); border-radius: 20px; padding: 4px 18px; margin-bottom: 16px; }
-.ticket div { display: flex; justify-content: space-between; gap: 12px; padding: 10px 0; border-bottom: 1px dashed var(--line); font-size: .92rem; }
+.ticket div { display: flex; justify-content: space-between; gap: 12px; padding: 10px 0; border-bottom: 1px dashed var(--line); font-size: .92rem; } /* taste-skill-ignore: ticket stub tear lines (receipt rows) */
 .ticket div:last-child { border-bottom: 0; }
 .ticket span { color: var(--muted); }
 .ticket .pts-up { color: var(--copper); }
@@ -221,22 +226,23 @@ h1, h2, h3, p { margin: 0; }
 .prof { display: flex; align-items: center; gap: 14px; padding: 16px; background: var(--s1); border-radius: 20px; border: 1px solid var(--line); }
 .prof .av { width: 56px; height: 56px; border-radius: 50%; background: var(--copper); color: var(--on-copper); display: grid; place-items: center; font-weight: 900; font-size: 1.2rem; }
 .rows { margin-top: 14px; background: var(--s1); border-radius: 20px; border: 1px solid var(--line); }
-.rows a, .rows div, .rows button { display: flex; align-items: center; gap: 12px; width: 100%; min-height: 56px; padding: 0 16px; border-bottom: 1px solid var(--line); text-decoration: none; text-align: left; }
+.rows a, .rows div, .rows button { display: flex; align-items: center; gap: 12px; width: 100%; min-height: 56px; padding: 0 16px; border-bottom: 1px solid var(--line); text-decoration: none; text-align: left; } /* taste-skill-ignore: grouped settings list separators */
 .rows > :last-child { border-bottom: 0; }
 .rows .icon { color: var(--copper); }
 .rows span { flex: 1; }
 .rows small { color: var(--muted); }
+#favList { max-width: 58%; padding: 8px 0; text-align: right; line-height: 1.3; }
 .demo-note { margin-top: 18px; font-size: .8rem; color: var(--muted); text-align: center; }
 .demo-note a { color: var(--copper); }
 
 /* Tab bar */
-.tabs { position: absolute; left: 0; right: 0; bottom: 0; z-index: 20; display: none; grid-template-columns: repeat(5, 1fr); align-items: end; padding: 8px 8px calc(env(safe-area-inset-bottom, 0px) + 10px); background: color-mix(in srgb, var(--s1) 94%, transparent); backdrop-filter: blur(14px); -webkit-backdrop-filter: blur(14px); border-top: 1px solid var(--line); }
+.tabs { position: absolute; left: 0; right: 0; bottom: 0; z-index: 20; display: none; grid-template-columns: repeat(5, 1fr); align-items: end; padding: 8px 8px calc(env(safe-area-inset-bottom, 0px) + 10px); background: color-mix(in srgb, var(--s1) 94%, transparent); backdrop-filter: blur(14px); -webkit-backdrop-filter: blur(14px); border-top: 1px solid var(--line); } /* taste-skill-ignore: sticky tab bar edge over scrolling content */
 .has-tabs .tabs { display: grid; }
 .tab { display: flex; flex-direction: column; align-items: center; gap: 3px; min-height: 52px; justify-content: flex-end; padding-bottom: 4px; font-size: .76rem; color: var(--muted); position: relative; }
 .tab[aria-current="page"] { color: var(--copper); }
 .tab-count { position: absolute; top: 4px; right: calc(50% - 20px); min-width: 18px; height: 18px; padding: 0 5px; border-radius: 99px; background: var(--copper); color: var(--on-copper); font-size: .66rem; font-weight: 800; display: grid; place-items: center; }
 .tab-count[hidden] { display: none; }
-.fab { width: 60px; height: 60px; margin: -28px auto 0; border-radius: 50%; background: var(--copper); color: var(--on-copper); display: grid; place-items: center; box-shadow: 0 10px 20px -8px rgba(0, 0, 0, .7); border: 4px solid var(--bg); }
+.fab { width: 60px; height: 60px; margin: -28px auto 0; border-radius: 50%; background: var(--copper); color: var(--on-copper); display: grid; place-items: center; box-shadow: 0 10px 20px -8px rgba(0, 0, 0, .7); border: 4px solid var(--bg); } /* taste-skill-ignore: floating action button lifts off the tab bar */
 .fab .icon { width: 26px; height: 26px; }
 
 .toast { position: absolute; left: 50%; bottom: 100px; z-index: 40; translate: -50% 12px; opacity: 0; pointer-events: none; display: flex; align-items: center; gap: 6px; width: max-content; max-width: calc(100% - 32px); background: var(--s2); border: 1px solid var(--line); color: var(--text); border-radius: 18px; padding: 10px 16px; font-size: .85rem; line-height: 1.35; transition: opacity 400ms ease, translate 400ms ease; }
@@ -246,9 +252,11 @@ h1, h2, h3, p { margin: 0; }
 .toast button { flex: none; min-height: 44px; padding: 0 12px; border-radius: 14px; color: var(--copper); font-weight: 800; }
 .toast button[hidden] { display: none; }
 .detail-on .toast { bottom: 110px; }
+.detail-on .toast:not(.has-act) { bottom: auto; top: calc(env(safe-area-inset-top, 0px) + 76px); translate: -50% -12px; }
+.detail-on .toast.show:not(.has-act) { translate: -50% 0; }
 .ok-on .toast { bottom: auto; top: calc(env(safe-area-inset-top, 0px) + 12px); translate: -50% -12px; }
 .ok-on .toast.show { translate: -50% 0; }
-@media (min-width: 900px) { .ok-on .toast { top: 50px; } }
+@media (min-width: 900px) { .ok-on .toast { top: 50px; } .detail-on .toast:not(.has-act) { top: 112px; } }
 
 
 /* Motion: pay bar rises with the detail screen; success gets the delight budget */
@@ -270,7 +278,7 @@ h1, h2, h3, p { margin: 0; }
   .slot, .date, .pick, .svc, .barber, .cat, .tab, .round, .pill-btn, .alt, .again, .ghost, .cta, .bk-actions > *, .rows button { transform: none !important; }
   .detail-on .paybar { transition: none; }
   #ok.on .ok-badge, #ok.on .ticket > div, .tab-count { animation: fadeOnly 200ms ease both !important; }
-  .toast, .toast.show, .ok-on .toast { translate: -50% 0; }
+  .toast, .toast.show, .ok-on .toast, .detail-on .toast:not(.has-act) { translate: -50% 0; }
   @keyframes fadeOnly { from { opacity: 0; } }
   .screen { transform: none; }
 }
@@ -387,7 +395,7 @@ h1, h2, h3, p { margin: 0; }
         <p>Tu cita quedó reservada. Llega cinco minutos antes y pagas en el local.</p>
         <div class="ticket" id="ticket"></div>
         <div class="ok-actions">
-          <a class="alt" id="icsBtn" href="#" download="cita-fade-club.ics"><svg class="icon"><use href="#i-cal"/></svg>Añadir a mi calendario</a>
+          <a class="alt" id="icsBtn" href="#" download="cita-fade-club.ics"><svg class="icon"><use href="#i-cal"/></svg>Añadir al calendario</a>
           <a class="alt" href="#" data-toast="En la app real esto abre WhatsApp con tu cita escrita"><svg class="icon"><use href="#i-chat"/></svg>Avisar por WhatsApp</a>
         </div>
         <button class="cta" data-go="bookings">Ver mis citas</button>
@@ -408,6 +416,7 @@ h1, h2, h3, p { margin: 0; }
           <div><svg class="icon"><use href="#i-wallet"/></svg><span>Puntos Fade Club</span><small id="pts">120 pts</small></div>
           <a href="#" data-toast="En la app real esto abre el mapa"><svg class="icon"><use href="#i-pin"/></svg><span>Calle Ejemplo 12, Santo Domingo</span><svg class="icon" style="width:16px;height:16px;color:var(--muted)"><use href="#i-chev"/></svg></a>
           <a href="#" data-toast="En la app real esto abre WhatsApp con la barbería"><svg class="icon"><use href="#i-chat"/></svg><span>Escribir a la barbería</span><svg class="icon" style="width:16px;height:16px;color:var(--muted)"><use href="#i-chev"/></svg></a>
+          <div><svg class="icon"><use href="#i-heart"/></svg><span>Mis favoritos</span><small id="favList">Aún no tienes favoritos</small></div>
           <div><svg class="icon"><use href="#i-clock"/></svg><span>Lun a sáb · 9 a. m. – 8 p. m.</span></div>
           <button type="button" data-go="welcome"><svg class="icon"><use href="#i-sc"/></svg><span>Ver la bienvenida</span><svg class="icon" style="width:16px;height:16px;color:var(--muted)"><use href="#i-chev"/></svg></button>
         </div>
@@ -514,7 +523,8 @@ h1, h2, h3, p { margin: 0; }
   toastEl.addEventListener('focusout', function () { if (toastEl.classList.contains('show')) arm(); });
 
   // Navigation: every screen change is a browser history entry, so the phone's back button stays in the app
-  var stack = 0, current = null, booted = false;
+  var stack = 0, current = null, booted = false, welcomeProf = false;
+  function visited() { return !!load('fadeclub-visited', null); }
   function show(id, mode) {
     if (mode !== false) phone.dataset.dir = 'fwd';
     hideToast();
@@ -528,7 +538,12 @@ h1, h2, h3, p { margin: 0; }
     if (id === 'bookings' || id === 'home') renderBookings();
     var scr = $(id); scr.scrollTop = 0;
     if (mode === 'replace') history.replaceState({ s: id, i: stack }, '');
-    else if (mode !== false && id !== current) { stack++; history.pushState({ s: id, i: stack }, ''); }
+    else if (mode !== false && id !== current) {
+      // Leaving the first-run welcome swaps its history entry for Inicio, so Back never lands on it again
+      if (current === 'welcome' && !welcomeProf) { history.replaceState({ s: 'home', i: stack }, ''); if (id !== 'home') { stack++; history.pushState({ s: id, i: stack }, ''); } }
+      else { stack++; history.pushState({ s: id, i: stack, p: id === 'welcome' ? 1 : 0 }, ''); }
+    }
+    if (mode !== false) welcomeProf = id === 'welcome' && mode !== 'replace';
     current = id;
     if (booted && id !== 'welcome') { try { localStorage.setItem('fadeclub-visited', '1'); } catch (e) {} }
     if (booted) { var hd = scr.querySelector('h1, h2'); if (hd) { hd.setAttribute('tabindex', '-1'); hd.focus({ preventScroll: true }); } }
@@ -543,6 +558,9 @@ h1, h2, h3, p { margin: 0; }
     stack = s.i || 0;
     var id = s.s;
     if (id === 'ok' && !$('ticket').innerHTML) id = 'home';
+    // Stale welcome entries (e.g. from before a reload) turn into Inicio once you've been in; Perfil's "Ver la bienvenida" entry stays
+    if (id === 'welcome' && !s.p && visited()) { id = 'home'; history.replaceState({ s: 'home', i: stack }, ''); }
+    welcomeProf = id === 'welcome' && !!s.p;
     if (id === 'detail') openDetail();
     show(id, false);
   });
@@ -555,26 +573,53 @@ h1, h2, h3, p { margin: 0; }
   $('barberList').innerHTML = REAL.map(function (b) {
     return '<button class="svc" data-pick-bar="' + b.id + '"><span class="ic" style="font-weight:900;font-size:1.2rem">' + b.mono + '</span><span class="t"><b>' + b.name + '</b><small>' + b.role + '</small></span><span class="p" style="color:var(--copper)"><svg class="icon" style="width:14px;height:14px;fill:currentColor;stroke:none;vertical-align:-2px"><use href="#i-star"/></svg> ' + b.rating + '</span></button>';
   }).join('');
+  var CATN = { corte: 'Cortes', barba: 'Barba', afeitado: 'Afeitado', combo: 'Combos' };
+  var HINTS = ['fade', 'barba', 'combo', 'afeitado'];
+  function svcName(x) { return x.name + ' ' + x.sub; }
   function renderSvc() {
     var q = ($('q').value || '').toLowerCase().trim();
-    var list = SVC.filter(function (s) { return (!state.cat || s.cat === state.cat) && (!q || (s.name + ' ' + s.sub).toLowerCase().indexOf(q) > -1); });
+    var hit = function (s) { return !q || svcName(s).toLowerCase().indexOf(q) > -1; };
+    // Favourites float to the top (stable: otherwise keep menu order)
+    var list = SVC.filter(function (s) { return (!state.cat || s.cat === state.cat) && hit(s); })
+      .map(function (s, i) { return { s: s, i: i }; })
+      .sort(function (a, b) { return (state.favs[b.s.id] ? 1 : 0) - (state.favs[a.s.id] ? 1 : 0) || a.i - b.i; })
+      .map(function (o) { return o.s; });
+    var empty;
+    if (state.cat) {
+      empty = '<div class="svc-empty"><p>No hay "' + esc(q) + '" en ' + CATN[state.cat] + '.</p><button type="button" class="link" id="allSvc">Buscar en todos los servicios</button></div>';
+    } else {
+      var sug = HINTS.filter(function (w) { return w !== q && w.indexOf(q) < 0 && q.indexOf(w) < 0; }).slice(0, 2);
+      if (sug.length < 2) sug = HINTS.filter(function (w) { return w !== q; }).slice(0, 2);
+      empty = '<div class="svc-empty"><p>No hay servicios con "' + esc(q) + '".</p><p class="sug">Prueba con ' + sug.map(function (w) { return '<button type="button" class="link" data-q="' + w + '">' + w + '</button>'; }).join(' o ') + '</p></div>';
+    }
     $('svcList').innerHTML = list.length ? list.map(function (s) {
-      return '<button class="svc" data-go="detail" data-svc="' + s.id + '"><span class="ic"><svg class="icon"><use href="#' + s.icon + '"/></svg></span><span class="t"><b>' + s.name + ' ' + s.sub + '</b><small>' + s.min + ' min</small></span><span class="p">' + rd(s.price) + '</span></button>';
-    }).join('') : '<p class="empty" style="padding:24px 0">No hay servicios con "' + esc(q) + '". Prueba con "fade" o "barba".</p>';
+      var fav = state.favs[s.id] ? '<svg class="icon fav-ic" role="img" aria-label="Favorito"><use href="#i-heart"/></svg>' : '';
+      return '<button class="svc" data-go="detail" data-svc="' + s.id + '"><span class="ic"><svg class="icon"><use href="#' + s.icon + '"/></svg></span><span class="t"><b>' + svcName(s) + fav + '</b><small>' + s.min + ' min</small></span><span class="p">' + rd(s.price) + '</span></button>';
+    }).join('') : empty;
     $('clearCat').hidden = !state.cat && !q;
-    $('svcTitle').textContent = state.cat ? 'Servicios · ' + document.querySelector('[data-cat="' + state.cat + '"]').textContent.trim() : 'Servicios';
+    $('clearCat').textContent = state.cat ? 'Quitar filtro' : 'Borrar búsqueda';
+    $('svcTitle').textContent = state.cat ? 'Servicios · ' + CATN[state.cat] : 'Servicios';
+    var fl = SVC.filter(function (s) { return state.favs[s.id]; }).map(svcName);
+    $('favList').textContent = fl.length ? fl.join(', ') : 'Aún no tienes favoritos';
   }
+  function setCat(c) {
+    state.cat = c;
+    document.querySelectorAll('[data-cat]').forEach(function (x) { x.setAttribute('aria-pressed', x.dataset.cat === state.cat ? 'true' : 'false'); });
+    renderSvc();
+  }
+  $('svcList').addEventListener('click', function (e) {
+    if (e.target.closest('#allSvc')) { setCat(null); var f = $('svcList').querySelector('.svc'); if (f) f.focus(); return; }
+    var w = e.target.closest('[data-q]'); if (w) { $('q').value = w.dataset.q; renderSvc(); $('q').focus(); }
+  });
   $('q').addEventListener('input', renderSvc);
   document.querySelector('.cats').addEventListener('click', function (e) {
     var c = e.target.closest('[data-cat]'); if (!c) return;
-    state.cat = state.cat === c.dataset.cat ? null : c.dataset.cat;
-    document.querySelectorAll('[data-cat]').forEach(function (x) { x.setAttribute('aria-pressed', x.dataset.cat === state.cat ? 'true' : 'false'); });
-    renderSvc();
+    setCat(state.cat === c.dataset.cat ? null : c.dataset.cat);
   });
-  $('clearCat').addEventListener('click', function () { state.cat = null; $('q').value = ''; document.querySelectorAll('[data-cat]').forEach(function (x) { x.setAttribute('aria-pressed', 'false'); }); renderSvc(); });
+  $('clearCat').addEventListener('click', function () { $('q').value = ''; setCat(null); $('q').focus(); });
 
   // Availability
-  var days = [];
+  var days = [], againMode = null, againBk = null;
   (function () {
     var d = new Date(); d.setHours(0, 0, 0, 0);
     for (var i = 0; i < 14; i++) { var x = new Date(d); x.setDate(d.getDate() + i); days.push(x); }
@@ -640,7 +685,7 @@ h1, h2, h3, p { margin: 0; }
       var label = ampm(s) + (st === 'mine' ? ', tu cita' : st === 'full' ? ', ocupado' : st === 'past' ? ', ya pasó' : '');
       return '<button class="slot' + (st === 'mine' ? ' mine' : '') + '" type="button" data-time="' + s + '" aria-label="' + label + '" aria-pressed="' + (state.time === s) + '"' + (st !== 'free' ? ' aria-disabled="true"' : '') + '>' + s + (st === 'mine' ? '<small>tu cita</small>' : '') + '</button>';
     };
-    var html = '<span class="tg">Mañana</span>' + SLOTS.slice(0, 3).map(btn).join('') + '<span class="tg">Tarde</span>' + SLOTS.slice(3).map(btn).join('');
+    var html = '<span class="tg">En la mañana</span>' + SLOTS.slice(0, 3).map(btn).join('') + '<span class="tg">En la tarde</span>' + SLOTS.slice(3, 8).map(btn).join('') + '<span class="tg">En la noche</span>' + SLOTS.slice(8).map(btn).join('');
     var who = state.bar === 'any' ? '' : ' con ' + barById(state.bar).name;
     $('slots').innerHTML = (open ? '' : '<p class="note">Ese día ya no quedan horas' + who + '. Prueba otro día' + (who ? ' u otro barbero' : '') + '.</p>') + html;
   }
@@ -648,7 +693,7 @@ h1, h2, h3, p { margin: 0; }
     var s = svcById(state.svc), b = $('bookBtn');
     b.disabled = !(state.day && state.time && status(state.day, state.time) === 'free');
     b.textContent = !state.day ? 'Escoge día y hora' : !state.time ? 'Escoge una hora' : 'Reservar · ' + ampm(state.time);
-    $('dSum').textContent = [s.name + ' ' + s.sub, barById(state.bar).name, state.day ? shortDay(state.day) : ''].filter(Boolean).map(function (x) { return x.replace(/ /g, '\u00a0'); }).join(' · ');
+    $('dSum').textContent = [s.name + ' ' + s.sub, state.bar === 'any' ? 'Cualquier barbero' : barById(state.bar).name, state.day ? shortDay(state.day) : ''].filter(Boolean).map(function (x) { return x.replace(/ /g, '\u00a0'); }).join(' · ');
   }
   function focusIn(box, sel) { var el = $(box).querySelector(sel); if (el) el.focus(); }
   function pickTime(slot, barId) {
@@ -700,7 +745,7 @@ h1, h2, h3, p { margin: 0; }
   $('fav').addEventListener('click', function () {
     var s = svcById(state.svc), on = !state.favs[s.id];
     if (on) state.favs[s.id] = true; else delete state.favs[s.id];
-    paintFav(); persist();
+    paintFav(); renderSvc(); persist();
     toast(on ? s.name + ' ' + s.sub + ' guardado en favoritos' : 'Quitado de favoritos');
   });
 
@@ -742,16 +787,25 @@ h1, h2, h3, p { margin: 0; }
     past.sort(function (x, y) { return startOf(y.b) - startOf(x.b); });
     $('count').hidden = !up.length; $('count').textContent = up.length;
     $('pts').textContent = state.pts + ' pts';
-    var last = state.bookings[0], rdate = last && repeatDate(last);
-    $('again').hidden = !last;
+    // Home shortcut: repeat the most recent past visit; with only upcoming ones, show the next appointment instead
+    var last = past.length ? past[0].b : null, next = up.length ? up[0].b : null, ag = $('again');
+    ag.hidden = !last && !next;
+    againMode = last ? 'repeat' : next ? 'next' : null;
     if (last) {
+      var rdate = repeatDate(last);
+      ag.querySelector('.ic').textContent = '↻';
       $('againTitle').textContent = 'Repetir: ' + last.svc;
       $('againSub').textContent = 'Con ' + last.bar + (rdate ? ' · ' + longDay(rdate) : '') + ' · ' + last.time;
+    } else if (next) {
+      ag.querySelector('.ic').innerHTML = '<svg class="icon"><use href="#i-cal"/></svg>';
+      $('againTitle').textContent = 'Tu próxima cita: ' + next.svc;
+      $('againSub').textContent = longDay(fromIso(next.date)) + ' · ' + next.time;
     }
+    againBk = last;
     var card = function (o, old) {
       var b = o.b;
       return '<div class="booking-card' + (old ? ' past' : '') + '"><span class="when">' + longDay(fromIso(b.date)) + ' · ' + esc(b.time) + '</span><b>' + esc(b.svc) + '</b><small>Con ' + esc(b.bar) + ' · ' + esc(b.price) + '</small><div class="bk-actions">' +
-        (old ? '<button type="button" data-repeat="' + o.i + '"><svg class="icon"><use href="#i-sc"/></svg>Reservar de nuevo</button>'
+        (old ? '<button type="button" data-repeat="' + o.i + '"><svg class="icon"><use href="#i-sc"/></svg>Repetir</button>'
              : '<a href="' + icsHref(b) + '" download="cita-fade-club.ics"><svg class="icon"><use href="#i-cal"/></svg>Añadir al calendario</a><button type="button" class="cancel" data-cancel="' + o.i + '">Cancelar cita</button>') +
         '</div></div>';
     };
@@ -789,7 +843,7 @@ h1, h2, h3, p { margin: 0; }
   });
   document.addEventListener('keydown', function (e) { if (e.key === 'Escape' && ['detail', 'barbers', 'ok'].indexOf(current) > -1) back(); });
 
-  $('again').addEventListener('click', function () { repeat(state.bookings[0]); });
+  $('again').addEventListener('click', function () { if (againMode === 'repeat') repeat(againBk); else if (againMode === 'next') show('bookings'); });
   document.querySelectorAll('[data-toast]').forEach(function (a) { if (a.tagName === 'A') a.addEventListener('click', function (e) { e.preventDefault(); }); });
 
   // Returning clients skip the welcome (it stays reachable from Perfil)
