@@ -200,7 +200,7 @@ section { padding: clamp(104px, 12vw, 176px) 0 0; }
 .price { font: 800 1.75rem/1 var(--font-display); white-space: nowrap; letter-spacing: -.03em; font-variant-numeric: tabular-nums; }
 .price small { display: block; font: 500 .875rem var(--font-body); letter-spacing: 0; margin-top: 8px; }
 .muted { color: var(--muted); }
-.plan ul { list-style: none; margin: 0; padding: 0; display: grid; gap: 10px; color: var(--muted); }
+.plan ul { list-style: none; margin: 0; padding: 0; display: grid; gap: 10px; color: var(--muted); align-content: start; align-items: start; }
 .plan li { display: flex; gap: 10px; }
 .plan li .icon { color: var(--teal); margin-top: 3px; width: 18px; height: 18px; }
 .plan .btn { margin-top: auto; }
@@ -250,7 +250,7 @@ details p { color: var(--muted); padding: 0 0 20px; max-width: 60ch; }
 .copy:hover { border-color: var(--sun); }
 .contact .btn-wa { margin-top: 24px; background: var(--sun); color: var(--sun-ink); }
 form { background: var(--paper); color: var(--ink); border-radius: 20px; padding: clamp(22px, 3vw, 32px); display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
-.field { display: grid; gap: 6px; }
+.field { display: grid; gap: 6px; align-content: start; }
 .full { grid-column: 1 / -1; }
 label { font-size: .875rem; font-weight: 600; }
 input, select, textarea { width: 100%; min-height: 48px; padding: 11px 14px; border-radius: 10px; border: 1.5px solid var(--line); background: var(--bg); color: var(--ink); font: 400 1.0625rem var(--font-body); caret-color: var(--teal); }
@@ -301,7 +301,7 @@ footer a:hover { color: var(--ink); }
   form { grid-template-columns: 1fr; }
   .wa-float span { display: none; }
   .wa-float { padding: 0; width: 56px; justify-content: center; }
-  .device { transform: none; }
+  .device, .device[data-ui] { transform: none; }
 }
 /* Problem vs solution */
 .versus { display: grid; grid-template-columns: 1fr 1fr; gap: 18px; }
@@ -337,6 +337,14 @@ footer a:hover { color: var(--ink); }
 .sent.show { display: flex; animation: rise 300ms var(--ease-out); }
 .sent .icon { color: var(--teal); margin-top: 2px; }
 .sent a { font-weight: 700; color: var(--teal); }
+.sent > span { flex: 1; }
+/* Same WhatsApp glyph as #i-wa, drawn as a mask so the ledger rows stay plain rows */
+.wa-mark { width: 20px; height: 20px; flex: none; background: currentColor; -webkit-mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23000' stroke-width='1.75' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M4 20l1.3-3.9A8 8 0 1 1 8 19z'/%3E%3Cpath d='M9 10.5c.3 1.8 2.2 3.7 4 4l1.2-1.2 1.8.8c-.3 1-1.2 1.6-2.2 1.4-3-.6-5.3-2.9-5.9-5.9-.2-1 .4-1.9 1.4-2.2l.8 1.8z'/%3E%3C/svg%3E") center / contain no-repeat; mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23000' stroke-width='1.75' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M4 20l1.3-3.9A8 8 0 1 1 8 19z'/%3E%3Cpath d='M9 10.5c.3 1.8 2.2 3.7 4 4l1.2-1.2 1.8.8c-.3 1-1.2 1.6-2.2 1.4-3-.6-5.3-2.9-5.9-5.9-.2-1 .4-1.9 1.4-2.2l.8 1.8z'/%3E%3C/svg%3E") center / contain no-repeat; }
+.sent-close { flex: none; margin: -6px -6px -6px 0; min-height: 44px; padding: 0 12px; border: 0; border-radius: 10px; background: transparent; color: var(--ink); font: 600 .875rem var(--font-body); text-decoration: underline; text-underline-offset: 4px; cursor: pointer; }
+.sent-close:hover { background: var(--bg); }
+.niches-note { margin-top: 18px; }
+footer a { display: inline-flex; align-items: center; gap: 8px; }
+footer a .icon { width: 18px; height: 18px; }
 @keyframes rise { from { opacity: 0; transform: translateY(8px); } }
 
 /* Stagger reveal (content is visible by default; JS only adds motion) */
@@ -375,6 +383,8 @@ details { border: 0; background: var(--paper); border-radius: 14px; padding: 0 2
 .plan h3 { font-size: 1.75rem; }
 .plan .head-col { display: grid; gap: 10px; }
 .plan ul { grid-template-columns: 1fr 1fr; gap: 8px 24px; }
+/* Two flowing columns (not grid rows), so a long item never leaves a hole beside a short one */
+@media (min-width: 861px) { .plan ul { display: block; columns: 2; column-gap: 32px; } .plan li { break-inside: avoid; margin-bottom: 10px; } .plan li:last-child { margin-bottom: 0; } }
 .plan li::before { content: ""; width: 6px; height: 6px; margin-top: .6em; border-radius: 50%; background: var(--teal); flex: none; }
 .plan.star li::before { background: var(--sun); }
 .plan .btn { margin-top: 0; }
@@ -471,7 +481,7 @@ details { border: 0; background: var(--paper); border-radius: 14px; padding: 0 2
       <div class="switch" role="group" aria-label="Escoge una demo">
         <button type="button" aria-pressed="true" data-slide="0">Salón</button>
         <button type="button" aria-pressed="false" data-slide="1">Barbería web</button>
-        <button type="button" aria-pressed="false" data-slide="2">App de barbería</button>
+        <button type="button" aria-pressed="false" data-slide="2">Barbería tipo app</button>
         <button type="button" aria-pressed="false" data-slide="3">Estudio de uñas</button>
         <button type="button" class="play" id="playPause" aria-label="Pausar demos"><svg class="icon i-pause" aria-hidden="true"><use href="#i-pause"/></svg><svg class="icon i-play" aria-hidden="true"><use href="#i-play"/></svg></button>
       </div>
@@ -528,8 +538,9 @@ details { border: 0; background: var(--paper); border-radius: 14px; padding: 0 2
         <div class="niche" style="--i:4"><span><svg class="icon"><use href="#i-dumbbell"/></svg></span><div>Gimnasios y entrenadores<small>Planes y horarios</small></div></div>
         <div class="niche" style="--i:5"><span><svg class="icon"><use href="#i-car"/></svg></span><div>Dealers y rent-a-car<small>Inventario y financiamiento</small></div></div>
       </div>
+      <p class="muted niches-note">Las demos de estos negocios te las preparo cuando me escribes.</p>
       <div class="sec-cta">
-        <a class="btn btn-ghost" data-wa="Hola Eric, mi negocio es de otro tipo, ¿también haces páginas para: " href="https://wa.me/18292600023">¿Otro tipo de negocio? Pregúntame</a>
+        <a class="btn btn-ghost" data-wa="Hola Eric, mi negocio es de otro tipo, ¿también haces páginas para: " href="https://wa.me/18292600023"><svg class="icon"><use href="#i-wa"/></svg>¿Otro tipo de negocio? Pregúntame</a>
       </div>
     </div>
   </section>
@@ -553,7 +564,7 @@ details { border: 0; background: var(--paper); border-radius: 14px; padding: 0 2
           </ul>
           <div class="demo-actions">
             <a class="btn btn-main" id="demoLink" href="demos/lumiere/">Abrir demo<svg class="icon"><use href="#i-arrow"/></svg></a>
-            <a class="btn btn-ghost" data-wa="Hola Eric, quiero una página como la demo del salón. Mi negocio es: " href="https://wa.me/18292600023">Quiero una así</a>
+            <a class="btn btn-ghost" data-wa="Hola Eric, quiero una página como la demo del salón. Mi negocio es: " href="https://wa.me/18292600023"><svg class="icon"><use href="#i-wa"/></svg>Quiero una así</a>
           </div>
         </div>
       </article>
@@ -566,7 +577,7 @@ details { border: 0; background: var(--paper); border-radius: 14px; padding: 0 2
             <p class="muted">El cliente escoge servicio, barbero, día y hora, y confirma su turno sin llamar. Negro y dorado, con tema claro.</p>
             <div class="demo-actions">
               <a class="btn btn-main" href="demos/navaja/">Abrir demo<svg class="icon"><use href="#i-arrow"/></svg></a>
-              <a class="btn btn-ghost" data-wa="Hola Eric, quiero una página con reservas como la demo de barbería. Mi negocio es: " href="https://wa.me/18292600023">Quiero una así</a>
+              <a class="btn btn-ghost" data-wa="Hola Eric, quiero una página con reservas como la demo de barbería. Mi negocio es: " href="https://wa.me/18292600023"><svg class="icon"><use href="#i-wa"/></svg>Quiero una así</a>
             </div>
           </div>
         </article>
@@ -578,7 +589,7 @@ details { border: 0; background: var(--paper); border-radius: 14px; padding: 0 2
             <p class="muted">Se siente como una app: inicio, barberos, reserva en tres toques y "Mis citas". Se abre desde un link, sin descargar nada.</p>
             <div class="demo-actions">
               <a class="btn btn-main" href="demos/fade-club/">Abrir demo<svg class="icon"><use href="#i-arrow"/></svg></a>
-              <a class="btn btn-ghost" data-wa="Hola Eric, quiero una app como la demo Fade Club. Mi negocio es: " href="https://wa.me/18292600023">Quiero una así</a>
+              <a class="btn btn-ghost" data-wa="Hola Eric, quiero una app como la demo Fade Club. Mi negocio es: " href="https://wa.me/18292600023"><svg class="icon"><use href="#i-wa"/></svg>Quiero una así</a>
             </div>
           </div>
         </article>
@@ -595,7 +606,7 @@ details { border: 0; background: var(--paper); border-radius: 14px; padding: 0 2
           </ul>
           <div class="demo-actions">
             <a class="btn btn-main" href="demos/nacar/">Abrir demo<svg class="icon"><use href="#i-arrow"/></svg></a>
-            <a class="btn btn-ghost" data-wa="Hola Eric, quiero una página como la demo de uñas. Mi negocio es: " href="https://wa.me/18292600023">Quiero una así</a>
+            <a class="btn btn-ghost" data-wa="Hola Eric, quiero una página como la demo de uñas. Mi negocio es: " href="https://wa.me/18292600023"><svg class="icon"><use href="#i-wa"/></svg>Quiero una así</a>
           </div>
         </div>
       </article>
@@ -621,7 +632,7 @@ details { border: 0; background: var(--paper); border-radius: 14px; padding: 0 2
             <li>Un link gratis (ej.: salonbella.vercel.app)</li>
             <li>Link listo para tu bio de Instagram y TikTok</li>
           </ul>
-          <a class="btn btn-ghost" data-wa="Hola Eric, me interesa el plan Básico." href="https://wa.me/18292600023">Elegir Básico</a>
+          <a class="btn btn-ghost" data-wa="Hola Eric, me interesa el plan Básico." href="https://wa.me/18292600023"><span class="wa-mark" aria-hidden="true"></span>Elegir Básico por WhatsApp</a>
         </article>
         <article class="plan star" style="--i:1">
           <div class="head-col">
@@ -633,10 +644,10 @@ details { border: 0; background: var(--paper); border-radius: 14px; padding: 0 2
             <li><b>Entrega en 3 a 5 días</b></li>
             <li>Todo lo del Básico: página, WhatsApp, mapa y link para tu bio</li>
             <li>Galería de fotos y testimonios</li>
-            <li>Formulario de citas</li>
+            <li>Formulario de citas: me llega tu pedido y yo confirmo la hora</li>
             <li>Dominio propio (tunegocio.com)</li>
           </ul>
-          <a class="btn btn-main" data-wa="Hola Eric, me interesa el plan Pro." href="https://wa.me/18292600023">Elegir Pro</a>
+          <a class="btn btn-main" data-wa="Hola Eric, me interesa el plan Pro." href="https://wa.me/18292600023"><span class="wa-mark" aria-hidden="true"></span>Elegir Pro por WhatsApp</a>
         </article>
         <article class="plan" style="--i:2">
           <div class="head-col">
@@ -645,17 +656,17 @@ details { border: 0; background: var(--paper); border-radius: 14px; padding: 0 2
           </div>
           <ul>
             <li><b>Entrega en 7 días</b></li>
-            <li>Todo lo del Pro</li>
-            <li>Reservas automáticas</li>
+            <li>Todo lo del Pro: galería, testimonios, formulario de citas y dominio propio</li>
+            <li>Reservas automáticas: el cliente escoge día y hora libre, sin esperar respuesta</li>
             <li>Versión en inglés</li>
             <li>4 videos cortos para TikTok</li>
           </ul>
-          <a class="btn btn-ghost" data-wa="Hola Eric, me interesa el plan Premium." href="https://wa.me/18292600023">Elegir Premium</a>
+          <a class="btn btn-ghost" data-wa="Hola Eric, me interesa el plan Premium." href="https://wa.me/18292600023"><span class="wa-mark" aria-hidden="true"></span>Elegir Premium por WhatsApp</a>
         </article>
       </div>
       <div class="upkeep">
         <div><b>Mantenimiento mensual · RD$1,500–3,000</b><p class="muted">Se paga aparte cada mes y todos los planes lo llevan: mantiene tu página en línea, con cambios de precios, fotos nuevas y soporte. Tú no tocas nada técnico.</p></div>
-        <a class="btn btn-ghost" data-wa="Hola Eric, tengo una pregunta sobre el mantenimiento mensual." href="https://wa.me/18292600023">Preguntar</a>
+        <a class="btn btn-ghost" data-wa="Hola Eric, tengo una pregunta sobre el mantenimiento mensual." href="https://wa.me/18292600023"><svg class="icon"><use href="#i-wa"/></svg>Preguntar</a>
       </div>
       <p class="terms">Antes de pagar el 50% ya viste y aprobaste tu demo. Si no te gusta la demo, no pagas nada. El precio final depende de cuántas secciones y fotos lleve tu página, y te lo confirmo antes de empezar.</p>
     </div>
@@ -670,7 +681,7 @@ details { border: 0; background: var(--paper); border-radius: 14px; padding: 0 2
       <ol class="stagger steps">
         <li><h3>Me escribes</h3><p>Me cuentas qué vendes y me mandas tu logo, fotos y lista de precios.</p><span class="when">Día 1</span></li>
         <li><h3>Te mando la demo</h3><p>Ves tu página funcionando en tu celular antes de pagar nada.</p><span class="when">En 24 horas</span></li>
-        <li><h3>Ajustamos</h3><p>Cambiamos textos, colores o fotos hasta que te guste. Pagas el 50% para seguir.</p><span class="when">Básico 48 h · Pro 3–5 días · Premium 7 días</span></li>
+        <li><h3>Ajustamos</h3><p>Cambiamos textos, colores o fotos hasta que te guste. Pagas el 50% para seguir.</p><span class="when">48 h a 7 días según el plan</span></li>
         <li><h3>Publicamos</h3><p>Conecto tu dominio, pagas el resto y te entrego el link para tus redes.</p><span class="when">Lista</span></li>
       </ol>
       <div class="sec-cta">
@@ -727,7 +738,7 @@ details { border: 0; background: var(--paper); border-radius: 14px; padding: 0 2
         <div class="field full"><label for="f-msg">¿Qué te gustaría que tenga tu página? (opcional)</label><textarea id="f-msg" name="msg" placeholder="Ej.: precios, fotos de mis trabajos y que me agenden por WhatsApp"></textarea></div>
         <button class="btn btn-main full" type="submit"><svg class="icon"><use href="#i-wa"/></svg><span class="lbl">Enviar por WhatsApp</span></button>
         <p class="form-note">Se abre WhatsApp con tu mensaje ya escrito; solo tienes que darle a enviar.</p>
-        <div class="sent" id="sent" role="status"><svg class="icon"><use href="#i-check"/></svg><span>Te abrí WhatsApp con tu mensaje. Si no se abrió, <a id="sentLink" href="https://wa.me/18292600023" target="_blank" rel="noopener">toca aquí para enviarlo</a>.</span></div>
+        <div class="sent" id="sent" role="status"><svg class="icon"><use href="#i-check"/></svg><span>Te abrí WhatsApp con tu mensaje. Si no se abrió, <a id="sentLink" href="https://wa.me/18292600023" target="_blank" rel="noopener">toca aquí para enviarlo</a>.</span><button class="sent-close" id="sentClose" type="button">Cerrar</button></div>
       </form>
     </div>
   </div>
@@ -736,7 +747,7 @@ details { border: 0; background: var(--paper); border-radius: 14px; padding: 0 2
 <footer>
   <div class="wrap">
     <span>© 2026 Eric Design Web · Los Alcarrizos, Santo Domingo</span>
-    <a data-wa="Hola Eric, " href="https://wa.me/18292600023">WhatsApp +1 (829) 260-0023</a>
+    <a data-wa="Hola Eric, " href="https://wa.me/18292600023"><svg class="icon"><use href="#i-wa"/></svg>WhatsApp +1 (829) 260-0023</a>
   </div>
 </footer>
 
@@ -774,7 +785,27 @@ details { border: 0; background: var(--paper); border-radius: 14px; padding: 0 2
   document.addEventListener('click', function (e) { if (links.classList.contains('open') && !e.target.closest('#links, #menu')) closeMenu(); });
   // Floating WhatsApp: hidden over the contact block, and over the hero on phones (the hero already has the CTA)
   var float = document.querySelector('.wa-float'), phone = matchMedia('(max-width: 560px)'), overContact = false, overHero = false;
-  function syncFloat() { float.classList.toggle('away', overContact || (overHero && phone.matches)); }
+  // ...and whenever a button, link or field would sit under it, so it never covers something you can tap
+  var overTarget = false, tapTargets = Array.prototype.filter.call(document.querySelectorAll('main a, main button, main input, main select, main textarea, main summary, footer a'), function (el) { return !el.closest('.contact'); });
+  function syncFloat() { float.classList.toggle('away', overContact || overTarget || (overHero && phone.matches)); }
+  var fq = false;
+  function checkUnder() {
+    fq = false;
+    var cs = getComputedStyle(float), w = float.offsetWidth, h = float.offsetHeight, pad = 10, ahead = 90; // ahead: start fading before a target arrives, from either scroll direction
+    var r = { left: innerWidth - parseFloat(cs.right) - w - pad, right: innerWidth - parseFloat(cs.right) + pad, top: innerHeight - parseFloat(cs.bottom) - h - ahead, bottom: innerHeight - parseFloat(cs.bottom) + ahead };
+    var hit = false;
+    for (var i = 0; i < tapTargets.length && !hit; i++) {
+      var b = tapTargets[i].getBoundingClientRect();
+      if (b.width && b.height && b.left < r.right && b.right > r.left && b.top < r.bottom && b.bottom > r.top) hit = true;
+    }
+    if (hit !== overTarget) { overTarget = hit; syncFloat(); }
+  }
+  function queueCheck() { if (!fq) { fq = true; requestAnimationFrame(checkUnder); } }
+  addEventListener('scroll', queueCheck, { passive: true });
+  addEventListener('resize', queueCheck);
+  document.addEventListener('toggle', queueCheck, true);
+  document.addEventListener('transitionend', function (e) { if (e.target.closest && e.target.closest('.stagger')) queueCheck(); }, true); // revealed cards slide into place without a scroll
+  queueCheck();
   if ('IntersectionObserver' in window) {
     new IntersectionObserver(function (es) { overContact = es[0].isIntersecting; syncFloat(); }).observe(document.getElementById('contacto'));
     new IntersectionObserver(function (es) { overHero = es[0].isIntersecting; syncFloat(); }).observe(document.querySelector('.hero'));
@@ -889,8 +920,16 @@ details { border: 0; background: var(--paper); border-radius: 14px; padding: 0 2
     document.querySelectorAll('.stagger').forEach(function (el) { io.observe(el); });
   } else { document.querySelectorAll('.stagger').forEach(function (el) { el.classList.add('in'); }); }
   function clearOnFix(e) { if (e.target.getAttribute('aria-invalid') === 'true') setErr(e.target.id.slice(2), ''); }
-  form.addEventListener('input', clearOnFix);
-  form.addEventListener('change', clearOnFix);
+  // The "sent" notice describes the message as it was; editing the form makes it stale
+  var sent = document.getElementById('sent');
+  function hideSent() { sent.classList.remove('show'); }
+  function onEdit(e) { clearOnFix(e); hideSent(); }
+  form.addEventListener('input', onEdit);
+  form.addEventListener('change', onEdit);
+  document.getElementById('sentClose').addEventListener('click', function () {
+    hideSent();
+    var btn = form.querySelector('[type=submit]'); btn.disabled = false; btn.querySelector('.lbl').textContent = 'Enviar por WhatsApp'; btn.focus();
+  });
 })();
 </script>
 </body>
