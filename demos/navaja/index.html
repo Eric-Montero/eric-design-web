@@ -3,8 +3,8 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Navaja Barber Studio · Agenda tu corte</title>
-<meta name="description" content="Barbería en Santo Domingo. Corte, barba y cejas. Agenda tu turno en línea en menos de un minuto.">
+<title>Navaja Barber Studio · Agenda tu cita</title>
+<meta name="description" content="Barbería en Santo Domingo. Corte, barba y cejas. Agenda tu cita en línea en menos de un minuto.">
 <meta name="theme-color" content="#0a0907">
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%230a0907'/%3E%3Cpath d='M18 46L46 18M26 18l20 28' stroke='%23c9a45c' stroke-width='5' stroke-linecap='round'/%3E%3C/svg%3E">
 <link rel="preload" href="fonts/cormorant-latin-600-normal.woff2" as="font" type="font/woff2" crossorigin>
@@ -160,7 +160,6 @@ header { position: sticky; top: 0; z-index: 40; background: var(--bg); }
 .tgroup { grid-column: 1 / -1; font-size: .74rem; color: var(--muted); margin-top: 4px; }
 .tgroup:first-child { margin-top: 0; }
 .time { grid-column: span 4; min-height: 46px; padding: 4px 2px; border-radius: 8px; border: 1px solid var(--line-2); background: var(--panel); cursor: pointer; font-size: .86rem; line-height: 1.15; font-variant-numeric: tabular-nums; }
-.time.am { grid-column: span 3; }
 .time small { display: block; font-size: .68rem; color: var(--muted); font-weight: 400; }
 .time[aria-pressed="true"] small { color: inherit; }
 .time[disabled] small { color: inherit; }
@@ -181,6 +180,7 @@ header { position: sticky; top: 0; z-index: 40; background: var(--bg); }
 .linkbtn { display: block; margin: 4px auto 0; min-height: 40px; padding: 8px 12px; }
 .grid .col:not(.summary) { transition: opacity 300ms ease; }
 .grid.booked .col:not(.summary) { opacity: .4; pointer-events: none; }
+.grid.locking .col:not(.summary) { opacity: .6; pointer-events: none; }
 .total { display: flex; justify-content: space-between; align-items: baseline; margin: 16px 0; }
 .total b { font: 600 1.9rem/1 var(--font-display); color: var(--gold); font-variant-numeric: tabular-nums; }
 .field { display: grid; gap: 6px; margin-bottom: 10px; }
@@ -274,7 +274,8 @@ footer { margin-top: clamp(72px, 9vw, 112px); padding: 40px 0; }
 .toast.show { opacity: 1; transform: translate(-50%, 0); visibility: visible; transition-delay: 0s; }
 .toast.has-act { display: flex; align-items: center; gap: 14px; padding-block: 4px; padding-right: 10px; }
 .toast.show.has-act { pointer-events: auto; }
-.toast-act { background: transparent; border: 0; min-height: 40px; padding: 0 10px; color: var(--gold); font: 600 .88rem/1 var(--font-body); text-decoration: underline; text-underline-offset: 3px; cursor: pointer; }
+.toast-msg { min-width: 0; }
+.toast-act { flex: none; background: transparent; border: 0; min-height: 40px; padding: 0 10px; color: var(--gold); font: 600 .88rem/1 var(--font-body); text-decoration: underline; text-underline-offset: 3px; cursor: pointer; }
 .toast { width: max-content; max-width: calc(100vw - 32px); text-align: center; }
 @media (max-width: 760px) { .toast { bottom: calc(env(safe-area-inset-bottom, 0px) + 88px); border-radius: 14px; } }
 
@@ -391,13 +392,13 @@ footer { background: var(--panel); }
   <div class="booking wrap" id="agenda">
     <div class="console">
       <div class="console-head">
-        <h2>Agenda tu turno</h2>
+        <h2>Agenda tu cita</h2>
         <div class="hours"><svg class="icon"><use href="#i-clock"/></svg><span>Atendemos<b>Lun a sáb · 9:00 a. m. – 8:00 p. m.</b></span></div>
       </div>
       <ol class="steps" aria-label="Progreso de la reserva">
         <li id="st-1" class="now"><span>1</span><em>Servicio</em></li>
         <li id="st-2"><span>2</span><em>Barbero</em></li>
-        <li id="st-3"><span>3</span><em>Fecha y hora</em></li>
+        <li id="st-3"><span>3</span><em>Día y hora</em></li>
         <li id="st-4"><span>4</span><em>Confirmar</em></li>
       </ol>
       <div class="grid" id="grid">
@@ -409,19 +410,19 @@ footer { background: var(--panel); }
         <div class="col" data-ui id="c-bar">
           <h3><svg class="icon"><use href="#i-user"/></svg>Escoge tu barbero</h3>
           <div class="opts" id="barbers"></div>
-          <p class="note"><svg class="icon"><use href="#i-info"/></svg>"El que esté libre" te da más horarios.</p>
+          <p class="note"><svg class="icon"><use href="#i-info"/></svg>"El que esté libre" te da más horas para escoger.</p>
         </div>
         <div class="col" data-ui id="c-when">
-          <h3><svg class="icon"><use href="#i-cal"/></svg>Fecha y hora</h3>
+          <h3><svg class="icon"><use href="#i-cal"/></svg>Día y hora</h3>
           <div class="cal-head">
             <button class="cal-nav" id="prevM" type="button" aria-label="Mes anterior"><svg class="icon"><use href="#i-left"/></svg></button>
             <b id="monthLabel" aria-live="polite"></b>
             <button class="cal-nav" id="nextM" type="button" aria-label="Mes siguiente"><svg class="icon"><use href="#i-right"/></svg></button>
           </div>
           <div class="cal" id="cal" role="group" aria-label="Calendario"></div>
-          <p class="hint">Domingos cerrado</p>
-          <p class="times-label">Horarios disponibles</p>
-          <p class="hint">Tachado = ocupado o ya pasó</p>
+          <p class="hint">Los domingos cerramos.</p>
+          <p class="times-label">Horas disponibles</p>
+          <p class="hint">Las horas tachadas están ocupadas o ya pasaron.</p>
           <div class="times" id="times"><p class="hint" style="grid-column:1/-1">Escoge un día para ver las horas.</p></div>
         </div>
         <div class="col summary" data-ui id="c-sum">
@@ -437,7 +438,7 @@ footer { background: var(--panel); }
             <div class="total"><span>Total</span><b id="s-total">RD$0</b></div>
             <form id="bookForm" novalidate>
               <div class="field"><label for="f-name">Tu nombre</label><input id="f-name" autocomplete="name" maxlength="40" placeholder="Ej.: Carlos"><span class="err" id="e-name" aria-live="polite"></span></div>
-              <div class="field"><label for="f-tel">WhatsApp</label><input id="f-tel" type="tel" maxlength="20" inputmode="tel" autocomplete="tel" placeholder="809-000-0000"><span class="err" id="e-tel" aria-live="polite"></span></div>
+              <div class="field"><label for="f-tel">WhatsApp</label><input id="f-tel" type="tel" maxlength="24" inputmode="tel" autocomplete="tel" placeholder="809-000-0000"><span class="err" id="e-tel" aria-live="polite"></span></div>
               <button class="btn btn-gold" id="confirm" type="submit" disabled>Confirmar cita</button>
               <p class="missing" id="missing" aria-live="polite">Te falta: servicio, barbero, día y hora.</p>
               <button type="button" class="linkbtn" id="reset" hidden>Empezar de nuevo</button>
@@ -553,7 +554,7 @@ footer { background: var(--panel); }
   })();
 
   function check() { return '<span class="tick"><svg class="icon"><use href="#i-check"/></svg></span>'; }
-  function stars(r) { return r ? '<span class="rating"><svg viewBox="0 0 24 24"><use href="#i-star"/></svg>' + r + '</span>' : 'Primer turno libre'; }
+  function stars(r) { return r ? '<span class="rating"><svg viewBox="0 0 24 24"><use href="#i-star"/></svg>' + r + '</span>' : 'Primera hora libre'; }
 
   // Services
   $('services').innerHTML = SERVICES.map(function (s) {
@@ -571,7 +572,18 @@ footer { background: var(--panel); }
     container.querySelectorAll('[' + attr + ']').forEach(function (el) { el.setAttribute('aria-pressed', el.getAttribute(attr) === val ? 'true' : 'false'); });
   }
   $('services').addEventListener('click', function (e) { var b = e.target.closest('[data-svc]'); if (!b) return; st.svc = b.dataset.svc; press($('services'), 'data-svc', st.svc); update(); goNext(); });
-  $('barbers').addEventListener('click', function (e) { var b = e.target.closest('[data-bar]'); if (!b) return; if (b.dataset.bar === st.bar) return; var had = st.time; st.bar = b.dataset.bar; press($('barbers'), 'data-bar', st.bar); st.time = null; renderTimes(); update(); if (had) toast('Cambiaste de barbero: vuelve a escoger la hora.'); goNext(); });
+  function snapshot() { return { svc: st.svc, bar: st.bar, date: st.date, time: st.time, view: view }; }
+  function restoreState(snap) {
+    st = { svc: snap.svc, bar: snap.bar, date: snap.date, time: snap.time };
+    view = snap.date ? new Date(snap.date.getFullYear(), snap.date.getMonth(), 1) : snap.view || new Date(today.getFullYear(), today.getMonth(), 1);
+    press($('services'), 'data-svc', st.svc || ''); press($('barbers'), 'data-bar', st.bar || '');
+    renderCal();
+    if (st.date) { renderTimes(); if (st.time && !slotOk(st.time)) { st.time = null; renderTimes(); } }
+    else $('times').innerHTML = '<p class="hint" style="grid-column:1/-1">Escoge un día para ver las horas.</p>';
+    update();
+  }
+  function undoAct(snap) { return { label: 'Deshacer', undo: true, fn: function () { restoreState(snap); } }; }
+  $('barbers').addEventListener('click', function (e) { var b = e.target.closest('[data-bar]'); if (!b) return; if (b.dataset.bar === st.bar) return; var snap = snapshot(); st.bar = b.dataset.bar; press($('barbers'), 'data-bar', st.bar); st.time = null; if (st.date) renderTimes(); update(); if (snap.time) toast('Cambiaste de barbero: vuelve a escoger la hora.', undoAct(snap)); goNext(); });
 
   // Calendar
   function sameDay(a, b) { return a && b && a.getTime() === b.getTime(); }
@@ -595,9 +607,9 @@ footer { background: var(--panel); }
     var b = e.target.closest('[data-day]'); if (!b || b.disabled) return;
     var nd = new Date(view.getFullYear(), view.getMonth(), +b.dataset.day);
     if (sameDay(nd, st.date)) return;
-    var had = st.time;
+    var snap = snapshot();
     st.date = nd; st.time = null;
-    if (had) toast('Cambiaste de día: vuelve a escoger la hora.');
+    if (snap.time) toast('Cambiaste de día: vuelve a escoger la hora.', undoAct(snap));
     $('cal').querySelectorAll('[data-day]').forEach(function (x) { x.setAttribute('aria-pressed', x === b ? 'true' : 'false'); });
     renderTimes(); var tl = $('times'); tl.classList.remove('fresh'); void tl.offsetWidth; tl.classList.add('fresh'); update();
   });
@@ -621,13 +633,12 @@ footer { background: var(--panel); }
   function renderTimes() {
     if (!st.date) return;
     var free = 0;
-    var btn = function (am) {
-      return function (s) {
-        var gone = passed(s), off = gone || busy(s); if (!off) free++;
-        return '<button type="button" class="time' + (am ? ' am' : '') + '" data-time="' + s + '" aria-label="' + ampm(s) + (gone ? ', ya pasó' : off ? ', ocupado' : '') + '" aria-pressed="' + (st.time === s ? 'true' : 'false') + '"' + (off ? ' disabled' : '') + '>' + s + '<small>' + sfx(s) + '</small></button>';
-      };
+    var btn = function (s) {
+      var gone = passed(s), off = gone || busy(s); if (!off) free++;
+      return '<button type="button" class="time" data-time="' + s + '" aria-label="' + ampm(s) + (gone ? ', ya pasó' : off ? ', ocupada' : '') + '" aria-pressed="' + (st.time === s ? 'true' : 'false') + '"' + (off ? ' disabled' : '') + '>' + s + '<small>' + sfx(s) + '</small></button>';
     };
-    var html = '<span class="tgroup">Mañana</span>' + SLOTS.slice(0, 4).map(btn(true)).join('') + '<span class="tgroup">Tarde (cerramos de 1:00 a 2:00 p. m.)</span>' + SLOTS.slice(4).map(btn(false)).join('');
+    // 12:00 p. m. sits with the afternoon hours, so each group shares one suffix
+    var html = '<span class="tgroup">Mañana</span>' + SLOTS.slice(0, 3).map(btn).join('') + '<span class="tgroup">Mediodía y tarde (cerramos de 1:00 a 2:00 p. m.)</span>' + SLOTS.slice(3).map(btn).join('');
     var msg = passed(SLOTS[SLOTS.length - 1]) ? 'Ya pasó la última hora de hoy. Escoge otro día.' : 'Ese día ya no quedan horas con este barbero. Prueba otro día o "El que esté libre".';
     $('times').innerHTML = free ? html : '<p class="hint" style="grid-column:1/-1">' + msg + '</p>';
   }
@@ -664,7 +675,13 @@ footer { background: var(--panel); }
     $('mbarBtn').textContent = step < 3 ? 'Continuar' : 'Confirmar';
     $('mbarBtn').dataset.target = ['c-svc', 'c-bar', 'c-when', 'c-sum'][step];
     syncMbar();
-    try { sessionStorage.setItem('navaja-st', JSON.stringify({ svc: st.svc, bar: st.bar, date: st.date && st.date.getTime(), time: st.time })); } catch (e) {}
+    save();
+  }
+  // A confirmed booking survives a refresh (and an unconfirmed edit of it); otherwise the draft does
+  var bookedSnap = null, locking = false;
+  function save() {
+    var b = bookedSnap, o = b ? { booked: true, svc: b.svc, bar: b.bar, date: b.date.getTime(), time: b.time, name: b.name, tel: b.tel } : { svc: st.svc, bar: st.bar, date: st.date && st.date.getTime(), time: st.time };
+    try { sessionStorage.setItem('navaja-st', JSON.stringify(o)); } catch (e) {}
   }
   var mobile = matchMedia('(max-width: 760px)');
   // Step 4: the summary already shows the confirm button, so the bar steps aside while it is on screen
@@ -689,9 +706,9 @@ footer { background: var(--panel); }
     return '';
   }
   function fmtTel(v) {
+    // Formats as you type but never drops digits: an extra digit stays visible so the message can count it
     var d = v.replace(/\D/g, ''), pre = '';
     if (d[0] === '1') { pre = '1-'; d = d.slice(1); }
-    d = d.slice(0, 10);
     var out = d.slice(0, 3);
     if (d.length > 3) out += '-' + d.slice(3, 6);
     if (d.length > 6) out += '-' + d.slice(6);
@@ -709,6 +726,15 @@ footer { background: var(--panel); }
     ['c-svc', 'c-bar', 'c-when'].forEach(function (id) { if (on) $(id).setAttribute('inert', ''); else $(id).removeAttribute('inert'); });
     $('sumBox').hidden = on; $('done').classList.toggle('show', on); $('mbar').hidden = on; syncMbar();
   }
+  // While "Reservando…" runs, the choices are frozen so nothing can change under the confirmation
+  function lock(on) {
+    locking = on;
+    $('grid').classList.toggle('locking', on);
+    ['c-svc', 'c-bar', 'c-when'].forEach(function (id) { if (on) $(id).setAttribute('inert', ''); else if (!$('grid').classList.contains('booked')) $(id).removeAttribute('inert'); });
+    $('f-name').readOnly = on; $('f-tel').readOnly = on;
+    $('c-sum').setAttribute('aria-busy', on ? 'true' : 'false');
+    if (on) $('reset').hidden = true;
+  }
   function focusIn(id) {
     var c = $(id);
     var t = null;
@@ -717,8 +743,39 @@ footer { background: var(--panel); }
     if (t) t.focus({ preventScroll: true });
   }
   $('sumBox').addEventListener('click', function (e) { var b = e.target.closest('.chg'); if (b) focusIn(b.dataset.go); });
+  function svcOf(id) { return SERVICES.filter(function (x) { return x.id === id; })[0]; }
+  function barOf(id) { return BARBERS.filter(function (x) { return x.id === id; })[0]; }
+  function dayText(d) { return DOWL[d.getDay()] + ' ' + d.getDate() + ' de ' + MONTHS[d.getMonth()]; }
+  function startOf(b) { var s = new Date(b.date); var hh = +b.time.split(':')[0]; if (hh < 9) hh += 12; s.setHours(hh, 0, 0, 0); return s; }
+  // Everything on the success card comes from the frozen booking, never from live state
+  function renderDone(b) {
+    var svc = svcOf(b.svc), who = b.bar === 'any' ? 'el primer barbero libre' : barOf(b.bar).name.replace(/\.$/, '');
+    var day = dayText(b.date), time = ampm(b.time), total = rd(svc.price);
+    $('doneText').textContent = b.name + ', te esperamos el ' + day + ' a las ' + time + ' con ' + who + '.';
+    $('doneList').innerHTML = '<div class="row"><dt>Servicio</dt><dd>' + svc.name + '</dd></div><div class="row"><dt>Total</dt><dd>' + total + '</dd></div><div class="row"><dt>Pagas</dt><dd>En el local</dd></div>';
+    $('waBtn').dataset.msg = 'Hola Navaja, reservé ' + svc.name + ' el ' + day + ' a las ' + time + ' con ' + who + '. Soy ' + b.name + '.';
+    var start = startOf(b), end = new Date(start.getTime() + svc.min * 60000);
+    var f = function (d) { return d.getFullYear() + String(d.getMonth() + 1).padStart(2, '0') + String(d.getDate()).padStart(2, '0') + 'T' + String(d.getHours()).padStart(2, '0') + String(d.getMinutes()).padStart(2, '0') + '00'; };
+    var TZ = 'America/Santo_Domingo';
+    var esc = function (t) { return String(t).replace(/\\/g, '\\\\').replace(/([,;])/g, '\\$1').replace(/\n/g, '\\n'); };
+    $('icsBtn').href = 'data:text/calendar;charset=utf-8,' + encodeURIComponent('BEGIN:VCALENDAR\r\nVERSION:2.0\r\nPRODID:-//Navaja//Demo//ES\r\nBEGIN:VTIMEZONE\r\nTZID:' + TZ + '\r\nBEGIN:STANDARD\r\nDTSTART:19700101T000000\r\nTZOFFSETFROM:-0400\r\nTZOFFSETTO:-0400\r\nTZNAME:AST\r\nEND:STANDARD\r\nEND:VTIMEZONE\r\nBEGIN:VEVENT\r\nUID:' + start.getTime() + '-' + b.svc + '@navaja-demo\r\nDTSTAMP:' + new Date().toISOString().replace(/[-:]/g, '').slice(0, 15) + 'Z\r\nDTSTART;TZID=' + TZ + ':' + f(start) + '\r\nDTEND;TZID=' + TZ + ':' + f(end) + '\r\nSUMMARY:' + esc(svc.name + ' en Navaja Barber Studio') + '\r\nLOCATION:' + esc('Calle Ejemplo 45, Santo Domingo') + '\r\nEND:VEVENT\r\nEND:VCALENDAR');
+  }
+  // Show a confirmed booking: live state, fields and steps all match it
+  function showBooked(b) {
+    bookedSnap = b;
+    restoreState({ svc: b.svc, bar: b.bar, date: new Date(b.date), time: b.time });
+    $('f-name').value = b.name; $('f-tel').value = b.tel;
+    renderDone(b); setBooked(true);
+    ['st-1', 'st-2', 'st-3', 'st-4'].forEach(function (id) { $(id).classList.add('done'); $(id).classList.remove('now'); $(id).removeAttribute('aria-current'); });
+    save();
+  }
+  function focusDone() {
+    $('c-sum').scrollIntoView({ behavior: smooth, block: 'start' });
+    var hd = $('done').querySelector('h4'); hd.setAttribute('tabindex', '-1'); hd.focus({ preventScroll: true });
+  }
   $('bookForm').addEventListener('submit', function (e) {
     e.preventDefault();
+    if (locking) return;
     var nm = $('f-name').value.trim(), tel = $('f-tel').value;
     var ok = err('name', nameMsg(nm));
     ok = err('tel', telMsg(tel)) && ok;
@@ -729,27 +786,19 @@ footer { background: var(--panel); }
       toast('Esa hora ya no está disponible. Escoge otra.');
       return;
     }
+    var snap = { svc: st.svc, bar: st.bar, date: new Date(st.date), time: st.time, name: nm, tel: tel };
+    hideToast();
     var btn = $('confirm'); btn.disabled = true; btn.textContent = 'Reservando…';
+    lock(true);
     setTimeout(function () {
-      var who = st.bar === 'any' ? 'el primer barbero libre' : val('s-bar').replace(/\.$/, '');
-      var svcName = val('s-svc'), day = val('s-day'), time = val('s-time'), total = $('s-total').textContent;
-      $('doneText').textContent = nm + ', te esperamos el ' + day + ' a las ' + time + ' con ' + who + '.';
-      $('doneList').innerHTML = '<div class="row"><dt>Servicio</dt><dd>' + svcName + '</dd></div><div class="row"><dt>Total</dt><dd>' + total + '</dd></div><div class="row"><dt>Pagas</dt><dd>En el local</dd></div>';
-      var msg = 'Hola Navaja, reservé ' + svcName + ' el ' + day + ' a las ' + time + ' con ' + who + '. Soy ' + nm + '.';
-      $('waBtn').dataset.msg = msg;
-      var start = new Date(st.date); var parts = st.time.split(':'); var hh = +parts[0]; if (hh < 9) hh += 12; start.setHours(hh, 0, 0, 0);
-      var svc = SERVICES.filter(function (x) { return x.id === st.svc; })[0];
-      var end = new Date(start.getTime() + svc.min * 60000);
-      var f = function (d) { return d.getFullYear() + String(d.getMonth() + 1).padStart(2, '0') + String(d.getDate()).padStart(2, '0') + 'T' + String(d.getHours()).padStart(2, '0') + String(d.getMinutes()).padStart(2, '0') + '00'; };
-      var TZ = 'America/Santo_Domingo';
-      var esc = function (t) { return String(t).replace(/\\/g, '\\\\').replace(/([,;])/g, '\\$1').replace(/\n/g, '\\n'); };
-      $('icsBtn').href = 'data:text/calendar;charset=utf-8,' + encodeURIComponent('BEGIN:VCALENDAR\r\nVERSION:2.0\r\nPRODID:-//Navaja//Demo//ES\r\nBEGIN:VTIMEZONE\r\nTZID:' + TZ + '\r\nBEGIN:STANDARD\r\nDTSTART:19700101T000000\r\nTZOFFSETFROM:-0400\r\nTZOFFSETTO:-0400\r\nTZNAME:AST\r\nEND:STANDARD\r\nEND:VTIMEZONE\r\nBEGIN:VEVENT\r\nUID:' + Date.now() + '@navaja-demo\r\nDTSTAMP:' + new Date().toISOString().replace(/[-:]/g, '').slice(0, 15) + 'Z\r\nDTSTART;TZID=' + TZ + ':' + f(start) + '\r\nDTEND;TZID=' + TZ + ':' + f(end) + '\r\nSUMMARY:' + esc(svcName + ' en Navaja Barber Studio') + '\r\nLOCATION:' + esc('Calle Ejemplo 45, Santo Domingo') + '\r\nEND:VEVENT\r\nEND:VCALENDAR');
-      setBooked(true);
-      ['st-1','st-2','st-3','st-4'].forEach(function (id) { $(id).classList.add('done'); $(id).classList.remove('now'); $(id).removeAttribute('aria-current'); });
-      $('c-sum').scrollIntoView({ behavior: smooth, block: 'start' });
-      var hd = $('done').querySelector('h4'); hd.setAttribute('tabindex', '-1'); hd.focus({ preventScroll: true });
-      btn.textContent = 'Confirmar cita';
-      try { sessionStorage.removeItem('navaja-st'); } catch (e) {}
+      try {
+        showBooked(snap);
+        focusDone();
+      } finally {
+        btn.textContent = 'Confirmar cita';
+        lock(false);
+        if (!$('grid').classList.contains('booked')) update();
+      }
     }, 800);
   });
   // Check a field as soon as the person leaves it, but never nag about an empty one they only tabbed through
@@ -772,57 +821,99 @@ footer { background: var(--panel); }
     renderCal(); update();
   }
   function startOver() { resetAll(); $('c-svc').scrollIntoView({ behavior: smooth, block: 'start' }); document.querySelector('[data-svc]').focus({ preventScroll: true }); }
-  $('again').addEventListener('click', startOver);
+  var fine = matchMedia('(hover: hover) and (pointer: fine)');
+  var undoKey = /Mac|iPhone|iPad/.test(navigator.platform || '') ? '⌘Z' : 'Ctrl+Z';
+  function withKey(m) { return fine.matches ? m + ' ' + undoKey + ' para deshacer.' : m; }
+  // Leave a confirmed booking for a new one, with a way back to it
+  function backToBooking(prev) {
+    return { label: 'Volver a mi cita', undo: true, fn: function () { showBooked(prev); focusDone(); } };
+  }
+  function newBooking(then) {
+    var prev = bookedSnap; bookedSnap = null;
+    resetAll(); then();
+    if (prev) toast(withKey('Empezamos una cita nueva.'), backToBooking(prev));
+  }
+  $('again').addEventListener('click', function () { newBooking(startOver); });
   $('reset').addEventListener('click', function () {
-    var snap = { svc: st.svc, bar: st.bar, date: st.date, time: st.time, view: view };
+    var snap = snapshot();
     startOver();
-    toast('Listo, empezamos de cero.', { label: 'Deshacer', fn: function () {
-      st = { svc: snap.svc, bar: snap.bar, date: snap.date, time: snap.time }; view = snap.view;
-      press($('services'), 'data-svc', st.svc || ''); press($('barbers'), 'data-bar', st.bar || '');
-      renderCal(); if (st.date) { renderTimes(); if (st.time && !slotOk(st.time)) { st.time = null; renderTimes(); } }
-      update();
+    toast(withKey('Listo, empezamos de cero.'), { label: 'Deshacer', undo: true, fn: function () {
+      restoreState(snap);
       $('c-sum').scrollIntoView({ behavior: smooth, block: 'start' });
       ($('confirm').disabled ? $('reset') : $('confirm')).focus({ preventScroll: true });
     } });
   });
   $('edit').addEventListener('click', function () {
+    var prev = bookedSnap;
     setBooked(false); update();
     $('c-sum').scrollIntoView({ behavior: smooth, block: 'start' });
     $('sumBox').querySelector('.chg:not([hidden])').focus({ preventScroll: true });
-    toast('Cambia lo que quieras y confirma de nuevo.');
+    toast('Cambia lo que quieras y confirma de nuevo.', backToBooking(prev));
   });
   // Menu rows preselect the service
   $('menu').addEventListener('click', function (e) {
     var b = e.target.closest('[data-pick]'); if (!b) return;
-    if ($('grid').classList.contains('booked')) resetAll();
-    st.svc = b.dataset.pick; press($('services'), 'data-svc', st.svc); update();
-    focusIn('c-svc');
+    if (locking) { toast('Un momento: estamos reservando tu cita.'); return; }
+    var pick = function () { st.svc = b.dataset.pick; press($('services'), 'data-svc', st.svc); update(); focusIn('c-svc'); };
+    if ($('grid').classList.contains('booked')) newBooking(pick); else pick();
   });
 
-  var toastEl = $('toast'), tt;
+  // Toast: pauses while hovered or focused, Escape closes it, Ctrl/Cmd+Z runs its undo
+  var toastEl = $('toast'), tt, toastMs = 0, undoFn = null, tHover = false, tFocus = false, tReturn = null;
+  function hideToast() {
+    clearTimeout(tt); undoFn = null;
+    if (toastEl.contains(document.activeElement)) { (tReturn && document.contains(tReturn) ? tReturn : $('c-sum')).focus({ preventScroll: true }); }
+    toastEl.classList.remove('show'); tHover = tFocus = false;
+  }
+  function arm() { clearTimeout(tt); if (!tHover && !tFocus && toastEl.classList.contains('show')) tt = setTimeout(hideToast, toastMs); }
   function toast(m, act) {
-    toastEl.textContent = m; toastEl.classList.toggle('has-act', !!act);
+    toastEl.textContent = ''; tHover = tFocus = false;
+    var t = document.createElement('span'); t.className = 'toast-msg'; t.textContent = m; toastEl.appendChild(t);
+    toastEl.classList.toggle('has-act', !!act);
+    undoFn = act && act.undo ? act.fn : null;
     if (act) {
       var b = document.createElement('button'); b.type = 'button'; b.className = 'toast-act'; b.textContent = act.label;
-      b.addEventListener('click', function () { clearTimeout(tt); toastEl.classList.remove('show'); act.fn(); });
+      b.addEventListener('click', function () { hideToast(); act.fn(); });
       toastEl.appendChild(b);
     }
-    toastEl.classList.add('show'); clearTimeout(tt); tt = setTimeout(function () { toastEl.classList.remove('show'); }, act ? 7000 : 2800);
+    toastEl.classList.add('show'); toastMs = act ? 7000 : 2800; arm();
   }
+  toastEl.addEventListener('mouseenter', function () { tHover = true; clearTimeout(tt); });
+  toastEl.addEventListener('mouseleave', function () { tHover = false; arm(); });
+  toastEl.addEventListener('focusin', function (e) { if (!toastEl.contains(e.relatedTarget)) tReturn = e.relatedTarget; tFocus = true; clearTimeout(tt); });
+  toastEl.addEventListener('focusout', function (e) { if (toastEl.contains(e.relatedTarget)) return; tFocus = false; arm(); });
+  document.addEventListener('keydown', function (e) {
+    if (!toastEl.classList.contains('show')) return;
+    if (e.key === 'Escape') { hideToast(); return; }
+    if ((e.ctrlKey || e.metaKey) && !e.shiftKey && !e.altKey && (e.key === 'z' || e.key === 'Z') && undoFn) {
+      var a = document.activeElement;
+      if (a && (a.tagName === 'INPUT' || a.tagName === 'TEXTAREA') && !a.readOnly && a.value) return; // leave text undo to the field
+      e.preventDefault(); var fn = undoFn; hideToast(); fn();
+    }
+  });
   $('waBtn').addEventListener('click', function (e) { e.preventDefault(); toast('En el sitio real esto abre WhatsApp con tu cita escrita.'); });
-  // Restore an unfinished booking after a refresh
-  var restored = false;
+  // Restore after a refresh: a confirmed booking that hasn't happened yet, or an unfinished one
+  var restored = false, rebooked = false;
   try {
     var saved = JSON.parse(sessionStorage.getItem('navaja-st') || 'null');
+    if (saved && saved.booked) {
+      var bk = { svc: saved.svc, bar: saved.bar, date: new Date(saved.date), time: saved.time, name: String(saved.name || ''), tel: String(saved.tel || '') };
+      if (svcOf(bk.svc) && barOf(bk.bar) && SLOTS.indexOf(bk.time) > -1 && bk.name && startOf(bk) > new Date()) { showBooked(bk); rebooked = true; }
+      saved = null;
+      if (!rebooked) sessionStorage.removeItem('navaja-st');
+    }
     if (saved) {
       if (saved.svc && SERVICES.some(function (x) { return x.id === saved.svc; })) { st.svc = saved.svc; press($('services'), 'data-svc', st.svc); restored = true; }
       if (saved.bar && BARBERS.some(function (x) { return x.id === saved.bar; })) { st.bar = saved.bar; press($('barbers'), 'data-bar', st.bar); restored = true; }
       if (saved.date && saved.date >= today.getTime() && new Date(saved.date).getDay() !== 0) { st.date = new Date(saved.date); view = new Date(st.date.getFullYear(), st.date.getMonth(), 1); st.time = saved.time; restored = true; }
     }
   } catch (e) {}
-  if (st.date) { renderTimes(); if (st.time && !slotOk(st.time)) { st.time = null; renderTimes(); } }
-  renderCal(); update();
-  if (restored) setTimeout(function () { toast('Retomamos tu cita donde la dejaste.'); }, 600);
+  if (!rebooked) {
+    if (st.date) { renderTimes(); if (st.time && !slotOk(st.time)) { st.time = null; renderTimes(); } }
+    renderCal(); update();
+  }
+  if (rebooked) setTimeout(function () { toast('Tu cita sigue reservada.'); }, 600);
+  else if (restored) setTimeout(function () { toast('Retomamos tu cita donde la dejaste.'); }, 600);
   // Header: mark the section in view
   var navLinks = [].slice.call(document.querySelectorAll('.nav ul a'));
   var navTick = false;
