@@ -1,17 +1,17 @@
 <!doctype html>
-<html lang="es" data-theme="light">
+<html lang="es" data-theme="dark">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Eric Design Web · Páginas que venden</title>
 <meta name="description" content="Landing pages para negocios en República Dominicana: listas en días, con WhatsApp, citas y tu propio dominio. Pide tu demo gratis.">
-<meta name="theme-color" content="#f1f4f3">
+<meta name="theme-color" content="#080d20">
 <meta property="og:title" content="Eric Design Web · Páginas que venden">
 <meta property="og:description" content="Tu negocio con página propia en días. Pide tu demo gratis por WhatsApp.">
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='16' fill='%23101418'/%3E%3Cpath d='M20 18h24M20 32h18M20 46h24M20 18v28' stroke='%23ffc93c' stroke-width='6' stroke-linecap='round'/%3E%3C/svg%3E">
 <link rel="preload" href="fonts/bricolage-grotesque-latin-opsz-normal.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="preload" href="fonts/figtree-latin-wght-normal.woff2" as="font" type="font/woff2" crossorigin>
-<script>try{var t=localStorage.getItem('edw-theme');if(t)document.documentElement.dataset.theme=t;else if(matchMedia('(prefers-color-scheme: dark)').matches)document.documentElement.dataset.theme='dark'}catch(e){}</script>
+<script>try{var t=localStorage.getItem('edw-theme');if(t)document.documentElement.dataset.theme=t;}catch(e){}</script>
 <style>
 /* Self-hosted variable fonts (Fontsource, latin subset): Bricolage carries wght + opsz, Figtree carries wght */
 @font-face { font-family: 'Bricolage Grotesque'; font-style: normal; font-weight: 200 800; font-display: swap; src: url(fonts/bricolage-grotesque-latin-opsz-normal.woff2) format('woff2-variations'), url(fonts/bricolage-grotesque-latin-opsz-normal.woff2) format('woff2'); }
@@ -28,37 +28,39 @@
   --max: 1180px;
 }
 [data-theme="light"] {
-  --bg: #f1f4f3;
+  --bg: #f4f5fb;
   --paper: #ffffff;
-  --ink: #101418;
-  --muted: #4c5560;
-  --line: #d6dedc;
-  --teal: #0b6f71;
+  --ink: #080d20;
+  --muted: #4a5068;
+  --line: #dadded;
+  --teal: #713bff;
   --teal-ink: #ffffff;
-  --sun: #ffc93c;
-  --sun-ink: #101418;
-  --soft: #e7efe9;
-  --slab: #101418;
-  --on-slab: #eef1ec;
-  --shadow: 0 24px 50px -28px rgba(16, 20, 24, .35);
+  --sun: #168bff;
+  --sun-ink: #080d20;
+  --soft: #eee9ff;
+  --slab: #080d20;
+  --on-slab: #eef1fa;
+  --shadow: 0 24px 50px -28px rgba(8, 13, 32, .35);
   color-scheme: light;
 }
 [data-theme="dark"] {
-  --bg: #0e1215;
-  --paper: #161b20;
-  --ink: #eef1ec;
-  --muted: #a3adb4;
-  --line: #2a3238;
-  --teal: #44c2bf;
-  --teal-ink: #062223;
-  --sun: #ffc93c;
-  --sun-ink: #101418;
-  --soft: #13262a;
-  --slab: #1c262c;
-  --on-slab: #eef1ec;
+  --bg: #080d20;
+  --paper: #10173a;
+  --ink: #eef1fa;
+  --muted: #a6adc8;
+  --line: #222b52;
+  --teal: #8f6bff;
+  --teal-ink: #080d20;
+  --sun: #168bff;
+  --sun-ink: #080d20;
+  --soft: #161544;
+  --slab: #10173a;
+  --on-slab: #eef1fa;
   --shadow: 0 24px 50px -24px rgba(0, 0, 0, .8);
   color-scheme: dark;
 }
+/* Brand violet keeps white text on primary buttons in dark mode (5.6:1) */
+[data-theme="dark"] .btn-main { background: #713bff; color: #ffffff; }
 *, *::before, *::after { box-sizing: border-box; }
 html { scroll-behavior: smooth; scroll-padding-top: 80px; }
 body { margin: 0; background: var(--bg); color: var(--ink); font: 400 1.0625rem/1.6 var(--font-body); -webkit-font-smoothing: antialiased; transition: background-color .35s, color .35s; }
@@ -359,7 +361,7 @@ footer a .icon { width: 18px; height: 18px; }
 @media (max-width: 560px) { body { padding-bottom: 72px; } }
 
 /* tasteskill restyle: no rules, no outlines, no resting shadows; surfaces by tone */
-[data-theme="light"] { --muted: #3a424b; }
+[data-theme="light"] { --muted: #3f4560; }
 .switch button[aria-pressed="true"] { background: var(--ink); color: var(--bg); }
 .switch button[aria-pressed="true"]::after { background: var(--sun); }
 @media (hover: hover) and (pointer: fine) { .switch button:hover { color: var(--ink); } .switch button[aria-pressed="true"]:hover { color: var(--bg); } }
@@ -768,7 +770,7 @@ details { border: 0; background: var(--paper); border-radius: 14px; padding: 0 2
   function syncTheme() {
     var dark = root.dataset.theme === 'dark';
     theme.setAttribute('aria-label', dark ? 'Cambiar a tema claro' : 'Cambiar a tema oscuro');
-    document.querySelector('meta[name=theme-color]').content = dark ? '#0e1215' : '#f1f4f3';
+    document.querySelector('meta[name=theme-color]').content = dark ? '#080d20' : '#f4f5fb';
   }
   theme.addEventListener('click', function () {
     root.dataset.theme = root.dataset.theme === 'dark' ? 'light' : 'dark';
