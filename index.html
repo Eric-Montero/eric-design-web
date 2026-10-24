@@ -3,12 +3,13 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Eric Design Web · Páginas que venden</title>
+<title>NovaPage · Páginas web que venden</title>
 <meta name="description" content="Landing pages para negocios en República Dominicana: listas en días, con WhatsApp, citas y tu propio dominio. Pide tu demo gratis.">
 <meta name="theme-color" content="#080d20">
-<meta property="og:title" content="Eric Design Web · Páginas que venden">
+<meta property="og:title" content="NovaPage · Páginas web que venden">
 <meta property="og:description" content="Tu negocio con página propia en días. Pide tu demo gratis por WhatsApp.">
-<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='16' fill='%23101418'/%3E%3Cpath d='M20 18h24M20 32h18M20 46h24M20 18v28' stroke='%23ffc93c' stroke-width='6' stroke-linecap='round'/%3E%3C/svg%3E">
+<link rel="icon" href="img/brand/novapage-favicon.svg" type="image/svg+xml">
+<link rel="apple-touch-icon" href="img/brand/apple-touch-icon.png">
 <link rel="preload" href="fonts/bricolage-grotesque-latin-opsz-normal.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="preload" href="fonts/figtree-latin-wght-normal.woff2" as="font" type="font/woff2" crossorigin>
 <script>try{var t=localStorage.getItem('edw-theme');if(t)document.documentElement.dataset.theme=t;}catch(e){}</script>
@@ -95,8 +96,9 @@ p { margin: 0; text-wrap: pretty; }
 header.top { position: sticky; top: 0; z-index: 50; background: var(--bg); }
 .nav { display: flex; align-items: center; gap: 28px; height: 68px; }
 .logo { min-height: 44px; display: flex; align-items: center; gap: 10px; text-decoration: none; font: 800 1.25rem/1 var(--font-display); letter-spacing: -.02em; }
-.logo-mark { width: 32px; height: 32px; border-radius: 9px; background: var(--slab); display: grid; place-items: center; }
-.logo-mark svg { width: 18px; height: 18px; stroke: var(--sun); stroke-width: 3.2; fill: none; stroke-linecap: round; }
+.logo-n { width: 38px; height: 34px; flex: none; }
+.logo-word { font: 800 1.375rem/1 var(--font-display); letter-spacing: -.03em; color: var(--ink); }
+.logo-word span { background: linear-gradient(90deg, #168bff, #793bff); -webkit-background-clip: text; background-clip: text; color: transparent; } /* taste-skill-ignore: brand wordmark from the official NovaPage logo */
 .logo small { font: 600 .78rem var(--font-body); color: var(--muted); letter-spacing: 0; margin-left: 2px; }
 .nav ul { display: flex; gap: 24px; list-style: none; margin: 0 0 0 auto; padding: 0; }
 .nav ul a { display: inline-block; padding: 12px 0; text-decoration: none; color: var(--muted); font-weight: 500; font-size: 1.0625rem; }
@@ -437,9 +439,9 @@ details { border: 0; background: var(--paper); border-radius: 14px; padding: 0 2
 
 <header class="top">
   <nav class="wrap nav" aria-label="Principal">
-    <a class="logo" href="#" aria-label="Eric Design Web, inicio">
-      <span class="logo-mark" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M7 5h10M7 12h7M7 19h10M7 5v14"/></svg></span>
-      Eric Design <small>Web</small>
+    <a class="logo" href="#" aria-label="NovaPage, inicio">
+      <svg class="logo-n" viewBox="14 0 228 202" aria-hidden="true"><defs><linearGradient id="lgN" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#20C4FF"/><stop offset=".48" stop-color="#167BFF"/><stop offset="1" stop-color="#793BFF"/></linearGradient><linearGradient id="lgP" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="#168BFF"/><stop offset="1" stop-color="#793BFF"/></linearGradient></defs><path d="M18 37 Q18 23 31 17 L55 6 Q68 0 80 9 L176 83 Q187 91 187 105 L187 157 Q187 169 176 163 L78 89 L78 157 Q78 170 66 176 L42 187 Q18 198 18 174 Z" fill="url(#lgN)"/><path d="M18 48 L78 95 L78 157 Q78 170 66 176 L42 187 Q18 198 18 174 Z" fill="#168BFF" opacity=".34"/><path d="M78 95 L176 163 Q187 169 187 157 L187 105 Q187 91 176 83 L80 9 Q68 0 55 6 L31 17 Q22 21 19 31 Z" fill="url(#lgP)"/><path d="M199 6 C204 28 215 39 237 44 C215 49 204 60 199 82 C194 60 183 49 161 44 C183 39 194 28 199 6Z" fill="#7547FF"/></svg>
+      <span class="logo-word">Nova<span>Page</span></span>
     </a>
     <ul id="links">
       <li><a href="#demos">Demos</a></li>
@@ -470,7 +472,7 @@ details { border: 0; background: var(--paper); border-radius: 14px; padding: 0 2
         <li><svg class="icon"><use href="#i-check"/></svg>Ves la demo antes de pagar</li>
       </ul>
     </div>
-    <div class="stage" id="showcase" role="region" aria-roledescription="carrusel" aria-label="Demos de Eric Design Web">
+    <div class="stage" id="showcase" role="region" aria-roledescription="carrusel" aria-label="Demos de NovaPage">
       <a class="device" data-ui id="heroDevice" href="demos/lumiere/" aria-label="Abrir la demo Lumière Salón &amp; Spa">
         <div class="bar"><i></i><i></i><i></i><span id="heroUrl">tusalon.com</span><b class="open-pill">Abrir demo →</b></div>
         <div class="slides" aria-hidden="true">
@@ -697,7 +699,7 @@ details { border: 0; background: var(--paper); border-radius: 14px; padding: 0 2
     <div class="stagger wrap about">
       <picture class="about-photo">
         <source srcset="img/eric.webp" type="image/webp">
-        <img src="img/eric.jpg" width="800" height="999" loading="lazy" alt="Eric Montero, diseñador web de Eric Design Web">
+        <img src="img/eric.jpg" width="800" height="999" loading="lazy" alt="Eric Montero, diseñador web de NovaPage">
       </picture>
       <div class="about-text">
         <h2>Soy Eric</h2>
@@ -748,7 +750,7 @@ details { border: 0; background: var(--paper); border-radius: 14px; padding: 0 2
 
 <footer>
   <div class="wrap">
-    <span>© 2026 Eric Design Web · Los Alcarrizos, Santo Domingo</span>
+    <span>© 2026 NovaPage · Los Alcarrizos, Santo Domingo</span>
     <a data-wa="Hola Eric, " href="https://wa.me/18292600023"><svg class="icon"><use href="#i-wa"/></svg>WhatsApp +1 (829) 260-0023</a>
   </div>
 </footer>

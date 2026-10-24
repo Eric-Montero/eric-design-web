@@ -1,0 +1,18 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="64" height="64" viewBox="0 0 64 64" role="img" aria-labelledby="title">
+  <title id="title">NovaPage favicon</title>
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#101A35"/>
+      <stop offset="100%" stop-color="#050817"/>
+    </linearGradient>
+    <linearGradient id="n" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#20C4FF"/>
+      <stop offset="48%" stop-color="#167BFF"/>
+      <stop offset="100%" stop-color="#793BFF"/>
+    </linearGradient>
+  </defs>
+  <rect width="64" height="64" rx="15" fill="url(#bg)"/>
+  <path d="M11 22 Q11 17 16 15 L21 12 Q25 10 29 13 L49 29 Q52 31 52 35 L52 49 Q52 53 48 50 L29 35 L29 48 Q29 52 25 54 L20 56 Q11 59 11 51 Z" fill="url(#n)"/>
+  <path d="M29 35 L48 50 Q52 53 52 49 L52 35 Q52 31 49 29 L29 13 Q25 10 21 12 L16 15 Q12 17 11 21 Z" fill="url(#n)"/>
+  <path d="M51 10 C52.5 15 55 17.5 60 19 C55 20.5 52.5 23 51 28 C49.5 23 47 20.5 42 19 C47 17.5 49.5 15 51 10Z" fill="#8A55FF"/>
+</svg>
