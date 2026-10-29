@@ -1,0 +1,452 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>The King of Games RD · Consolas, juegos y accesorios (propuesta de rediseño)</title>
+<meta name="description" content="Propuesta de rediseño de NovaPage para The King of Games RD: tienda con carrito y pedido por WhatsApp en español.">
+<meta name="robots" content="noindex, nofollow">
+<meta name="theme-color" content="#0a0a0b">
+<link rel="preload" href="fonts/archivo-latin-wdth-normal.woff2" as="font" type="font/woff2" crossorigin>
+<style>
+@font-face { font-family: 'Archivo'; src: url(fonts/archivo-latin-wdth-normal.woff2) format('woff2'); font-weight: 100 900; font-stretch: 62% 125%; font-display: swap; }
+@font-face { font-family: 'Hanken'; src: url(fonts/hanken-grotesk-latin-400-normal.woff2) format('woff2'); font-weight: 400; font-display: swap; }
+@font-face { font-family: 'Hanken'; src: url(fonts/hanken-grotesk-latin-500-normal.woff2) format('woff2'); font-weight: 500; font-display: swap; }
+@font-face { font-family: 'Hanken'; src: url(fonts/hanken-grotesk-latin-600-normal.woff2) format('woff2'); font-weight: 600; font-display: swap; }
+@font-face { font-family: 'Hanken'; src: url(fonts/hanken-grotesk-latin-700-normal.woff2) format('woff2'); font-weight: 700; font-display: swap; }
+
+:root {
+  --bg: #0a0a0b;
+  --s1: #131315;
+  --s2: #1b1b1e;
+  --line: #2a2a2f;
+  --ink: #f5f5f6;
+  --muted: #a2a2ab;
+  --or: #ff9500;
+  --or-ink: #1a0f00;
+  --or-2: #ffb347;
+  --wa: #1fa855;
+  --tile: #f2f3f5;
+  --r: 18px;
+  --head: 'Archivo', system-ui, sans-serif;
+  --body: 'Hanken', system-ui, -apple-system, 'Segoe UI', sans-serif;
+}
+* { box-sizing: border-box; }
+html { scroll-behavior: smooth; -webkit-text-size-adjust: 100%; }
+@media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } *, *::before, *::after { animation: none !important; transition: none !important; } }
+body { margin: 0; background: var(--bg); color: var(--ink); font: 400 17px/1.55 var(--body); -webkit-font-smoothing: antialiased; }
+img { display: block; max-width: 100%; height: auto; }
+a { color: inherit; }
+button, input, select, textarea { font: inherit; color: inherit; }
+:focus-visible { outline: 3px solid var(--or); outline-offset: 3px; border-radius: 8px; }
+.wrap { width: min(1200px, 100% - 40px); margin-inline: auto; }
+.sr { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
+h1, h2, h3 { font-family: var(--head); margin: 0; letter-spacing: -.01em; }
+.proposal { background: #fff2df; color: #2a1800; font-size: 14px; text-align: center; padding: 8px 16px; line-height: 1.35; }
+
+.btn { display: inline-flex; align-items: center; justify-content: center; gap: 10px; min-height: 52px; padding: 0 22px; border-radius: 12px; border: 0; font-weight: 700; font-size: 16.5px; text-decoration: none; cursor: pointer; transition: transform .15s ease, filter .2s, background-color .2s; -webkit-tap-highlight-color: transparent; }
+.btn:active { transform: scale(.97); }
+.btn svg { width: 22px; height: 22px; flex: none; }
+.btn-or { background: var(--or); color: var(--or-ink); }
+.btn-wa { background: var(--wa); color: #fff; }
+.btn-line { background: transparent; color: var(--ink); box-shadow: inset 0 0 0 1.5px #3b3b42; }
+@media (hover: hover) { .btn-or:hover, .btn-wa:hover { filter: brightness(1.08); } .btn-line:hover { box-shadow: inset 0 0 0 1.5px var(--ink); } }
+
+/* cabecera */
+.top { position: sticky; top: 0; z-index: 30; background: rgba(10, 10, 11, .88); backdrop-filter: blur(16px); -webkit-backdrop-filter: blur(16px); border-bottom: 1px solid var(--line); }
+.top .wrap { display: flex; align-items: center; gap: 16px; height: 68px; }
+.top .logo img { height: 32px; width: auto; }
+.top .nav { display: flex; gap: 22px; margin-left: 18px; font-weight: 500; font-size: 15.5px; }
+.top .nav a { text-decoration: none; color: var(--muted); }
+.top .nav a:hover { color: var(--ink); }
+.cartBtn { margin-left: auto; position: relative; display: inline-flex; align-items: center; gap: 8px; min-height: 44px; padding: 0 14px; border-radius: 12px; border: 1.5px solid var(--line); background: var(--s1); font-weight: 700; cursor: pointer; }
+.cartBtn svg { width: 22px; height: 22px; }
+.cartBtn b { min-width: 24px; height: 24px; border-radius: 12px; background: var(--or); color: var(--or-ink); display: grid; place-items: center; font-size: 13px; padding: 0 6px; }
+.cartBtn.bump { animation: bump .35s ease; }
+@keyframes bump { 50% { transform: scale(1.1); } }
+@media (max-width: 900px) { .top .nav { display: none; } }
+
+/* hero */
+.hero { position: relative; overflow: hidden; padding: 48px 0 30px; }
+.hero::before { content: ''; position: absolute; inset: auto -200px -300px auto; width: 900px; height: 900px; background: radial-gradient(closest-side, rgba(255, 149, 0, .22), transparent); }
+.hero .wrap { position: relative; display: grid; grid-template-columns: 1.05fr .95fr; gap: 40px; align-items: center; }
+.tag { display: inline-flex; align-items: center; gap: 8px; font-size: 13.5px; font-weight: 700; color: var(--or-2); letter-spacing: .12em; text-transform: uppercase; }
+.tag svg { width: 18px; height: 18px; }
+h1 { font-size: clamp(44px, 6.6vw, 86px); line-height: .92; font-weight: 900; font-stretch: 112%; margin: 16px 0 18px; text-transform: uppercase; }
+h1 span { color: var(--or); }
+.lead { font-size: 19px; color: var(--muted); max-width: 30em; margin: 0 0 26px; }
+.cta { display: flex; flex-wrap: wrap; gap: 12px; }
+.deal { background: var(--tile); color: #111; border-radius: 26px; padding: 22px; display: grid; grid-template-columns: 1fr 1fr; gap: 10px; align-items: center; position: relative; }
+.deal img { width: 100%; aspect-ratio: 1; object-fit: contain; mix-blend-mode: multiply; }
+.deal .k { position: absolute; left: 18px; top: 18px; background: #111; color: var(--or); font-weight: 800; font-size: 13px; padding: 6px 10px; border-radius: 8px; letter-spacing: .06em; }
+.deal h3 { font: 900 30px/1 var(--head); font-stretch: 100%; }
+.deal .was { color: #777; text-decoration: line-through; font-size: 15px; margin-top: 10px; }
+.deal .now { font: 900 38px/1 var(--head); font-stretch: 95%; color: #111; }
+.deal .save { display: inline-block; margin-top: 8px; background: var(--or); color: var(--or-ink); font-weight: 800; font-size: 14px; padding: 5px 10px; border-radius: 8px; }
+.deal .btn { margin-top: 14px; min-height: 48px; width: 100%; }
+@media (max-width: 920px) { .hero .wrap { grid-template-columns: 1fr; } }
+@media (max-width: 520px) { body { font-size: 16.5px; } .wrap { width: calc(100% - 32px); } .hero { padding-top: 28px; } .lead { font-size: 17.5px; } .cta .btn { flex: 1 1 100%; } .deal h3 { font-size: 24px; } .deal .now { font-size: 30px; } }
+
+/* beneficios */
+.hero .wrap.pw { display: block; }
+.perks { display: grid; grid-template-columns: repeat(4, 1fr); gap: 10px; margin: 30px 0 0; padding: 0; list-style: none; }
+.perks li { background: var(--s1); border: 1px solid var(--line); border-radius: 16px; padding: 16px; display: flex; gap: 12px; align-items: flex-start; }
+.perks svg { width: 26px; height: 26px; color: var(--or); flex: none; }
+.perks b { display: block; font-size: 15.5px; }
+.perks span { font-size: 13.5px; color: var(--muted); }
+@media (max-width: 900px) { .perks { grid-template-columns: 1fr 1fr; } }
+@media (max-width: 480px) { .perks { grid-template-columns: 1fr; } }
+
+/* tienda */
+section { scroll-margin-top: 74px; }
+.sec { padding: 56px 0; }
+.kicker { font-size: 13.5px; font-weight: 700; letter-spacing: .14em; text-transform: uppercase; color: var(--or); margin: 0 0 10px; }
+h2 { font-size: clamp(34px, 5vw, 58px); line-height: .95; font-weight: 900; font-stretch: 108%; text-transform: uppercase; }
+.sub { color: var(--muted); margin: 12px 0 0; max-width: 36em; }
+.head { margin-bottom: 22px; }
+.cats { display: flex; gap: 8px; overflow-x: auto; scrollbar-width: none; padding: 2px 2px 10px; scroll-snap-type: x proximity; }
+.cats::-webkit-scrollbar { display: none; }
+.cat { flex: none; scroll-snap-align: start; min-height: 46px; padding: 0 16px; border-radius: 12px; border: 1.5px solid var(--line); background: var(--s1); font-weight: 700; font-size: 15px; cursor: pointer; display: inline-flex; align-items: center; gap: 8px; }
+.cat small { color: var(--muted); font-weight: 600; }
+.cat[aria-pressed="true"] { background: var(--or); color: var(--or-ink); border-color: var(--or); }
+.cat[aria-pressed="true"] small { color: #5a3500; }
+.tools { display: flex; gap: 10px; flex-wrap: wrap; margin: 8px 0 14px; }
+.search { flex: 1 1 280px; position: relative; }
+.search svg { position: absolute; left: 14px; top: 50%; transform: translateY(-50%); width: 20px; height: 20px; color: var(--muted); }
+.search input, .sort { width: 100%; min-height: 50px; border-radius: 12px; border: 1.5px solid var(--line); background: var(--s1); padding: 0 14px 0 44px; font-size: 16px; }
+.sort { width: auto; padding: 0 14px; flex: 0 0 auto; }
+.search input:focus, .sort:focus { outline: none; border-color: var(--or); }
+.count { font-size: 14px; color: var(--muted); margin: 0 2px 12px; display: flex; justify-content: space-between; gap: 10px; flex-wrap: wrap; }
+.grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(210px, 1fr)); gap: 12px; }
+.card { background: var(--s1); border: 1px solid var(--line); border-radius: var(--r); overflow: hidden; display: flex; flex-direction: column; }
+.card .ph { position: relative; background: var(--tile); aspect-ratio: 1; }
+.card .ph img { width: 100%; height: 100%; object-fit: contain; padding: 10px; mix-blend-mode: multiply; }
+.card .off { position: absolute; left: 10px; top: 10px; background: #111; color: var(--or); font-weight: 800; font-size: 12.5px; padding: 4px 8px; border-radius: 7px; }
+.card .body { padding: 14px; display: flex; flex-direction: column; gap: 6px; flex: 1; }
+.card .lbl { font-size: 12px; font-weight: 700; color: var(--muted); letter-spacing: .06em; text-transform: uppercase; }
+.card h3 { font: 600 16px/1.3 var(--body); }
+.card .pr { margin-top: auto; padding-top: 6px; display: flex; align-items: baseline; gap: 8px; flex-wrap: wrap; }
+.card .pr b { font: 900 22px/1 var(--head); font-stretch: 95%; }
+.card .pr s { color: var(--muted); font-size: 13.5px; }
+.card .pr small { color: var(--muted); font-size: 13px; }
+.add { min-height: 44px; border-radius: 10px; border: 0; background: var(--s2); border: 1.5px solid var(--line); font-weight: 700; font-size: 15px; cursor: pointer; display: inline-flex; align-items: center; justify-content: center; gap: 8px; transition: background-color .15s, color .15s; }
+.add svg { width: 18px; height: 18px; }
+@media (hover: hover) { .add:hover { background: var(--or); color: var(--or-ink); border-color: var(--or); } }
+.add.in { background: var(--or); color: var(--or-ink); border-color: var(--or); }
+.more { display: flex; justify-content: center; margin-top: 16px; }
+@media (max-width: 520px) { .grid { grid-template-columns: 1fr 1fr; gap: 10px; } .card .body { padding: 10px; } .card h3 { font-size: 14.5px; } .card .pr b { font-size: 19px; } .tools .sort { flex: 1 1 100%; } }
+
+/* dos formularios */
+.duo { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
+.panel { border-radius: 24px; padding: clamp(20px, 3vw, 32px); display: flex; flex-direction: column; gap: 14px; }
+.p1 { background: var(--or); color: var(--or-ink); }
+.p1 .kicker { color: #5a3500; }
+.p1 h2, .p2 h2 { font-size: clamp(30px, 3.6vw, 44px); }
+.p1 .sub { color: #4a2c00; }
+.p2 { background: var(--s1); border: 1px solid var(--line); }
+.fld { display: grid; gap: 6px; }
+.fld label { font-size: 14.5px; font-weight: 700; }
+.inp { width: 100%; min-height: 50px; border-radius: 12px; border: 1.5px solid var(--line); background: var(--s2); padding: 0 14px; font-size: 16px; }
+.p1 .inp { background: rgba(255, 255, 255, .55); border-color: rgba(0, 0, 0, .15); color: #1a0f00; }
+.p1 .inp::placeholder { color: #6a4a1a; }
+.inp:focus { outline: none; border-color: var(--ink); }
+.p1 .btn { background: #111; color: #fff; }
+.two { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+@media (max-width: 860px) { .duo { grid-template-columns: 1fr; } }
+@media (max-width: 480px) { .two { grid-template-columns: 1fr; } }
+
+/* reseñas */
+.revs { display: grid; grid-template-columns: .8fr 1fr 1fr 1fr; gap: 12px; }
+.score { background: var(--s1); border: 1px solid var(--line); border-radius: 18px; padding: 22px; }
+.score b { display: block; font: 900 40px/1 var(--head); font-stretch: 105%; color: var(--or); }
+.score .st { color: var(--or); letter-spacing: 3px; margin: 8px 0; }
+.score span { color: var(--muted); font-size: 14.5px; }
+.rev { background: var(--s1); border: 1px solid var(--line); border-radius: 18px; padding: 20px; margin: 0; }
+.rev blockquote { margin: 0 0 12px; }
+.rev figcaption { font-size: 14px; color: var(--muted); }
+@media (max-width: 900px) { .revs { grid-template-columns: 1fr 1fr; } }
+@media (max-width: 520px) { .revs { grid-template-columns: 1fr; } }
+
+/* visítanos */
+.visit { background: var(--s1); border: 1px solid var(--line); border-radius: 24px; padding: clamp(22px, 3vw, 36px); display: grid; grid-template-columns: 1.2fr 1fr; gap: 24px; align-items: center; }
+.visit p { color: var(--muted); margin: 10px 0 0; }
+.acts { display: flex; flex-wrap: wrap; gap: 10px; }
+@media (max-width: 760px) { .visit { grid-template-columns: 1fr; } }
+
+footer { border-top: 1px solid var(--line); padding: 34px 0 120px; margin-top: 40px; }
+footer .wrap { display: flex; justify-content: space-between; gap: 16px; flex-wrap: wrap; font-size: 14px; color: var(--muted); }
+footer a { color: var(--ink); font-weight: 600; }
+
+/* carrito */
+.scrim { position: fixed; inset: 0; background: rgba(0, 0, 0, .6); z-index: 60; opacity: 0; pointer-events: none; transition: opacity .25s; }
+.scrim.open { opacity: 1; pointer-events: auto; }
+.drawer { position: fixed; z-index: 61; top: 0; right: 0; bottom: 0; width: min(440px, 100%); background: var(--s1); border-left: 1px solid var(--line); transform: translateX(100%); transition: transform .3s cubic-bezier(.2, .7, .2, 1); display: flex; flex-direction: column; }
+.drawer.open { transform: none; }
+.dh { display: flex; justify-content: space-between; align-items: center; padding: 18px 20px; border-bottom: 1px solid var(--line); }
+.dh h2 { font-size: 26px; }
+.x { width: 44px; height: 44px; border-radius: 12px; border: 1.5px solid var(--line); background: transparent; cursor: pointer; font-size: 22px; }
+.items { flex: 1; overflow: auto; padding: 10px 20px; }
+.it { display: grid; grid-template-columns: 64px 1fr auto; gap: 12px; align-items: center; padding: 12px 0; border-bottom: 1px solid var(--line); }
+.it img { width: 64px; height: 64px; border-radius: 12px; background: var(--tile); object-fit: contain; padding: 4px; }
+.it b { display: block; font-size: 14.5px; font-weight: 600; line-height: 1.25; }
+.it small { color: var(--muted); }
+.qty { display: flex; align-items: center; gap: 2px; background: var(--s2); border-radius: 10px; padding: 3px; }
+.qty button { width: 34px; height: 34px; border: 0; background: transparent; border-radius: 8px; cursor: pointer; font-size: 18px; }
+.qty output { min-width: 22px; text-align: center; font-weight: 700; }
+.empty { color: var(--muted); text-align: center; padding: 40px 10px; }
+.df { padding: 16px 20px max(16px, env(safe-area-inset-bottom)); border-top: 1px solid var(--line); display: grid; gap: 12px; }
+.tot { display: flex; justify-content: space-between; align-items: baseline; }
+.tot b { font: 900 30px/1 var(--head); color: var(--or); }
+.seg { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
+.seg label { position: relative; }
+.seg input { position: absolute; opacity: 0; inset: 0; }
+.seg span { display: grid; place-items: center; min-height: 48px; border-radius: 12px; border: 1.5px solid var(--line); font-weight: 700; font-size: 14.5px; text-align: center; line-height: 1.2; padding: 4px; cursor: pointer; }
+.seg small { display: block; font-weight: 500; font-size: 12px; color: var(--muted); }
+.seg input:checked + span { border-color: var(--or); background: rgba(255, 149, 0, .12); }
+.seg input:focus-visible + span { outline: 3px solid var(--or); outline-offset: 2px; }
+
+.mbar { position: fixed; left: 12px; right: 12px; bottom: max(12px, env(safe-area-inset-bottom)); z-index: 40; display: none; gap: 8px; }
+.mbar .btn { flex: 1; min-height: 54px; box-shadow: 0 12px 30px -10px rgba(0, 0, 0, .8); }
+@media (max-width: 760px) { .mbar { display: flex; } }
+.toast { position: fixed; left: 50%; bottom: 88px; transform: translate(-50%, 16px); background: #fff; color: #111; font-weight: 700; padding: 12px 18px; border-radius: 14px; opacity: 0; transition: opacity .25s, transform .25s; z-index: 70; pointer-events: none; max-width: calc(100% - 32px); text-align: center; }
+.toast.show { opacity: 1; transform: translate(-50%, 0); }
+</style>
+</head>
+<body>
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <symbol id="i-wa" viewBox="0 0 24 24"><path fill="currentColor" d="M12.04 2a9.9 9.9 0 0 0-8.5 15l-1.4 5.1 5.2-1.4A9.9 9.9 0 1 0 12.04 2Zm0 18.1a8.2 8.2 0 0 1-4.2-1.2l-.3-.2-3.1.8.8-3-.2-.3a8.2 8.2 0 1 1 7 3.9Zm4.5-6.1c-.2-.1-1.5-.7-1.7-.8-.2-.1-.4-.1-.6.1l-.8 1c-.1.2-.3.2-.5.1a6.7 6.7 0 0 1-3.3-2.9c-.3-.4.3-.4.7-1.3.1-.2 0-.3 0-.4l-.8-1.8c-.2-.5-.4-.4-.6-.4h-.5a1 1 0 0 0-.7.3 3 3 0 0 0-.9 2.2 5.2 5.2 0 0 0 1.1 2.7 11.8 11.8 0 0 0 4.5 4c1.7.7 2.3.8 3.2.6a2.7 2.7 0 0 0 1.8-1.3 2.2 2.2 0 0 0 .2-1.3c-.1-.1-.3-.2-.5-.3Z"/></symbol>
+  <symbol id="i-bag" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"><path d="M5 8h14l-1 12H6Z"/><path d="M9 8V6a3 3 0 0 1 6 0v2"/></g></symbol>
+  <symbol id="i-plus" viewBox="0 0 24 24"><path fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" d="M12 5v14M5 12h14"/></symbol>
+  <symbol id="i-search" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></g></symbol>
+  <symbol id="i-crown" viewBox="0 0 24 24"><path fill="currentColor" d="M3 8l4.5 4L12 5l4.5 7L21 8l-2 11H5Z"/></symbol>
+  <symbol id="i-truck" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 6h11v10H3zM14 9h4l3 3v4h-7"/><circle cx="7" cy="17.5" r="1.8"/><circle cx="17" cy="17.5" r="1.8"/></g></symbol>
+  <symbol id="i-tag" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"><path d="M3 12V4h8l10 10-8 8Z"/><circle cx="7.5" cy="8.5" r="1.3"/></g></symbol>
+  <symbol id="i-swap" viewBox="0 0 24 24"><path fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" d="M7 4 3 8l4 4M3 8h14M17 20l4-4-4-4M21 16H7"/></symbol>
+  <symbol id="i-shield" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round" stroke-linecap="round"><path d="M12 3 4 6v6c0 5 3.5 8 8 9 4.5-1 8-4 8-9V6Z"/><path d="m9 12 2 2 4-4"/></g></symbol>
+  <symbol id="i-pin" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="2"><path d="M12 21s7-6.2 7-12a7 7 0 0 0-14 0c0 5.8 7 12 7 12Z"/><circle cx="12" cy="9" r="2.5"/></g></symbol>
+  <symbol id="i-ig" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/></g></symbol>
+</svg>
+
+<div class="proposal"><b>Propuesta de rediseño</b> preparada por NovaPage para The King of Games RD · No es el sitio oficial</div>
+
+<header class="top">
+  <div class="wrap">
+    <a class="logo" href="#inicio" aria-label="The King of Games, inicio"><img src="img/logo.webp" alt="The King of Games" width="153" height="32"></a>
+    <nav class="nav" aria-label="Secciones">
+      <a href="#tienda">Tienda</a>
+      <a href="#cambio">Recibimos tu consola</a>
+      <a href="#ofertas">Igualamos ofertas</a>
+      <a href="#visitanos">Tienda física</a>
+    </nav>
+    <button class="cartBtn" id="cartBtn" type="button" aria-label="Ver mi pedido"><svg aria-hidden="true"><use href="#i-bag"/></svg><span class="lbl">Pedido</span><b id="cartN">0</b></button>
+  </div>
+</header>
+
+<main>
+  <section class="hero" id="inicio">
+    <div class="wrap">
+      <div>
+        <span class="tag"><svg aria-hidden="true"><use href="#i-crown"/></svg>Más que juegos, es un estilo de vida</span>
+        <h1>Tu próxima consola, al <span>mejor precio</span></h1>
+        <p class="lead">PlayStation, Nintendo, Xbox, juegos y accesorios nuevos y sellados. Arma tu pedido aquí y lo confirmamos por WhatsApp. En Santo Domingo pagas al recibir.</p>
+        <div class="cta">
+          <a class="btn btn-or" href="#tienda"><svg aria-hidden="true"><use href="#i-bag"/></svg>Ver la tienda</a>
+          <a class="btn btn-line" href="#cambio"><svg aria-hidden="true"><use href="#i-swap"/></svg>Cambia tu consola</a>
+        </div>
+      </div>
+      <div class="deal" id="deal"></div>
+    </div>
+    <div class="wrap pw">
+      <ul class="perks">
+        <li><svg aria-hidden="true"><use href="#i-truck"/></svg><div><b>Envío a todo el país</b><span>En Santo Domingo pagas al recibir</span></div></li>
+        <li><svg aria-hidden="true"><use href="#i-tag"/></svg><div><b>Igualamos ofertas</b><span>De tiendas reales</span></div></li>
+        <li><svg aria-hidden="true"><use href="#i-swap"/></svg><div><b>Recibimos consolas</b><span>Como parte del pago</span></div></li>
+        <li><svg aria-hidden="true"><use href="#i-shield"/></svg><div><b>Garantía</b><span>En daños de fábrica</span></div></li>
+      </ul>
+    </div>
+  </section>
+
+  <section class="sec" id="tienda">
+    <div class="wrap">
+      <div class="head"><p class="kicker">Tienda</p><h2>Todo nuevo y sellado</h2></div>
+      <div class="cats" id="cats" role="group" aria-label="Categorías"></div>
+      <div class="tools">
+        <label class="search"><span class="sr">Buscar</span><svg aria-hidden="true"><use href="#i-search"/></svg><input id="q" type="search" placeholder="Busca: PS5, Zelda, control, Steam Deck…" autocomplete="off"></label>
+        <select class="sort" id="sort" aria-label="Ordenar"><option value="rel">Más populares</option><option value="asc">Menor precio</option><option value="desc">Mayor precio</option><option value="off">Mayor descuento</option></select>
+      </div>
+      <div class="count"><span id="count"></span><span>Precios en RD$ tomados de thekingofgamesrd.com el 29 de oct.</span></div>
+      <div class="grid" id="grid" aria-live="polite"></div>
+      <div class="more"><button class="btn btn-line" type="button" id="moreBtn" hidden>Ver más</button></div>
+    </div>
+  </section>
+
+  <section class="sec" style="padding-top:12px">
+    <div class="wrap duo">
+      <form class="panel p1" id="cambio" novalidate>
+        <p class="kicker">Recibimos tu consola</p>
+        <h2>Tu consola vieja paga parte de la nueva</h2>
+        <p class="sub">Dinos qué tienes y qué quieres, y te decimos cuánto te queda la diferencia.</p>
+        <div class="two">
+          <div class="fld"><label for="c-have">Tengo</label><select class="inp" id="c-have"><option>PS5 (disco)</option><option>PS5 (digital)</option><option selected>PS4</option><option>PS4 Pro</option><option>Nintendo Switch</option><option>Nintendo Switch OLED</option><option>Xbox Series X</option><option>Xbox Series S</option><option>Otra</option></select></div>
+          <div class="fld"><label for="c-state">Estado</label><select class="inp" id="c-state"><option>Como nueva</option><option selected>Buen estado</option><option>Con detalles</option></select></div>
+        </div>
+        <div class="fld"><label for="c-want">Quiero</label><input class="inp" id="c-want" placeholder="Ej.: PS5 Slim Digital"></div>
+        <button class="btn" type="submit"><svg aria-hidden="true"><use href="#i-wa"/></svg>Pedir mi oferta</button>
+      </form>
+      <form class="panel p2" id="ofertas" novalidate>
+        <p class="kicker">Igualamos ofertas</p>
+        <h2>¿Lo viste más barato?</h2>
+        <p class="sub">Si otra tienda real lo tiene a mejor precio, mándanos dónde y lo revisamos.</p>
+        <div class="fld"><label for="o-prod">Producto</label><input class="inp" id="o-prod" placeholder="Ej.: Nintendo Switch OLED"></div>
+        <div class="two">
+          <div class="fld"><label for="o-store">Tienda</label><input class="inp" id="o-store" placeholder="Ej.: nombre o link"></div>
+          <div class="fld"><label for="o-price">Su precio (RD$)</label><input class="inp" id="o-price" inputmode="numeric" placeholder="Ej.: 16,500"></div>
+        </div>
+        <button class="btn btn-or" type="submit"><svg aria-hidden="true"><use href="#i-wa"/></svg>Enviar por WhatsApp</button>
+      </form>
+    </div>
+  </section>
+
+  <section class="sec" id="resenas" style="padding-top:12px">
+    <div class="wrap">
+      <div class="head"><p class="kicker">Lo que dicen en Google</p><h2>Clientes del King</h2></div>
+      <div class="revs">
+        <div class="score"><b>Excelente</b><div class="st" aria-label="5 estrellas">★★★★★</div><span>A base de 105 reseñas en Google</span></div>
+        <figure class="rev"><blockquote>“Un servicio al cliente rápido, sincero y eficiente y productos de calidad. Me fui con un PS5 Slim 10/10.”</blockquote><figcaption>Razer ULTIMATE (S.A.S)</figcaption></figure>
+        <figure class="rev"><blockquote>“Ya llevo 2 años obteniendo equipos y orientaciones a la hora de adquirirlo. Excelente servicio.”</blockquote><figcaption>Mabel Torres Guzmán</figcaption></figure>
+        <figure class="rev"><blockquote>“Me encantó, muy buenos precios, la Switch barata.”</blockquote><figcaption>Ana Solte Wilde</figcaption></figure>
+      </div>
+    </div>
+  </section>
+
+  <section class="sec" id="visitanos" style="padding-top:12px">
+    <div class="wrap">
+      <div class="visit">
+        <div>
+          <p class="kicker">Tienda física</p>
+          <h2>Plaza Central, 2do piso</h2>
+          <p>Dentro de Party Fiesta, Santo Domingo. Envío disponible a todas partes del país.</p>
+        </div>
+        <div class="acts">
+          <a class="btn btn-wa" href="https://wa.me/18495059661" target="_blank" rel="noopener"><svg aria-hidden="true"><use href="#i-wa"/></svg>849-505-9661</a>
+          <a class="btn btn-line" href="https://wa.me/18296299661" target="_blank" rel="noopener"><svg aria-hidden="true"><use href="#i-wa"/></svg>829-629-9661</a>
+          <a class="btn btn-line" href="https://maps.app.goo.gl/FsBVRrjXYjiyksPn8" target="_blank" rel="noopener"><svg aria-hidden="true"><use href="#i-pin"/></svg>Cómo llegar</a>
+          <a class="btn btn-line" href="https://www.instagram.com/thekingofgamesrd/" target="_blank" rel="noopener"><svg aria-hidden="true"><use href="#i-ig"/></svg>@thekingofgamesrd</a>
+        </div>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer>
+  <div class="wrap"><span>Propuesta de rediseño no oficial. Productos, fotos, precios y reseñas tomados de thekingofgamesrd.com e Instagram el 29 de octubre de 2026.</span><span>Diseño: <a href="https://novapage-rd.vercel.app/" target="_blank" rel="noopener">NovaPage</a></span></div>
+</footer>
+
+<div class="scrim" id="scrim"></div>
+<aside class="drawer" id="drawer" aria-label="Tu pedido" aria-hidden="true" inert>
+  <div class="dh"><h2>Tu pedido</h2><button class="x" id="close" type="button" aria-label="Cerrar">×</button></div>
+  <div class="items" id="items"></div>
+  <div class="df">
+    <div class="seg" role="radiogroup" aria-label="Entrega">
+      <label><input type="radio" name="del" value="Envío (Santo Domingo, pago al recibir)" checked><span>Envío en SD<small>Pagas al recibir</small></span></label>
+      <label><input type="radio" name="del" value="Envío al interior" ><span>Envío al interior<small>Todo el país</small></span></label>
+      <label><input type="radio" name="del" value="Retiro en tienda (Plaza Central)"><span>Retiro en tienda<small>Plaza Central</small></span></label>
+      <label><input type="radio" name="del" value="Por coordinar"><span>Por coordinar<small>Lo hablamos</small></span></label>
+    </div>
+    <div class="tot"><span>Total</span><b id="total">RD$0</b></div>
+    <button class="btn btn-wa" id="send" type="button"><svg aria-hidden="true"><use href="#i-wa"/></svg>Pedir por WhatsApp</button>
+  </div>
+</aside>
+
+<div class="mbar"><a class="btn btn-or" href="#tienda"><svg aria-hidden="true"><use href="#i-bag"/></svg>Tienda</a><a class="btn btn-wa" href="https://wa.me/18495059661" target="_blank" rel="noopener"><svg aria-hidden="true"><use href="#i-wa"/></svg>WhatsApp</a></div>
+<div class="toast" id="toast" role="status"></div>
+
+<script>
+const WA = '18495059661';
+const ITEMS = [{"s":"control-xbox-nuevo-sellado-original","n":"Control Xbox original","c":"controles","p":3500,"rp":4000,"mx":0,"o":"Xbox"},{"s":"joy-con-para-nintendo-switch-nuevos-sellados-replica-azul-rojo","n":"Joy-Con para Nintendo Switch replica (azul-rojo)","c":"controles","p":2800,"rp":3150,"mx":0,"o":"Nintendo"},{"s":"playstation-5-slim-disco-nuevo-sellado","n":"PlayStation 5 Slim Disco","c":"consolas","p":43500,"rp":47500,"mx":0,"o":"Playstation"},{"s":"juego-switch-zelda-tears-of-the-kigndom-nuevo-sellado","n":"Zelda Tears of The Kingdom","c":"switch","p":3350,"rp":3800,"mx":0,"o":"Nintendo"},{"s":"juego-switch-zelda-echoes-of-wisdom-nuevo-sellado","n":"Zelda Echoes of Wisdom","c":"switch","p":3200,"rp":3600,"mx":0,"o":"Nintendo"},{"s":"juego-switch-zelda-breath-of-the-wild-nuevo-sellado","n":"Zelda Breath of The Wild","c":"switch","p":3000,"rp":3500,"mx":0,"o":"Nintendo"},{"s":"juego-switch-yoshis-crafted-world-nuevo-sellado","n":"Yoshis Crafted World","c":"switch","p":3000,"rp":3500,"mx":0,"o":"Nintendo"},{"s":"juego-switch-wario-ware-get-it-together-nuevo-sellado","n":"Wario Ware Get It Together","c":"switch","p":2500,"rp":3000,"mx":0,"o":"Nintendo"},{"s":"juego-switch-super-mario-party-jamboree-nuevo-sellado","n":"Super Mario Party Jamboree","c":"switch","p":3200,"rp":3600,"mx":0,"o":"Nintendo"},{"s":"juego-switch-pokemon-violeta-nuevo-sellado","n":"Pokemon Violeta","c":"switch","p":3000,"rp":3500,"mx":0,"o":"Nintendo"},{"s":"juego-switch-pokemon-escudo-shield-nuevo-sellado","n":"Pokemon Escudo / Shield","c":"switch","p":3000,"rp":3500,"mx":0,"o":"Nintendo"},{"s":"juego-switch-pokemon-escarlata-nuevo-sellado","n":"Pokemon Escarlata","c":"switch","p":3000,"rp":3500,"mx":0,"o":"Nintendo"},{"s":"juego-switch-pikmin-4-nuevo-sellado-2","n":"Pikmin 4","c":"switch","p":3000,"rp":3500,"mx":0,"o":"Nintendo"},{"s":"juego-switch-pikmin-4-nuevo-sellado","n":"Pokemon Arceus","c":"switch","p":3000,"rp":3500,"mx":0,"o":"Nintendo"},{"s":"juego-switch-octopath-traveler-2-nuevo-sellado","n":"Octopath Traveler 2","c":"switch","p":3000,"rp":3500,"mx":0,"o":"Nintendo"},{"s":"juego-switch-ninja-lego-movie-nuevo-sellado","n":"Ninja Lego Movie","c":"switch","p":3000,"rp":3500,"mx":0,"o":"Nintendo"},{"s":"juego-switch-nba2k25-nuevo-sellado","n":"NBA2K25","c":"switch","p":3000,"rp":3500,"mx":0,"o":"Nintendo"},{"s":"juego-switch-minecraft-nuevo-sellado","n":"Minecraft","c":"switch","p":3000,"rp":3500,"mx":0,"o":"Nintendo"},{"s":"juego-switch-mariokart-8-deluxe-nuevo-sellado","n":"Metroid Prime Remastered","c":"switch","p":3000,"rp":3500,"mx":0,"o":"Nintendo"},{"s":"juego-switch-mariorabbids-nuevo-sellado","n":"Mario+Rabbids","c":"switch","p":3000,"rp":3500,"mx":0,"o":"Nintendo"},{"s":"juego-switch-mario-y-luigi-brothership-nuevo-sellado","n":"Mario Y Luigi Brothership","c":"switch","p":3500,"rp":4000,"mx":0,"o":"Nintendo"},{"s":"juego-switch-mario-paper-la-puerta-milenaria-nuevo-sellado-2","n":"Mario Paper la Puerta Milenaria","c":"switch","p":3000,"rp":3500,"mx":0,"o":"Nintendo"},{"s":"juego-switch-mario-paper-la-puerta-milenaria-nuevo-sellado","n":"Mario Wonder","c":"switch","p":3000,"rp":3500,"mx":0,"o":"Nintendo"},{"s":"juego-switch-mario-odyssey-nuevo-sellado","n":"Mario Odyssey","c":"switch","p":3000,"rp":3500,"mx":0,"o":"Nintendo"},{"s":"juego-switch-mario-maker-2-nuevo-sellado","n":"Mario Maker 2","c":"switch","p":3000,"rp":3500,"mx":0,"o":"Nintendo"},{"s":"juego-switch-mario-golf-super-rush-nuevo-sellado","n":"Mario Golf Super Rush","c":"switch","p":3000,"rp":3500,"mx":0,"o":"Nintendo"},{"s":"juego-switch-mario-bros-deluxe-nuevo-sellado","n":"Mario Bros Deluxe","c":"switch","p":3000,"rp":3500,"mx":0,"o":"Nintendo"},{"s":"juego-switch-mario-3d-world-bowser-fury-nuevo-sellado","n":"Mario 3D World + Bowser Fury","c":"switch","p":3000,"rp":3500,"mx":0,"o":"Nintendo"},{"s":"juego-switch-luigis-mansion-3-nuevo-sellado","n":"Luigis Mansion 3","c":"switch","p":3000,"rp":3500,"mx":0,"o":"Nintendo"},{"s":"juego-switch-luigis-mansion-2-hd-nuevo-sellado","n":"Luigis Mansion 2 HD","c":"switch","p":3000,"rp":3500,"mx":0,"o":"Nintendo"},{"s":"juego-switch-little-nightmer-nuevo-sellado","n":"Little Nightmares","c":"switch","p":3000,"rp":3500,"mx":0,"o":"Nintendo"},{"s":"juego-switch-kirby-forgotten-land-nuevo-sellado-2","n":"Kirby Forgotten Land","c":"switch","p":3000,"rp":3500,"mx":0,"o":"Nintendo"},{"s":"juego-switch-kirby-forgotten-land-nuevo-sellado","n":"Kirby Star Allies","c":"switch","p":3000,"rp":3500,"mx":0,"o":"Nintendo"},{"s":"juego-switch-donkey-kong-country-nuevo-sellado","n":"Donkey Kong Returns HD","c":"switch","p":3000,"rp":3500,"mx":0,"o":"Nintendo"},{"s":"juego-switch-captain-toad-capitan-toad-nuevo-sellado","n":"Captain Toad/ Capitan Toad","c":"switch","p":3000,"rp":3500,"mx":0,"o":"Nintendo"},{"s":"juego-switch-animal-crossing-nuevo-sellado-2","n":"Animal Crossing","c":"switch","p":3000,"rp":3500,"mx":0,"o":"Nintendo"},{"s":"juego-ps5-the-last-of-us-2-nuevo-sellado-copia","n":"The Last Of Us 2","c":"ps5","p":3000,"rp":3500,"mx":0,"o":"Playstation"},{"s":"juego-ps5-the-last-of-us-1-nuevo-sellado","n":"The Last Of Us 1","c":"ps5","p":2800,"rp":3150,"mx":0,"o":"Playstation"},{"s":"juego-ps5-tekken-8-nuevo-sellado","n":"Tekken 8","c":"ps5","p":3500,"rp":4000,"mx":0,"o":"Playstation"},{"s":"juego-ps5-spiderman-miles-morales-ultimate-edition-nuevo-sellado","n":"Spiderman Miles Morales Ultimate Edition","c":"ps5","p":2500,"rp":3000,"mx":0,"o":"Playstation"},{"s":"juego-ps5-saintsrow-nuevo-sellado","n":"Saints Row","c":"ps5","p":2500,"rp":3000,"mx":0,"o":"Playstation"},{"s":"juego-ps5-returnal-nuevo-sellado","n":"Returnal","c":"ps5","p":2500,"rp":3000,"mx":0,"o":"Playstation"},{"s":"juego-ps5-resident-evil-village-nuevo-sellado","n":"Resident Evil Village","c":"ps5","p":2500,"rp":3000,"mx":0,"o":"Playstation"},{"s":"juego-ps5-resident-evil-4-remake-nuevo-sellado","n":"Resident Evil 4 Remake","c":"ps5","p":2500,"rp":3000,"mx":0,"o":"Playstation"},{"s":"juego-ps5-nba2k25-nuevo-sellado","n":"NBA2K25","c":"ps5","p":3500,"rp":4000,"mx":0,"o":"Playstation"},{"s":"juego-ps5-mortal-kombat-11-nuevo-sellado-copia","n":"NBA2K24","c":"ps5","p":2000,"rp":2500,"mx":0,"o":"Playstation"},{"s":"juego-ps5-mortal-kombat-1-nuevo-sellado","n":"Mortal Kombat 1","c":"ps5","p":2800,"rp":3150,"mx":0,"o":"Playstation"},{"s":"juego-ps5-mlb24-the-show-24-nuevo-sellado","n":"MLB The Show 24","c":"ps5","p":3500,"rp":4000,"mx":0,"o":"Playstation"},{"s":"juego-ps5-marvel-midnight-suns-nuevo-sellado","n":"Marvel Midnight Suns","c":"ps5","p":2000,"rp":2500,"mx":0,"o":"Playstation"},{"s":"juego-ps5-gta-v-nuevo-sellado","n":"GTA V","c":"ps5","p":2500,"rp":3000,"mx":0,"o":"Playstation"},{"s":"juego-ps5-gotham-knights-nuevo-sellado","n":"Gotham Knights","c":"ps5","p":2500,"rp":3000,"mx":0,"o":"Playstation"},{"s":"juego-ps5-god-of-war-ragnarok-nuevo-sellado","n":"God of War Ragnarok","c":"ps5","p":3000,"rp":3500,"mx":0,"o":"Playstation"},{"s":"juego-ps5-ghost-of-tsushima-nuevo-sellado","n":"Ghost of Tsushima","c":"ps5","p":3000,"rp":3500,"mx":0,"o":"Playstation"},{"s":"juego-ps5-final-fantasy-xvi-nuevo-sellado","n":"Final Fantasy XVI","c":"ps5","p":2500,"rp":3000,"mx":0,"o":"Playstation"},{"s":"juego-ps5-final-fantasy-rebirth-nuevo-sellado","n":"Final Fantasy Rebirth","c":"ps5","p":4000,"rp":4500,"mx":0,"o":"Playstation"},{"s":"juego-ps5-final-fantasy-crisis-core-nuevo-sellado","n":"Final Fantasy Crisis Core","c":"ps5","p":1800,"rp":2100,"mx":0,"o":"Playstation"},{"s":"juego-ps5-dragon-dogma-2-nuevo-sellado","n":"Dragon Dogma 2","c":"ps5","p":3500,"rp":4000,"mx":0,"o":"Playstation"},{"s":"juego-ps5-dragon-ball-sparking-zero-nuevo-sellado","n":"Dragon Ball Sparking Zero","c":"ps5","p":4000,"rp":4500,"mx":0,"o":"Playstation"},{"s":"juego-ps5-dragon-ball-kakaroto-nuevo-sellado","n":"Dragon Ball Kakaroto","c":"ps5","p":2500,"rp":3000,"mx":0,"o":"Playstation"},{"s":"juego-ps5-destruction-all-stars-nuevo-sellado","n":"Destruction All Stars","c":"ps5","p":995,"rp":1500,"mx":0,"o":"Playstation"},{"s":"juego-ps5-borderlands-3-ultimate-edition-nuevo-sellado","n":"Borderlands 3 Ultimate Edition","c":"ps5","p":2000,"rp":2500,"mx":0,"o":"Playstation"},{"s":"juego-ps5-call-of-duty-black-ops-6-nuevo-sellado","n":"Call of Duty Black Ops 6","c":"ps5","p":4000,"rp":4500,"mx":0,"o":"Playstation"},{"s":"juego-ps4-tlou-the-last-of-us-1-tlou-1-nuevo-sellado","n":"Tony Hawks Pro Skater 1+2","c":"ps4","p":1500,"rp":2000,"mx":0,"o":"Playstation"},{"s":"juego-ps4-resident-evil-7-gold-edition-nuevo-sellado","n":"Resident Evil 7 Gold Edition","c":"ps4","p":1500,"rp":2000,"mx":0,"o":"Playstation"},{"s":"juego-ps4-resident-evil-6-nuevo-sellado","n":"Resident Evil 6","c":"ps4","p":1500,"rp":2000,"mx":0,"o":"Playstation"},{"s":"juego-ps4-resident-evil-5-nuevo-sellado","n":"Resident Evil 5","c":"ps4","p":1500,"rp":2000,"mx":0,"o":"Playstation"},{"s":"juego-ps4-resident-evil-4-nuevo-sellado","n":"Resident Evil 4","c":"ps4","p":1500,"rp":2000,"mx":0,"o":"Playstation"},{"s":"juego-ps4-octopath-traveler-2-nuevo-sellado","n":"Octopath Traveler 2","c":"ps4","p":2500,"rp":3000,"mx":0,"o":"Playstation"},{"s":"juego-ps4-naruto-ninja-storm-4-nuevo-sellado","n":"Naruto Ninja Storm 4","c":"ps4","p":2000,"rp":2500,"mx":0,"o":"Playstation"},{"s":"juego-ps4-marvel-avengers-nuevo-sellado","n":"Marvel Avengers","c":"ps4","p":2000,"rp":2500,"mx":0,"o":"Playstation"},{"s":"juego-ps4-mafia-3-nuevo-sellado","n":"Mafia 3","c":"ps4","p":2000,"rp":2500,"mx":0,"o":"Playstation"},{"s":"juego-ps4-madden-25-nuevo-sellado","n":"Madden 25","c":"ps4","p":1500,"rp":2000,"mx":0,"o":"Playstation"},{"s":"juego-ps4-injustice-2-nuevo-sellado","n":"Injustice 2","c":"ps4","p":2000,"rp":2500,"mx":0,"o":"Playstation"},{"s":"juego-ps4-gta-v-nuevo-sellado","n":"GTA V","c":"ps4","p":1500,"rp":2000,"mx":0,"o":"Playstation"},{"s":"juego-ps4-gta-triology-nuevo-sellado","n":"Gta Trilogy","c":"ps4","p":2500,"rp":3000,"mx":0,"o":"Playstation"},{"s":"juego-ps4-god-of-war-ragnarok-nuevo-sellado","n":"God of War Ragnarok","c":"ps4","p":3000,"rp":3500,"mx":0,"o":"Playstation"},{"s":"juego-ps4-ghost-of-tsushima-nuevo-sellado","n":"Ghost of Tsushima","c":"ps4","p":3000,"rp":3500,"mx":0,"o":"Playstation"},{"s":"juego-ps4-final-fantasy-0hd-nuevo-sellado","n":"Final Fantasy Type-0 HD","c":"ps4","p":2500,"rp":3000,"mx":0,"o":"Playstation"},{"s":"juego-ps4-crash-ctr-nitro-racing-nuevo-sellado","n":"Crash CTR Nitro Racing","c":"ps4","p":2500,"rp":3000,"mx":0,"o":"Playstation"},{"s":"control-ps5-dualsense-edge-nuevo-sellado-original","n":"Control PS5 Dualsense Edge original","c":"controles","p":11500,"rp":13000,"mx":0,"o":"Playstation"},{"s":"gift-card-fisico-psn-playstation-americana","n":"Gift Card fisico/PSN PlayStation Americana","c":"accesorios","p":3300,"rp":0,"mx":7100,"o":"Playstation"},{"s":"headset-ps5-3d-pulse-nuevo-sellado-colores-disponibles","n":"Headset PS5 3D Pulse (colores disponibles)","c":"audio","p":5500,"rp":0,"mx":6500,"o":"Headset/Playstation"},{"s":"steam-deck-oled-nuevo-sellado","n":"Steam Deck OLED","c":"consolas","p":46000,"rp":0,"mx":51800,"o":"Laptop/Pc"},{"s":"rog-ally-z1-extreme-nuevo-sellado","n":"Rog Ally Z1 Extreme","c":"consolas","p":38500,"rp":43500,"mx":0,"o":"Laptop/Pc"},{"s":"playstation-5-pro-digital-2tb-nuevo-sellado","n":"PlayStation 5 Pro Digital 2TB","c":"consolas","p":70000,"rp":75000,"mx":0,"o":"Playstation"},{"s":"playstation-4-slim-500gb-nuevo-sellado","n":"PlayStation 4 Slim 500GB","c":"consolas","p":15500,"rp":17500,"mx":0,"o":"Playstation"},{"s":"playstation-4-slim-1tb-bundle-god-of-war-ragnarok-nuevo-sellado","n":"PlayStation 4 Slim 1TB Bundle God of War Ragnarok","c":"consolas","p":18500,"rp":21000,"mx":0,"o":"Playstation"},{"s":"pro-controller-switch-original-nuevo-sellado-colores-variados","n":"Pro Controller Switch original (colores variados)","c":"controles","p":4000,"rp":0,"mx":4500,"o":"Nintendo"},{"s":"playstation-vr2-nuevo-sellado","n":"PlayStation VR2","c":"consolas","p":28000,"rp":31500,"mx":0,"o":"Playstation"},{"s":"monitor-tuf-gaming-vg27vq3b-nuevo-sellado","n":"Monitor TUF GAMING VG27VQ3B","c":"monitores","p":15495,"rp":17500,"mx":0,"o":"Monitores"},{"s":"monitor-sceptre-e205w-16003r-nuevo-sellado","n":"Monitor SCEPTRE E205W-16003R","c":"monitores","p":5500,"rp":6500,"mx":0,"o":"Monitores"},{"s":"monitor-msi-optix-g32c4xs-nuevo-sellado","n":"Monitor MSI OPTIX G32C4XS","c":"monitores","p":15995,"rp":18000,"mx":0,"o":"Monitores"},{"s":"monitor-msi-pro-mp251-nuevo-sellado","n":"Monitor MSI PRO MP251","c":"monitores","p":8000,"rp":9000,"mx":0,"o":"Monitores"},{"s":"monitor-msi-mag-274upf-e2-4k-nuevo-sellado","n":"Monitor MSI MAG 274UPF E2 4K","c":"monitores","p":29495,"rp":33500,"mx":0,"o":"Monitores"},{"s":"monitor-msi-g274qpf-nuevo-sellado","n":"Monitor MSI G274QPF","c":"monitores","p":17995,"rp":20500,"mx":0,"o":"Monitores"},{"s":"modulo-stick-edge-nuevo-sellado-original","n":"Modulo Stick Edge original","c":"controles","p":2500,"rp":3000,"mx":0,"o":"Playstation"},{"s":"mousepad-logitech-s-nuevo-sellado","n":"Mousepad Logitech S","c":"accesorios","p":1500,"rp":2000,"mx":0,"o":"Laptop/Pc/Xbox"},{"s":"combo-logitech-la-k120-tecladomouse-usb-nuevo-sellado-original","n":"Combo Logitech LA K120 teclado+mouse USB original","c":"accesorios","p":1500,"rp":2000,"mx":0,"o":"Laptop/Pc"},{"s":"lampara-luces-xbox","n":"Lampara/Luces XBOX","c":"accesorios","p":2000,"rp":2500,"mx":0,"o":"Xbox"},{"s":"kit-de-accesorios-13-en-1-para-switch","n":"Kit de accesorios 13 en 1 para Switch","c":"accesorios","p":2500,"rp":3000,"mx":0,"o":"Nintendo"},{"s":"bocina-jbl-flip-5-nueva-sellada-original","n":"Bocina JBL FLIP 5 original","c":"audio","p":5000,"rp":6000,"mx":0,"o":"Headset/Hogar"},{"s":"bocina-jbl-flip-4-nueva-sellada-original","n":"Bocina JBL FLIP 4 original","c":"audio","p":4000,"rp":4500,"mx":0,"o":"Headset/Hogar"},{"s":"bocina-jbl-clip-4-nueva-sellada-original-colores-variados","n":"Bocina JBL CLIP 4 original (colores variados)","c":"audio","p":3000,"rp":0,"mx":3500,"o":"Headset/Hogar"},{"s":"bocina-jbl-xtreme-3-nueva-sellada-original","n":"Bocina JBL XTREME 3 original","c":"audio","p":13500,"rp":15500,"mx":0,"o":"Headset/Hogar"},{"s":"ipad-10ma-generacion-nuevo-sellado-colores-variados","n":"iPad 10ma generación (colores variados)","c":"accesorios","p":22995,"rp":0,"mx":44500,"o":"Tablet/Celulares"},{"s":"headset-xbox-alambrico-nuevo-sellado","n":"Headset XBOX alambrico","c":"audio","p":3000,"rp":3500,"mx":0,"o":"Headset/Laptop/Pc/Xbox"},{"s":"headset-razer-blackshark-v2-x-nuevo-sellado","n":"Headset RAZER Blackshark V2 X","c":"audio","p":3000,"rp":3500,"mx":0,"o":"Headset/Laptop/Pc/Playstation/Xbox"},{"s":"headset-ps5-pulse-elite-nuevo-sellado","n":"Headset PS5 Pulse Elite","c":"audio","p":8500,"rp":10000,"mx":0,"o":"Headset/Playstation"},{"s":"headset-airlite-pro-pdp-nuevo-sellado","n":"Headset Airlite PRO PDP","c":"audio","p":4000,"rp":4500,"mx":0,"o":"Headset/Playstation"},{"s":"guia-logitech-g920-xbox-y-pc-nuevo-sellado","n":"Guia Logitech G920 XBOX y PC","c":"controles","p":18500,"rp":21000,"mx":0,"o":"Xbox"},{"s":"rollox20-para-camara-instax-mini-nuevo-sellado","n":"RolloX20 para camara Instax Mini","c":"accesorios","p":2000,"rp":2500,"mx":0,"o":"Hogar"},{"s":"camara-instax-mini-12-nuevo-sellado-colores-variados","n":"Camara Instax Mini 12 (colores variados)","c":"accesorios","p":6000,"rp":0,"mx":6800,"o":"Hogar"},{"s":"camara-instax-mini-12-bundle-blanca-nueva-sellada","n":"Camara Instax Mini 12 Bundle blanca","c":"accesorios","p":7000,"rp":8000,"mx":0,"o":"Hogar"},{"s":"fire-stick-4k-nuevo-sellado","n":"Fire Stick 4K","c":"accesorios","p":2500,"rp":3000,"mx":0,"o":"Hogar"},{"s":"estuche-switch-zelda-negro-nuevo-sellado","n":"Estuche switch Zelda negro","c":"accesorios","p":2000,"rp":2500,"mx":0,"o":"Nintendo"},{"s":"estuche-switch-lite-zelda-marron-nuevo-sellado","n":"Estuche switch lite Zelda marrón","c":"accesorios","p":2000,"rp":2500,"mx":0,"o":"Nintendo"},{"s":"cargo-pouch-switch-nuevo-sellado","n":"Cargo pouch Switch","c":"accesorios","p":1500,"rp":2000,"mx":0,"o":"Nintendo"},{"s":"edicion-coleccionista-zelda-tears-of-the-kingdom-nuevo-sellado","n":"Edición coleccionista Zelda Tears of the Kingdom","c":"switch","p":8995,"rp":11000,"mx":0,"o":"Nintendo"},{"s":"disco-duro-externo-hdd-segate-nuevo-sellado-2tb","n":"Disco duro externo HDD Seagate 2TB","c":"accesorios","p":5000,"rp":5700,"mx":0,"o":"Laptop/Pc/Playstation"},{"s":"deerlamn-funda-para-samsung-galaxy-s24-ultra-nuevo-sellado","n":"DEERLAMN Funda para Samsung Galaxy S24 Ultra","c":"accesorios","p":1100,"rp":1500,"mx":0,"o":"Tablet/Celulares"},{"s":"cover-silicon-control-ps5-colores-variados-copia","n":"Tapas PS5 Slim disco/digital plateadas","c":"accesorios","p":3500,"rp":4000,"mx":0,"o":"Playstation"},{"s":"cover-silicon-switch-oled-v1-v2-nuevo-sellado-colores-variados","n":"Cover silicón Switch Oled/V1/V2 (colores variados)","c":"accesorios","p":1500,"rp":2000,"mx":0,"o":"Nintendo"},{"s":"cover-silicon-control-ps5-colores-variados","n":"Cover silicón control PS5 *colores variados*","c":"accesorios","p":500,"rp":700,"mx":0,"o":"Playstation"},{"s":"control-xbox-elite-series-2-completo-nuevo-sellado","n":"Control XBOX Elite Series 2 completo","c":"controles","p":7000,"rp":8600,"mx":0,"o":"Xbox"},{"s":"control-xbox-elite-series-2-core-nuevo-sellado","n":"Control XBOX Elite Series 2 Core","c":"controles","p":5000,"rp":5700,"mx":0,"o":"Xbox"},{"s":"control-remoto-ps5-media-remote-ps5-nuevo-sellado","n":"Control remoto PS5/ Media remote PS5","c":"controles","p":1995,"rp":2500,"mx":0,"o":"Playstation"},{"s":"control-ps5-azul-metalico-original-nuevo-sellado","n":"Control PS5 azul metálico original","c":"controles","p":3800,"rp":4300,"mx":0,"o":"Playstation"},{"s":"control-ps5-rojo-original-nuevo-sellado-copia","n":"Control PS5 rojo original","c":"controles","p":3800,"rp":4300,"mx":0,"o":"Playstation"},{"s":"control-ps5-camuflaje-original-nuevo-sellado","n":"Control PS5 camuflaje original","c":"controles","p":3800,"rp":4300,"mx":0,"o":"Playstation"},{"s":"control-ps5-blanco-original-nuevo-sellado","n":"Control PS5 blanco original","c":"controles","p":3800,"rp":4300,"mx":0,"o":"Playstation"},{"s":"control-ps5-azul-original-nuevo-sellado","n":"Control PS5 azul original","c":"controles","p":3800,"rp":4300,"mx":0,"o":"Playstation"},{"s":"control-ps5-morado-original-nuevo-sellado","n":"Control PS5 morado original","c":"controles","p":3800,"rp":4300,"mx":0,"o":"Playstation"},{"s":"control-ps5-negro-original-nuevo-sellado","n":"Control PS5 negro original","c":"controles","p":3800,"rp":4300,"mx":0,"o":"Playstation"},{"s":"controles-ps4-originales-nuevos-sellados-colores-variados","n":"Controles PS4 originales (colores variados)","c":"controles","p":3500,"rp":0,"mx":4000,"o":"Playstation"},{"s":"charging-station-ps5-original-nuevo-sellado","n":"Charging Station PS5 original","c":"accesorios","p":2500,"rp":3000,"mx":0,"o":"Playstation"},{"s":"charging-station-1a-nuevo-sellado","n":"Charging Station 1A","c":"accesorios","p":2000,"rp":2500,"mx":0,"o":"Playstation"},{"s":"camara-ps5-hd-nuevo-sellado","n":"Camara PS5 HD","c":"accesorios","p":3500,"rp":4000,"mx":0,"o":"Playstation"},{"s":"cable-hdmi-2-1-ultra-8k-nuevo-sellado","n":"Cable HDMI 2.1 Ultra 8K","c":"accesorios","p":2000,"rp":2500,"mx":0,"o":"Playstation"},{"s":"bombillo-inteligente-sengled-nuevo-sellado","n":"Bombillo inteligente Sengled","c":"accesorios","p":800,"rp":1000,"mx":0,"o":"Hogar"},{"s":"bateria-control-xbox-original-nuevo-sellado","n":"Bateria control XBOX original","c":"controles","p":2500,"rp":3500,"mx":0,"o":"Xbox"},{"s":"base-de-pared-para-ps5-fat-nueva-sellada","n":"Base de pared para PS5 FAT","c":"accesorios","p":2500,"rp":3100,"mx":0,"o":"Playstation"},{"s":"base-multifuncional-para-ps4-fat-slim-nuevo-sellado","n":"Base multifuncional para PS4 FAT/SLIM","c":"accesorios","p":995,"rp":1500,"mx":0,"o":"Playstation"},{"s":"control-para-telefono-bluetooth-xbox-moga-xp7-x-nuevo-sellado","n":"Control para telefono bluetooth Xbox MOGA XP7-X+","c":"controles","p":5500,"rp":6500,"mx":0,"o":"Tablet/Celulares/Xbox"},{"s":"neverita-attitude-de-16-pies-cubicos-nueva-sellada","n":"Neverita Attitude de 1,6 pies cúbicos","c":"accesorios","p":5995,"rp":7500,"mx":0,"o":"Hogar"},{"s":"amiibo-zelda-link-nuevo-sellado","n":"Amiibo Zelda Link","c":"accesorios","p":1495,"rp":0,"mx":2000,"o":"Nintendo"},{"s":"amazon-echo-dot-5gen-nuevo-sellado-colores-variados","n":"Amazon Alexa Echo Dot 5th Gen (colores variados)","c":"accesorios","p":2500,"rp":0,"mx":3000,"o":"Hogar"},{"s":"adaptador-de-gamecube","n":"Adaptador de Gamecube","c":"accesorios","p":1000,"rp":1300,"mx":0,"o":"Nintendo"},{"s":"playstation-5-slim-digital-nuevo-sellado","n":"PlayStation 5 Slim Digital","c":"consolas","p":37500,"rp":40000,"mx":0,"o":"Playstation"},{"s":"nintendo-switch-lite-amarillo-nuevo-sellado","n":"Nintendo Switch Lite Amarillo","c":"consolas","p":11000,"rp":12500,"mx":0,"o":"Nintendo"},{"s":"nintendo-switch-lite-turquesa-nuevo-sellado","n":"Nintendo Switch Lite Turquesa","c":"consolas","p":11000,"rp":12500,"mx":0,"o":"Nintendo"},{"s":"nintendo-switch-lite-rosado-nuevo-sellado","n":"Nintendo Switch Lite Rosado","c":"consolas","p":11000,"rp":12500,"mx":0,"o":"Nintendo"},{"s":"nintendo-switch-oled-edicion-zelda-tears-of-the-kingdom-nuevo-sellado","n":"Nintendo Switch Oled edición Zelda Tears of the Kingdom","c":"consolas","p":18500,"rp":21000,"mx":0,"o":"Nintendo"},{"s":"nintendo-switch-oled-mario-nuevo-sellado","n":"Nintendo Switch Oled Mario","c":"consolas","p":18000,"rp":20500,"mx":0,"o":"Nintendo"},{"s":"descubre-el-nuevo-switch-oled-blanco-en-the-king-of-games","n":"Nintendo Switch Oled Blanco","c":"consolas","p":17500,"rp":20000,"mx":0,"o":"Nintendo"},{"s":"nintendo-switch-oled-neon-nuevo-sellado","n":"Nintendo Switch Oled Neon","c":"consolas","p":17500,"rp":20000,"mx":0,"o":"Nintendo"}];
+const CATS = [
+  ['all', 'Todo'], ['consolas', 'Consolas'], ['ps5', 'Juegos PS5'], ['switch', 'Juegos Switch'], ['ps4', 'Juegos PS4'],
+  ['controles', 'Controles'], ['audio', 'Audio'], ['monitores', 'Monitores'], ['accesorios', 'Accesorios'],
+];
+const LBL = Object.fromEntries(CATS);
+const $ = s => document.querySelector(s);
+const money = n => 'RD$' + n.toLocaleString('en-US');
+const esc = s => String(s).replace(/[&<>"]/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]));
+const img = it => `img/p/${it.s}.webp`;
+const POP = ['playstation-5-slim-digital-nuevo-sellado', 'nintendo-switch-oled-mario-nuevo-sellado', 'playstation-5-pro-digital-2tb-nuevo-sellado', 'steam-deck-oled-nuevo-sellado', 'playstation-5-slim-disco-nuevo-sellado', 'rog-ally-z1-extreme-nuevo-sellado', 'headset-ps5-3d-pulse-nuevo-sellado-colores-disponibles', 'control-ps5-negro-original-nuevo-sellado'];
+const rank = it => { const i = POP.indexOf(it.s); return i >= 0 ? i : 100 + (it.c === 'consolas' ? 0 : it.c === 'controles' ? 1 : 2); };
+
+// oferta destacada
+{ const it = ITEMS.find(x => x.s === 'playstation-5-slim-digital-nuevo-sellado');
+  $('#deal').innerHTML = `<span class="k">OFERTA</span><img src="${img(it)}" alt="${esc(it.n)}" width="360" height="360"><div><h3>${esc(it.n)}</h3><div class="was">${money(it.rp)}</div><div class="now">${money(it.p)}</div><span class="save">Ahorras ${money(it.rp - it.p)}</span><button class="btn btn-or" type="button" data-add="${it.s}"><svg aria-hidden="true"><use href="#i-plus"/></svg>Agregar</button></div>`; }
+
+const STEP = innerWidth > 1100 ? 15 : innerWidth > 860 ? 16 : 12;
+let cat = 'all', q = '', sort = 'rel', limit = STEP;
+$('#cats').innerHTML = CATS.map(([id, n]) => `<button class="cat" type="button" data-c="${id}" aria-pressed="${id === cat}">${n} <small>${id === 'all' ? ITEMS.length : ITEMS.filter(i => i.c === id).length}</small></button>`).join('');
+const norm = s => s.toLowerCase().normalize('NFD').replace(/[̀-ͯ]/g, '');
+function list() {
+  const t = norm(q).split(/\s+/).filter(Boolean);
+  let l = ITEMS.filter(i => (q || cat === 'all' || i.c === cat) && t.every(w => norm(i.n + ' ' + i.o + ' ' + LBL[i.c]).includes(w)));
+  const S = { rel: (a, b) => rank(a) - rank(b), asc: (a, b) => a.p - b.p, desc: (a, b) => b.p - a.p, off: (a, b) => (b.rp ? b.rp - b.p : 0) - (a.rp ? a.rp - a.p : 0) };
+  return l.sort(S[sort]);
+}
+function card(it) {
+  const inCart = cart[it.s];
+  return `<article class="card"><div class="ph"><img src="${img(it)}" alt="${esc(it.n)}" width="360" height="360" loading="lazy">${it.rp ? `<span class="off">-${money(it.rp - it.p)}</span>` : ''}</div>
+  <div class="body"><span class="lbl">${LBL[it.c]}</span><h3>${esc(it.n)}</h3>
+  <div class="pr">${it.mx ? `<small>Desde</small><b>${money(it.p)}</b>` : `<b>${money(it.p)}</b>${it.rp ? `<s>${money(it.rp)}</s>` : ''}`}</div>
+  <button class="add${inCart ? ' in' : ''}" type="button" data-add="${it.s}">${inCart ? `✓ En el pedido (${inCart})` : `<svg aria-hidden="true"><use href="#i-plus"/></svg>Agregar`}</button></div></article>`;
+}
+function draw() {
+  const l = list();
+  $('#grid').innerHTML = l.slice(0, limit).map(card).join('') || '<p class="empty">No encontramos eso. Escríbenos por WhatsApp y te lo buscamos.</p>';
+  $('#count').textContent = q ? `${l.length} resultados para “${q}”` : `${l.length} productos`;
+  $('#moreBtn').hidden = l.length <= limit; $('#moreBtn').textContent = `Ver ${Math.min(STEP, l.length - limit)} más de ${l.length - limit}`;
+}
+$('#cats').addEventListener('click', e => { const b = e.target.closest('[data-c]'); if (!b) return; cat = b.dataset.c; q = ''; $('#q').value = ''; limit = STEP; document.querySelectorAll('.cat').forEach(x => x.setAttribute('aria-pressed', x === b)); draw(); });
+$('#q').addEventListener('input', e => { q = e.target.value.trim(); limit = STEP; draw(); });
+$('#sort').addEventListener('change', e => { sort = e.target.value; draw(); });
+$('#moreBtn').addEventListener('click', () => { limit += STEP; draw(); });
+
+// carrito
+const cart = {};
+let tt; function toast(t) { const el = $('#toast'); el.textContent = t; el.classList.add('show'); clearTimeout(tt); tt = setTimeout(() => el.classList.remove('show'), 2200); }
+function add(s, d = 1) { cart[s] = (cart[s] || 0) + d; if (cart[s] <= 0) delete cart[s]; paintCart(); draw(); }
+document.addEventListener('click', e => {
+  const a = e.target.closest('[data-add]'); if (a) { add(a.dataset.add); toast('Agregado a tu pedido'); $('#cartBtn').classList.remove('bump'); void $('#cartBtn').offsetWidth; $('#cartBtn').classList.add('bump'); }
+  const q2 = e.target.closest('[data-q]'); if (q2) add(q2.dataset.s, +q2.dataset.q);
+});
+const byS = Object.fromEntries(ITEMS.map(i => [i.s, i]));
+const total = () => Object.entries(cart).reduce((t, [s, n]) => t + byS[s].p * n, 0);
+function paintCart() {
+  const n = Object.values(cart).reduce((a, b) => a + b, 0);
+  $('#cartN').textContent = n;
+  $('#items').innerHTML = n ? Object.entries(cart).map(([s, k]) => { const it = byS[s]; return `<div class="it"><img src="${img(it)}" alt="" width="64" height="64"><div><b>${esc(it.n)}</b><small>${it.mx ? 'Desde ' : ''}${money(it.p)}</small></div><div class="qty"><button type="button" data-s="${s}" data-q="-1" aria-label="Quitar uno">−</button><output>${k}</output><button type="button" data-s="${s}" data-q="1" aria-label="Agregar uno">+</button></div></div>`; }).join('') : '<p class="empty">Tu pedido está vacío. Toca “Agregar” en cualquier producto.</p>';
+  $('#total').textContent = money(total());
+  $('#send').disabled = !n; $('#send').style.opacity = n ? 1 : .5;
+}
+let lastFocus;
+function openCart(o) { const d = $('#drawer'); d.classList.toggle('open', o); $('#scrim').classList.toggle('open', o); d.setAttribute('aria-hidden', !o); d.inert = !o; if (o) { lastFocus = document.activeElement; $('#close').focus(); } else if (lastFocus) lastFocus.focus(); }
+$('#cartBtn').addEventListener('click', () => openCart(true));
+$('#close').addEventListener('click', () => openCart(false));
+$('#scrim').addEventListener('click', () => openCart(false));
+addEventListener('keydown', e => { if (e.key === 'Escape') openCart(false); });
+$('#send').addEventListener('click', () => {
+  const lines = Object.entries(cart).map(([s, n]) => `• ${n} x ${byS[s].n} — ${byS[s].mx ? 'desde ' : ''}${money(byS[s].p * n)}`);
+  const msg = ['¡Hola, King! 👑 Quiero hacer este pedido:', '', ...lines, '', `💰 Total: ${money(total())}`, `🚚 Entrega: ${document.querySelector('input[name=del]:checked').value}`, '', '¿Está todo disponible?'].join('\n');
+  window.open(`https://wa.me/${WA}?text=${encodeURIComponent(msg)}`, '_blank', 'noopener');
+});
+
+// formularios
+$('#cambio').addEventListener('submit', e => { e.preventDefault(); const v = id => $(id).value.trim();
+  const msg = ['¡Hola, King! 👑 Quiero cambiar mi consola:', '', `🎮 Tengo: ${v('#c-have')} (${v('#c-state')})`, v('#c-want') ? `⭐ Quiero: ${v('#c-want')}` : '', '', '¿Cuánto me queda la diferencia?'].filter((l, i, a) => l !== '' || a[i - 1] !== '').join('\n');
+  window.open(`https://wa.me/${WA}?text=${encodeURIComponent(msg)}`, '_blank', 'noopener'); });
+$('#ofertas').addEventListener('submit', e => { e.preventDefault(); const v = id => $(id).value.trim();
+  if (!v('#o-prod')) { $('#o-prod').focus(); toast('Escribe el producto'); return; }
+  const msg = ['¡Hola, King! 👑 ¿Me igualan esta oferta?', '', `🎮 Producto: ${v('#o-prod')}`, v('#o-store') ? `🏪 Tienda: ${v('#o-store')}` : '', v('#o-price') ? `💵 Su precio: RD$${v('#o-price')}` : ''].filter(Boolean).join('\n').replace('\n🎮', '\n\n🎮');
+  window.open(`https://wa.me/${WA}?text=${encodeURIComponent(msg)}`, '_blank', 'noopener'); });
+
+draw(); paintCart();
+</script>
+</body>
+</html>
