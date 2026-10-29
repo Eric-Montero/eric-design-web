@@ -441,7 +441,8 @@ function card(m) {
   let cur = sel[m.id]; if (cur == null || !okV(m.v[cur])) cur = vs.reduce((a, b) => (b.v[2] < a.v[2] ? b : a)).i;
   sel[m.id] = cur;
   const [gb, cd, price, war] = m.v[cur];
-  const gbs = [...new Set(vs.map(x => x.v[0]))];
+  const gbN = g => /TB/.test(g) ? parseFloat(g) * 1024 : parseFloat(String(g).split('+').pop()) || 0;
+  const gbs = [...new Set(vs.map(x => x.v[0]))].sort((a, b) => gbN(a) - gbN(b));
   const cds = [...new Set(vs.filter(x => x.v[0] === gb).map(x => x.v[1]))];
   const segGb = gbs.filter(Boolean).length > 1 || (gbs[0] && gbs.length) ? `<div class="opts"><span class="lab">Capacidad</span><div class="seg">${gbs.map(g => `<button type="button" data-m="${m.id}" data-gb="${esc(g)}" aria-pressed="${g === gb}">${fmtGb(g) || 'Única'}</button>`).join('')}</div></div>` : '';
   const segCd = `<div class="opts"><span class="lab">Condición</span><div class="seg">${cds.map(c => `<button type="button" data-m="${m.id}" data-cd="${esc(c)}" aria-pressed="${c === cd}">${c}</button>`).join('')}</div></div>`;
