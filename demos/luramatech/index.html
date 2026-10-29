@@ -1,0 +1,399 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Luramatech · Radios CarPlay y Android Auto para tu vehículo (propuesta)</title>
+<meta name="description" content="Propuesta de página web de NovaPage para Luramatech: radios con Apple CarPlay y Android Auto, cotización por WhatsApp e instalación profesional en Los Prados.">
+<meta name="robots" content="noindex, nofollow">
+<meta name="theme-color" content="#070b16">
+<link rel="preload" href="fonts/archivo-latin-wdth-normal.woff2" as="font" type="font/woff2" crossorigin>
+<style>
+@font-face { font-family: 'Archivo'; src: url(fonts/archivo-latin-wdth-normal.woff2) format('woff2'); font-weight: 100 900; font-stretch: 62% 125%; font-display: swap; }
+@font-face { font-family: 'Hanken'; src: url(fonts/hanken-grotesk-latin-400-normal.woff2) format('woff2'); font-weight: 400; font-display: swap; }
+@font-face { font-family: 'Hanken'; src: url(fonts/hanken-grotesk-latin-500-normal.woff2) format('woff2'); font-weight: 500; font-display: swap; }
+@font-face { font-family: 'Hanken'; src: url(fonts/hanken-grotesk-latin-600-normal.woff2) format('woff2'); font-weight: 600; font-display: swap; }
+@font-face { font-family: 'Hanken'; src: url(fonts/hanken-grotesk-latin-700-normal.woff2) format('woff2'); font-weight: 700; font-display: swap; }
+
+:root {
+  --bg: #070b16;
+  --s1: #0d1426;
+  --s2: #131c33;
+  --line: #22304f;
+  --ink: #f2f5fb;
+  --muted: #9aa6c0;
+  --blue: #2f8cff;
+  --blue-2: #1b5fd6;
+  --red: #e2343f;
+  --wa: #1fa855;
+  --r: 20px;
+  --head: 'Archivo', system-ui, sans-serif;
+  --body: 'Hanken', system-ui, -apple-system, 'Segoe UI', sans-serif;
+}
+* { box-sizing: border-box; }
+html { scroll-behavior: smooth; -webkit-text-size-adjust: 100%; }
+@media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } *, *::before, *::after { animation: none !important; transition: none !important; } }
+body { margin: 0; background: var(--bg); color: var(--ink); font: 400 17px/1.55 var(--body); -webkit-font-smoothing: antialiased; }
+img { display: block; max-width: 100%; height: auto; }
+a { color: inherit; }
+button, input, select, textarea { font: inherit; color: inherit; }
+:focus-visible { outline: 3px solid var(--blue); outline-offset: 3px; border-radius: 8px; }
+.wrap { width: min(1160px, 100% - 40px); margin-inline: auto; }
+.sr { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
+h1, h2, h3 { font-family: var(--head); margin: 0; font-stretch: 80%; letter-spacing: -.01em; text-transform: uppercase; }
+
+.proposal { background: #e8eefc; color: #0b1430; font-size: 14px; text-align: center; padding: 8px 16px; line-height: 1.35; }
+
+/* botones */
+.btn { display: inline-flex; align-items: center; justify-content: center; gap: 10px; min-height: 52px; padding: 0 22px; border-radius: 12px; border: 0; font-weight: 700; font-size: 16.5px; text-decoration: none; cursor: pointer; transition: transform .15s ease, filter .2s, background-color .2s; -webkit-tap-highlight-color: transparent; }
+.btn:active { transform: scale(.97); }
+.btn svg { width: 22px; height: 22px; flex: none; }
+.btn-blue { background: var(--blue); color: #fff; }
+.btn-wa { background: var(--wa); color: #fff; }
+.btn-line { background: transparent; color: var(--ink); box-shadow: inset 0 0 0 1.5px #3a4a6e; }
+@media (hover: hover) { .btn-blue:hover, .btn-wa:hover { filter: brightness(1.1); } .btn-line:hover { box-shadow: inset 0 0 0 1.5px var(--ink); } }
+
+/* cabecera */
+.top { position: sticky; top: 0; z-index: 30; background: rgba(7, 11, 22, .86); backdrop-filter: blur(16px); -webkit-backdrop-filter: blur(16px); border-bottom: 1px solid var(--line); }
+.top .wrap { display: flex; align-items: center; justify-content: space-between; height: 66px; gap: 18px; }
+.mark { display: flex; align-items: center; gap: 10px; text-decoration: none; }
+.mark i { display: flex; align-items: center; justify-content: center; width: 38px; height: 38px; border-radius: 9px; background: #fff; font: 900 18px/1 var(--head); font-style: normal; font-stretch: 75%; letter-spacing: -.04em; }
+.mark i b:first-child { color: var(--red); } .mark i b:last-child { color: var(--blue-2); }
+.mark span { font: 800 21px/1 var(--head); font-stretch: 78%; letter-spacing: .01em; }
+.mark small { display: block; font: 600 11.5px/1 var(--body); color: var(--muted); margin-top: 3px; letter-spacing: .02em; }
+.nav { display: flex; gap: 26px; font-weight: 500; font-size: 15.5px; }
+.nav a { text-decoration: none; color: var(--muted); }
+.nav a:hover { color: var(--ink); }
+.top .btn { min-height: 42px; padding: 0 16px; font-size: 15px; }
+@media (max-width: 880px) { .nav { display: none; } }
+
+/* hero */
+.hero { position: relative; overflow: hidden; padding: 46px 0 50px; }
+.hero::before { content: ''; position: absolute; width: 900px; height: 900px; left: -380px; top: -420px; background: radial-gradient(closest-side, rgba(47, 140, 255, .25), transparent); }
+.hero .wrap { position: relative; display: grid; grid-template-columns: 1.15fr .85fr; gap: 44px; align-items: center; }
+.eyebrow { display: inline-flex; align-items: center; gap: 8px; font-size: 14px; font-weight: 600; color: #cfe0ff; background: rgba(47, 140, 255, .14); border: 1px solid rgba(47, 140, 255, .35); padding: 7px 14px; border-radius: 999px; }
+.eyebrow i { width: 8px; height: 8px; border-radius: 50%; background: var(--red); }
+h1 { font-size: clamp(50px, 8vw, 104px); line-height: .88; font-weight: 850; margin: 20px 0 18px; }
+h1 em { font-style: normal; color: var(--blue); }
+.lead { font-size: 19px; color: var(--muted); max-width: 31em; margin: 0 0 26px; }
+.cta { display: flex; flex-wrap: wrap; gap: 12px; }
+.chips { display: flex; flex-wrap: wrap; gap: 8px; margin: 26px 0 0; padding: 0; list-style: none; }
+.chips li { display: inline-flex; align-items: center; gap: 8px; font-size: 14.5px; font-weight: 600; background: var(--s2); border: 1px solid var(--line); padding: 8px 13px; border-radius: 10px; }
+.chips svg { width: 18px; height: 18px; color: var(--blue); }
+.hero-pic { position: relative; }
+.hero-pic img { width: 100%; aspect-ratio: 4 / 5; object-fit: cover; object-position: 50% 70%; border-radius: 26px; }
+.hero-pic .badge { position: absolute; right: -10px; top: 24px; background: var(--red); color: #fff; border-radius: 16px; padding: 12px 16px; font: 800 15px/1.15 var(--body); box-shadow: 0 14px 30px -12px rgba(226, 52, 63, .8); transform: rotate(3deg); }
+.hero-pic .badge b { display: block; font: 900 30px/1 var(--head); font-stretch: 80%; }
+@media (max-width: 900px) { .hero .wrap { grid-template-columns: 1fr; } .hero-pic { max-width: 520px; } .hero-pic img { aspect-ratio: 4 / 3.4; } .hero-pic .badge { right: 10px; } }
+@media (max-width: 520px) { body { font-size: 16.5px; } .wrap { width: calc(100% - 32px); } .hero { padding-top: 26px; } .lead { font-size: 17.5px; } .cta .btn { flex: 1 1 100%; } }
+
+/* marcas */
+.brands { padding: 6px 0 20px; }
+.brands p { color: var(--muted); font-size: 14px; font-weight: 600; letter-spacing: .1em; text-transform: uppercase; margin: 0 0 14px; }
+.row { display: flex; gap: 14px; overflow-x: auto; padding: 4px 2px 12px; scrollbar-width: none; scroll-snap-type: x proximity; }
+.row::-webkit-scrollbar { display: none; }
+.story { flex: none; scroll-snap-align: start; width: 84px; text-align: center; background: none; border: 0; padding: 0; cursor: pointer; }
+.story span { display: block; width: 76px; height: 76px; margin: 0 auto 8px; border-radius: 50%; padding: 3px; background: conic-gradient(var(--red), var(--blue), var(--red)); }
+.story img { width: 100%; height: 100%; border-radius: 50%; object-fit: cover; border: 3px solid var(--bg); }
+.story b { font-size: 13px; font-weight: 600; color: #d8e0f2; display: block; line-height: 1.2; }
+
+/* secciones */
+section { scroll-margin-top: 72px; }
+.sec { padding: 60px 0; }
+.kicker { font-size: 13.5px; font-weight: 700; letter-spacing: .14em; text-transform: uppercase; color: var(--blue); margin: 0 0 10px; }
+h2 { font-size: clamp(38px, 5.6vw, 66px); line-height: .92; font-weight: 850; }
+.sub { color: var(--muted); margin: 12px 0 0; max-width: 36em; }
+.head { margin-bottom: 26px; }
+
+/* incluye */
+.feat { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; }
+.f { background: var(--s1); border: 1px solid var(--line); border-radius: 18px; padding: 20px; display: flex; gap: 14px; align-items: flex-start; }
+.f svg { width: 28px; height: 28px; color: var(--blue); flex: none; }
+.f b { display: block; font-weight: 700; font-size: 17px; }
+.f span { color: var(--muted); font-size: 14.5px; }
+@media (max-width: 860px) { .feat { grid-template-columns: 1fr 1fr; } }
+@media (max-width: 520px) { .feat { grid-template-columns: 1fr; } }
+
+/* cotizador */
+.quote { display: grid; grid-template-columns: 1.1fr .9fr; gap: 26px; background: var(--s1); border: 1px solid var(--line); border-radius: 28px; padding: clamp(20px, 4vw, 40px); }
+.form { display: grid; gap: 16px; margin-top: 22px; }
+.two { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+.fld { display: grid; gap: 7px; }
+.fld label, .fld .lbl { font-weight: 600; font-size: 15px; }
+.fld .opt { color: var(--muted); font-weight: 400; }
+.inp { width: 100%; min-height: 52px; border-radius: 12px; border: 1.5px solid var(--line); background: var(--s2); padding: 0 14px; font-size: 16px; }
+.inp:focus { outline: none; border-color: var(--blue); box-shadow: 0 0 0 3px rgba(47, 140, 255, .2); }
+.inp[aria-invalid="true"] { border-color: var(--red); }
+.err { color: #ff8a90; font-size: 14px; }
+.opts { display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; }
+.opts label { position: relative; }
+.opts input { position: absolute; opacity: 0; inset: 0; }
+.opts span { display: grid; align-content: center; gap: 2px; min-height: 64px; padding: 10px 12px; border-radius: 12px; border: 1.5px solid var(--line); cursor: pointer; font-weight: 700; font-size: 15px; line-height: 1.15; }
+.opts small { font-weight: 500; font-size: 12.5px; color: var(--muted); }
+.opts input:checked + span { border-color: var(--blue); background: rgba(47, 140, 255, .14); }
+.opts input:focus-visible + span { outline: 3px solid var(--blue); outline-offset: 2px; }
+.checks { display: flex; flex-wrap: wrap; gap: 8px; }
+.checks label { display: inline-flex; align-items: center; gap: 8px; min-height: 44px; padding: 0 14px; border: 1.5px solid var(--line); border-radius: 999px; cursor: pointer; font-size: 15px; font-weight: 600; }
+.checks input { width: 18px; height: 18px; accent-color: var(--blue); }
+.wa-card { background: #0b1a17; border: 1px solid #1d3b33; border-radius: 22px; padding: 16px; align-self: start; position: sticky; top: 86px; }
+.wa-card .bar { display: flex; align-items: center; gap: 10px; font-weight: 600; font-size: 14px; margin-bottom: 12px; color: #cfe8df; }
+.wa-card .bar i { width: 34px; height: 34px; border-radius: 50%; background: var(--wa); display: grid; place-items: center; }
+.wa-card .bar svg { width: 20px; height: 20px; color: #fff; }
+.msg { background: #134d38; color: #eafff4; border-radius: 14px 14px 4px 14px; padding: 12px 14px; font-size: 15px; white-space: pre-wrap; line-height: 1.45; }
+.wa-card .btn { width: 100%; margin-top: 14px; }
+.wa-card .note { font-size: 13px; color: #9cc5b6; margin: 10px 2px 0; }
+@media (max-width: 860px) { .quote { grid-template-columns: 1fr; } .wa-card { position: static; } }
+@media (max-width: 520px) { .two { grid-template-columns: 1fr; } .opts { grid-template-columns: 1fr; } .opts span { min-height: 56px; } }
+
+/* trabajos */
+.works { display: flex; gap: 12px; overflow-x: auto; padding-bottom: 10px; scroll-snap-type: x mandatory; scrollbar-width: thin; }
+.work { flex: none; width: 240px; scroll-snap-align: start; margin: 0; }
+.work img { width: 100%; aspect-ratio: 9 / 16; object-fit: cover; border-radius: 18px; border: 1px solid var(--line); }
+.work figcaption { font-size: 14.5px; font-weight: 600; margin-top: 8px; }
+.work figcaption small { display: block; color: var(--muted); font-weight: 500; }
+.hint { font-size: 13.5px; color: var(--muted); margin-top: 6px; }
+
+/* pasos */
+.steps { display: grid; grid-template-columns: repeat(4, 1fr); gap: 12px; padding: 0; margin: 0; list-style: none; counter-reset: s; }
+.steps li { background: var(--s1); border: 1px solid var(--line); border-radius: 18px; padding: 20px; }
+.steps li::before { counter-increment: s; content: '0' counter(s); display: block; font: 900 34px/1 var(--head); font-stretch: 75%; color: var(--blue); margin-bottom: 10px; }
+.steps b { display: block; font-size: 17px; margin-bottom: 4px; }
+.steps span { color: var(--muted); font-size: 14.5px; }
+@media (max-width: 860px) { .steps { grid-template-columns: 1fr 1fr; } }
+@media (max-width: 480px) { .steps { grid-template-columns: 1fr; } }
+
+/* visítanos */
+.visit { display: grid; grid-template-columns: .7fr 1.3fr; gap: 16px; align-items: stretch; }
+.visit img { width: 100%; height: 100%; object-fit: cover; border-radius: 22px; aspect-ratio: 3 / 4; }
+.box { background: var(--s1); border: 1px solid var(--line); border-radius: 22px; padding: clamp(20px, 3vw, 32px); display: flex; flex-direction: column; gap: 14px; justify-content: center; }
+.box p { margin: 0; color: var(--muted); }
+.nums { display: flex; flex-wrap: wrap; gap: 10px; }
+@media (max-width: 760px) { .visit { grid-template-columns: 1fr; } .visit img { aspect-ratio: 4 / 3; object-position: 50% 30%; } }
+
+footer { border-top: 1px solid var(--line); padding: 36px 0 120px; margin-top: 40px; }
+footer .wrap { display: flex; justify-content: space-between; gap: 16px; flex-wrap: wrap; font-size: 14px; color: var(--muted); }
+footer a { color: var(--ink); font-weight: 600; }
+
+.mbar { position: fixed; left: 12px; right: 12px; bottom: max(12px, env(safe-area-inset-bottom)); z-index: 40; display: none; gap: 8px; }
+.mbar .btn { flex: 1; min-height: 54px; box-shadow: 0 12px 30px -10px rgba(0, 0, 0, .8); }
+@media (max-width: 760px) { .mbar { display: flex; } }
+</style>
+</head>
+<body>
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <symbol id="i-wa" viewBox="0 0 24 24"><path fill="currentColor" d="M12.04 2a9.9 9.9 0 0 0-8.5 15l-1.4 5.1 5.2-1.4A9.9 9.9 0 1 0 12.04 2Zm0 18.1a8.2 8.2 0 0 1-4.2-1.2l-.3-.2-3.1.8.8-3-.2-.3a8.2 8.2 0 1 1 7 3.9Zm4.5-6.1c-.2-.1-1.5-.7-1.7-.8-.2-.1-.4-.1-.6.1l-.8 1c-.1.2-.3.2-.5.1a6.7 6.7 0 0 1-3.3-2.9c-.3-.4.3-.4.7-1.3.1-.2 0-.3 0-.4l-.8-1.8c-.2-.5-.4-.4-.6-.4h-.5a1 1 0 0 0-.7.3 3 3 0 0 0-.9 2.2 5.2 5.2 0 0 0 1.1 2.7 11.8 11.8 0 0 0 4.5 4c1.7.7 2.3.8 3.2.6a2.7 2.7 0 0 0 1.8-1.3 2.2 2.2 0 0 0 .2-1.3c-.1-.1-.3-.2-.5-.3Z"/></symbol>
+  <symbol id="i-car" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 16V11l2-5h10l2 5v5M3 16h18v3H3zM7 16v3M17 16v3"/><circle cx="7.5" cy="13" r=".5"/><circle cx="16.5" cy="13" r=".5"/></g></symbol>
+  <symbol id="i-play" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"><rect x="3" y="4" width="18" height="14" rx="3"/><path d="m10 8 5 3-5 3Z"/><path d="M8 21h8"/></g></symbol>
+  <symbol id="i-android" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3 4 20l8-4 8 4Z"/></g></symbol>
+  <symbol id="i-screen" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><rect x="2" y="5" width="20" height="12" rx="2"/><path d="M12 17v3M8 20h8"/></g></symbol>
+  <symbol id="i-cam" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"><path d="M4 7h3l2-2h6l2 2h3v12H4Z"/><circle cx="12" cy="13" r="3.5"/></g></symbol>
+  <symbol id="i-bt" viewBox="0 0 24 24"><path fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" d="m7 7 10 10-5 4V3l5 4L7 17"/></symbol>
+  <symbol id="i-usb" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2v14M9 5l3-3 3 3M7 10v2l5 3 5-3v-2"/><circle cx="12" cy="19" r="2.5"/></g></symbol>
+  <symbol id="i-shield" viewBox="0 0 24 24"><path fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round" d="M12 3 4 6v6c0 5 3.5 8 8 9 4.5-1 8-4 8-9V6Z"/><path fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" d="m9 12 2 2 4-4"/></symbol>
+  <symbol id="i-pin" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="2"><path d="M12 21s7-6.2 7-12a7 7 0 0 0-14 0c0 5.8 7 12 7 12Z"/><circle cx="12" cy="9" r="2.5"/></g></symbol>
+  <symbol id="i-ig" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/></g></symbol>
+</svg>
+
+<div class="proposal"><b>Propuesta de página web</b> preparada por NovaPage para Luramatech · No es un sitio oficial</div>
+
+<header class="top">
+  <div class="wrap">
+    <a class="mark" href="#inicio" aria-label="Luramatech, inicio"><i aria-hidden="true"><b>L</b><b>M</b></i><span>LURAMATECH<small>Adictos al buen servicio</small></span></a>
+    <nav class="nav" aria-label="Secciones">
+      <a href="#incluye">Qué incluye</a>
+      <a href="#cotiza">Cotizar</a>
+      <a href="#trabajos">Instalaciones</a>
+      <a href="#visitanos">Ubicación</a>
+    </nav>
+    <a class="btn btn-wa" href="https://wa.me/18299091866" target="_blank" rel="noopener"><svg aria-hidden="true"><use href="#i-wa"/></svg>WhatsApp</a>
+  </div>
+</header>
+
+<main>
+  <section class="hero" id="inicio">
+    <div class="wrap">
+      <div>
+        <span class="eyebrow"><i></i>Instalación profesional en Los Prados</span>
+        <h1>Tu carro con <em>CarPlay</em> y pantalla de 12.3”</h1>
+        <p class="lead">Radios con Apple CarPlay y Android Auto inalámbricos para KIA, Hyundai, Toyota, Lexus, Mercedes y más. Dinos el modelo y el año, y te cotizamos por WhatsApp.</p>
+        <div class="cta">
+          <a class="btn btn-blue" href="#cotiza"><svg aria-hidden="true"><use href="#i-car"/></svg>Cotizar para mi vehículo</a>
+          <a class="btn btn-line" href="#trabajos">Ver instalaciones</a>
+        </div>
+        <ul class="chips">
+          <li><svg aria-hidden="true"><use href="#i-play"/></svg>Apple CarPlay</li>
+          <li><svg aria-hidden="true"><use href="#i-android"/></svg>Android Auto</li>
+          <li><svg aria-hidden="true"><use href="#i-shield"/></svg>Garantía 6 meses</li>
+        </ul>
+      </div>
+      <div class="hero-pic">
+        <img src="img/hero.webp" alt="Tablero de un vehículo con pantalla táctil mostrando mapa y música" width="1000" height="1497" fetchpriority="high">
+        <div class="badge"><b>12.3”</b>pantalla táctil</div>
+      </div>
+    </div>
+  </section>
+
+  <div class="brands">
+    <div class="wrap">
+      <p>Trabajamos con</p>
+      <div class="row" id="stories" role="group" aria-label="Escoge la marca de tu vehículo"></div>
+    </div>
+  </div>
+
+  <section class="sec" id="incluye">
+    <div class="wrap">
+      <div class="head"><p class="kicker">Qué incluye tu radio</p><h2>Todo en una pantalla</h2></div>
+      <div class="feat">
+        <div class="f"><svg aria-hidden="true"><use href="#i-play"/></svg><div><b>Apple CarPlay inalámbrico</b><span>Conecta tu iPhone sin cable al subir al carro.</span></div></div>
+        <div class="f"><svg aria-hidden="true"><use href="#i-android"/></svg><div><b>Android Auto inalámbrico</b><span>Mapas, música y mensajes desde tu Android.</span></div></div>
+        <div class="f"><svg aria-hidden="true"><use href="#i-screen"/></svg><div><b>Pantalla táctil 12.3”</b><span>Horizontal o vertical, según tu tablero.</span></div></div>
+        <div class="f"><svg aria-hidden="true"><use href="#i-cam"/></svg><div><b>Cámara de reversa</b><span>Compatible para estacionar sin adivinar.</span></div></div>
+        <div class="f"><svg aria-hidden="true"><use href="#i-bt"/></svg><div><b>Bluetooth manos libres</b><span>Llamadas con las manos en el volante.</span></div></div>
+        <div class="f"><svg aria-hidden="true"><use href="#i-usb"/></svg><div><b>Puertos USB</b><span>Carga rápida para tu celular.</span></div></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="sec" id="cotiza" style="padding-top:20px">
+    <div class="wrap">
+      <div class="quote">
+        <div>
+          <p class="kicker">Cotiza en 30 segundos</p>
+          <h2>Escríbenos modelo y año</h2>
+          <p class="sub">Llena esto y te llega todo escrito por WhatsApp. Te respondemos con el precio de la radio para tu vehículo.</p>
+          <form class="form" id="form" novalidate>
+            <div class="two">
+              <div class="fld"><label for="f-brand">Marca</label><select class="inp" id="f-brand"></select></div>
+              <div class="fld"><label for="f-model">Modelo</label><input class="inp" id="f-model" list="models" placeholder="Ej.: Santa Fe" autocomplete="off" aria-describedby="e-model"><datalist id="models"></datalist><div class="err" id="e-model" aria-live="polite"></div></div>
+            </div>
+            <div class="fld"><label for="f-year">Año</label><select class="inp" id="f-year" aria-describedby="e-year"></select><div class="err" id="e-year" aria-live="polite"></div></div>
+            <div class="fld"><span class="lbl" id="scr-l">Tipo de pantalla</span>
+              <div class="opts" role="radiogroup" aria-labelledby="scr-l">
+                <label><input type="radio" name="scr" value="Horizontal 12.3”" checked><span>Horizontal<small>12.3”, tipo original</small></span></label>
+                <label><input type="radio" name="scr" value="Vertical tipo Tesla"><span>Vertical<small>Tipo Tesla</small></span></label>
+                <label><input type="radio" name="scr" value="No sé, recomiéndenme"><span>No sé<small>Recomiéndenme</small></span></label>
+              </div></div>
+            <div class="fld"><span class="lbl" id="ex-l">También quiero <span class="opt">(opcional)</span></span>
+              <div class="checks" role="group" aria-labelledby="ex-l">
+                <label><input type="checkbox" value="Cámara de reversa">Cámara de reversa</label>
+                <label><input type="checkbox" value="Instalación esta semana">Instalarla esta semana</label>
+              </div></div>
+            <div class="fld"><label for="f-name">Tu nombre <span class="opt">(opcional)</span></label><input class="inp" id="f-name" autocomplete="given-name" placeholder="Ej.: Carlos"></div>
+          </form>
+        </div>
+        <aside class="wa-card" aria-label="Vista previa del mensaje">
+          <div class="bar"><i><svg aria-hidden="true"><use href="#i-wa"/></svg></i>Luramatech · WhatsApp</div>
+          <div class="msg" id="msg" aria-live="polite"></div>
+          <button class="btn btn-wa" type="button" id="send"><svg aria-hidden="true"><use href="#i-wa"/></svg>Enviar por WhatsApp</button>
+          <p class="note">Se abre WhatsApp al 829-909-1866 con este mensaje.</p>
+        </aside>
+      </div>
+    </div>
+  </section>
+
+  <section class="sec" id="trabajos" style="padding-top:20px">
+    <div class="wrap">
+      <div class="head"><p class="kicker">Instalaciones recientes</p><h2>Así quedan</h2></div>
+      <div class="works">
+        <figure class="work"><img src="img/trabajo-santa-fe.webp" alt="Radio CarPlay instalada en un Hyundai Santa Fe" width="361" height="640" loading="lazy"><figcaption>Hyundai Santa Fe<small>2013 – 2018 · CarPlay</small></figcaption></figure>
+        <figure class="work"><img src="img/trabajo-prado.webp" alt="Radio CarPlay de 12.3 pulgadas en una Toyota Prado 2024" width="361" height="640" loading="lazy"><figcaption>Toyota Prado 2024<small>CarPlay 12.3”</small></figcaption></figure>
+        <figure class="work"><img src="img/trabajo-mercedes-gle.webp" alt="Instalación de radio CarPlay en un Mercedes GLE" width="361" height="640" loading="lazy"><figcaption>Mercedes-Benz GLE<small>CarPlay 12.3”</small></figcaption></figure>
+        <figure class="work"><img src="img/trabajo-fj-cruiser.webp" alt="Antes y después de la radio en una Toyota FJ Cruiser 2015" width="361" height="640" loading="lazy"><figcaption>Toyota FJ Cruiser 2015<small>Antes y después</small></figcaption></figure>
+        <figure class="work"><img src="img/trabajo-vertical.webp" alt="Pantalla vertical tipo Tesla instalada en un vehículo" width="361" height="640" loading="lazy"><figcaption>Pantalla vertical<small>Tipo Tesla</small></figcaption></figure>
+        <figure class="work"><img src="img/trabajo-gls.webp" alt="Anuncio de radio CarPlay para Mercedes-Benz GLS 2018" width="361" height="640" loading="lazy"><figcaption>Mercedes-Benz GLS 2018<small>CarPlay 12.3” · garantía 6 meses</small></figcaption></figure>
+      </div>
+      <p class="hint">Desliza para ver más →</p>
+    </div>
+  </section>
+
+  <section class="sec" id="proceso" style="padding-top:20px">
+    <div class="wrap">
+      <div class="head"><p class="kicker">Cómo funciona</p><h2>De la cotización a la carretera</h2></div>
+      <ol class="steps">
+        <li><b>Escríbenos</b><span>Modelo y año de tu vehículo, aquí o por WhatsApp.</span></li>
+        <li><b>Te cotizamos</b><span>Te decimos qué radio le queda y el precio.</span></li>
+        <li><b>Instalamos</b><span>Instalación profesional en nuestro taller de Los Prados.</span></li>
+        <li><b>Garantía</b><span>6 meses de garantía con la instalación.</span></li>
+      </ol>
+    </div>
+  </section>
+
+  <section class="sec" id="visitanos" style="padding-top:20px">
+    <div class="wrap visit">
+      <img src="img/taller.webp" alt="Frente del taller de Luramatech con su letrero" width="361" height="640" loading="lazy">
+      <div class="box">
+        <p class="kicker">Visítanos</p>
+        <h2>Calle Félix Mota 55, Los Prados</h2>
+        <p>Santo Domingo. Escríbenos antes de venir para tener tu radio lista.</p>
+        <div class="nums">
+          <a class="btn btn-wa" href="https://wa.me/18299091866" target="_blank" rel="noopener"><svg aria-hidden="true"><use href="#i-wa"/></svg>829-909-1866</a>
+          <a class="btn btn-line" href="https://wa.me/18498474888" target="_blank" rel="noopener"><svg aria-hidden="true"><use href="#i-wa"/></svg>849-847-4888</a>
+          <a class="btn btn-line" href="https://www.google.com/maps/search/?api=1&amp;query=Calle+F%C3%A9lix+Mota+55+Los+Prados+Santo+Domingo" target="_blank" rel="noopener"><svg aria-hidden="true"><use href="#i-pin"/></svg>Cómo llegar</a>
+          <a class="btn btn-line" href="https://www.instagram.com/luramatech/" target="_blank" rel="noopener"><svg aria-hidden="true"><use href="#i-ig"/></svg>@luramatech</a>
+        </div>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer>
+  <div class="wrap"><span>Propuesta de página web no oficial para Luramatech. Fotos y datos tomados de su Instagram (@luramatech) el 29 de octubre de 2026; foto de portada de ejemplo.</span><span>Diseño: <a href="https://novapage-rd.vercel.app/" target="_blank" rel="noopener">NovaPage</a></span></div>
+</footer>
+
+<div class="mbar"><a class="btn btn-blue" href="#cotiza"><svg aria-hidden="true"><use href="#i-car"/></svg>Cotizar</a><a class="btn btn-wa" href="https://wa.me/18299091866" target="_blank" rel="noopener"><svg aria-hidden="true"><use href="#i-wa"/></svg>WhatsApp</a></div>
+
+<script>
+const WA = '18299091866';
+const $ = s => document.querySelector(s);
+const BRANDS = [
+  { id: 'kia', name: 'KIA', models: ['Sportage', 'Sorento', 'K5', 'Rio', 'Picanto', 'Seltos'] },
+  { id: 'hyundai', name: 'Hyundai', models: ['Santa Fe', 'Tucson', 'Elantra', 'Sonata', 'Accent', 'Creta'] },
+  { id: 'toyota', name: 'Toyota', models: ['Prado', 'FJ Cruiser', '4Runner', 'Hilux', 'Corolla', 'RAV4', 'Tacoma'] },
+  { id: 'lexus', name: 'Lexus', models: ['IS 250 / 350', 'GS 460', 'RX 350', 'GX 460'] },
+  { id: 'mercedes', name: 'Mercedes-Benz', models: ['GLE', 'GLS', 'ML', 'Clase C', 'Clase E'] },
+  { id: 'nissan', name: 'Nissan', models: ['Qashqai', 'Rogue', 'Frontier', 'Pathfinder', 'X-Trail'] },
+  { id: 'ford', name: 'Ford', models: ['Explorer', 'F-150', 'Escape', 'Edge'] },
+  { id: 'chevrolet', name: 'Chevrolet', models: ['Tahoe', 'Silverado', 'Equinox', 'Traverse'] },
+  { id: 'mini', name: 'Mini Cooper', models: ['Cooper', 'Countryman', 'Clubman'] },
+  { id: 'europeos', name: 'Europeos', models: ['Volkswagen', 'BMW', 'Audi', 'Volvo', 'Porsche'] },
+];
+// historias de marcas
+$('#stories').innerHTML = BRANDS.map(b => `<button class="story" type="button" data-b="${b.id}"><span><img src="img/marca-${b.id}.webp" alt="" width="150" height="150"></span><b>${b.name}</b></button>`).join('');
+$('#stories').addEventListener('click', e => {
+  const s = e.target.closest('[data-b]'); if (!s) return;
+  $('#f-brand').value = s.dataset.b; fillModels(); update();
+  $('#cotiza').scrollIntoView({ behavior: matchMedia('(prefers-reduced-motion: reduce)').matches ? 'auto' : 'smooth' });
+  setTimeout(() => $('#f-model').focus({ preventScroll: true }), 500);
+});
+// formulario
+$('#f-brand').innerHTML = BRANDS.map(b => `<option value="${b.id}">${b.name}</option>`).join('') + '<option value="otra">Otra marca</option>';
+const now = new Date().getFullYear() + 1;
+$('#f-year').innerHTML = '<option value="">Escoge el año</option>' + Array.from({ length: now - 2003 }, (_, i) => `<option>${now - i}</option>`).join('');
+function fillModels() { const b = BRANDS.find(x => x.id === $('#f-brand').value); $('#models').innerHTML = b ? b.models.map(m => `<option value="${m}">`).join('') : ''; }
+function message() {
+  const v = id => $(id).value.trim();
+  const b = BRANDS.find(x => x.id === $('#f-brand').value);
+  const car = [b ? b.name : '', v('#f-model'), v('#f-year')].filter(Boolean).join(' ');
+  const extras = [...document.querySelectorAll('.checks input:checked')].map(x => x.value);
+  const L = [`¡Hola, Luramatech! ${v('#f-name') ? 'Soy ' + v('#f-name') + '. ' : ''}Quiero cotizar una radio:`, '', `🚗 Vehículo: ${car || '(modelo y año)'}`, `📺 Pantalla: ${document.querySelector('input[name=scr]:checked').value}`];
+  if (extras.length) L.push(`➕ También: ${extras.join(', ')}`);
+  L.push('', '¿Qué precio tiene para mi vehículo?');
+  return L.join('\n');
+}
+function update() { $('#msg').textContent = message(); }
+$('#form').addEventListener('input', update); $('#form').addEventListener('change', e => { if (e.target.id === 'f-brand') fillModels(); update(); });
+$('#form').addEventListener('submit', e => e.preventDefault());
+function check() {
+  let first = null;
+  [['#f-model', '#e-model', 'Escribe el modelo de tu vehículo.'], ['#f-year', '#e-year', 'Escoge el año.']].forEach(([f, e, m]) => {
+    const bad = !$(f).value.trim(); $(f).setAttribute('aria-invalid', bad); $(e).textContent = bad ? m : ''; if (bad && !first) first = $(f);
+  });
+  if (first) first.focus();
+  return !first;
+}
+['#f-model', '#f-year'].forEach(f => $(f).addEventListener('change', () => { if ($(f).value.trim()) { $(f).setAttribute('aria-invalid', 'false'); $(f).closest('.fld').querySelector('.err').textContent = ''; } }));
+$('#send').addEventListener('click', () => { if (check()) window.open(`https://wa.me/${WA}?text=${encodeURIComponent(message())}`, '_blank', 'noopener'); });
+fillModels(); update();
+</script>
+</body>
+</html>
