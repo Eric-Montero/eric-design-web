@@ -24,6 +24,11 @@
       "source": "/cool",
       "destination": "/demos/cool-gameplay/",
       "permanent": false
+    },
+    {
+      "source": "/nueva",
+      "destination": "/nueva.html",
+      "permanent": false
     }
   ]
 }
