@@ -1,0 +1,510 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Capital Móvil · La Capital de los Celulares (propuesta de rediseño)</title>
+<meta name="description" content="Propuesta de rediseño de NovaPage para Capital Móvil: buscador de precios, condiciones claras y pedido por WhatsApp.">
+<meta name="robots" content="noindex, nofollow">
+<meta name="theme-color" content="#050608">
+<link rel="preload" href="fonts/archivo-latin-wght-normal.woff2" as="font" type="font/woff2" crossorigin>
+<style>
+@font-face { font-family: 'Archivo'; src: url(fonts/archivo-latin-wght-normal.woff2) format('woff2'); font-weight: 100 900; font-display: swap; }
+@font-face { font-family: 'Hanken'; src: url(fonts/hanken-grotesk-latin-400-normal.woff2) format('woff2'); font-weight: 400; font-display: swap; }
+@font-face { font-family: 'Hanken'; src: url(fonts/hanken-grotesk-latin-500-normal.woff2) format('woff2'); font-weight: 500; font-display: swap; }
+@font-face { font-family: 'Hanken'; src: url(fonts/hanken-grotesk-latin-600-normal.woff2) format('woff2'); font-weight: 600; font-display: swap; }
+@font-face { font-family: 'Hanken'; src: url(fonts/hanken-grotesk-latin-700-normal.woff2) format('woff2'); font-weight: 700; font-display: swap; }
+
+:root {
+  --bg: #050608;
+  --s1: #0d0f13;
+  --s2: #14171d;
+  --line: #22262f;
+  --ink: #f3f5f9;
+  --muted: #9ba3b4;
+  --blue: #1a8cff;
+  --blue-2: #0047d9;
+  --grad: linear-gradient(135deg, #008bfa, #0038c2);
+  --wa: #1fa855;
+  --gold: #ffcf5a;
+  --r: 20px;
+  --head: 'Archivo', system-ui, sans-serif;
+  --body: 'Hanken', system-ui, -apple-system, 'Segoe UI', sans-serif;
+}
+* { box-sizing: border-box; }
+html { scroll-behavior: smooth; -webkit-text-size-adjust: 100%; }
+@media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } *, *::before, *::after { animation: none !important; transition: none !important; } }
+body { margin: 0; background: var(--bg); color: var(--ink); font: 400 17px/1.55 var(--body); -webkit-font-smoothing: antialiased; }
+img { display: block; max-width: 100%; height: auto; }
+a { color: inherit; }
+button, input, select, textarea { font: inherit; color: inherit; }
+:focus-visible { outline: 3px solid var(--blue); outline-offset: 3px; border-radius: 8px; }
+.wrap { width: min(1180px, 100% - 40px); margin-inline: auto; }
+.sr { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
+h1, h2, h3 { font-family: var(--head); margin: 0; letter-spacing: -.025em; }
+
+/* aviso de propuesta */
+.proposal { background: #e9eefb; color: #0b1430; font-size: 14px; text-align: center; padding: 8px 16px; line-height: 1.35; }
+.proposal b { font-weight: 700; }
+
+/* botones */
+.btn { display: inline-flex; align-items: center; justify-content: center; gap: 10px; min-height: 52px; padding: 0 22px; border-radius: 14px; border: 0; font-weight: 700; font-size: 16.5px; text-decoration: none; cursor: pointer; transition: transform .15s ease, background-color .2s ease, filter .2s; -webkit-tap-highlight-color: transparent; }
+.btn:active { transform: scale(.97); }
+.btn svg { width: 22px; height: 22px; flex: none; }
+.btn-blue { background: var(--grad); color: #fff; }
+.btn-wa { background: var(--wa); color: #fff; }
+.btn-line { background: transparent; color: var(--ink); box-shadow: inset 0 0 0 1.5px #3a404c; }
+@media (hover: hover) { .btn-blue:hover, .btn-wa:hover { filter: brightness(1.1); } .btn-line:hover { box-shadow: inset 0 0 0 1.5px var(--ink); } }
+
+/* cabecera */
+.top { position: sticky; top: 0; z-index: 30; background: rgba(5, 6, 8, .85); backdrop-filter: saturate(1.4) blur(16px); -webkit-backdrop-filter: saturate(1.4) blur(16px); border-bottom: 1px solid var(--line); }
+.top .wrap { display: flex; align-items: center; justify-content: space-between; height: 66px; gap: 18px; }
+.top .logo img { height: 30px; width: auto; }
+.nav { display: flex; gap: 26px; font-weight: 500; font-size: 15.5px; }
+.nav a { text-decoration: none; color: var(--muted); }
+.nav a:hover { color: var(--ink); }
+.top .btn { min-height: 42px; padding: 0 16px; font-size: 15px; border-radius: 12px; }
+@media (max-width: 880px) { .nav { display: none; } }
+
+/* hero */
+.hero { position: relative; overflow: hidden; padding: 54px 0 40px; }
+.hero::before { content: ''; position: absolute; width: 900px; height: 900px; right: -280px; top: -320px; background: radial-gradient(closest-side, rgba(0, 120, 255, .28), transparent); pointer-events: none; }
+.hero .wrap { position: relative; display: grid; grid-template-columns: 1.1fr .9fr; gap: 40px; align-items: center; }
+.status { display: inline-flex; align-items: center; gap: 8px; font-size: 14px; font-weight: 600; color: var(--muted); background: var(--s2); border: 1px solid var(--line); padding: 7px 14px; border-radius: 999px; }
+.status i { width: 9px; height: 9px; border-radius: 50%; background: #2fd36b; box-shadow: 0 0 0 4px rgba(47, 211, 107, .2); }
+.status.closed i { background: #ff5d5d; box-shadow: 0 0 0 4px rgba(255, 93, 93, .2); }
+h1 { font-size: clamp(46px, 7vw, 92px); line-height: .92; font-weight: 800; margin: 20px 0 18px; text-wrap: balance; }
+h1 span { background: linear-gradient(90deg, #38a8ff, #1a6bff); -webkit-background-clip: text; background-clip: text; color: transparent; }
+.lead { font-size: 19px; color: var(--muted); max-width: 31em; margin: 0 0 26px; }
+.cta { display: flex; flex-wrap: wrap; gap: 12px; }
+.facts { display: grid; grid-template-columns: repeat(3, auto); justify-content: start; gap: 8px 28px; margin: 30px 0 0; padding: 0; list-style: none; }
+.facts b { display: block; font: 800 26px/1 var(--head); }
+.facts span { font-size: 14px; color: var(--muted); }
+.hero-img { position: relative; }
+.hero-img img { width: 100%; border-radius: 28px; aspect-ratio: 4 / 4.2; object-fit: cover; object-position: 50% 60%; }
+.hero-img .tag { position: absolute; left: 18px; bottom: 18px; background: rgba(13, 15, 19, .85); backdrop-filter: blur(10px); border: 1px solid var(--line); border-radius: 16px; padding: 12px 16px; }
+.hero-img .tag small { display: block; color: var(--muted); font-size: 13px; }
+.hero-img .tag b { font: 800 24px/1.1 var(--head); }
+@media (max-width: 900px) { .hero .wrap { grid-template-columns: 1fr; } .hero-img img { aspect-ratio: 16 / 11; } }
+@media (max-width: 520px) {
+  body { font-size: 16.5px; }
+  .wrap { width: calc(100% - 32px); }
+  .hero { padding-top: 30px; }
+  .lead { font-size: 17.5px; }
+  .cta .btn { flex: 1 1 100%; }
+  .facts { grid-template-columns: repeat(3, 1fr); gap: 8px 14px; }
+  .facts b { font-size: 21px; }
+  .facts span { font-size: 12.5px; }
+}
+
+/* secciones */
+section { scroll-margin-top: 72px; }
+.sec { padding: 64px 0; }
+.kicker { font-size: 13.5px; font-weight: 700; letter-spacing: .14em; text-transform: uppercase; color: var(--blue); margin: 0 0 10px; }
+h2 { font-size: clamp(34px, 4.8vw, 56px); line-height: .98; font-weight: 800; text-wrap: balance; }
+.sub { color: var(--muted); margin: 12px 0 0; max-width: 36em; }
+.head { margin-bottom: 26px; display: flex; justify-content: space-between; align-items: end; gap: 20px; flex-wrap: wrap; }
+
+/* buscador */
+.finder { background: var(--s1); border: 1px solid var(--line); border-radius: 28px; padding: clamp(16px, 3vw, 28px); }
+.brands { display: grid; grid-template-columns: repeat(4, 1fr); gap: 10px; }
+.brand { position: relative; overflow: hidden; border-radius: 18px; border: 1.5px solid var(--line); background: #000; cursor: pointer; padding: 0; text-align: left; aspect-ratio: 16 / 10; transition: border-color .2s; }
+.brand img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; opacity: .65; transition: opacity .2s, transform .4s; }
+.brand::after { content: ''; position: absolute; inset: 0; background: linear-gradient(transparent 35%, rgba(0, 0, 0, .85)); }
+.brand span { z-index: 1; position: absolute; left: 14px; bottom: 12px; font: 800 22px/1 var(--head); text-shadow: 0 2px 12px rgba(0, 0, 0, .7); }
+.brand small { display: block; font: 500 13px var(--body); color: var(--muted); margin-top: 4px; }
+.brand[aria-pressed="true"] { border-color: var(--blue); box-shadow: 0 0 0 3px rgba(26, 140, 255, .25); }
+.brand[aria-pressed="true"] img { opacity: 1; }
+@media (hover: hover) { .brand:hover img { opacity: .9; transform: scale(1.04); } }
+.tools { display: flex; flex-wrap: wrap; gap: 10px; align-items: center; margin: 18px 0 6px; }
+.search { flex: 1 1 260px; position: relative; }
+.search svg { position: absolute; left: 14px; top: 50%; transform: translateY(-50%); width: 20px; height: 20px; color: var(--muted); }
+.search input { width: 100%; min-height: 50px; border-radius: 14px; border: 1.5px solid var(--line); background: var(--s2); padding: 0 14px 0 44px; font-size: 16px; }
+.search input:focus { outline: none; border-color: var(--blue); }
+.conds { display: flex; gap: 8px; overflow-x: auto; scrollbar-width: none; padding: 2px; }
+.conds::-webkit-scrollbar { display: none; }
+.chip { flex: none; min-height: 44px; padding: 0 15px; border-radius: 999px; border: 1.5px solid var(--line); background: var(--s2); font-weight: 600; font-size: 14.5px; cursor: pointer; white-space: nowrap; }
+.chip[aria-pressed="true"] { background: var(--ink); color: var(--bg); border-color: var(--ink); }
+.budget { display: flex; align-items: center; gap: 12px; font-size: 14.5px; color: var(--muted); margin-top: 10px; flex-wrap: wrap; }
+.budget input { flex: 1 1 200px; accent-color: var(--blue); }
+.budget output { color: var(--ink); font-weight: 700; min-width: 110px; font-variant-numeric: tabular-nums; }
+.meta { display: flex; justify-content: space-between; flex-wrap: wrap; gap: 8px; font-size: 13.5px; color: var(--muted); margin: 14px 2px 12px; }
+.meta b { color: var(--gold); font-weight: 600; }
+
+.grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(270px, 1fr)); gap: 12px; }
+.card { background: var(--s2); border: 1px solid var(--line); border-radius: var(--r); padding: 18px; display: flex; flex-direction: column; gap: 12px; }
+.card .row1 { display: flex; justify-content: space-between; gap: 10px; align-items: flex-start; }
+.card h3 { font-size: 21px; font-weight: 750; line-height: 1.1; }
+.card .tagline { font-size: 13px; color: var(--muted); margin-top: 4px; }
+.card .esim { flex: none; font-size: 11.5px; font-weight: 700; letter-spacing: .06em; color: var(--muted); border: 1px solid var(--line); border-radius: 8px; padding: 4px 7px; }
+.opts { display: grid; gap: 8px; }
+.opts .lab { font-size: 12.5px; color: var(--muted); font-weight: 600; letter-spacing: .04em; text-transform: uppercase; }
+.seg { display: flex; flex-wrap: wrap; gap: 6px; }
+.seg button { min-height: 40px; padding: 0 12px; border-radius: 10px; border: 1.5px solid var(--line); background: transparent; font-size: 14px; font-weight: 600; cursor: pointer; }
+.seg button[aria-pressed="true"] { border-color: var(--blue); background: rgba(26, 140, 255, .14); color: #fff; }
+.price { display: flex; align-items: baseline; justify-content: space-between; gap: 10px; margin-top: auto; padding-top: 6px; border-top: 1px solid var(--line); }
+.price b { font: 800 30px/1.1 var(--head); font-variant-numeric: tabular-nums; letter-spacing: -.02em; }
+.price small { font-size: 13px; color: var(--muted); text-align: right; line-height: 1.25; }
+.price small strong { color: #7fe0a6; font-weight: 600; display: block; }
+.card .btn { min-height: 46px; font-size: 15.5px; }
+.empty { padding: 30px; text-align: center; color: var(--muted); border: 1px dashed var(--line); border-radius: var(--r); }
+.more { display: flex; justify-content: center; margin-top: 16px; }
+
+/* condiciones */
+.conditions { display: grid; grid-template-columns: repeat(5, 1fr); gap: 10px; }
+.cond { background: var(--s1); border: 1px solid var(--line); border-radius: 18px; padding: 18px; }
+.cond b { display: block; font: 800 19px var(--head); margin-bottom: 6px; }
+.cond p { margin: 0; font-size: 14.5px; color: var(--muted); }
+.cond .dot { display: inline-block; width: 10px; height: 10px; border-radius: 50%; margin-right: 8px; }
+@media (max-width: 960px) { .conditions { grid-template-columns: 1fr 1fr; } }
+@media (max-width: 520px) { .brands { grid-template-columns: 1fr 1fr; } .grid { grid-template-columns: 1fr; } .conditions { grid-template-columns: 1fr; } }
+
+/* categorías */
+.cats { display: grid; grid-template-columns: repeat(5, 1fr); gap: 12px; }
+.cat { position: relative; border-radius: 18px; overflow: hidden; background: #000; text-decoration: none; aspect-ratio: 4 / 5; border: 1px solid var(--line); }
+.cat img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; transition: transform .5s; }
+.cat span { position: absolute; left: 14px; bottom: 14px; right: 14px; font: 800 20px/1.1 var(--head); }
+.cat small { display: block; font: 500 13px var(--body); color: var(--muted); margin-top: 3px; }
+@media (hover: hover) { .cat:hover img { transform: scale(1.05); } }
+@media (max-width: 900px) { .cats { grid-template-columns: repeat(3, 1fr); } }
+@media (max-width: 520px) { .cats { grid-template-columns: 1fr 1fr; } .cat { aspect-ratio: 1; } }
+
+/* recibimos */
+.trade { display: grid; grid-template-columns: 1fr 1fr; gap: 28px; background: var(--grad); border-radius: 30px; padding: clamp(22px, 4vw, 46px); }
+.trade h2 { color: #fff; }
+.trade .sub { color: #d6e5ff; }
+.steps { list-style: none; padding: 0; margin: 22px 0 0; display: grid; gap: 10px; counter-reset: s; }
+.steps li { display: flex; gap: 12px; align-items: center; font-weight: 500; }
+.steps li::before { counter-increment: s; content: counter(s); width: 32px; height: 32px; border-radius: 50%; background: rgba(255, 255, 255, .18); display: grid; place-items: center; font-weight: 700; flex: none; }
+.tform { background: rgba(0, 10, 40, .35); border: 1px solid rgba(255, 255, 255, .2); border-radius: 22px; padding: 20px; display: grid; gap: 14px; }
+.fld { display: grid; gap: 6px; }
+.fld label { font-size: 14.5px; font-weight: 600; }
+.inp { width: 100%; min-height: 50px; border-radius: 12px; border: 1.5px solid rgba(255, 255, 255, .25); background: rgba(0, 0, 0, .25); padding: 0 14px; font-size: 16px; color: #fff; }
+.inp option { color: #000; }
+.inp:focus { outline: none; border-color: #fff; }
+.two { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+.tform .seg button { border-color: rgba(255, 255, 255, .3); }
+.tform .seg button[aria-pressed="true"] { background: #fff; color: #0038c2; border-color: #fff; }
+@media (max-width: 860px) { .trade { grid-template-columns: 1fr; } }
+
+/* reseñas */
+.reviews { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; }
+.rev { background: var(--s1); border: 1px solid var(--line); border-radius: 18px; padding: 20px; margin: 0; }
+.rev .stars { color: var(--gold); letter-spacing: 2px; font-size: 15px; }
+.rev blockquote { margin: 10px 0 14px; font-size: 16px; }
+.rev figcaption { font-size: 14px; color: var(--muted); }
+.rev figcaption b { color: var(--ink); font-weight: 600; }
+@media (max-width: 860px) { .reviews { grid-template-columns: 1fr; } }
+
+/* visítanos */
+.visit { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
+.box { background: var(--s1); border: 1px solid var(--line); border-radius: 22px; padding: 24px; }
+.box h3 { font-size: 24px; margin-bottom: 12px; }
+.box p { margin: 0 0 16px; color: var(--muted); }
+.hours div { display: flex; justify-content: space-between; padding: 12px 0; border-bottom: 1px solid var(--line); }
+.hours div:last-child { border: 0; }
+.hours .today { color: #fff; font-weight: 700; }
+.hours span:last-child { white-space: nowrap; text-align: right; }
+.hours .today span:first-child::after { content: ' · hoy'; color: var(--blue); font-weight: 600; }
+@media (max-width: 760px) { .visit { grid-template-columns: 1fr; } }
+
+/* pie */
+footer { border-top: 1px solid var(--line); padding: 40px 0 120px; margin-top: 40px; }
+footer .wrap { display: grid; gap: 22px; }
+.socials { display: flex; flex-wrap: wrap; gap: 10px; }
+.socials a { display: inline-flex; align-items: center; gap: 8px; min-height: 44px; padding: 0 16px; border-radius: 999px; background: var(--s2); border: 1px solid var(--line); text-decoration: none; font-weight: 600; font-size: 15px; }
+.socials svg { width: 19px; height: 19px; }
+.fine { font-size: 13.5px; color: var(--muted); display: flex; justify-content: space-between; gap: 12px; flex-wrap: wrap; }
+.fine a { color: var(--ink); font-weight: 600; }
+
+/* barra inferior celular */
+.mbar { position: fixed; left: 12px; right: 12px; bottom: max(12px, env(safe-area-inset-bottom)); z-index: 40; display: none; gap: 8px; }
+.mbar .btn { flex: 1; min-height: 54px; box-shadow: 0 12px 30px -10px rgba(0, 0, 0, .8); }
+@media (max-width: 760px) { .mbar { display: flex; } }
+.toast { position: fixed; left: 50%; bottom: 90px; transform: translate(-50%, 16px); background: #fff; color: #0b1430; font-weight: 600; padding: 13px 18px; border-radius: 14px; opacity: 0; transition: opacity .25s, transform .25s; z-index: 50; pointer-events: none; max-width: calc(100% - 32px); text-align: center; }
+.toast.show { opacity: 1; transform: translate(-50%, 0); }
+</style>
+</head>
+<body>
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <symbol id="i-wa" viewBox="0 0 24 24"><path fill="currentColor" d="M12.04 2a9.9 9.9 0 0 0-8.5 15l-1.4 5.1 5.2-1.4A9.9 9.9 0 1 0 12.04 2Zm0 18.1a8.2 8.2 0 0 1-4.2-1.2l-.3-.2-3.1.8.8-3-.2-.3a8.2 8.2 0 1 1 7 3.9Zm4.5-6.1c-.2-.1-1.5-.7-1.7-.8-.2-.1-.4-.1-.6.1l-.8 1c-.1.2-.3.2-.5.1a6.7 6.7 0 0 1-3.3-2.9c-.3-.4.3-.4.7-1.3.1-.2 0-.3 0-.4l-.8-1.8c-.2-.5-.4-.4-.6-.4h-.5a1 1 0 0 0-.7.3 3 3 0 0 0-.9 2.2 5.2 5.2 0 0 0 1.1 2.7 11.8 11.8 0 0 0 4.5 4c1.7.7 2.3.8 3.2.6a2.7 2.7 0 0 0 1.8-1.3 2.2 2.2 0 0 0 .2-1.3c-.1-.1-.3-.2-.5-.3Z"/></symbol>
+  <symbol id="i-search" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></g></symbol>
+  <symbol id="i-swap" viewBox="0 0 24 24"><path fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" d="M7 4 3 8l4 4M3 8h14M17 20l4-4-4-4M21 16H7"/></symbol>
+  <symbol id="i-pin" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="2"><path d="M12 21s7-6.2 7-12a7 7 0 0 0-14 0c0 5.8 7 12 7 12Z"/><circle cx="12" cy="9" r="2.5"/></g></symbol>
+  <symbol id="i-ig" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/></g></symbol>
+  <symbol id="i-tt" viewBox="0 0 24 24"><path fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" d="M14 3v11.5a3.5 3.5 0 1 1-3.5-3.5M14 3c.4 2.6 2.2 4.4 5 4.6"/></symbol>
+  <symbol id="i-fb" viewBox="0 0 24 24"><path fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" d="M15 3h-2a4 4 0 0 0-4 4v3H7v4h2v7h4v-7h3l1-4h-4V7a1 1 0 0 1 1-1h2Z"/></symbol>
+</svg>
+
+<div class="proposal"><b>Propuesta de rediseño</b> preparada por NovaPage para Capital Móvil · No es el sitio oficial</div>
+
+<header class="top">
+  <div class="wrap">
+    <a class="logo" href="#inicio" aria-label="Capital Móvil, inicio"><img src="img/logo.svg" alt="Capital Móvil" width="136" height="30"></a>
+    <nav class="nav" aria-label="Secciones">
+      <a href="#precios">Precios</a>
+      <a href="#condiciones">Condiciones</a>
+      <a href="#recibimos">Recibimos tu iPhone</a>
+      <a href="#visitanos">Ubicación</a>
+    </nav>
+    <a class="btn btn-wa" href="https://wa.me/18093429598" target="_blank" rel="noopener"><svg aria-hidden="true"><use href="#i-wa"/></svg>WhatsApp</a>
+  </div>
+</header>
+
+<main>
+  <section class="hero" id="inicio">
+    <div class="wrap">
+      <div>
+        <span class="status" id="status"><i></i><span>Abierto ahora</span></span>
+        <h1>La Capital de los <span>Celulares</span></h1>
+        <p class="lead">iPhone, Samsung, Xiaomi y Cubot con garantía. Busca tu modelo, mira el precio de una vez y pídelo por WhatsApp.</p>
+        <div class="cta">
+          <a class="btn btn-blue" href="#precios"><svg aria-hidden="true"><use href="#i-search"/></svg>Buscar mi celular</a>
+          <a class="btn btn-line" href="#recibimos"><svg aria-hidden="true"><use href="#i-swap"/></svg>Vende o cambia tu iPhone</a>
+        </div>
+        <ul class="facts">
+          <li><b>515 mil</b><span>seguidores en Instagram</span></li>
+          <li><b>Todo RD</b><span>envíos rápidos</span></li>
+          <li><b>1 año</b><span>de garantía en nuevos</span></li>
+        </ul>
+      </div>
+      <div class="hero-img">
+        <img src="img/iphone.webp" alt="iPhone color naranja sobre fondo negro" width="768" height="432" fetchpriority="high">
+        <div class="tag"><small>iPhone desde</small><b id="fromIphone">RD$8,995</b></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="sec" id="precios" style="padding-top:24px">
+    <div class="wrap">
+      <div class="head"><div><p class="kicker">Precios de hoy</p><h2>Encuentra tu celular en segundos</h2><p class="sub">Escoge la marca, toca la capacidad y la condición, y ve el precio con su garantía.</p></div></div>
+      <div class="finder">
+        <div class="brands" role="group" aria-label="Marca" id="brands"></div>
+        <div class="tools">
+          <label class="search"><span class="sr">Buscar modelo</span><svg aria-hidden="true"><use href="#i-search"/></svg><input id="q" type="search" placeholder="Busca: 15 Pro Max, A56, KingKong…" autocomplete="off"></label>
+          <div class="conds" role="group" aria-label="Condición" id="conds"></div>
+        </div>
+        <div class="budget"><label for="max">Mi presupuesto hasta</label><input type="range" id="max" min="5000" max="105000" step="1000" value="105000"><output id="maxO" for="max">Sin límite</output></div>
+        <div class="meta"><span id="count"></span><span>Precios en RD$ tomados de capitalmovil.com.do el 29 de oct. · <b>Oferta válida hasta el 1° de noviembre</b></span></div>
+        <div class="grid" id="grid" aria-live="polite"></div>
+        <div class="more"><button class="btn btn-line" id="moreBtn" type="button" hidden>Ver más modelos</button></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="sec" id="condiciones" style="padding-top:16px">
+    <div class="wrap">
+      <div class="head"><div><p class="kicker">Sin sorpresas</p><h2>¿Qué significa cada condición?</h2></div></div>
+      <div class="conditions">
+        <div class="cond"><b><span class="dot" style="background:#2fd36b"></span>Nuevo</b><p>Equipo nuevo en caja.</p></div>
+        <div class="cond"><b><span class="dot" style="background:#38a8ff"></span>Como Nuevo</b><p>Equipo en perfecto estado físico.</p></div>
+        <div class="cond"><b><span class="dot" style="background:#8f7bff"></span>Grado A</b><p>Muy buen estado físico, con leves señales de uso y 100% funcional.</p></div>
+        <div class="cond"><b><span class="dot" style="background:#ffcf5a"></span>Grado A-</b><p>Buen estado, con detalles estéticos moderados, 100% funcional.</p></div>
+        <div class="cond"><b><span class="dot" style="background:#ff8a5a"></span>Outlet</b><p>Equipo funcional con rebaja especial por liquidación (reparado).</p></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="sec" id="mas" style="padding-top:16px">
+    <div class="wrap">
+      <div class="head"><div><p class="kicker">También tenemos</p><h2>Más que celulares</h2></div></div>
+      <div class="cats">
+        <a class="cat" href="https://wa.me/18093429598?text=Hola%2C%20quiero%20ver%20las%20tablets%20disponibles." target="_blank" rel="noopener"><img src="img/tablets.webp" alt="" width="714" height="402" loading="lazy"><span>Tablets<small>Preguntar disponibilidad</small></span></a>
+        <a class="cat" href="https://wa.me/18093429598?text=Hola%2C%20quiero%20ver%20los%20relojes%20disponibles." target="_blank" rel="noopener"><img src="img/relojes.webp" alt="" width="714" height="402" loading="lazy"><span>Relojes<small>Preguntar disponibilidad</small></span></a>
+        <a class="cat" href="https://wa.me/18093429598?text=Hola%2C%20quiero%20ver%20los%20accesorios%20disponibles." target="_blank" rel="noopener"><img src="img/accesorios.webp" alt="" width="714" height="402" loading="lazy"><span>Accesorios<small>Cargadores, forros y más</small></span></a>
+        <a class="cat" href="https://wa.me/18093429598?text=Hola%2C%20quiero%20ver%20las%20laptops%20Samsung%20disponibles." target="_blank" rel="noopener"><img src="img/laptops.webp" alt="" width="714" height="402" loading="lazy"><span>Laptops<small>Samsung</small></span></a>
+        <a class="cat" href="https://wa.me/18093429598?text=Hola%2C%20quiero%20ver%20los%20televisores%20HighPro%20disponibles." target="_blank" rel="noopener"><img src="img/highpro.webp" alt="" width="714" height="402" loading="lazy"><span>Televisores<small>HighPro</small></span></a>
+      </div>
+    </div>
+  </section>
+
+  <section class="sec" id="recibimos" style="padding-top:16px">
+    <div class="wrap">
+      <div class="trade">
+        <div>
+          <p class="kicker" style="color:#cfe1ff">Recibimos tu iPhone</p>
+          <h2>Tu iPhone viejo vale para el nuevo</h2>
+          <p class="sub">Dinos qué tienes y te decimos cuánto te damos por él, o cuánto te queda el cambio.</p>
+          <ol class="steps"><li>Llena estos datos</li><li>Te respondemos por WhatsApp con la oferta</li><li>Lo traes a la tienda y sales con el nuevo</li></ol>
+        </div>
+        <form class="tform" id="tform" novalidate>
+          <div class="fld"><span id="tw-l" style="font-size:14.5px;font-weight:600">Quiero</span>
+            <div class="seg" role="group" aria-labelledby="tw-l" id="tWant"><button type="button" aria-pressed="true" data-v="cambiar">Cambiarlo</button><button type="button" aria-pressed="false" data-v="vender">Venderlo</button></div></div>
+          <div class="two">
+            <div class="fld"><label for="t-model">Mi iPhone</label><select class="inp" id="t-model"></select></div>
+            <div class="fld"><label for="t-gb">Capacidad</label><select class="inp" id="t-gb"><option>64 GB</option><option selected>128 GB</option><option>256 GB</option><option>512 GB</option><option>1 TB</option></select></div>
+          </div>
+          <div class="two">
+            <div class="fld"><label for="t-bat">Batería</label><select class="inp" id="t-bat"><option>90% o más</option><option selected>80% a 89%</option><option>Menos de 80%</option></select></div>
+            <div class="fld"><label for="t-state">Estado</label><select class="inp" id="t-state"><option>Perfecto</option><option selected>Detalles leves</option><option>Pantalla o tapa rota</option></select></div>
+          </div>
+          <div class="fld" id="t-new-f"><label for="t-new">Lo quiero cambiar por <span style="font-weight:400;opacity:.8">(opcional)</span></label><input class="inp" id="t-new" placeholder="Ej.: iPhone 16 Pro Max"></div>
+          <button class="btn btn-wa" type="submit"><svg aria-hidden="true"><use href="#i-wa"/></svg>Pedir mi oferta por WhatsApp</button>
+        </form>
+      </div>
+    </div>
+  </section>
+
+  <section class="sec" id="resenas" style="padding-top:16px">
+    <div class="wrap">
+      <div class="head"><div><p class="kicker">Reseñas de Google</p><h2>Nuestros clientes hablan por nosotros</h2></div></div>
+      <div class="reviews">
+        <figure class="rev"><div class="stars" aria-label="5 estrellas">★★★★★</div><blockquote>“La tienda de celulares con los mejores precio del Mercado. Bueno, bonito y a buen precio.”</blockquote><figcaption><b>Pedro Peralta</b> · Google</figcaption></figure>
+        <figure class="rev"><div class="stars" aria-label="5 estrellas">★★★★★</div><blockquote>“Excelente y confiable negocio para comprar y reparar celulares y sus accesorios.”</blockquote><figcaption><b>Sergio Gonzalez</b> · Google</figcaption></figure>
+        <figure class="rev"><div class="stars" aria-label="5 estrellas">★★★★★</div><blockquote>“Tienda muy concurrida, vende todo tipo de celulares, forros, reloj y demás accesorios.”</blockquote><figcaption><b>Anehudy Bravo</b> · Local Guide en Google</figcaption></figure>
+      </div>
+    </div>
+  </section>
+
+  <section class="sec" id="visitanos" style="padding-top:16px">
+    <div class="wrap visit">
+      <div class="box">
+        <p class="kicker">Visítanos</p>
+        <h3>Plaza Vértice II, 2do nivel</h3>
+        <p>Av. República de Colombia, Arroyo Hondo 3ro, Santo Domingo</p>
+        <a class="btn btn-line" href="https://maps.app.goo.gl/HtQrr" target="_blank" rel="noopener"><svg aria-hidden="true"><use href="#i-pin"/></svg>Cómo llegar</a>
+      </div>
+      <div class="box">
+        <p class="kicker">Horario</p>
+        <div class="hours" id="hours">
+          <div data-d="1,2,3,4,5"><span>Lunes a viernes</span><span>8:00 a. m. – 7:00 p. m.</span></div>
+          <div data-d="6"><span>Sábado</span><span>8:30 a. m. – 7:00 p. m.</span></div>
+          <div data-d="0"><span>Domingo</span><span>9:30 a. m. – 3:00 p. m.</span></div>
+        </div>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer>
+  <div class="wrap">
+    <img src="img/logo.svg" alt="Capital Móvil" width="160" height="35" style="width:160px">
+    <div class="socials">
+      <a href="https://wa.me/18093429598" target="_blank" rel="noopener"><svg aria-hidden="true" style="color:#1fa855"><use href="#i-wa"/></svg>(809) 342-9598</a>
+      <a href="https://www.instagram.com/capitalmovilrd/" target="_blank" rel="noopener"><svg aria-hidden="true"><use href="#i-ig"/></svg>Instagram</a>
+      <a href="https://www.tiktok.com/@capitalmovilrd" target="_blank" rel="noopener"><svg aria-hidden="true"><use href="#i-tt"/></svg>TikTok</a>
+      <a href="https://www.facebook.com/capitalmovilrd/" target="_blank" rel="noopener"><svg aria-hidden="true"><use href="#i-fb"/></svg>Facebook</a>
+    </div>
+    <div class="fine"><span>Propuesta de rediseño no oficial. Marcas, fotos, precios y reseñas tomados de capitalmovil.com.do e Instagram el 29 de octubre de 2026.</span><span>Diseño: <a href="https://novapage-rd.vercel.app/" target="_blank" rel="noopener">NovaPage</a></span></div>
+  </div>
+</footer>
+
+<div class="mbar"><a class="btn btn-blue" href="#precios"><svg aria-hidden="true"><use href="#i-search"/></svg>Precios</a><a class="btn btn-wa" href="https://wa.me/18093429598" target="_blank" rel="noopener"><svg aria-hidden="true"><use href="#i-wa"/></svg>WhatsApp</a></div>
+<div class="toast" id="toast" role="status"></div>
+
+<script>
+const WA = '18093429598';
+const DATA = [{"b":"iphone","g":"","m":"18 Pro Max eSIM","v":[["256","Nuevo",94995,"1 año Apple"]]},{"b":"iphone","g":"","m":"18 Pro Max eSIM Burgundy","v":[["256","Nuevo",102995,"1 año Apple"]]},{"b":"iphone","g":"","m":"17 Pro Max eSIM","v":[["1TB","Nuevo",99995,"1 año Apple"],["256","Nuevo",79995,"1 año Apple"],["512","Nuevo",92995,"1 año Apple"]]},{"b":"iphone","g":"","m":"17 Pro eSIM","v":[["256","Como Nuevo",60995,"6 meses"],["512","Como Nuevo",64995,"6 meses"],["1TB","Como Nuevo",68995,"6 meses"],["256","Grado A",58995,"6 meses"],["256","Grado A-",57995,"6 meses"]]},{"b":"iphone","g":"","m":"16 Pro Max eSIM","v":[["256","Grado A",45995,"6 meses"],["256","Como Nuevo",48495,"6 meses"]]},{"b":"iphone","g":"","m":"16 Pro eSIM","v":[["128","Grado A-",34995,"6 meses"],["128","Grado A",35495,"6 meses"],["128","Como Nuevo",36495,"6 meses"]]},{"b":"iphone","g":"","m":"16 Plus eSIM","v":[["128","Grado A-",29995,"6 meses"],["128","Grado A",33495,"6 meses"],["128","Como Nuevo",34995,"6 meses"],["256","Grado A",35995,"6 meses"],["256","Como Nuevo",38495,"6 meses"]]},{"b":"iphone","g":"","m":"16 Plus eSIM Color Negro","v":[["128","Como Nuevo",32995,"6 meses"]]},{"b":"iphone","g":"","m":"15 Pro Max eSIM","v":[["256","Outlet",29995,"90 días"],["256","Grado A-",31495,"90 días"],["256","Grado A",36495,"90 días"],["256","Como Nuevo",38495,"90 días"],["512","Grado A",39495,"90 días"],["512","Como Nuevo",40495,"90 días"],["1TB","Como Nuevo",43495,"90 días"]]},{"b":"iphone","g":"","m":"15 Pro eSIM","v":[["128","Como Nuevo",29495,"90 días"]]},{"b":"iphone","g":"","m":"15 Plus eSIM","v":[["128","Grado A-",22995,"90 días"]]},{"b":"iphone","g":"","m":"14 Pro Max eSIM","v":[["128","Grado A-",25995,"90 días"],["128","Grado A",27495,"90 días"],["128","Como Nuevo",28995,"90 días"],["256","Outlet",28995,"90 días"],["256","Grado A-",28995,"90 días"],["256","Como Nuevo",31995,"90 días"],["1TB","Grado A-",32495,"90 días"]]},{"b":"iphone","g":"","m":"14 Pro eSIM","v":[["512","Grado A-",24495,"90 días"]]},{"b":"iphone","g":"","m":"14 Plus eSIM","v":[["128","Grado A-",18995,"90 días"],["128","Grado A",19995,"90 días"]]},{"b":"iphone","g":"","m":"14 eSIM","v":[["128","Outlet",14995,"60 días"],["128","Grado A-",14995,"90 días"],["128","Grado A",15995,"90 días"],["128","Como Nuevo",16995,"90 días"]]},{"b":"iphone","g":"","m":"13 Pro Max","v":[["256","Outlet",23995,"60 días"]]},{"b":"iphone","g":"","m":"13","v":[["128","Outlet",12995,"60 días"],["128","Grado A",13995,"90 días"],["128","Como Nuevo",15495,"90 días"],["256","Grado A-",14995,"90 días"],["256","Grado A",15995,"90 días"]]},{"b":"iphone","g":"","m":"12 Pro Max","v":[["128","Outlet",14995,"45 días"],["128","Grado A-",16495,"60 días"],["128","Grado A",17495,"60 días"],["128","Como Nuevo",18495,"60 días"],["256","Outlet",16995,"45 días"],["256","Grado A-",17995,"60 días"],["256","Grado A",18995,"60 días"],["256","Como Nuevo",19995,"60 días"],["512","Outlet",17995,"45 días"],["512","Grado A-",18995,"60 días"],["512","Grado A",19995,"60 días"],["512","Como Nuevo",20995,"60 días"]]},{"b":"iphone","g":"","m":"12","v":[["64","Grado A-",8995,"45 días"],["64","Grado A",9495,"45 días"],["64","Como Nuevo",10995,"45 días"],["128","Outlet",9995,"45 días"],["128","Grado A-",9995,"45 días"],["128","Grado A",10495,"45 días"]]},{"b":"iphone","g":"","m":"11 Pro Max","v":[["64","Outlet",9995,"45 días"],["64","Grado A-",10495,"45 días"],["64","Como Nuevo",10995,"45 días"],["256","Grado A-",10995,"45 días"],["256","Como Nuevo",12495,"45 días"],["512","Outlet",10995,"45 días"],["512","Grado A-",11495,"45 días"]]},{"b":"samsung","g":"","m":"S26 Ultra","v":[["12+256","Nuevo",57995,"1 año Samsung"],["12+512","Nuevo",66995,"1 año Samsung"]]},{"b":"samsung","g":"","m":"S24 Ultra","v":[["12+256","Como Nuevo",38995,"6 meses"]]},{"b":"samsung","g":"","m":"S22 Ultra 5G","v":[["128","Como Nuevo",22495,"60 días"]]},{"b":"samsung","g":"","m":"A56 (2025)","v":[["8+128","Nuevo",17995,"1 año Samsung"],["8+256","Nuevo",22995,"1 año Samsung"]]},{"b":"samsung","g":"","m":"A27 5G","v":[["6+128","Nuevo",18995,"1 año Samsung"]]},{"b":"samsung","g":"","m":"A16","v":[["4+128","Nuevo",8995,"1 año Samsung"]]},{"b":"samsung","g":"","m":"A06","v":[["4+64","Nuevo",6495,"1 año Samsung"]]},{"b":"samsung","g":"","m":"A07","v":[["4+128","Nuevo",7995,"1 año Samsung"]]},{"b":"samsung","g":"","m":"A15","v":[["4+128","Grado A",5995,"60 días"],["4+128","Como Nuevo",6495,"60 días"]]},{"b":"samsung","g":"","m":"Galaxy Buds3","v":[["","Nuevo",6495,"1 año Samsung"]]},{"b":"samsung","g":"","m":"Galaxy Buds Core","v":[["","Nuevo",2995,"1 año Samsung"]]},{"b":"xiaomi","g":"","m":"Redmi A7 Pro","v":[["4+128","Nuevo",7995,""]]},{"b":"xiaomi","g":"","m":"Redmi 15C","v":[["8+128","Nuevo",8995,""],["8+256","Nuevo",9995,""]]},{"b":"xiaomi","g":"","m":"Redmi 17","v":[["8+128","Nuevo",9995,""],["4+256","Nuevo",11495,""]]},{"b":"xiaomi","g":"","m":"Redmi Note 17","v":[["4+128","Nuevo",12495,""],["6+256","Nuevo",14495,""]]},{"b":"xiaomi","g":"","m":"Redmi Note 17 Pro 5G","v":[["6+128","Nuevo",17495,""]]},{"b":"xiaomi","g":"","m":"Redmi Note 17 Pro Max 5G","v":[["8+512","Nuevo",24995,""]]},{"b":"xiaomi","g":"","m":"Redmi Note 15 Pro 4G","v":[["8+256","Nuevo",16995,""]]},{"b":"xiaomi","g":"","m":"Redmi Note 15 Pro Plus 5G","v":[["8+256","Nuevo",21995,""]]},{"b":"xiaomi","g":"","m":"POCO X8 Pro Max","v":[["12+512","Nuevo",31995,""]]},{"b":"cubot","g":"Smartphones","m":"Cubot A20","v":[["12+128","Nuevo",5495,"1 año Cubot"]]},{"b":"cubot","g":"Smartphones","m":"Cubot A30","v":[["16+128","Nuevo",5995,"1 año Cubot"]]},{"b":"cubot","g":"Smartphones","m":"Cubot A40","v":[["12+256","Nuevo",6995,"1 año Cubot"]]},{"b":"cubot","g":"Smartphones","m":"Cubot A50","v":[["16+128","Nuevo",6995,"1 año Cubot"]]},{"b":"cubot","g":"Smartphones","m":"Cubot Note 60","v":[["16+128","Nuevo",6995,"1 año Cubot"]]},{"b":"cubot","g":"Smartphones","m":"Cubot P90","v":[["24+256","Nuevo",8995,"1 año Cubot"]]},{"b":"cubot","g":"Smartphones","m":"Cubot X100 5G","v":[["16+256","Nuevo",9995,"1 año Cubot"]]},{"b":"cubot","g":"Resistentes","m":"KingKong Mini 4","v":[["6+128","Nuevo",7995,"1 año Cubot"]]},{"b":"cubot","g":"Resistentes","m":"KingKong ES","v":[["16+128","Nuevo",7995,"1 año Cubot"]]},{"b":"cubot","g":"Resistentes","m":"KingKong ES 3","v":[["16+256","Nuevo",10495,"1 año Cubot"]]},{"b":"cubot","g":"Resistentes","m":"KingKong ES 5","v":[["16+128","Nuevo",9995,"1 año Cubot"]]},{"b":"cubot","g":"Resistentes","m":"KingKong ES Pro","v":[["16+128","Nuevo",7995,"1 año Cubot"]]},{"b":"cubot","g":"Resistentes","m":"KingKong Ace 2","v":[["16+128","Nuevo",7995,"1 año Cubot"]]},{"b":"cubot","g":"Resistentes","m":"KingKong Ace 5","v":[["20+256","Nuevo",11495,"1 año Cubot"]]},{"b":"cubot","g":"Resistentes","m":"KingKong 8","v":[["12+256","Nuevo",8495,"1 año Cubot"]]},{"b":"cubot","g":"Resistentes","m":"KingKong Power 5","v":[["16+128","Nuevo",11495,"1 año Cubot"]]},{"b":"cubot","g":"Resistentes","m":"KingKong Power 3","v":[["16+256","Nuevo",10995,"1 año Cubot"]]},{"b":"cubot","g":"Resistentes","m":"KingKong AX","v":[["24+256","Nuevo",9995,"1 año Cubot"]]},{"b":"cubot","g":"Resistentes","m":"KingKong 9","v":[["24+256","Nuevo",9995,"1 año Cubot"]]},{"b":"cubot","g":"Resistentes","m":"KingKong 11 5G","v":[["32+256","Nuevo",14995,"1 año Cubot"],["16+256","Nuevo",13995,"1 año Cubot"]]},{"b":"cubot","g":"Resistentes","m":"KingKong X 5G","v":[["32+256","Nuevo",14995,"1 año Cubot"]]},{"b":"cubot","g":"Resistentes","m":"KingKong Dura","v":[["20+128","Nuevo",10995,"1 año Cubot"],["32+256","Nuevo",12995,"1 año Cubot"]]},{"b":"cubot","g":"Resistentes","m":"KingKong Star 2 5G","v":[["24+256","Nuevo",13495,"1 año Cubot"]]}];
+const BRANDS = [
+  { id: 'iphone', name: 'iPhone', img: 'iphone' },
+  { id: 'samsung', name: 'Samsung', img: 'samsung' },
+  { id: 'xiaomi', name: 'Xiaomi', img: 'xiaomi' },
+  { id: 'cubot', name: 'Cubot', img: 'cubot' },
+];
+const CONDS = ['Todas', 'Nuevo', 'Como Nuevo', 'Grado A', 'Grado A-', 'Outlet'];
+const $ = s => document.querySelector(s);
+const money = n => 'RD$' + n.toLocaleString('en-US');
+const esc = s => String(s).replace(/[&<>"]/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]));
+
+// nombres bonitos
+function nice(m) {
+  let name = m.m, tag = '', note = m.g || '';
+  if (/eSIM/.test(name)) { tag = 'eSIM'; name = name.replace(/\s*eSIM/, ''); }
+  if (m.b === 'iphone') name = 'iPhone ' + name;
+  if (m.b === 'samsung' && !/^Galaxy/.test(name)) name = 'Galaxy ' + name;
+  const color = name.match(/\s(Burgundy|Color Negro)$/);
+  if (color) { name = name.replace(color[0], ''); note = color[1].replace('Color ', '') ; }
+  return { name, tag, note };
+}
+const fmtGb = g => !g ? '' : /\+/.test(g) ? g.replace('+', ' + ') + ' GB' : /TB/.test(g) ? g.replace('TB', ' TB') : g + ' GB';
+const MODELS = DATA.map((m, i) => ({ ...m, id: i, ...nice(m), min: Math.min(...m.v.map(v => v[2])) }));
+$('#fromIphone').textContent = money(Math.min(...MODELS.filter(m => m.b === 'iphone').map(m => m.min)));
+
+// estado
+const STEP = matchMedia('(max-width: 640px)').matches ? 6 : 8;
+let brand = 'iphone', cond = 'Todas', q = '', max = Infinity, limit = STEP;
+const sel = {}; // modelo -> índice de variante elegida
+
+$('#brands').innerHTML = BRANDS.map(b => {
+  const ms = MODELS.filter(m => m.b === b.id);
+  return `<button class="brand" type="button" data-b="${b.id}" aria-pressed="${b.id === brand}"><img src="img/${b.img}.webp" alt="" width="768" height="432"><span>${b.name}<small>${ms.length} modelos · desde ${money(Math.min(...ms.map(m => m.min)))}</small></span></button>`;
+}).join('');
+$('#conds').innerHTML = CONDS.map(c => `<button class="chip" type="button" data-c="${c}" aria-pressed="${c === cond}">${c}</button>`).join('');
+
+const okV = v => (cond === 'Todas' || v[1] === cond) && v[2] <= max;
+function visible() {
+  const t = q.toLowerCase().replace(/iphone|galaxy/g, '').trim();
+  return MODELS.filter(m => (q ? true : m.b === brand) && (!t || m.name.toLowerCase().includes(t) || m.m.toLowerCase().includes(t)) && m.v.some(okV));
+}
+function card(m) {
+  const vs = m.v.map((v, i) => ({ v, i })).filter(x => okV(x.v));
+  let cur = sel[m.id]; if (cur == null || !okV(m.v[cur])) cur = vs.reduce((a, b) => (b.v[2] < a.v[2] ? b : a)).i;
+  sel[m.id] = cur;
+  const [gb, cd, price, war] = m.v[cur];
+  const gbs = [...new Set(vs.map(x => x.v[0]))];
+  const cds = [...new Set(vs.filter(x => x.v[0] === gb).map(x => x.v[1]))];
+  const segGb = gbs.filter(Boolean).length > 1 || (gbs[0] && gbs.length) ? `<div class="opts"><span class="lab">Capacidad</span><div class="seg">${gbs.map(g => `<button type="button" data-m="${m.id}" data-gb="${esc(g)}" aria-pressed="${g === gb}">${fmtGb(g) || 'Única'}</button>`).join('')}</div></div>` : '';
+  const segCd = `<div class="opts"><span class="lab">Condición</span><div class="seg">${cds.map(c => `<button type="button" data-m="${m.id}" data-cd="${esc(c)}" aria-pressed="${c === cd}">${c}</button>`).join('')}</div></div>`;
+  return `<article class="card">
+    <div class="row1"><div><h3>${esc(m.name)}</h3><div class="tagline">${[m.note, m.g, vs.length > 1 ? `${vs.length} opciones` : ''].filter(Boolean).join(' · ') || '&nbsp;'}</div></div>${m.tag ? `<span class="esim">${m.tag}</span>` : ''}</div>
+    ${segGb}${segCd}
+    <div class="price"><b>${money(price)}</b><small>${war ? `Garantía<strong>${esc(war)}</strong>` : 'Consultar garantía'}</small></div>
+    <button class="btn btn-wa" type="button" data-buy="${m.id}"><svg aria-hidden="true"><use href="#i-wa"/></svg>Lo quiero</button>
+  </article>`;
+}
+function draw() {
+  const list = visible();
+  const shown = list.slice(0, limit);
+  $('#grid').innerHTML = shown.length ? shown.map(card).join('') : `<div class="empty">No hay modelos con esos filtros. Prueba otra condición o sube tu presupuesto.</div>`;
+  $('#count').textContent = q ? `${list.length} resultados para “${q}” en todas las marcas` : `${list.length} modelos de ${BRANDS.find(b => b.id === brand).name}`;
+  $('#moreBtn').hidden = list.length <= limit;
+  $('#moreBtn').textContent = `Ver ${list.length - limit} modelos más`;
+}
+$('#brands').addEventListener('click', e => { const b = e.target.closest('[data-b]'); if (!b) return; brand = b.dataset.b; q = ''; $('#q').value = ''; limit = STEP; document.querySelectorAll('.brand').forEach(x => x.setAttribute('aria-pressed', x === b)); draw(); });
+$('#conds').addEventListener('click', e => { const b = e.target.closest('[data-c]'); if (!b) return; cond = b.dataset.c; document.querySelectorAll('.chip').forEach(x => x.setAttribute('aria-pressed', x === b)); draw(); });
+$('#q').addEventListener('input', e => { q = e.target.value.trim(); limit = STEP; draw(); });
+$('#max').addEventListener('input', e => { const v = +e.target.value; max = v >= 105000 ? Infinity : v; $('#maxO').textContent = max === Infinity ? 'Sin límite' : money(v); draw(); });
+$('#moreBtn').addEventListener('click', () => { limit += STEP * 2; draw(); });
+$('#grid').addEventListener('click', e => {
+  const b = e.target.closest('button'); if (!b) return;
+  if (b.dataset.buy != null) { buy(MODELS[+b.dataset.buy]); return; }
+  const m = MODELS[+b.dataset.m]; const cur = m.v[sel[m.id]];
+  const gb = b.dataset.gb ?? cur[0], cd = b.dataset.cd ?? cur[1];
+  let i = m.v.findIndex(v => v[0] === gb && v[1] === cd && okV(v));
+  if (i < 0) i = m.v.findIndex(v => v[0] === gb && okV(v));
+  if (i >= 0) { sel[m.id] = i; draw(); }
+});
+function buy(m) {
+  const [gb, cd, price, war] = m.v[sel[m.id]];
+  const msg = ['¡Hola, Capital Móvil! Me interesa este equipo:', '', `📱 ${m.name}${m.note ? ' ' + m.note : ''}${gb ? ' · ' + fmtGb(gb) : ''}`, `✨ Condición: ${cd}`, `💵 Precio: ${money(price)}`, war ? `🛡️ Garantía: ${war}` : '', '', '¿Está disponible? ¿Hacen envío a mi zona?'].filter((l, i, a) => l !== '' || a[i - 1] !== '').join('\n');
+  window.open(`https://wa.me/${WA}?text=${encodeURIComponent(msg)}`, '_blank', 'noopener');
+}
+draw();
+
+// recibimos tu iPhone
+$('#t-model').innerHTML = ['iPhone 11', 'iPhone 11 Pro', 'iPhone 11 Pro Max', 'iPhone 12', 'iPhone 12 Pro', 'iPhone 12 Pro Max', 'iPhone 13', 'iPhone 13 Pro', 'iPhone 13 Pro Max', 'iPhone 14', 'iPhone 14 Plus', 'iPhone 14 Pro', 'iPhone 14 Pro Max', 'iPhone 15', 'iPhone 15 Plus', 'iPhone 15 Pro', 'iPhone 15 Pro Max', 'iPhone 16', 'iPhone 16 Plus', 'iPhone 16 Pro', 'iPhone 16 Pro Max', 'iPhone 17 Pro', 'iPhone 17 Pro Max'].map(x => `<option${x === 'iPhone 13' ? ' selected' : ''}>${x}</option>`).join('');
+let want = 'cambiar';
+$('#tWant').addEventListener('click', e => { const b = e.target.closest('button'); if (!b) return; want = b.dataset.v; document.querySelectorAll('#tWant button').forEach(x => x.setAttribute('aria-pressed', x === b)); $('#t-new-f').hidden = want !== 'cambiar'; });
+$('#tform').addEventListener('submit', e => {
+  e.preventDefault();
+  const v = id => $(id).value.trim();
+  const lines = [want === 'cambiar' ? '¡Hola, Capital Móvil! Quiero cambiar mi iPhone por otro:' : '¡Hola, Capital Móvil! Quiero vender mi iPhone:', '', `📱 ${v('#t-model')} · ${v('#t-gb')}`, `🔋 Batería: ${v('#t-bat')}`, `🔎 Estado: ${v('#t-state')}`];
+  if (want === 'cambiar' && v('#t-new')) lines.push(`🔁 Lo quiero cambiar por: ${v('#t-new')}`);
+  lines.push('', want === 'cambiar' ? '¿Cuánto me dan por él y cuánto me queda la diferencia?' : '¿Cuánto me dan por él?');
+  const msg = lines.join('\n');
+  window.open(`https://wa.me/${WA}?text=${encodeURIComponent(msg)}`, '_blank', 'noopener');
+});
+
+// abierto ahora (hora de Santo Domingo)
+const HOURS = { 0: [9.5, 15], 1: [8, 19], 2: [8, 19], 3: [8, 19], 4: [8, 19], 5: [8, 19], 6: [8.5, 19] };
+const fmtH = h => { const H = Math.floor(h), M = Math.round((h - H) * 60); return `${((H + 11) % 12) + 1}:${String(M).padStart(2, '0')} ${H < 12 ? 'a. m.' : 'p. m.'}`; };
+(function () {
+  const now = new Date(new Date().toLocaleString('en-US', { timeZone: 'America/Santo_Domingo' }));
+  const d = now.getDay(), h = now.getHours() + now.getMinutes() / 60, [a, b] = HOURS[d], el = $('#status');
+  if (h >= a && h < b) el.lastElementChild.textContent = `Abierto ahora · hasta las ${fmtH(b)}`;
+  else { el.classList.add('closed'); const n = h < a ? d : (d + 1) % 7; el.lastElementChild.textContent = `Cerrado · abrimos ${n === d ? 'hoy' : 'mañana'} a las ${fmtH(HOURS[n][0])}`; }
+  document.querySelectorAll('#hours div').forEach(r => r.classList.toggle('today', r.dataset.d.split(',').includes(String(d))));
+})();
+</script>
+</body>
+</html>
