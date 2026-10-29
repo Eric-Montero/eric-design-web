@@ -27,7 +27,12 @@
     },
     {
       "source": "/nueva",
-      "destination": "/nueva.html",
+      "destination": "/",
+      "permanent": false
+    },
+    {
+      "source": "/nueva.html",
+      "destination": "/",
       "permanent": false
     }
   ]

@@ -418,6 +418,72 @@ details { border: 0; background: var(--paper); border-radius: 14px; padding: 0 2
   .js .stagger > * { opacity: 1; transform: none; }
 }
 .sr-only { position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; border: 0; }
+
+/* ===== Versión nueva: portada que se arma sola ===== */
+.hb { align-items: start; padding-top: 12px; padding-bottom: 0; }
+.hb-copy { padding-top: clamp(24px, 6vh, 72px); }
+.hb-copy { position: sticky; top: max(96px, calc(50vh - 230px)); }
+.hb-steps { list-style: none; padding: 0; margin: 30px 0 0; display: grid; gap: 10px; counter-reset: s; }
+.hb-steps li { display: flex; align-items: center; gap: 12px; color: var(--muted); font-weight: 600; transition: color 250ms ease; }
+.hb-steps li::before { counter-increment: s; content: counter(s); width: 30px; height: 30px; border-radius: 50%; display: grid; place-items: center; background: var(--paper); color: var(--muted); font-size: .875rem; flex: none; transition: background-color 250ms ease, color 250ms ease; }
+.hb-steps li.on { color: var(--ink); }
+.hb-steps li.on::before { background: var(--teal); color: var(--teal-ink); }
+.hb-track { position: relative; height: 230vh; }
+.hb-sticky { position: sticky; top: 68px; height: calc(100vh - 68px); height: calc(100svh - 68px); display: grid; place-items: center; }
+.hb-wrap { position: relative; width: 330px; height: 676px; transform-origin: center; }
+.hb-phone { position: absolute; inset: 0; border-radius: 52px; background: #05081a; padding: 14px; box-shadow: var(--shadow); border: 1px solid #2a3360; }
+.hb-screen { position: relative; width: 300px; height: 646px; border-radius: 40px; overflow: hidden; background: #fbf8f4; color: #1d1a17; font-family: var(--font-body); }
+.hb-notch { position: absolute; left: 50%; top: 10px; width: 96px; height: 26px; border-radius: 14px; background: #05081a; transform: translateX(-50%); z-index: 5; }
+.hb-b { position: absolute; transform-origin: center; will-change: transform; }
+.hb-hdr { left: 12px; top: 44px; width: 276px; height: 38px; display: flex; align-items: center; gap: 8px; padding: 0 10px; border-radius: 12px; background: #fff; box-shadow: 0 1px 0 rgba(0,0,0,.06); font: 700 14px var(--font-display); }
+.hb-hdr i { width: 22px; height: 22px; border-radius: 50%; background: #c0567a; }
+.hb-hdr span { margin-left: auto; width: 18px; height: 2px; background: #1d1a17; box-shadow: 0 5px 0 #1d1a17, 0 -5px 0 #1d1a17; }
+.hb-hero { left: 12px; top: 92px; width: 276px; height: 196px; border-radius: 18px; overflow: hidden; background: #2a1d22; }
+.hb-hero img { width: 100%; height: 100%; object-fit: cover; }
+.hb-hero b { position: absolute; left: 14px; bottom: 12px; right: 14px; color: #fff; font: 800 21px/1.05 var(--font-display); text-shadow: 0 2px 12px rgba(0,0,0,.5); }
+.hb-t { left: 16px; top: 302px; font: 800 19px var(--font-display); }
+.hb-card { left: 12px; width: 276px; height: 50px; border-radius: 14px; background: #fff; display: flex; align-items: center; justify-content: space-between; padding: 0 12px 0 14px; font-weight: 600; font-size: 14px; box-shadow: 0 1px 0 rgba(0,0,0,.06); }
+.hb-card em { font-style: normal; font-weight: 800; color: #fff; background: #713bff; border-radius: 999px; padding: 4px 10px; font-size: 12.5px; }
+.hb-wa { left: 12px; top: 520px; width: 276px; height: 54px; border-radius: 16px; background: #15803d; color: #fff; display: flex; align-items: center; justify-content: center; gap: 8px; font-weight: 800; font-size: 15px; }
+.hb-wa .icon { width: 20px; height: 20px; }
+.hb-ripple { position: absolute; left: 150px; top: 547px; width: 10px; height: 10px; margin: -5px 0 0 -5px; border-radius: 50%; background: rgba(255,255,255,.55); pointer-events: none; }
+.hb-piece { position: absolute; left: 0; top: 0; will-change: transform; }
+.hb-note { position: absolute; right: -46px; top: 120px; width: 268px; background: var(--paper); color: var(--ink); border-radius: 18px; padding: 14px 16px; box-shadow: var(--shadow); border: 1px solid var(--line); font-size: 14.5px; line-height: 1.4; will-change: transform; z-index: 6; }
+.hb-note .who { display: flex; align-items: center; gap: 8px; font-weight: 700; font-size: 13px; color: var(--muted); margin-bottom: 6px; }
+.hb-note .who i { width: 22px; height: 22px; border-radius: 6px; background: #15803d; display: grid; place-items: center; }
+.hb-note .who .icon { width: 14px; height: 14px; color: #fff; }
+.hb-note .who span { margin-left: auto; font-weight: 500; }
+.hb-note .ok { margin-top: 10px; display: inline-flex; align-items: center; gap: 6px; background: var(--soft); color: var(--teal); font-weight: 700; font-size: 13px; padding: 5px 10px; border-radius: 999px; }
+@media (max-width: 980px) {
+  .hb-copy { position: static; }
+  .hb-track { height: 200vh; margin-top: 8px; }
+  .hb-note { right: 50%; transform-origin: center; top: 70px; }
+}
+@media (prefers-reduced-motion: reduce) { .hb-track { height: auto; } .hb-sticky { position: relative; height: auto; padding: 24px 0; } .hb-copy { position: static; } }
+
+/* ===== Demos dentro del celular ===== */
+.try { display: grid; grid-template-columns: 1fr auto; gap: clamp(28px, 5vw, 72px); align-items: center; margin-bottom: 56px; background: var(--paper); border-radius: 26px; padding: clamp(20px, 4vw, 48px); }
+.try h3 { font-size: clamp(1.6rem, 3vw, 2.2rem); }
+.try > div > p { color: var(--muted); margin-top: 12px; max-width: 44ch; }
+.try-tabs { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 24px; }
+.try-tabs button { min-height: 44px; padding: 0 16px; border-radius: 999px; border: 2px solid var(--line); background: transparent; color: var(--ink); font: 600 .9375rem var(--font-body); cursor: pointer; transition: background-color 200ms ease, border-color 200ms ease, color 200ms ease; }
+.try-tabs button[aria-pressed="true"] { background: var(--teal); border-color: var(--teal); color: var(--teal-ink); }
+.try-open { margin-top: 22px; }
+.try-phone { width: 318px; border-radius: 48px; background: #05081a; padding: 12px; border: 1px solid #2a3360; box-shadow: var(--shadow); }
+.try-screen { position: relative; width: 294px; height: 620px; border-radius: 38px; overflow: hidden; background: #fff; }
+.try-screen iframe { position: absolute; left: 0; top: 0; width: 390px; height: 822px; border: 0; transform: scale(.7538); transform-origin: 0 0; }
+.try-screen .load { position: absolute; inset: 0; display: grid; place-items: center; color: #666; font-size: .9rem; }
+@media (max-width: 860px) { .try { grid-template-columns: 1fr; justify-items: center; text-align: left; } .try > div { justify-self: stretch; } }
+@media (max-width: 360px) { .try-phone { width: 286px; } .try-screen { width: 262px; height: 554px; } .try-screen iframe { transform: scale(.6718); } }
+
+/* ===== Videos ===== */
+.vids { display: grid; grid-template-columns: repeat(2, minmax(0, 300px)); gap: 20px; justify-content: start; }
+.vid { margin: 0; }
+.vid video { width: 100%; height: auto; aspect-ratio: 9 / 16; border-radius: 22px; background: #05081a; display: block; }
+.vid figcaption { margin-top: 10px; font-weight: 600; }
+.vid figcaption small { display: block; color: var(--muted); font-weight: 400; }
+.vids-cta { display: flex; flex-wrap: wrap; gap: 12px; margin-top: 28px; }
+@media (max-width: 560px) { .vids { grid-template-columns: 1fr 1fr; gap: 12px; } }
 </style>
 </head>
 <body>
@@ -469,40 +535,42 @@ details { border: 0; background: var(--paper); border-radius: 14px; padding: 0 2
 </header>
 
 <main>
-  <div class="wrap hero">
-    <div>
+  <div class="wrap hero hb">
+    <div class="hb-copy">
       <h1>Páginas web que venden</h1>
       <p class="lead">Diseño páginas web para negocios en República Dominicana: tus servicios, precios y fotos en un solo link, con botón de WhatsApp para que te escriban y agenden.</p>
       <div class="cta-row">
         <a class="btn btn-main" data-wa="Hola Eric, quiero mi demo gratis. Mi negocio es: " href="https://wa.me/18292600023"><svg class="icon"><use href="#i-wa"/></svg>Pide tu demo gratis</a>
         <a class="btn btn-ghost" href="#demos">Ver ejemplos<svg class="icon"><use href="#i-arrow"/></svg></a>
       </div>
+      <ol class="hb-steps" id="hbSteps" aria-label="Cómo se arma tu página">
+        <li class="on">Tu marca y tus fotos</li>
+        <li>Tus servicios con precios</li>
+        <li>Te escriben por WhatsApp</li>
+      </ol>
       <ul class="proofs">
         <li><svg class="icon"><use href="#i-check"/></svg>Ves la demo antes de pagar</li>
       </ul>
     </div>
-    <div class="stage" id="showcase" role="region" aria-roledescription="carrusel" aria-label="Demos de NovaPage">
-      <a class="device" data-ui id="heroDevice" href="demos/lumiere/" aria-label="Abrir la demo Lumière Salón &amp; Spa">
-        <div class="bar"><i></i><i></i><i></i><span id="heroUrl">tusalon.com</span><b class="open-pill">Abrir demo →</b></div>
-        <div class="slides" aria-hidden="true">
-          <div class="slide shot on" aria-hidden="false"><img src="img/demos/lumiere-1200.webp" srcset="img/demos/lumiere-640.webp 640w, img/demos/lumiere-1200.webp 1200w" sizes="(max-width: 900px) 92vw, 600px" width="1200" height="750" alt="" decoding="async"></div>
-          <div class="slide shot" aria-hidden="true"><img src="img/demos/navaja-1200.webp" srcset="img/demos/navaja-640.webp 640w, img/demos/navaja-1200.webp 1200w" sizes="(max-width: 900px) 92vw, 600px" width="1200" height="750" alt="" loading="lazy" decoding="async"></div>
-          <div class="slide shot" aria-hidden="true"><img src="img/demos/fade-1200.webp" srcset="img/demos/fade-640.webp 640w, img/demos/fade-1200.webp 1200w" sizes="(max-width: 900px) 92vw, 600px" width="1200" height="750" alt="" loading="lazy" decoding="async"></div>
-          <div class="slide shot" aria-hidden="true"><img src="img/demos/nacar-1200.webp" srcset="img/demos/nacar-640.webp 640w, img/demos/nacar-1200.webp 1200w" sizes="(max-width: 900px) 92vw, 600px" width="1200" height="750" alt="" loading="lazy" decoding="async"></div>
-          <div class="slide shot" aria-hidden="true"><img src="img/demos/olivo-1200.webp" srcset="img/demos/olivo-640.webp 640w, img/demos/olivo-1200.webp 1200w" sizes="(max-width: 900px) 92vw, 600px" width="1200" height="750" alt="" loading="lazy" decoding="async"></div>
-          <div class="slide shot" aria-hidden="true"><img src="img/demos/lavanderia-1200.webp" srcset="img/demos/lavanderia-640.webp 640w, img/demos/lavanderia-1200.webp 1200w" sizes="(max-width: 900px) 92vw, 600px" width="1200" height="750" alt="" loading="lazy" decoding="async"></div>
-          <div class="slide shot" aria-hidden="true"><img src="img/demos/party-balloons-1200.webp" srcset="img/demos/party-balloons-640.webp 640w, img/demos/party-balloons-1200.webp 1200w" sizes="(max-width: 900px) 92vw, 600px" width="1200" height="750" alt="" loading="lazy" decoding="async"></div>
+    <div class="hb-track" id="hbTrack" aria-hidden="true">
+      <div class="hb-sticky">
+        <div class="hb-wrap" id="hbWrap">
+          <div class="hb-phone"><div class="hb-screen" id="hbScreen">
+            <div class="hb-notch"></div>
+            <div class="hb-b hb-hdr" id="hbHdr"><i></i>Salón Bella<span></span></div>
+            <div class="hb-b hb-hero" id="hbHero"><img src="img/hb-salon.webp" alt="" width="640" height="427"><b>Tu mejor versión empieza aquí</b></div>
+            <div class="hb-b hb-t" id="hbT">Servicios</div>
+            <div class="hb-b hb-card" id="hbC1" style="top:334px">Corte y secado<em>RD$800</em></div>
+            <div class="hb-b hb-card" id="hbC2" style="top:392px">Manicure en gel<em>RD$600</em></div>
+            <div class="hb-b hb-card" id="hbC3" style="top:450px">Tinte completo<em>RD$2,500</em></div>
+            <div class="hb-b hb-wa" id="hbWa"><svg class="icon"><use href="#i-wa"/></svg>Reservar por WhatsApp</div>
+            <div class="hb-ripple" id="hbRip"></div>
+            <svg class="hb-piece" id="pcA" viewBox="14 0 228 202"><path d="M18 48 L78 95 L78 157 Q78 170 66 176 L42 187 Q18 198 18 174 Z" fill="#168BFF"/><path d="M18 37 Q18 23 31 17 L55 6 Q68 0 80 9 L78 89 L78 157 Q78 170 66 176 L42 187 Q18 198 18 174 Z" fill="#20C4FF"/></svg>
+            <svg class="hb-piece" id="pcB" viewBox="14 0 228 202"><path d="M78 95 L176 163 Q187 169 187 157 L187 105 Q187 91 176 83 L80 9 Q68 0 55 6 L31 17 Q22 21 19 31 Z" fill="#713BFF"/></svg>
+            <svg class="hb-piece" id="pcS" viewBox="14 0 228 202"><path d="M199 6 C204 28 215 39 237 44 C215 49 204 60 199 82 C194 60 183 49 161 44 C183 39 194 28 199 6Z" fill="#7547FF"/></svg>
+          </div></div>
+          <div class="hb-note" id="hbNote"><div class="who"><i><svg class="icon"><use href="#i-wa"/></svg></i>WhatsApp · Salón Bella<span>ahora</span></div><b>María:</b> ¡Hola! Quiero el corte y secado de RD$800 para mañana a las 10:00 a. m. 😊<div class="ok" id="hbOk">✓ Cita agendada</div></div>
         </div>
-      </a>
-      <div class="switch" role="group" aria-label="Escoge una demo">
-        <button type="button" aria-pressed="true" data-slide="0">Salón</button>
-        <button type="button" aria-pressed="false" data-slide="1">Barbería web</button>
-        <button type="button" aria-pressed="false" data-slide="2">Barbería tipo app</button>
-        <button type="button" aria-pressed="false" data-slide="3">Estudio de uñas</button>
-        <button type="button" aria-pressed="false" data-slide="4">Restaurante</button>
-        <button type="button" aria-pressed="false" data-slide="5">Lavandería</button>
-        <button type="button" aria-pressed="false" data-slide="6">Regalos y globos</button>
-        <button type="button" class="play" id="playPause" aria-label="Pausar demos"><svg class="icon i-pause" aria-hidden="true"><use href="#i-pause"/></svg><svg class="icon i-play" aria-hidden="true"><use href="#i-play"/></svg></button>
       </div>
     </div>
   </div>
@@ -571,6 +639,15 @@ details { border: 0; background: var(--paper); border-radius: 14px; padding: 0 2
       <div class="stagger head">
         <h2>Demos que puedes abrir y tocar</h2>
         <p>Son páginas reales: casi todas con datos de ejemplo y una hecha para un negocio de verdad. Ábrelas en tu celular y prueba los botones como lo haría tu cliente.</p>
+      </div>
+      <div class="try stagger" id="try">
+        <div>
+          <h3>Pruébalas aquí mismo</h3>
+          <p>Escoge un negocio y usa la demo dentro del celular: desliza, toca los botones y arma un pedido como lo haría tu cliente.</p>
+          <div class="try-tabs" id="tryTabs" role="group" aria-label="Escoge una demo"></div>
+          <a class="btn btn-ghost try-open" id="tryOpen" href="demos/lumiere/">Abrir en pantalla completa<svg class="icon"><use href="#i-arrow"/></svg></a>
+        </div>
+        <div class="try-phone"><div class="try-screen"><span class="load">Cargando demo…</span><iframe id="tryFrame" title="Demo Lumière Salón &amp; Spa" loading="lazy"></iframe></div></div>
       </div>
       <article class="stagger demo">
         <a class="demo-shot shot-card" href="demos/lumiere/" aria-label="Abrir demo Lumière Salón &amp; Spa"><img src="img/demos/lumiere-1200.webp" srcset="img/demos/lumiere-640.webp 640w, img/demos/lumiere-1200.webp 1200w" sizes="(max-width: 900px) 92vw, 600px" width="1200" height="750" alt="Portada de la demo Lumière Salón & Spa" loading="lazy" decoding="async"></a>
@@ -672,6 +749,23 @@ details { border: 0; background: var(--paper); border-radius: 14px; padding: 0 2
             </div>
           </div>
         </article>
+      </div>
+    </div>
+  </section>
+
+  <section id="videos">
+    <div class="wrap">
+      <div class="stagger head">
+        <h2>Mira cómo la hago</h2>
+        <p>Así se arma una página de principio a fin: el código a un lado y la página creciendo en el celular. Cada una está hecha a mano para el negocio.</p>
+      </div>
+      <div class="vids stagger">
+        <figure class="vid"><video controls playsinline muted preload="none" poster="video/como-la-hago-lavanderia.webp" width="540" height="960"><source src="video/como-la-hago-lavanderia.mp4" type="video/mp4"></video><figcaption>Lavandería Espuma<small>Demo con datos de ejemplo</small></figcaption></figure>
+        <figure class="vid"><video controls playsinline muted preload="none" poster="video/como-la-hago-party.webp" width="540" height="960"><source src="video/como-la-hago-party.mp4" type="video/mp4"></video><figcaption>Fiesta De Globos By Evelin<small>Negocio real, con su permiso</small></figcaption></figure>
+      </div>
+      <div class="vids-cta stagger">
+        <a class="btn btn-main" href="https://www.tiktok.com/@novapagerd" target="_blank" rel="noopener"><svg class="icon"><use href="#i-tiktok"/></svg>Más videos en TikTok</a>
+        <a class="btn btn-ghost" href="https://www.instagram.com/novapage.rd/" target="_blank" rel="noopener"><svg class="icon"><use href="#i-ig"/></svg>Instagram</a>
       </div>
     </div>
   </section>
@@ -904,60 +998,89 @@ details { border: 0; background: var(--paper); border-radius: 14px; padding: 0 2
     document.querySelectorAll('main section[id], #contacto').forEach(function (el) { spy.observe(el); });
   }
 
-  // Hero showcase: rotates through the demos
-  var DEMOS = [
-    { url: 'tusalon.com', href: 'demos/lumiere/', ext: false, name: 'Lumière Salón & Spa' },
-    { url: 'tubarberia.com', href: 'demos/navaja/', ext: false, name: 'Navaja Barber Studio' },
-    { url: 'tubarberia.app', href: 'demos/fade-club/', ext: false, name: 'Fade Club' },
-    { url: 'tuestudiodeunas.com', href: 'demos/nacar/', ext: false, name: 'Nácar Nail Studio' },
-    { url: 'turestaurante.com', href: 'demos/olivo/', ext: false, name: 'Olivo · Cocina & Bar' },
-    { url: 'tulavanderia.com', href: 'demos/lavanderia/', ext: false, name: 'Espuma Lavandería' },
-    { url: 'tustiendaderegalos.com', href: 'demos/party-balloons/', ext: false, name: 'Fiesta De Globos By Evelin' }
-  ];
-  var SLIDE_MS = 5000;
-  var showcase = document.getElementById('showcase'), dev = document.getElementById('heroDevice');
-  var slides = showcase.querySelectorAll('.slide'), tabs = showcase.querySelectorAll('[data-slide]'), sw = showcase.querySelector('.switch');
+  // ===== Portada: la página se arma sola con el scroll (todo sale de p) =====
   var still = matchMedia('(prefers-reduced-motion: reduce)').matches;
-  // stopped: the visitor pressed pause (or prefers reduced motion); held: hover or keyboard focus inside the carousel
-  var cur = 0, timer = null, stopped = still, held = false, playBtn = document.getElementById('playPause');
-  showcase.style.setProperty('--slide-ms', SLIDE_MS + 'ms');
-  function go(i) {
-    cur = (i + DEMOS.length) % DEMOS.length; var d = DEMOS[cur];
-    slides.forEach(function (sl, k) { sl.classList.toggle('on', k === cur); sl.setAttribute('aria-hidden', k === cur ? 'false' : 'true'); });
-    tabs.forEach(function (t) { t.setAttribute('aria-pressed', 'false'); });
-    void sw.offsetWidth; // restart the progress bar
-    tabs[cur].setAttribute('aria-pressed', 'true');
-    document.getElementById('heroUrl').textContent = d.url;
-    dev.href = d.href; dev.setAttribute('aria-label', 'Abrir la demo ' + d.name);
-    if (d.ext) { dev.target = '_blank'; dev.rel = 'noopener'; } else { dev.removeAttribute('target'); dev.removeAttribute('rel'); }
-  }
-  function schedule() {
-    clearInterval(timer);
-    var off = stopped || held;
-    sw.classList.toggle('paused', off);
-    if (off || document.hidden) return;
-    timer = setInterval(function () { go(cur + 1); }, SLIDE_MS);
-  }
-  function syncPlay() {
-    playBtn.classList.toggle('is-paused', stopped);
-    playBtn.setAttribute('aria-label', stopped ? 'Reanudar demos' : 'Pausar demos');
-  }
-  playBtn.addEventListener('click', function () {
-    stopped = !stopped; held = false; syncPlay();
-    if (!stopped) go(cur); // restart the progress bar from zero
-    schedule();
-  });
-  tabs.forEach(function (t, k) {
-    t.addEventListener('click', function () { go(k); schedule(); });
-  });
-  function hold(on) { held = on; schedule(); }
-  // Hold only for a real mouse and keyboard focus, so a tap on a phone never freezes the carousel
-  showcase.addEventListener('pointerenter', function (e) { if (e.pointerType === 'mouse') hold(true); });
-  showcase.addEventListener('pointerleave', function (e) { if (e.pointerType === 'mouse') hold(false); });
-  showcase.addEventListener('focusin', function (e) { var kb = true; try { kb = e.target.matches(':focus-visible'); } catch (x) {} if (e.target !== playBtn && kb) hold(true); });
-  showcase.addEventListener('focusout', function (e) { if (!showcase.contains(e.relatedTarget) || e.relatedTarget === playBtn) hold(false); });
-  document.addEventListener('visibilitychange', schedule);
-  syncPlay(); go(0); schedule();
+  (function () {
+    var track = document.getElementById('hbTrack'), wrap = document.getElementById('hbWrap'); if (!track) return;
+    var $ = function (id) { return document.getElementById(id); };
+    var clamp = function (x) { return Math.max(0, Math.min(1, x)); };
+    var seg = function (p, a, b) { return clamp((p - a) / (b - a)); };
+    var expo = function (x) { return x >= 1 ? 1 : 1 - Math.pow(2, -10 * x); };
+    var spring = function (x) { return x >= 1 ? 1 : 1 - (1 + 8 * x) * Math.exp(-8 * x); };
+    var lerp = function (a, b, t) { return a + (b - a) * t; };
+    var steps = document.querySelectorAll('#hbSteps li');
+    // destino de cada pieza del logo (en coordenadas de la pantalla de 300 × 646)
+    var PIECES = [
+      { el: $('pcA'), from: [150, 270, 190], to: [150, 63, 40], block: $('hbHdr'), a: .06, b: .2 },
+      { el: $('pcB'), from: [150, 270, 190], to: [150, 190, 120], block: $('hbHero'), a: .08, b: .24 },
+      { el: $('pcS'), from: [150, 270, 190], to: [150, 547, 40], block: $('hbWa'), a: .1, b: .27 }
+    ];
+    function seek(p) {
+      PIECES.forEach(function (pc) {
+        var k = spring(seg(p, pc.a, pc.b));
+        var x = lerp(pc.from[0], pc.to[0], k), y = lerp(pc.from[1], pc.to[1], k), s = lerp(pc.from[2], pc.to[2], k);
+        pc.el.style.width = s + 'px'; pc.el.style.height = s * 202 / 228 + 'px';
+        pc.el.style.transform = 'translate(' + (x - s / 2) + 'px,' + (y - s * 101 / 228) + 'px)';
+        pc.el.style.opacity = 1 - seg(p, pc.b - .09, pc.b - .03);
+        var g = spring(seg(p, pc.b - .06, pc.b + .06));
+        pc.block.style.transform = 'scale(' + (.2 + .8 * g) + ')';
+        pc.block.style.opacity = g;
+      });
+      var tt = expo(seg(p, .3, .38)); $('hbT').style.opacity = tt; $('hbT').style.transform = 'translateY(' + (1 - tt) * 14 + 'px)';
+      ['hbC1', 'hbC2', 'hbC3'].forEach(function (id, i) { var k = spring(seg(p, .34 + i * .05, .46 + i * .05)); var el = $(id); el.style.opacity = k; el.style.transform = 'translateX(' + (1 - k) * 300 + 'px)'; });
+      // toque en el botón de WhatsApp
+      var tap = seg(p, .6, .68), r = $('hbRip');
+      r.style.transform = 'scale(' + (tap * 40) + ')'; r.style.opacity = tap > 0 && tap < 1 ? (1 - tap) : 0;
+      if (p > .27) $('hbWa').style.transform = 'scale(' + (1 - .04 * Math.sin(Math.PI * tap)) + ')';
+      // llega el mensaje
+      var n = spring(seg(p, .66, .8)), note = $('hbNote');
+      var mobile = innerWidth <= 980;
+      note.style.opacity = n;
+      note.style.transform = (mobile ? 'translateX(50%) ' : '') + 'translateY(' + (1 - n) * 40 + 'px) scale(' + (.92 + .08 * n) + ')';
+      var ok = expo(seg(p, .82, .9)); $('hbOk').style.opacity = ok; $('hbOk').style.transform = 'translateY(' + (1 - ok) * 8 + 'px)';
+      var stage = p < .3 ? 0 : p < .58 ? 1 : 2;
+      steps.forEach(function (li, i) { li.classList.toggle('on', i <= stage); });
+    }
+    function fit() {
+      var avail = wrap.parentElement.clientHeight - 24, aw = wrap.parentElement.clientWidth;
+      var s = Math.min(1, avail / 676, (aw - 8) / 330);
+      wrap.style.transform = 'scale(' + s + ')';
+    }
+    function frame() {
+      var r = track.getBoundingClientRect(), run = track.offsetHeight - (innerHeight - 68);
+      seek(still ? 1 : clamp((-r.top + 68 + (innerWidth <= 980 ? 0 : 0)) / Math.max(1, run)));
+    }
+    var q = 0; function req() { if (!q) q = requestAnimationFrame(function () { q = 0; frame(); }); }
+    addEventListener('scroll', req, { passive: true });
+    addEventListener('resize', function () { fit(); frame(); });
+    fit(); frame();
+  })();
+
+  // ===== Demos dentro del celular =====
+  (function () {
+    var DEMOS = [
+      { href: 'demos/lumiere/', name: 'Lumière Salón & Spa', tab: 'Salón' },
+      { href: 'demos/navaja/', name: 'Navaja Barber Studio', tab: 'Barbería' },
+      { href: 'demos/fade-club/', name: 'Fade Club', tab: 'Barbería tipo app' },
+      { href: 'demos/nacar/', name: 'Nácar Nail Studio', tab: 'Uñas' },
+      { href: 'demos/olivo/', name: 'Olivo · Cocina & Bar', tab: 'Restaurante' },
+      { href: 'demos/lavanderia/', name: 'Espuma Lavandería', tab: 'Lavandería' },
+      { href: 'demos/party-balloons/', name: 'Fiesta De Globos By Evelin', tab: 'Regalos y globos' }
+    ];
+    var tabs = document.getElementById('tryTabs'), frameEl = document.getElementById('tryFrame'), open = document.getElementById('tryOpen'), loaded = false, cur = 0;
+    if (!tabs) return;
+    tabs.innerHTML = DEMOS.map(function (d, i) { return '<button type="button" aria-pressed="' + (i === 0) + '" data-i="' + i + '">' + d.tab + '</button>'; }).join('');
+    function show(i) {
+      cur = i; var d = DEMOS[i];
+      tabs.querySelectorAll('button').forEach(function (b, k) { b.setAttribute('aria-pressed', k === i); });
+      frameEl.title = 'Demo ' + d.name; open.href = d.href; open.setAttribute('aria-label', 'Abrir en pantalla completa la demo ' + d.name);
+      if (loaded) frameEl.src = d.href;
+    }
+    tabs.addEventListener('click', function (e) { var b = e.target.closest('[data-i]'); if (b) show(+b.dataset.i); });
+    function load() { if (loaded) return; loaded = true; frameEl.src = DEMOS[cur].href; }
+    if ('IntersectionObserver' in window) new IntersectionObserver(function (es, o) { if (es[0].isIntersecting) { load(); o.disconnect(); } }, { rootMargin: '400px 0px' }).observe(document.getElementById('try'));
+    else load();
+  })();
 
   var toast = document.getElementById('toast'), tt;
   function say(msg) { toast.textContent = msg; toast.classList.add('show'); clearTimeout(tt); tt = setTimeout(function () { toast.classList.remove('show'); }, 2600); }
