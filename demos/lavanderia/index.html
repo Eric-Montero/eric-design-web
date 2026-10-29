@@ -1,0 +1,455 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Espuma Lavandería · Lavado, planchado y recogida a domicilio</title>
+<meta name="description" content="Recogemos tu ropa, la lavamos, la doblamos y te la devolvemos en 24 horas. Agenda tu recogida por WhatsApp. Demo de NovaPage.">
+<meta name="theme-color" content="#f3f8fb">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Ccircle cx='16' cy='16' r='15' fill='%2312a4bd'/%3E%3Ccircle cx='12' cy='13' r='5' fill='%23fff' opacity='.9'/%3E%3Ccircle cx='20' cy='19' r='3.4' fill='%23fff' opacity='.7'/%3E%3C/svg%3E">
+<link rel="preload" href="fonts/jost-latin-600-normal.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="fonts/hanken-grotesk-latin-400-normal.woff2" as="font" type="font/woff2" crossorigin>
+<style>
+@font-face { font-family: 'Jost'; src: url(fonts/jost-latin-500-normal.woff2) format('woff2'); font-weight: 500; font-display: swap; }
+@font-face { font-family: 'Jost'; src: url(fonts/jost-latin-600-normal.woff2) format('woff2'); font-weight: 600; font-display: swap; }
+@font-face { font-family: 'Jost'; src: url(fonts/jost-latin-700-normal.woff2) format('woff2'); font-weight: 700; font-display: swap; }
+@font-face { font-family: 'Hanken'; src: url(fonts/hanken-grotesk-latin-400-normal.woff2) format('woff2'); font-weight: 400; font-display: swap; }
+@font-face { font-family: 'Hanken'; src: url(fonts/hanken-grotesk-latin-500-normal.woff2) format('woff2'); font-weight: 500; font-display: swap; }
+@font-face { font-family: 'Hanken'; src: url(fonts/hanken-grotesk-latin-600-normal.woff2) format('woff2'); font-weight: 600; font-display: swap; }
+
+:root {
+  --bg: #f3f8fb;
+  --paper: #ffffff;
+  --mist: #e2f1f6;
+  --ink: #0d2240;
+  --ink-2: #4b5d74;
+  --line: #d8e6ee;
+  --aqua: #12a4bd;
+  --aqua-ink: #0b7489;
+  --lemon: #ffd84d;
+  --wa: #1fa855;
+  --r: 20px;
+  --shadow: 0 1px 2px rgba(13, 34, 64, .05), 0 12px 30px -14px rgba(13, 34, 64, .22);
+  --head: 'Jost', system-ui, sans-serif;
+  --body: 'Hanken', system-ui, -apple-system, 'Segoe UI', sans-serif;
+}
+* { box-sizing: border-box; }
+html { scroll-behavior: smooth; -webkit-text-size-adjust: 100%; }
+@media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } *, *::before, *::after { animation: none !important; transition: none !important; } }
+body { margin: 0; background: var(--bg); color: var(--ink); font: 400 17px/1.55 var(--body); -webkit-font-smoothing: antialiased; }
+img { display: block; max-width: 100%; height: auto; }
+a { color: inherit; }
+button, input, select, textarea { font: inherit; color: inherit; }
+:focus-visible { outline: 3px solid var(--aqua); outline-offset: 3px; border-radius: 8px; }
+.wrap { width: min(1140px, 100% - 40px); margin-inline: auto; }
+.skip { position: absolute; left: 12px; top: -60px; background: var(--ink); color: #fff; padding: 10px 16px; border-radius: 10px; z-index: 99; }
+.skip:focus { top: 12px; }
+h1, h2, h3 { font-family: var(--head); letter-spacing: -.02em; margin: 0; }
+
+/* Botones */
+.btn { display: inline-flex; align-items: center; justify-content: center; gap: 10px; min-height: 52px; padding: 0 24px; border-radius: 14px; border: 0; font-weight: 600; font-size: 17px; text-decoration: none; cursor: pointer; transition: transform .15s ease, background-color .2s ease; -webkit-tap-highlight-color: transparent; }
+.btn:active { transform: scale(.97); }
+.btn svg { width: 22px; height: 22px; flex: none; }
+.btn-main { background: var(--ink); color: #fff; }
+.btn-wa { background: var(--wa); color: #fff; }
+.btn-soft { background: var(--mist); color: var(--ink); }
+@media (hover: hover) { .btn-main:hover { background: #18335c; } .btn-wa:hover { background: #179247; } .btn-soft:hover { background: #cfe9f1; } }
+
+/* Barra */
+.top { position: sticky; top: 0; z-index: 30; background: rgba(243, 248, 251, .9); backdrop-filter: blur(14px); -webkit-backdrop-filter: blur(14px); border-bottom: 1px solid transparent; transition: border-color .2s; }
+.top.scrolled { border-bottom-color: var(--line); }
+.top .wrap { display: flex; align-items: center; justify-content: space-between; height: 66px; gap: 16px; }
+.logo { display: flex; align-items: center; gap: 10px; text-decoration: none; font: 700 23px/1 var(--head); letter-spacing: -.02em; }
+.logo svg { width: 34px; height: 34px; }
+.logo small { display: block; font: 600 11px/1 var(--body); letter-spacing: .14em; color: var(--aqua-ink); margin-top: 3px; }
+.nav { display: flex; gap: 26px; font-weight: 500; }
+.nav a { text-decoration: none; color: var(--ink-2); }
+.nav a:hover { color: var(--ink); }
+.top .btn { min-height: 44px; padding: 0 16px; font-size: 15.5px; border-radius: 12px; }
+@media (max-width: 860px) { .nav { display: none; } }
+
+/* Hero */
+.hero { padding: 28px 0 56px; }
+.hero .wrap { display: grid; grid-template-columns: 1fr 1fr; gap: 48px; align-items: center; }
+.status { display: inline-flex; align-items: center; gap: 8px; font-size: 14.5px; font-weight: 600; padding: 7px 14px; border-radius: 999px; background: var(--paper); box-shadow: var(--shadow); }
+.status i { width: 9px; height: 9px; border-radius: 50%; background: #1fa855; box-shadow: 0 0 0 4px rgba(31, 168, 85, .18); }
+.status.closed i { background: #e2554f; box-shadow: 0 0 0 4px rgba(226, 85, 79, .18); }
+h1 { font-size: clamp(46px, 6.6vw, 80px); line-height: .96; font-weight: 700; margin: 18px 0 16px; text-wrap: balance; }
+h1 span { color: var(--aqua); }
+.lead { font-size: 19px; color: var(--ink-2); max-width: 30em; margin: 0 0 26px; text-wrap: pretty; }
+.cta { display: flex; flex-wrap: wrap; gap: 12px; }
+.perks { display: flex; flex-wrap: wrap; gap: 10px; margin: 26px 0 0; padding: 0; list-style: none; }
+.perks li { display: inline-flex; align-items: center; gap: 8px; font-size: 15px; font-weight: 500; background: var(--mist); padding: 8px 14px; border-radius: 12px; }
+.perks svg { width: 18px; height: 18px; color: var(--aqua-ink); }
+.hero-pic { position: relative; }
+.hero-pic img { width: 100%; aspect-ratio: 4 / 4.4; object-fit: cover; border-radius: 28px; box-shadow: var(--shadow); }
+.ticket { position: absolute; left: -18px; bottom: 26px; background: var(--paper); border-radius: 18px; padding: 14px 18px; box-shadow: var(--shadow); display: flex; gap: 12px; align-items: center; }
+.ticket b { font: 700 28px/1 var(--head); color: var(--aqua-ink); }
+.ticket span { font-size: 14px; color: var(--ink-2); line-height: 1.25; }
+.bubble { position: absolute; border-radius: 50%; background: radial-gradient(circle at 30% 30%, #fff, rgba(255, 255, 255, .35) 45%, rgba(18, 164, 189, .25)); border: 1px solid rgba(255, 255, 255, .8); animation: rise 7s ease-in-out infinite; }
+.bubble.a { width: 64px; height: 64px; right: -14px; top: 18px; }
+.bubble.b { width: 34px; height: 34px; right: 46px; top: -14px; animation-delay: -3s; }
+@keyframes rise { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-14px); } }
+@media (max-width: 900px) {
+  .hero { padding-top: 18px; }
+  .hero .wrap { grid-template-columns: 1fr; gap: 30px; }
+  .ticket { left: 12px; bottom: 12px; }
+}
+@media (max-width: 520px) {
+  body { font-size: 16.5px; }
+  .wrap { width: calc(100% - 32px); }
+  .lead { font-size: 17.5px; }
+  .cta .btn { flex: 1 1 100%; }
+  .hero-pic img { aspect-ratio: 4 / 3.6; }
+}
+
+/* Secciones */
+section { scroll-margin-top: 74px; }
+.sec { padding: 64px 0; }
+.kicker { font-size: 14px; font-weight: 600; letter-spacing: .12em; text-transform: uppercase; color: var(--aqua-ink); margin: 0 0 8px; }
+h2 { font-size: clamp(34px, 4.6vw, 52px); line-height: 1; font-weight: 700; text-wrap: balance; }
+.sub { margin: 12px 0 0; color: var(--ink-2); max-width: 34em; }
+.head { margin-bottom: 28px; }
+
+/* Servicios */
+.services { display: grid; grid-template-columns: repeat(4, 1fr); gap: 18px; }
+.svc { background: var(--paper); border-radius: var(--r); overflow: hidden; box-shadow: var(--shadow); display: flex; flex-direction: column; }
+.svc img { width: 100%; aspect-ratio: 4 / 3; object-fit: cover; }
+.svc div { padding: 16px 18px 20px; }
+.svc h3 { font-size: 22px; font-weight: 600; margin-bottom: 4px; }
+.svc p { margin: 0; color: var(--ink-2); font-size: 15.5px; }
+.svc .from { display: inline-block; margin-top: 12px; font-weight: 600; font-size: 15px; color: var(--aqua-ink); }
+@media (max-width: 960px) { .services { grid-template-columns: 1fr 1fr; } }
+@media (max-width: 520px) { .services { gap: 12px; } .svc div { padding: 12px 12px 14px; } .svc h3 { font-size: 18px; } .svc p { font-size: 14px; } }
+
+/* Precios + calculadora */
+.prices { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; align-items: start; }
+.table { background: var(--paper); border-radius: var(--r); box-shadow: var(--shadow); padding: 8px 22px; }
+.row { display: flex; justify-content: space-between; gap: 16px; padding: 15px 0; border-bottom: 1px solid var(--line); }
+.row:last-child { border-bottom: 0; }
+.row span { color: var(--ink-2); font-size: 14.5px; display: block; }
+.row b { font-weight: 600; white-space: nowrap; }
+.calc { background: var(--ink); color: #fff; border-radius: var(--r); padding: 24px; }
+.calc h3 { font-size: 24px; font-weight: 600; }
+.calc .hint { color: #b9c7da; font-size: 15px; margin: 4px 0 18px; }
+.q { display: flex; align-items: center; justify-content: space-between; gap: 12px; padding: 12px 0; border-bottom: 1px solid #23395c; }
+.q label { font-weight: 500; }
+.q small { display: block; color: #9fb2c9; font-size: 13.5px; }
+.step { display: flex; align-items: center; gap: 4px; background: #172f52; border-radius: 12px; padding: 4px; }
+.step button { width: 40px; height: 40px; border: 0; border-radius: 9px; background: transparent; color: #fff; font-size: 22px; cursor: pointer; }
+.step button:hover { background: #22406b; }
+.step output { min-width: 34px; text-align: center; font-weight: 600; font-variant-numeric: tabular-nums; }
+.switch { display: flex; align-items: center; gap: 10px; padding: 14px 0 4px; cursor: pointer; }
+.switch input { width: 22px; height: 22px; accent-color: var(--lemon); }
+.total { display: flex; justify-content: space-between; align-items: baseline; margin-top: 16px; padding-top: 16px; border-top: 1px dashed #3a5579; }
+.total b { font: 700 40px/1 var(--head); color: var(--lemon); font-variant-numeric: tabular-nums; }
+.calc .btn { width: 100%; margin-top: 18px; }
+@media (max-width: 860px) { .prices { grid-template-columns: 1fr; } }
+
+/* Cómo funciona */
+.how { display: grid; grid-template-columns: repeat(3, 1fr); gap: 18px; counter-reset: s; }
+.how li { list-style: none; background: var(--paper); border-radius: var(--r); padding: 24px; box-shadow: var(--shadow); }
+.how li::before { counter-increment: s; content: counter(s); display: grid; place-items: center; width: 44px; height: 44px; border-radius: 14px; background: var(--mist); color: var(--aqua-ink); font: 700 22px/1 var(--head); margin-bottom: 14px; }
+.how h3 { font-size: 21px; font-weight: 600; margin-bottom: 6px; }
+.how p { margin: 0; color: var(--ink-2); }
+.how { padding: 0; margin: 0; }
+@media (max-width: 760px) { .how { grid-template-columns: 1fr; } }
+
+/* Recogida */
+.pickup { display: grid; grid-template-columns: 1.1fr .9fr; gap: 28px; background: var(--paper); border-radius: 28px; box-shadow: var(--shadow); padding: clamp(22px, 4vw, 44px); }
+.form { display: grid; gap: 16px; margin-top: 22px; }
+.two { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
+.fld { display: grid; gap: 7px; }
+.fld label, .fld .lbl { font-weight: 600; font-size: 15px; }
+.fld .opt { font-weight: 400; color: var(--ink-2); }
+.inp { width: 100%; min-height: 50px; padding: 12px 14px; border-radius: 12px; border: 1.5px solid var(--line); background: var(--bg); font-size: 16px; }
+.inp:focus { outline: none; border-color: var(--aqua); box-shadow: 0 0 0 3px rgba(18, 164, 189, .2); }
+.inp[aria-invalid="true"] { border-color: #e2554f; }
+.err { color: #c43c36; font-size: 14px; }
+.slots { display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; }
+.slots label { position: relative; }
+.slots input { position: absolute; opacity: 0; inset: 0; }
+.slots span { display: grid; place-items: center; text-align: center; min-height: 56px; border-radius: 12px; border: 1.5px solid var(--line); font-weight: 600; font-size: 15px; line-height: 1.15; cursor: pointer; padding: 6px; }
+.slots small { display: block; font-weight: 400; font-size: 12.5px; color: var(--ink-2); }
+.slots input:checked + span { background: var(--ink); color: #fff; border-color: var(--ink); }
+.slots input:checked + span small { color: #b9c7da; }
+.slots input:focus-visible + span { outline: 3px solid var(--aqua); outline-offset: 2px; }
+.wa-card { background: #e9e3da; border-radius: 20px; padding: 16px; align-self: start; position: sticky; top: 86px; }
+.wa-card .bar { display: flex; align-items: center; gap: 10px; font-weight: 600; font-size: 14px; margin-bottom: 12px; }
+.wa-card .bar i { width: 34px; height: 34px; border-radius: 50%; background: var(--aqua); display: grid; place-items: center; }
+.wa-card .bar i svg { width: 20px; height: 20px; }
+.msg { background: #d9fdd3; border-radius: 14px 14px 4px 14px; padding: 12px 14px; font-size: 15px; white-space: pre-wrap; line-height: 1.45; }
+.wa-card .btn { width: 100%; margin-top: 14px; }
+@media (max-width: 860px) { .pickup { grid-template-columns: 1fr; } .wa-card { position: static; } }
+@media (max-width: 480px) { .two { grid-template-columns: 1fr; } }
+
+/* Local */
+.place { display: grid; grid-template-columns: .9fr 1.1fr; gap: 36px; align-items: center; }
+.place img { width: 100%; aspect-ratio: 4 / 4.2; object-fit: cover; border-radius: 26px; box-shadow: var(--shadow); }
+.hours { background: var(--paper); border-radius: var(--r); box-shadow: var(--shadow); padding: 6px 20px; margin-top: 20px; }
+.hours div { display: flex; justify-content: space-between; padding: 12px 0; border-bottom: 1px solid var(--line); }
+.hours div:last-child { border: 0; }
+.hours .today { font-weight: 600; color: var(--aqua-ink); }
+.addr { display: flex; gap: 10px; margin-top: 16px; color: var(--ink-2); }
+.addr svg { width: 22px; height: 22px; color: var(--aqua-ink); flex: none; margin-top: 2px; }
+@media (max-width: 860px) { .place { grid-template-columns: 1fr; } .place img { aspect-ratio: 16 / 10; } }
+
+/* Preguntas */
+.faq { display: grid; gap: 10px; max-width: 760px; }
+details { background: var(--paper); border-radius: 16px; box-shadow: var(--shadow); padding: 0 20px; }
+summary { list-style: none; cursor: pointer; padding: 18px 0; font-weight: 600; display: flex; justify-content: space-between; gap: 16px; }
+summary::-webkit-details-marker { display: none; }
+summary::after { content: '+'; font: 500 26px/1 var(--head); color: var(--aqua-ink); transition: transform .2s; }
+details[open] summary::after { transform: rotate(45deg); }
+details p { margin: 0 0 18px; color: var(--ink-2); }
+
+/* Pie */
+footer { background: var(--ink); color: #c9d5e4; padding: 44px 0 110px; margin-top: 40px; }
+footer .wrap { display: grid; gap: 20px; }
+footer .logo { color: #fff; }
+footer .logo small { color: #7fd6e5; }
+.credit { display: flex; justify-content: space-between; flex-wrap: wrap; gap: 12px; font-size: 14px; border-top: 1px solid #23395c; padding-top: 18px; }
+.credit a { color: #fff; font-weight: 600; }
+
+/* WhatsApp flotante */
+.fab { position: fixed; right: max(18px, env(safe-area-inset-right)); bottom: max(18px, env(safe-area-inset-bottom)); z-index: 40; width: 62px; height: 62px; border-radius: 50%; background: var(--wa); color: #fff; display: grid; place-items: center; box-shadow: 0 12px 28px -8px rgba(31, 168, 85, .8); }
+.fab svg { width: 32px; height: 32px; }
+
+.js .rv { opacity: 0; transform: translateY(16px); transition: opacity .6s ease, transform .6s cubic-bezier(.2, .7, .2, 1); }
+.js .rv.in { opacity: 1; transform: none; }
+</style>
+</head>
+<body>
+<a class="skip" href="#main">Saltar al contenido</a>
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <symbol id="i-wa" viewBox="0 0 24 24"><path fill="currentColor" d="M12.04 2a9.9 9.9 0 0 0-8.5 15l-1.4 5.1 5.2-1.4A9.9 9.9 0 1 0 12.04 2Zm0 18.1a8.2 8.2 0 0 1-4.2-1.2l-.3-.2-3.1.8.8-3-.2-.3a8.2 8.2 0 1 1 7 3.9Zm4.5-6.1c-.2-.1-1.5-.7-1.7-.8-.2-.1-.4-.1-.6.1l-.8 1c-.1.2-.3.2-.5.1a6.7 6.7 0 0 1-3.3-2.9c-.3-.4.3-.4.7-1.3.1-.2 0-.3 0-.4l-.8-1.8c-.2-.5-.4-.4-.6-.4h-.5a1 1 0 0 0-.7.3 3 3 0 0 0-.9 2.2 5.2 5.2 0 0 0 1.1 2.7 11.8 11.8 0 0 0 4.5 4c1.7.7 2.3.8 3.2.6a2.7 2.7 0 0 0 1.8-1.3 2.2 2.2 0 0 0 .2-1.3c-.1-.1-.3-.2-.5-.3Z"/></symbol>
+  <symbol id="i-truck" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 6h11v10H3zM14 9h4l3 3v4h-7"/><circle cx="7" cy="17.5" r="1.8"/><circle cx="17" cy="17.5" r="1.8"/></g></symbol>
+  <symbol id="i-clock" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></g></symbol>
+  <symbol id="i-leaf" viewBox="0 0 24 24"><path fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" d="M5 19c0-8 5-13 15-14-1 10-6 15-14 15M5 19l7-7"/></symbol>
+  <symbol id="i-pin" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="2"><path d="M12 21s7-6.2 7-12a7 7 0 0 0-14 0c0 5.8 7 12 7 12Z"/><circle cx="12" cy="9" r="2.5"/></g></symbol>
+  <symbol id="i-logo" viewBox="0 0 34 34"><circle cx="17" cy="17" r="16" fill="#12a4bd"/><circle cx="13" cy="14" r="6" fill="#fff" opacity=".92"/><circle cx="22" cy="21" r="4" fill="#fff" opacity=".7"/><circle cx="21.5" cy="10.5" r="2.2" fill="#ffd84d"/></symbol>
+</svg>
+
+<header class="top" id="top">
+  <div class="wrap">
+    <a class="logo" href="#main"><svg aria-hidden="true"><use href="#i-logo"/></svg><span>Espuma<small>LAVANDERÍA</small></span></a>
+    <nav class="nav" aria-label="Secciones">
+      <a href="#servicios">Servicios</a>
+      <a href="#precios">Precios</a>
+      <a href="#recogida">Recogida</a>
+      <a href="#local">Horario</a>
+    </nav>
+    <a class="btn btn-main" href="#recogida">Pedir recogida</a>
+  </div>
+</header>
+
+<main id="main">
+  <section class="hero" id="inicio">
+    <div class="wrap">
+      <div>
+        <span class="status" id="status"><i></i><span>Abierto ahora · hasta 8:00 p. m.</span></span>
+        <h1>Tú vive.<br>La ropa, <span>déjanosla.</span></h1>
+        <p class="lead">Recogemos tu ropa en casa, la lavamos, la doblamos y te la devolvemos limpia y oliendo rico en 24 horas.</p>
+        <div class="cta">
+          <a class="btn btn-main" href="#recogida"><svg aria-hidden="true"><use href="#i-truck"/></svg>Agendar recogida</a>
+          <a class="btn btn-soft" href="#precios">Ver precios</a>
+        </div>
+        <ul class="perks">
+          <li><svg aria-hidden="true"><use href="#i-truck"/></svg>Recogida gratis desde 15 lb</li>
+          <li><svg aria-hidden="true"><use href="#i-clock"/></svg>Lista en 24 horas</li>
+          <li><svg aria-hidden="true"><use href="#i-leaf"/></svg>Detergente hipoalergénico</li>
+        </ul>
+      </div>
+      <div class="hero-pic">
+        <span class="bubble a" aria-hidden="true"></span><span class="bubble b" aria-hidden="true"></span>
+        <img src="img/hero.webp" alt="Bolsa de ropa para lavar frente a las lavadoras de la lavandería" width="800" height="441" fetchpriority="high">
+        <div class="ticket"><b>24 h</b><span>Recogemos hoy,<br>te la traemos mañana</span></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="sec" id="servicios">
+    <div class="wrap">
+      <div class="head rv"><p class="kicker">Servicios</p><h2>Todo lo que tu ropa necesita</h2></div>
+      <div class="services">
+        <article class="svc rv"><img src="img/lavado.webp" alt="Camisetas lavadas y dobladas sobre una mesa" width="800" height="533" loading="lazy"><div><h3>Lavado y doblado</h3><p>Ropa del día a día, separada por colores y doblada.</p><span class="from">RD$45 por libra</span></div></article>
+        <article class="svc rv"><img src="img/planchado.webp" alt="Persona planchando una camisa blanca" width="800" height="533" loading="lazy"><div><h3>Planchado</h3><p>Camisas, pantalones y uniformes listos para usar.</p><span class="from">Desde RD$60 por pieza</span></div></article>
+        <article class="svc rv"><img src="img/camisas.webp" alt="Camisas de vestir colgadas en ganchos" width="700" height="467" loading="lazy"><div><h3>Lavado en seco</h3><p>Trajes, vestidos y telas delicadas con cuidado especial.</p><span class="from">Desde RD$250 por pieza</span></div></article>
+        <article class="svc rv"><img src="img/edredones.webp" alt="Toallas blancas limpias y dobladas" width="800" height="533" loading="lazy"><div><h3>Edredones y toallas</h3><p>Ropa de cama, cortinas y toallas grandes.</p><span class="from">Desde RD$350</span></div></article>
+      </div>
+    </div>
+  </section>
+
+  <section class="sec" id="precios" style="padding-top:16px">
+    <div class="wrap">
+      <div class="head rv"><p class="kicker">Precios</p><h2>Sabes lo que pagas antes de mandarla</h2><p class="sub">Calcula tu pedido aquí. El precio final se confirma al pesar la ropa.</p></div>
+      <div class="prices">
+        <div class="table rv">
+          <div class="row"><div>Lavado y doblado<span>Mínimo 8 libras</span></div><b>RD$45 / lb</b></div>
+          <div class="row"><div>Camisa o blusa planchada<span>En gancho</span></div><b>RD$60</b></div>
+          <div class="row"><div>Pantalón planchado</div><b>RD$70</b></div>
+          <div class="row"><div>Traje en seco<span>Saco y pantalón</span></div><b>RD$450</b></div>
+          <div class="row"><div>Edredón<span>Tamaño full o queen</span></div><b>RD$450</b></div>
+          <div class="row"><div>Servicio express<span>Lista el mismo día</span></div><b>+50%</b></div>
+        </div>
+        <form class="calc rv" id="calc" aria-labelledby="calc-t">
+          <h3 id="calc-t">Calcula tu pedido</h3>
+          <p class="hint">Toca + y − para sumar tus piezas.</p>
+          <div class="q"><label id="l-lb">Libras de ropa<small>RD$45 por libra</small></label><div class="step" role="group" aria-labelledby="l-lb"><button type="button" data-k="lb" data-d="-1" aria-label="Quitar una libra">−</button><output id="o-lb">10</output><button type="button" data-k="lb" data-d="1" aria-label="Agregar una libra">+</button></div></div>
+          <div class="q"><label id="l-sh">Camisas planchadas<small>RD$60 cada una</small></label><div class="step" role="group" aria-labelledby="l-sh"><button type="button" data-k="sh" data-d="-1" aria-label="Quitar una camisa">−</button><output id="o-sh">0</output><button type="button" data-k="sh" data-d="1" aria-label="Agregar una camisa">+</button></div></div>
+          <div class="q"><label id="l-ed">Edredones<small>RD$450 cada uno</small></label><div class="step" role="group" aria-labelledby="l-ed"><button type="button" data-k="ed" data-d="-1" aria-label="Quitar un edredón">−</button><output id="o-ed">0</output><button type="button" data-k="ed" data-d="1" aria-label="Agregar un edredón">+</button></div></div>
+          <label class="switch"><input type="checkbox" id="express"> Express: lista hoy mismo (+50%)</label>
+          <div class="total"><span>Total estimado</span><b id="total">RD$450</b></div>
+          <a class="btn btn-wa" href="#recogida" id="calc-go"><svg aria-hidden="true"><use href="#i-truck"/></svg>Agendar con este pedido</a>
+        </form>
+      </div>
+    </div>
+  </section>
+
+  <section class="sec" id="como" style="padding-top:16px">
+    <div class="wrap">
+      <div class="head rv"><p class="kicker">Cómo funciona</p><h2>Tres pasos, cero filas</h2></div>
+      <ol class="how">
+        <li class="rv"><h3>Agenda</h3><p>Escoge el día y la hora en que pasamos por tu ropa.</p></li>
+        <li class="rv"><h3>Lavamos</h3><p>La pesamos, te confirmamos el precio y la lavamos con cuidado.</p></li>
+        <li class="rv"><h3>Recibe</h3><p>Te la llevamos doblada o en ganchos en 24 horas.</p></li>
+      </ol>
+    </div>
+  </section>
+
+  <section class="sec" id="recogida" style="padding-top:16px">
+    <div class="wrap">
+      <div class="pickup rv">
+        <div>
+          <p class="kicker">Recogida a domicilio</p>
+          <h2>¿Cuándo pasamos por tu ropa?</h2>
+          <form class="form" id="form" novalidate>
+            <div class="fld"><label for="f-svc">Servicio</label>
+              <select class="inp" id="f-svc"><option>Lavado y doblado</option><option>Planchado</option><option>Lavado en seco</option><option>Edredones y toallas</option><option>Varios servicios</option></select></div>
+            <div class="fld"><label for="f-date">Día de recogida</label><input class="inp" type="date" id="f-date" aria-describedby="e-date"><div class="err" id="e-date" aria-live="polite"></div></div>
+            <div class="fld"><span class="lbl" id="slot-l">Horario</span>
+              <div class="slots" role="radiogroup" aria-labelledby="slot-l">
+                <label><input type="radio" name="slot" value="Mañana (8 a 12)" checked><span>Mañana<small>8 a 12</small></span></label>
+                <label><input type="radio" name="slot" value="Tarde (12 a 4)"><span>Tarde<small>12 a 4</small></span></label>
+                <label><input type="radio" name="slot" value="Noche (4 a 7)"><span>Noche<small>4 a 7</small></span></label>
+              </div></div>
+            <div class="two">
+              <div class="fld"><label for="f-name">Tu nombre</label><input class="inp" id="f-name" autocomplete="given-name" placeholder="Ej.: Ana" aria-describedby="e-name"><div class="err" id="e-name" aria-live="polite"></div></div>
+              <div class="fld"><label for="f-sector">Sector</label><input class="inp" id="f-sector" placeholder="Ej.: Bella Vista" aria-describedby="e-sector"><div class="err" id="e-sector" aria-live="polite"></div></div>
+            </div>
+            <div class="fld"><label for="f-addr">Dirección <span class="opt">(calle, número, apto.)</span></label><input class="inp" id="f-addr" autocomplete="street-address" placeholder="Ej.: Calle 5 #12, apto 3B"></div>
+            <div class="fld"><label for="f-notes">Notas <span class="opt">(opcional)</span></label><input class="inp" id="f-notes" placeholder="Ej.: Hay una camisa con mancha de vino"></div>
+          </form>
+        </div>
+        <aside class="wa-card" aria-label="Vista previa del mensaje">
+          <div class="bar"><i><svg aria-hidden="true"><use href="#i-logo"/></svg></i>Espuma Lavandería</div>
+          <div class="msg" id="msg" aria-live="polite"></div>
+          <button class="btn btn-wa" id="send" type="button"><svg aria-hidden="true"><use href="#i-wa"/></svg>Enviar por WhatsApp</button>
+        </aside>
+      </div>
+    </div>
+  </section>
+
+  <section class="sec" id="local" style="padding-top:16px">
+    <div class="wrap place">
+      <img class="rv" src="img/local.webp" alt="Interior de la lavandería con lavadoras y piso blanco" width="1000" height="1330" loading="lazy">
+      <div class="rv">
+        <p class="kicker">Visítanos</p>
+        <h2>También puedes traerla tú</h2>
+        <div class="addr"><svg aria-hidden="true"><use href="#i-pin"/></svg><span>Av. Ejemplo 123, local 4, Santo Domingo<br>Al lado del supermercado</span></div>
+        <div class="hours" id="hours">
+          <div data-d="1,2,3,4,5"><span>Lunes a viernes</span><span>7:00 a. m. – 8:00 p. m.</span></div>
+          <div data-d="6"><span>Sábado</span><span>8:00 a. m. – 6:00 p. m.</span></div>
+          <div data-d="0"><span>Domingo</span><span>9:00 a. m. – 1:00 p. m.</span></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="sec" id="preguntas" style="padding-top:16px">
+    <div class="wrap">
+      <div class="head rv"><p class="kicker">Preguntas</p><h2>Lo que más nos preguntan</h2></div>
+      <div class="faq">
+        <details class="rv"><summary>¿La recogida tiene costo?</summary><p>Es gratis a partir de 15 libras. Si tu pedido es menor, cuesta RD$150.</p></details>
+        <details class="rv"><summary>¿Cuánto tarda mi ropa?</summary><p>24 horas en el servicio normal. Con express, la tienes el mismo día si la recogemos antes de las 11:00 a. m.</p></details>
+        <details class="rv"><summary>¿Cómo pago?</summary><p>En efectivo o por transferencia cuando te entregamos la ropa.</p></details>
+        <details class="rv"><summary>¿Y si se daña una prenda?</summary><p>Revisamos cada pieza al recibirla. Si algo pasa por nuestra culpa, lo reponemos.</p></details>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer>
+  <div class="wrap">
+    <a class="logo" href="#main"><svg aria-hidden="true"><use href="#i-logo"/></svg><span>Espuma<small>LAVANDERÍA</small></span></a>
+    <p style="margin:0">Lavado, planchado y recogida a domicilio en Santo Domingo.</p>
+    <div class="credit"><span>Demo con datos ficticios: nombre, dirección, teléfono y precios son de ejemplo.</span><a href="../../#demos">Hecha por NovaPage</a></div>
+  </div>
+</footer>
+
+<a class="fab" href="https://wa.me/18090000000" target="_blank" rel="noopener" aria-label="Escribir por WhatsApp"><svg aria-hidden="true"><use href="#i-wa"/></svg></a>
+
+<script>
+document.documentElement.classList.add('js');
+const WA = '18090000000';
+const $ = s => document.querySelector(s);
+const money = n => 'RD$' + n.toLocaleString('en-US');
+
+// Abierto ahora (hora de Santo Domingo)
+const HOURS = { 0: [9, 13], 1: [7, 20], 2: [7, 20], 3: [7, 20], 4: [7, 20], 5: [7, 20], 6: [8, 18] };
+const fmtH = h => `${((h + 11) % 12) + 1}:00 ${h < 12 ? 'a. m.' : 'p. m.'}`;
+(function status() {
+  const now = new Date(new Date().toLocaleString('en-US', { timeZone: 'America/Santo_Domingo' }));
+  const d = now.getDay(), h = now.getHours() + now.getMinutes() / 60, [a, b] = HOURS[d];
+  const el = $('#status');
+  if (h >= a && h < b) el.querySelector('span').textContent = `Abierto ahora · hasta ${fmtH(b)}`;
+  else { el.classList.add('closed'); let n = h < a ? d : (d + 1) % 7; el.querySelector('span').textContent = `Cerrado · abrimos ${n === d ? 'hoy' : 'mañana'} a las ${fmtH(HOURS[n][0])}`; }
+  document.querySelectorAll('#hours div').forEach(r => r.classList.toggle('today', r.dataset.d.split(',').includes(String(d))));
+})();
+
+// Calculadora
+const PRICE = { lb: 45, sh: 60, ed: 450 }, MIN = { lb: 0, sh: 0, ed: 0 };
+const qty = { lb: 10, sh: 0, ed: 0 };
+function total() { const t = qty.lb * PRICE.lb + qty.sh * PRICE.sh + qty.ed * PRICE.ed; return Math.round($('#express').checked ? t * 1.5 : t); }
+function paint() { Object.keys(qty).forEach(k => $('#o-' + k).textContent = qty[k]); $('#total').textContent = money(total()); update(); }
+$('#calc').addEventListener('click', e => { const b = e.target.closest('[data-k]'); if (!b) return; const k = b.dataset.k; qty[k] = Math.max(MIN[k], Math.min(99, qty[k] + Number(b.dataset.d))); paint(); });
+$('#express').addEventListener('change', paint);
+
+// Recogida por WhatsApp
+const iso = d => new Date(d.getTime() - d.getTimezoneOffset() * 6e4).toISOString().slice(0, 10);
+$('#f-date').min = iso(new Date());
+const fmtDate = v => v ? new Date(v + 'T12:00').toLocaleDateString('es-DO', { weekday: 'long', day: 'numeric', month: 'long' }) : '';
+function message() {
+  const v = id => $(id).value.trim();
+  const slot = document.querySelector('input[name=slot]:checked').value;
+  const items = [qty.lb && `${qty.lb} lb de ropa`, qty.sh && `${qty.sh} camisas planchadas`, qty.ed && `${qty.ed} edredón(es)`].filter(Boolean).join(', ');
+  const L = ['¡Hola, Espuma! 🫧 Quiero agendar una recogida:', '', `🧺 Servicio: ${v('#f-svc')}`];
+  if (items) L.push(`📦 Pedido aprox.: ${items}${$('#express').checked ? ' (express)' : ''} · ${money(total())}`);
+  if (v('#f-date')) L.push(`📅 Día: ${fmtDate(v('#f-date'))}`);
+  L.push(`🕘 Horario: ${slot}`);
+  if (v('#f-name')) L.push(`🙋 Nombre: ${v('#f-name')}`);
+  if (v('#f-sector') || v('#f-addr')) L.push(`📍 Dirección: ${[v('#f-addr'), v('#f-sector')].filter(Boolean).join(', ')}`);
+  if (v('#f-notes')) L.push(`📝 Notas: ${v('#f-notes')}`);
+  return L.join('\n');
+}
+function update() { $('#msg').textContent = message(); }
+$('#form').addEventListener('input', update); $('#form').addEventListener('change', update);
+$('#form').addEventListener('submit', e => e.preventDefault());
+function check() {
+  let first = null;
+  [['#f-date', '#e-date', 'Escoge el día de recogida.'], ['#f-name', '#e-name', 'Escribe tu nombre.'], ['#f-sector', '#e-sector', 'Dinos tu sector.']].forEach(([f, e, m]) => {
+    const bad = !$(f).value.trim(); $(f).setAttribute('aria-invalid', bad); $(e).textContent = bad ? m : ''; if (bad && !first) first = $(f);
+  });
+  if (first) first.focus();
+  return !first;
+}
+$('#send').addEventListener('click', () => { if (check()) window.open(`https://wa.me/${WA}?text=${encodeURIComponent(message())}`, '_blank', 'noopener'); });
+paint();
+
+// Barra y animaciones
+const topBar = $('#top'); addEventListener('scroll', () => topBar.classList.toggle('scrolled', scrollY > 8), { passive: true });
+const io = new IntersectionObserver(es => es.forEach(x => { if (x.isIntersecting) { x.target.classList.add('in'); io.unobserve(x.target); } }), { rootMargin: '0px 0px -8% 0px' });
+document.querySelectorAll('.rv').forEach(el => io.observe(el));
+</script>
+</body>
+</html>
