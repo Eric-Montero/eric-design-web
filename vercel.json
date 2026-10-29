@@ -1,8 +1,29 @@
 {
   "redirects": [
-    { "source": "/king", "destination": "/demos/king-of-games/", "permanent": false },
-    { "source": "/capital", "destination": "/demos/capital-movil/", "permanent": false },
-    { "source": "/lura", "destination": "/demos/luramatech/", "permanent": false },
-    { "source": "/globos", "destination": "/demos/party-balloons/", "permanent": false }
+    {
+      "source": "/king",
+      "destination": "/demos/king-of-games/",
+      "permanent": false
+    },
+    {
+      "source": "/capital",
+      "destination": "/demos/capital-movil/",
+      "permanent": false
+    },
+    {
+      "source": "/lura",
+      "destination": "/demos/luramatech/",
+      "permanent": false
+    },
+    {
+      "source": "/globos",
+      "destination": "/demos/party-balloons/",
+      "permanent": false
+    },
+    {
+      "source": "/cool",
+      "destination": "/demos/cool-gameplay/",
+      "permanent": false
+    }
   ]
 }
