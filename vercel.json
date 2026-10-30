@@ -34,6 +34,11 @@
       "source": "/nueva.html",
       "destination": "/",
       "permanent": false
+    },
+    {
+      "source": "/food",
+      "destination": "/demos/foodtruck-lovers/",
+      "permanent": false
     }
   ]
 }
